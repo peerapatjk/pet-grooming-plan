@@ -15,6 +15,8 @@
 11. Routine bookings default to card holds; deposits are reserved for higher-risk or higher-value services.
 12. The merchant correction window defaults to 24 hours after appointment time.
 13. Reminder schedule defaults to 24 hours before plus same-day reminder.
+14. The first software launch should be a narrower launch slice, not the entire roadmap in one release.
+15. `pending_verification` and `pending_merchant_confirmation` may hold inventory provisionally, but those holds must expire automatically if the required action does not happen in time.
 
 Correct these before Phase 2 if any are wrong. The plan should not proceed on hidden assumptions.
 
@@ -30,6 +32,42 @@ The product must solve two real problems at the same time:
 The MVP should optimize for repeat behavior, not just discovery. The product wins if a customer can rebook the same service for the same pet faster than they can message the shop manually, and if a groomer trusts the booking board enough to rely on it as the canonical schedule.
 
 The MVP must support both Thai and English for system-managed experiences on both customer and merchant surfaces.
+
+## Launch Posture
+
+This spec distinguishes between:
+
+- `launch slice` — the first release that proves schedule truth, payment trust, and repeat-value
+- `full MVP roadmap` — the broader set of capabilities that may follow once the launch slice is working
+
+The launch slice should stay narrow enough that:
+
+- instant booking is truthful for the services included
+- merchants can actually keep the canonical schedule current
+- payment protection is explained clearly
+- customer and merchant support load remains manageable
+
+## Stakeholder Satisfaction
+
+This product should not be considered launch-ready unless the following groups can each operate or approve it with confidence:
+
+- Product / GM / Launch DRI
+- CEO
+- Finance
+- Accounting
+- Operations
+- Customer Support / Merchant Success
+- Marketing
+- Legal
+- Risk / Compliance / Security / Privacy
+- Tech
+- Data / Analytics
+- Sales / BD / Merchant Acquisition
+- External Critical Vendors
+
+The detailed cross-functional gate lives in:
+
+- [stakeholder-readiness.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/stakeholder-readiness.md)
 
 ## Tech Stack
 
@@ -139,9 +177,9 @@ Testing must prove schedule truth, payment-protection behavior, and operational 
   - customer completes onboarding and reaches booking-ready state
   - customer creates a pet profile and books a routine service
   - merchant confirms an exception booking
+  - provisional hold expires and releases inventory correctly
   - reminder and reconfirmation behavior before appointment time
   - merchant marks arrived, completed, cancelled, and no-show outcomes
-  - bulk status update workflow for merchant cleanup
   - customer and merchant flows render correctly in Thai and English
 
 Coverage expectations:
@@ -172,7 +210,7 @@ Coverage expectations:
 
 ## Product Scope
 
-### In Scope for MVP
+### Launch Slice for First Release
 
 - customer onboarding with language choice, phone or account verification, and first-use setup
 - customer search by location, service, and relevant near-term availability
@@ -188,9 +226,15 @@ Coverage expectations:
 - merchant controls to lock a booking to a groomer or station
 - merchant controls to block resources from online booking and configure booking cutoff times
 - merchant offline booking entry with payment-link follow-up
-- basic daily revenue and booking summary
 - repeat booking for the same pet and service
 - product analytics for onboarding, first booking, merchant schedule trust, and repeat behavior
+
+### Full MVP Roadmap After Launch Validation
+
+- basic daily revenue and booking summary
+- bulk merchant cleanup actions if booking volume proves they are necessary
+- lightweight post-service review capture tied to completed bookings
+- deeper marketplace discovery and reporting breadth once the core loop is stable
 
 ### Out of Scope for MVP
 
@@ -214,7 +258,8 @@ Coverage expectations:
 3. Select pet profile or create one
 4. Choose service
 5. See eligible booking mode:
-   - instant confirmation for standard cases
+   - instant confirmation for standard cases with no extra blocking step
+   - pending verification for cases that need OTP or payment completion before confirmation
    - pending merchant confirmation for exception cases
 6. Complete payment protection step:
    - no payment protection
@@ -234,9 +279,26 @@ Coverage expectations:
 5. Update status quickly from desktop, tablet, or mobile
 6. Mark arrival, in-service, completion, decline, cancellation, or no-show
 7. Lock bookings to a groomer or station and block resources from online booking when needed
-8. Perform bulk status updates if operational cleanup is needed
-9. Review daily bookings and revenue summary
+8. Use bulk status updates later if operator volume proves they are necessary
+9. Review daily bookings and, later, revenue summary when reporting is added
 10. Use merchant workflows in Thai or English for system-managed UI
+
+## Inventory Commitment Model
+
+Inventory truth depends on separating `booking status` from `inventory commitment`.
+
+The system must support:
+
+- `confirmed inventory` for bookings that have satisfied the required conditions and should fully consume capacity
+- `provisional hold` for bookings in `pending_verification` or `pending_merchant_confirmation` when the product chooses to reserve the slot temporarily
+- `released inventory` when a provisional hold expires, a request is declined, or a booking is cancelled
+
+Rules:
+
+- A provisional hold must include an expiry timestamp.
+- The same slot must not remain provisionally blocked after the expiry timestamp passes.
+- Customers and merchants should be able to see the next required action and time expectation for a provisional hold.
+- The system must audit auto-releases and manual overrides.
 
 ## Booking State Machine
 
@@ -256,9 +318,12 @@ Canonical booking states for MVP:
 
 State transition rules:
 
+- An instant-eligible booking that still requires OTP or payment completion should enter `pending_verification` before it becomes `confirmed`.
 - A booking that requires OTP or payment completion must not become `confirmed` before those steps pass.
 - A request-based booking must not become `confirmed` before merchant approval.
 - A request-based booking may become `declined_by_merchant` without being conflated with `cancelled` or `no_show`.
+- `pending_verification` and `pending_merchant_confirmation` must carry expiry behavior for any provisional inventory hold.
+- When a provisional hold expires, the booking must release inventory and move to `cancelled` with an explicit system reason such as verification timeout or merchant response timeout.
 - A confirmed booking may become `reconfirmed` after reminder response.
 - A confirmed or reconfirmed booking may become `late`, `arrived`, `cancelled`, or `no_show`.
 - A merchant must be able to correct booking outcome status within a defined post-appointment window.
@@ -281,6 +346,34 @@ This matrix is part of the product, not just operations copy.
 | Customer arrives late within grace period | Slot may be preserved | Payment outcome unchanged until service decision | Mark late or arrived |
 | Customer misses grace period | Slot may be released | Hold or deposit follows no-show policy | Mark no_show |
 
+## Customer Trust and Support
+
+These are launch requirements, not polish:
+
+- Before commitment, the customer must see whether the booking uses no payment protection, a hold, or a deposit.
+- The system must explain what releases a hold, what forfeits a deposit, and what happens on late cancellation or no-show.
+- After booking, the customer must be able to see the current verification and payment-protection state.
+- Failed authorization, failed OTP, or timeout states must have a clear next step.
+- Operations and support must have an audit trail for booking-state changes, payment-protection events, and manual overrides.
+
+## Cross-Functional Readiness Requirements
+
+The launch slice must also be legible to the rest of the company:
+
+- CEO must be able to see the wedge, success metrics, and kill conditions.
+- Product or GM must own the final launch decision process, waivers, and review cadence.
+- Finance must be able to evaluate downside risk from payment protection and support burden.
+- Accounting must be able to reconcile holds, deposits, captures, refunds, forfeitures, and payouts.
+- Operations must have SOPs for merchant onboarding, support, disputes, and manual overrides.
+- Customer Support and Merchant Success must have scripts, queue ownership, and merchant recovery playbooks.
+- Marketing must have truthful claims and approved trust messaging.
+- Legal must have reviewed terms, consent language, and dispute handling.
+- Risk, Compliance, Security, and Privacy must have reviewed controls, access, and retention posture.
+- Tech must have observability, rollback, and incident response for risky flows.
+- Data and Analytics must have trustworthy metric definitions and launch dashboards.
+- Sales, BD, or Merchant Acquisition must align merchant promises with the actual launch slice.
+- External critical vendors must be validated or covered by fallback plans.
+
 ## Success Criteria
 
 The spec is successful when the MVP can satisfy all of these conditions:
@@ -289,6 +382,7 @@ The spec is successful when the MVP can satisfy all of these conditions:
 - A repeat customer can rebook the same pet and service in under 60 seconds.
 - Routine services can be instantly booked without causing schedule conflicts in the canonical schedule.
 - Exception cases are clearly routed into merchant confirmation without misleading the customer.
+- Pending verification and pending merchant confirmation holds auto-release correctly when they expire.
 - Both online and offline-originated bookings can trigger deposits or card holds and verification flows.
 - Booking-created, confirmed, declined, and reminder notifications render correctly in Thai and English.
 - Merchants can mark arrival, cancellation, and no-show from desktop, tablet, and mobile.
@@ -296,13 +390,19 @@ The spec is successful when the MVP can satisfy all of these conditions:
 - Merchants can correct booking outcomes inside a defined operational window after appointment time.
 - A missed offline manual update does not create a second hidden schedule; every capacity-consuming booking must exist in the same booking system.
 - The policy engine can determine release, refund, capture, or forfeiture behavior for each appointment outcome.
+- Customers can understand the payment-protection policy before completing a booking.
+- Support and operations can trace why a hold, deposit, decline, timeout, cancellation, or no-show occurred.
+- Product / GM, CEO, Finance, Accounting, Operations, Customer Support / Merchant Success, Marketing, Legal, Risk, Tech, Data, Sales / BD, and external vendors each have a reviewable readiness packet or explicit waiver before launch.
 - Customer and merchant system-managed journeys are usable in both Thai and English.
 - The team can observe onboarding completion, first booking conversion, merchant schedule trust, and repeat booking through instrumentation.
 
 ## Open Questions
 
-- Which services are always instant-bookable in V1?
+- Which services are always instant-bookable in the launch slice?
 - What exact inputs should trigger request-and-confirm mode: service type, pet profile, uploaded photos, or a combination?
+- What should the verification-hold expiry and merchant response SLA be?
+
+These questions should be resolved through the pilot decision gate before implementation-heavy work is treated as locked.
 
 ## References
 

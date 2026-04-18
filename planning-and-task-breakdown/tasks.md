@@ -6,16 +6,40 @@ This document decomposes the approved spec and implementation plan into small, v
 
 The goal is to leave the system in a working state after each small cluster of tasks rather than building all backend, then all UI, then attempting to connect everything at the end.
 
+This task plan also distinguishes between:
+
+- `launch-slice work` that proves schedule truth, payment trust, and repeat booking
+- `post-launch expansion` that should follow only after the launch slice is working
+
+It assumes a separate cross-functional readiness gate for:
+
+- Product / GM / Launch DRI
+- CEO
+- Finance
+- Accounting
+- Operations
+- Customer Support / Merchant Success
+- Marketing
+- Legal
+- Risk / Compliance / Security / Privacy
+- Tech
+- Data / Analytics
+- Sales / BD / Merchant Acquisition
+- External Critical Vendors
+
 ## Architecture Decisions
 
 - Build around one canonical booking schedule shared by online and offline-originated bookings.
 - Treat payment-protection policy and booking state transitions as domain logic, not UI logic.
+- Model provisional inventory explicitly for pending verification and pending merchant confirmation.
 - Build Thai and English localization into system-managed flows from the start.
 - Keep merchant-generated bilingual content out of V1 unless approved separately.
 - Treat merchant decline as distinct from cancellation and no-show.
 - Keep waitlist and offered-slot flows out of V1 unless separately approved.
 - Default to card holds for routine bookings and deposits for higher-risk or higher-value services.
 - Default to a 24-hour merchant correction window and a 24-hours-plus-same-day reminder cadence.
+- Treat payment-protection explanation, failure fallback, and support visibility as launch requirements, not late copy polish.
+- Keep bulk merchant cleanup and richer dashboards out of the launch slice unless merchant volume proves they are needed.
 
 ## Task List
 
@@ -70,6 +94,7 @@ The goal is to leave the system in a working state after each small cluster of t
 **Acceptance criteria:**
 - [ ] Event list exists for onboarding completion, first search, booking start, booking success, and repeat booking.
 - [ ] Merchant trust signals such as offline booking usage, decline rate, and status corrections are defined.
+- [ ] Verification timeout, payment-protection drop-off, and merchant-response timing are defined.
 - [ ] Review cadence and success thresholds are documented.
 
 **Verification:**
@@ -84,10 +109,58 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Estimated scope:** Small
 
+## Task 0C: Complete pilot synthesis and lock launch policy
+
+**Description:** Convert the pilot and prototype findings into explicit launch decisions so later domain and workflow tasks are based on evidence rather than unresolved assumptions.
+
+**Acceptance criteria:**
+- [ ] The pilot decision gate artifact is complete.
+- [ ] The launch service taxonomy is locked for instant booking versus request-confirm.
+- [ ] Verification-hold expiry and merchant response SLA are locked.
+- [ ] Payment-protection defaults and onboarding minimum fields are locked.
+- [ ] Launch-slice versus post-launch scope is explicit.
+
+**Verification:**
+- [ ] Manual check: [idea-refine/pilot-decision-gate.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/pilot-decision-gate.md) is filled with evidence-backed decisions
+- [ ] Manual check: remaining open questions are narrow enough that implementation can proceed without hidden product guesses
+
+**Dependencies:** Task 0, Task 0A, Task 0B
+
+**Files likely touched:**
+- `idea-refine/pilot-decision-gate.md`
+- `idea-refine/prototype-and-eval.md`
+- `spec-driven-development/spec.md`
+
+**Estimated scope:** Small
+
+## Task 0D: Define stakeholder success criteria and launch packets
+
+**Description:** Convert the product strategy into explicit cross-functional launch requirements so stakeholder alignment is operational rather than implied.
+
+**Acceptance criteria:**
+- [ ] Product / GM, CEO, Finance, Accounting, Operations, Customer Support / Merchant Success, Marketing, Legal, Risk, Tech, Data, Sales / BD, and external vendors each have explicit launch requirements.
+- [ ] Required launch packets are defined for each stakeholder group.
+- [ ] Ownership is clear for each packet and approval decision.
+
+**Verification:**
+- [ ] Manual check: [spec-driven-development/stakeholder-readiness.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/stakeholder-readiness.md) is complete
+- [ ] Manual check: stakeholder requirements match the launch-slice scope rather than a hypothetical broader product
+
+**Dependencies:** Task 0C
+
+**Files likely touched:**
+- `spec-driven-development/stakeholder-readiness.md`
+- `spec-driven-development/requirements.md`
+- `spec-driven-development/plan.md`
+
+**Estimated scope:** Small
+
 ### Checkpoint: Prototype Gate
 
 - [ ] Concierge pilot and clickable prototypes are defined
 - [ ] Learning plan exists for first booking, merchant trust, and repeat booking
+- [ ] Pilot decision gate is complete and launch policy is locked
+- [ ] Stakeholder success criteria and launch packets are defined
 - [ ] Review with human before deep implementation
 
 ### Phase 1: Foundation
@@ -119,12 +192,13 @@ The goal is to leave the system in a working state after each small cluster of t
 
 ## Task 2: Implement booking state machine and transition guards
 
-**Description:** Encode the full booking lifecycle so that state transitions are explicit, validated, and testable before any UI or API begins relying on them, including a distinct merchant-decline outcome for request-based bookings.
+**Description:** Encode the full booking lifecycle so that state transitions are explicit, validated, and testable before any UI or API begins relying on them, including a distinct merchant-decline outcome for request-based bookings and explicit timeout behavior for provisional states.
 
 **Acceptance criteria:**
 - [ ] Valid transitions for all canonical booking states are implemented.
 - [ ] Invalid transitions are rejected with explicit errors.
 - [ ] Request-based bookings can transition into a merchant-decline outcome that is distinct from cancellation and no-show.
+- [ ] Timeout-based system cancellations are represented explicitly for verification and merchant-response expiry.
 - [ ] Merchant correction-window rules are represented in the transition logic.
 
 **Verification:**
@@ -132,7 +206,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: transition rules match the spec state machine
 
-**Dependencies:** Task 1
+**Dependencies:** Task 0C, Task 1
 
 **Files likely touched:**
 - `packages/domain/src/booking-state-machine.ts`
@@ -155,7 +229,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: policy outputs match the matrix in the spec
 
-**Dependencies:** Task 1, Task 2
+**Dependencies:** Task 0C, Task 1, Task 2
 
 **Files likely touched:**
 - `packages/domain/src/payment-policy.ts`
@@ -166,10 +240,11 @@ The goal is to leave the system in a working state after each small cluster of t
 
 ## Task 4: Implement service eligibility and routing rules
 
-**Description:** Build the rules that decide whether a booking can be instantly confirmed or must enter merchant confirmation, based on service and pet attributes.
+**Description:** Build the rules that decide whether a booking can be instantly confirmed, must enter pending verification, or must enter merchant confirmation, based on the locked launch service taxonomy and routing inputs.
 
 **Acceptance criteria:**
 - [ ] Instant-book vs request-confirm decisions are deterministic.
+- [ ] Rules reflect the pilot-locked launch service list and request-confirm triggers.
 - [ ] Routing rules accept service, pet, and merchant policy inputs.
 - [ ] Rule outputs include a machine-readable reason for request-confirm routing.
 
@@ -178,7 +253,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: exception reasons are explicit enough for future UI messaging
 
-**Dependencies:** Task 1, Task 2
+**Dependencies:** Task 0C, Task 1, Task 2
 
 **Files likely touched:**
 - `packages/domain/src/booking-routing.ts`
@@ -203,6 +278,7 @@ The goal is to leave the system in a working state after each small cluster of t
 **Acceptance criteria:**
 - [ ] Online and offline bookings share the same booking table or equivalent canonical model.
 - [ ] Availability and booking data can represent capacity without a parallel shadow schedule.
+- [ ] Schema includes provisional-hold expiry metadata and auditable timeout reasons.
 - [ ] Audit fields exist for status changes and operator actions.
 
 **Verification:**
@@ -225,6 +301,7 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Acceptance criteria:**
 - [ ] Capacity checks account for both online and offline bookings.
+- [ ] Capacity checks account for provisional holds and their expiry behavior.
 - [ ] Double-booking is rejected through ordinary booking flows.
 - [ ] Online inventory controls support blocked resources and booking cutoff times.
 - [ ] Service returns a clear reason when capacity is not available.
@@ -244,21 +321,47 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Estimated scope:** Medium
 
+## Task 6A: Implement provisional-hold lifecycle service
+
+**Description:** Build the service that creates, expires, releases, and audits provisional inventory holds for `pending_verification` and `pending_merchant_confirmation` bookings.
+
+**Acceptance criteria:**
+- [ ] Pending verification and pending merchant confirmation can reserve inventory provisionally with an expiry timestamp.
+- [ ] Expired provisional holds auto-release inventory without manual cleanup.
+- [ ] Timeout actions record explicit reason metadata for auditability.
+- [ ] Hold-lifecycle behavior is reusable by both online and offline booking flows.
+
+**Verification:**
+- [ ] Integration tests pass: `pnpm test:integration -- --grep "provisional-hold"`
+- [ ] Typecheck passes: `pnpm typecheck`
+- [ ] Manual check: expired verification and review holds no longer block capacity
+
+**Dependencies:** Task 2, Task 5, Task 6
+
+**Files likely touched:**
+- `apps/api/src/services/provisional-hold-service.ts`
+- `apps/api/src/services/availability-service.ts`
+- `apps/api/src/repositories/booking-repository.ts`
+- `tests/integration/provisional-hold.test.ts`
+
+**Estimated scope:** Medium
+
 ## Task 7: Build booking creation API for online flow
 
 **Description:** Create the backend API for customer-originated bookings, including pet linkage, service selection, routing decision, and initial verification or payment requirements.
 
 **Acceptance criteria:**
 - [ ] API creates bookings in the canonical schedule.
-- [ ] API returns `confirmed` or `pending_merchant_confirmation` based on routing rules.
+- [ ] API returns `confirmed`, `pending_verification`, or `pending_merchant_confirmation` based on routing rules and verification requirements.
 - [ ] API records whether OTP or payment protection is still outstanding.
+- [ ] API returns next-step and expiry metadata when a booking is provisional.
 
 **Verification:**
 - [ ] Integration tests pass: `pnpm test:integration -- --grep "booking-create"`
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: online booking response includes next-step requirements for the client
 
-**Dependencies:** Task 4, Task 5, Task 6
+**Dependencies:** Task 4, Task 5, Task 6, Task 6A
 
 **Files likely touched:**
 - `apps/api/src/routes/bookings/create-booking.ts`
@@ -275,13 +378,14 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Merchant-created offline bookings consume capacity in the same canonical schedule.
 - [ ] Backend can generate a secure payment or verification link for offline bookings.
 - [ ] Offline bookings are marked with origin metadata for auditability.
+- [ ] Offline bookings follow the same provisional-hold and expiry rules as app-originated bookings when verification is still outstanding.
 
 **Verification:**
 - [ ] Integration tests pass: `pnpm test:integration -- --grep "offline-booking"`
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: an offline booking can trigger verification without bypassing canonical schedule rules
 
-**Dependencies:** Task 5, Task 6, Task 7
+**Dependencies:** Task 5, Task 6, Task 6A, Task 7
 
 **Files likely touched:**
 - `apps/api/src/routes/bookings/create-offline-booking.ts`
@@ -299,13 +403,14 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] OTP verification can unblock bookings that require it.
 - [ ] Reconfirmation status is stored separately from initial confirmation.
 - [ ] Verification failures do not incorrectly confirm a booking.
+- [ ] Verification failures or timeouts do not leave provisional holds active.
 
 **Verification:**
 - [ ] Integration tests pass: `pnpm test:integration -- --grep "otp|reconfirmation"`
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: bookings cannot enter confirmed state until required verification completes
 
-**Dependencies:** Task 2, Task 5, Task 7, Task 8
+**Dependencies:** Task 2, Task 5, Task 6A, Task 7, Task 8
 
 **Files likely touched:**
 - `apps/api/src/routes/bookings/verify-booking.ts`
@@ -319,6 +424,7 @@ The goal is to leave the system in a working state after each small cluster of t
 
 - [ ] Canonical schedule exists for online and offline bookings
 - [ ] Availability prevents ordinary double-booking
+- [ ] Provisional holds expire and release inventory correctly
 - [ ] Booking creation, offline ingestion, and verification tests pass
 - [ ] Review with human before UI tasks
 
@@ -329,7 +435,7 @@ The goal is to leave the system in a working state after each small cluster of t
 **Description:** Create the translation-key structure, locale selection helpers, and formatting utilities used by customer, merchant, and notification surfaces.
 
 **Acceptance criteria:**
-- [ ] Translation keys exist for booking states, verification prompts, reminders, and common errors.
+- [ ] Translation keys exist for booking states, verification prompts, reminders, hold-expiry messaging, and common errors.
 - [ ] Thai and English locale resources are both wired into the shared layer.
 - [ ] Date, time, and currency helpers support locale-aware formatting.
 
@@ -398,12 +504,13 @@ The goal is to leave the system in a working state after each small cluster of t
 
 ## Task 12: Build customer search and routine booking flow
 
-**Description:** Implement the end-to-end customer flow for searching shops, reviewing relevant availability, choosing a service and pet, and creating a routine booking that can be instantly confirmed where eligible.
+**Description:** Implement the end-to-end customer flow for searching shops, reviewing relevant availability, choosing a service and pet, and creating a routine booking that can be instantly confirmed where eligible or move into pending verification when required.
 
 **Acceptance criteria:**
 - [ ] Customer can search shops by location, service, and relevant availability through the mobile flow.
 - [ ] Customer can complete a routine booking through the mobile flow.
 - [ ] Flow shows instant confirmation when routing allows it.
+- [ ] Flow explains pending verification and expiry expectations when payment protection or OTP is still outstanding.
 - [ ] Flow renders system-managed copy in Thai and English.
 
 **Verification:**
@@ -430,6 +537,7 @@ The goal is to leave the system in a working state after each small cluster of t
 **Acceptance criteria:**
 - [ ] Customer can submit a booking that enters merchant confirmation.
 - [ ] Pending state and next-step messaging are explicit.
+- [ ] Flow shows merchant-response timing or expiry expectations when the slot is provisionally held.
 - [ ] Localization works for all system-managed pending-state copy.
 
 **Verification:**
@@ -443,6 +551,31 @@ The goal is to leave the system in a working state after each small cluster of t
 - `apps/app-mobile/src/screens/booking/ExceptionBookingFlow.tsx`
 - `apps/app-mobile/src/screens/booking/PendingConfirmation.tsx`
 - `apps/app-mobile/tests/exception-booking-flow.test.tsx`
+
+**Estimated scope:** Medium
+
+## Task 13A: Build payment-protection trust surfaces and failure recovery flow
+
+**Description:** Implement the customer-facing explanation, status visibility, and fallback states for holds, deposits, verification, and payment failures so trust is built into the launch slice.
+
+**Acceptance criteria:**
+- [ ] Booking flow explains hold or deposit behavior before commitment.
+- [ ] Customer can see the current verification and authorization state after booking creation.
+- [ ] Payment or verification failure shows a clear next step and support fallback.
+- [ ] Trust and failure-state copy is localized in Thai and English.
+
+**Verification:**
+- [ ] Tests pass: `pnpm test -- --grep "payment-trust"`
+- [ ] Build succeeds: `pnpm build`
+- [ ] Manual check: a user can understand what happens to their hold or deposit without external explanation
+
+**Dependencies:** Task 7, Task 9, Task 10, Task 12, Task 13
+
+**Files likely touched:**
+- `apps/app-mobile/src/screens/booking/PaymentProtectionStep.tsx`
+- `apps/app-mobile/src/screens/booking/BookingStatusDetail.tsx`
+- `apps/app-mobile/src/screens/booking/PaymentFailureState.tsx`
+- `apps/app-mobile/tests/payment-trust-flow.test.tsx`
 
 **Estimated scope:** Medium
 
@@ -473,7 +606,7 @@ The goal is to leave the system in a working state after each small cluster of t
 
 - [ ] Thai and English localization foundation is in place
 - [ ] Customer onboarding works
-- [ ] Pet profile, routine booking, exception booking, and repeat booking flows work
+- [ ] Pet profile, routine booking, exception booking, payment-trust, and repeat booking flows work
 - [ ] Review with human before merchant operations tasks
 
 ### Phase 4: Merchant Operations
@@ -536,6 +669,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Merchant can trigger payment-link or verification follow-up for the offline booking.
 - [ ] Merchant can lock a booking to a groomer or station and block resources from online booking.
 - [ ] Offline bookings appear in the same board as online bookings.
+- [ ] Merchant can see whether an offline booking is provisional, confirmed, or timed out.
 
 **Verification:**
 - [ ] Tests pass: `pnpm test -- --grep "offline-booking-ui"`
@@ -552,37 +686,14 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Estimated scope:** Medium
 
-## Task 18: Build bulk status update workflow
-
-**Description:** Implement merchant bulk actions for cancellation and no-show cleanup so status correction can happen efficiently at end of day or after operational issues.
-
-**Acceptance criteria:**
-- [ ] Merchant can select multiple bookings for a bulk status action.
-- [ ] Bulk actions respect allowed transitions and audit fields.
-- [ ] Bulk-action copy is localized for Thai and English.
-
-**Verification:**
-- [ ] Tests pass: `pnpm test -- --grep "bulk-status"`
-- [ ] Build succeeds: `pnpm build`
-- [ ] Manual check: multiple bookings can be updated without violating state rules
-
-**Dependencies:** Task 2, Task 16
-
-**Files likely touched:**
-- `apps/app-merchant/src/components/bookings/BulkStatusToolbar.tsx`
-- `apps/app-merchant/src/screens/bookings/BulkStatusModal.tsx`
-- `apps/app-merchant/tests/bulk-status-update.test.tsx`
-
-**Estimated scope:** Medium
-
 ### Checkpoint: Merchant Operations
 
 - [ ] Merchant can define services and availability
 - [ ] Merchant can operate booking board with online and offline bookings
-- [ ] Merchant can perform bulk cleanup actions
+- [ ] Merchant can see and act on provisional versus confirmed bookings without falling back to a second shadow schedule
 - [ ] Review with human before operational automation
 
-### Phase 5: Notifications and Reporting
+### Phase 5: Notifications and Launch Readiness
 
 ## Task 19: Build transactional notification, reminder, and reconfirmation pipeline
 
@@ -593,6 +704,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Reminder timing is configurable according to product decision.
 - [ ] Reconfirmation messages are localized in Thai and English.
 - [ ] Reminder jobs do not send for cancelled or completed bookings.
+- [ ] Time-sensitive messages for verification expiry or merchant-response timeout are supported where relevant.
 
 **Verification:**
 - [ ] Integration tests pass: `pnpm test:integration -- --grep "reminders"`
@@ -616,6 +728,7 @@ The goal is to leave the system in a working state after each small cluster of t
 **Acceptance criteria:**
 - [ ] Customer events exist for onboarding completion, first search, booking start, booking success, and repeat booking.
 - [ ] Merchant events exist for offline booking creation, decline actions, and correction-window edits.
+- [ ] Verification timeout, payment-protection drop-off, and merchant-response timing events are implemented.
 - [ ] Event naming and properties match the agreed analytics schema.
 
 **Verification:**
@@ -623,7 +736,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Build succeeds: `pnpm build`
 - [ ] Manual check: event traces are visible for the critical user journeys
 
-**Dependencies:** Task 0B, Task 10A, Task 12, Task 13, Task 16
+**Dependencies:** Task 0B, Task 9, Task 10A, Task 12, Task 13, Task 13A, Task 16
 
 **Files likely touched:**
 - `packages/domain/src/analytics-events.ts`
@@ -633,6 +746,96 @@ The goal is to leave the system in a working state after each small cluster of t
 - `tests/integration/analytics-events.test.ts`
 
 **Estimated scope:** Medium
+
+## Task 19B: Define Finance and Accounting reconciliation package
+
+**Description:** Document how holds, deposits, captures, refunds, forfeitures, disputes, and payouts are tracked so Finance and Accounting can approve the launch slice.
+
+**Acceptance criteria:**
+- [ ] Ledger treatment is defined for holds, deposits, captures, refunds, forfeitures, and payout timing.
+- [ ] Reconciliation workflow and ownership are documented.
+- [ ] Finance downside scenarios for payment failures and dispute volume are documented.
+
+**Verification:**
+- [ ] Manual check: Finance and Accounting packet exists and is reviewable
+- [ ] Manual check: reconciliation assumptions match the booking and payment policy design
+
+**Dependencies:** Task 3, Task 8, Task 19A
+
+**Files likely touched:**
+- `spec-driven-development/stakeholder-readiness.md`
+- `docs/product/finance-accounting-readiness.md`
+
+**Estimated scope:** Small
+
+## Task 19C: Define Operations, Support, and merchant-success package
+
+**Description:** Document merchant onboarding, support workflows, escalation paths, manual override controls, and merchant recovery playbooks so Operations and frontline teams can run the launch slice without inventing policy on the fly.
+
+**Acceptance criteria:**
+- [ ] SOPs exist for merchant onboarding, verification timeout, merchant-response timeout, late arrival, no-show, and disputes.
+- [ ] Escalation owners and SLA expectations are documented.
+- [ ] Manual override permissions and audit expectations are documented.
+- [ ] Support scripts and merchant-success recovery playbooks are documented.
+
+**Verification:**
+- [ ] Manual check: Operations and Support packet exists and is reviewable
+- [ ] Manual check: operational flows match the actual product states and policies
+
+**Dependencies:** Task 9, Task 16, Task 17, Task 20
+
+**Files likely touched:**
+- `spec-driven-development/stakeholder-readiness.md`
+- `docs/product/operations-support-readiness.md`
+
+**Estimated scope:** Small
+
+## Task 19D: Define Marketing, Sales, Legal, and Risk launch package
+
+**Description:** Produce the positioning, approved claims, trust messaging, merchant promises, terms, consent requirements, and control expectations needed so launch messaging is truthful and risky flows are commercially and legally reviewable.
+
+**Acceptance criteria:**
+- [ ] Marketing launch audience, value proposition, and approved claims are documented.
+- [ ] Trust messaging for holds, deposits, cancellations, and pending states is documented.
+- [ ] Sales or BD merchant promises and acquisition assumptions are documented.
+- [ ] Customer and merchant terms, consent copy, and policy review requirements are documented for legal review.
+- [ ] Risk, privacy, security, or compliance review requirements are documented.
+
+**Verification:**
+- [ ] Manual check: Marketing, Sales, Legal, and Risk packet exists and is reviewable
+- [ ] Manual check: launch claims match the actual launch slice and product behavior
+
+**Dependencies:** Task 13A, Task 19
+
+**Files likely touched:**
+- `spec-driven-development/stakeholder-readiness.md`
+- `docs/product/marketing-sales-legal-risk-readiness.md`
+
+**Estimated scope:** Small
+
+## Task 19E: Define Product / GM, CEO, Tech, Data, and vendor launch-readiness package
+
+**Description:** Produce the executive, technical, analytics, and vendor readiness packet covering launch ownership, wedge rationale, metrics, kill conditions, observability, rollback, dashboard quality, and external dependency validation.
+
+**Acceptance criteria:**
+- [ ] Product or GM packet includes launch ownership, waiver rules, and review cadence.
+- [ ] CEO packet includes launch wedge, success metrics, kill conditions, and deferred scope.
+- [ ] Tech packet includes observability, incident response, rollback, and dependency validation.
+- [ ] Data or analytics packet includes metric definitions, dashboard QA, and launch review ownership.
+- [ ] Vendor-readiness packet includes PSP, OTP, notification, and fallback validation.
+- [ ] A consolidated stakeholder status view exists with green, yellow, red, or waiver state.
+
+**Verification:**
+- [ ] Manual check: Product, CEO, Tech, Data, and vendor packet exists and is reviewable
+- [ ] Manual check: stakeholder status can be used as a real pre-launch gate
+
+**Dependencies:** Task 19, Task 19A
+
+**Files likely touched:**
+- `spec-driven-development/stakeholder-readiness.md`
+- `docs/product/product-ceo-tech-data-vendor-readiness.md`
+
+**Estimated scope:** Small
 
 ## Task 20: Build grace-period, no-show, and correction-window handling
 
@@ -648,7 +851,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: late and no-show flows resolve both booking and payment outcomes correctly
 
-**Dependencies:** Task 3, Task 9, Task 16, Task 18, Task 19
+**Dependencies:** Task 3, Task 9, Task 16, Task 19
 
 **Files likely touched:**
 - `apps/api/src/services/no-show-service.ts`
@@ -657,9 +860,45 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Estimated scope:** Medium
 
+### Checkpoint: Launch Slice Ready
+
+- [ ] All launch-critical domain, backend, customer, merchant, and automation tasks are complete
+- [ ] Builds succeed: `pnpm build`
+- [ ] Typecheck succeeds: `pnpm typecheck`
+- [ ] Core customer and merchant journeys work end to end
+- [ ] Provisional holds, payment trust, and timeout paths work end to end
+- [ ] Thai and English system-managed experiences are working
+- [ ] Product / GM, CEO, Finance, Accounting, Operations, Customer Support / Merchant Success, Marketing, Legal, Risk, Tech, Data, Sales / BD, and external vendors each have a reviewable readiness packet
+- [ ] Ready for human review before launch
+
+### Phase 6: Post-launch Expansion
+
+## Task 18: Build bulk status update workflow
+
+**Description:** Implement merchant bulk actions for cancellation and no-show cleanup once operator volume proves that end-of-day cleanup is common enough to justify the extra complexity.
+
+**Acceptance criteria:**
+- [ ] Merchant can select multiple bookings for a bulk status action.
+- [ ] Bulk actions respect allowed transitions and audit fields.
+- [ ] Bulk-action copy is localized for Thai and English.
+
+**Verification:**
+- [ ] Tests pass: `pnpm test -- --grep "bulk-status"`
+- [ ] Build succeeds: `pnpm build`
+- [ ] Manual check: multiple bookings can be updated without violating state rules
+
+**Dependencies:** Task 2, Task 16, Task 20
+
+**Files likely touched:**
+- `apps/app-merchant/src/components/bookings/BulkStatusToolbar.tsx`
+- `apps/app-merchant/src/screens/bookings/BulkStatusModal.tsx`
+- `apps/app-merchant/tests/bulk-status-update.test.tsx`
+
+**Estimated scope:** Medium
+
 ## Task 21: Build daily revenue and booking summary dashboard
 
-**Description:** Implement a lightweight reporting surface for merchants to review booking counts, outcomes, and revenue-related summaries for daily operations.
+**Description:** Implement a lightweight reporting surface for merchants to review booking counts, outcomes, and revenue-related summaries after the launch slice proves the core loop and operators need more reporting depth.
 
 **Acceptance criteria:**
 - [ ] Merchant can view booking totals by outcome.
@@ -682,12 +921,11 @@ The goal is to leave the system in a working state after each small cluster of t
 
 ### Checkpoint: Complete
 
-- [ ] All critical domain, backend, customer, merchant, and automation tasks are complete
+- [ ] Launch slice is stable in production or pilot-like rollout
+- [ ] Post-launch expansion tasks are justified by real operator volume or reporting needs
 - [ ] Builds succeed: `pnpm build`
 - [ ] Typecheck succeeds: `pnpm typecheck`
-- [ ] Core customer and merchant journeys work end to end
-- [ ] Thai and English system-managed experiences are working
-- [ ] Ready for human review before implementation continues at scale
+- [ ] Ready for continued expansion without breaking the core booking loop
 
 ## Risks and Mitigations
 
@@ -704,3 +942,4 @@ The goal is to leave the system in a working state after each small cluster of t
 ## Open Questions
 
 - Which exact services are instant-bookable in V1?
+- What should the verification-hold expiry and merchant response SLA be?

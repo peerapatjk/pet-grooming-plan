@@ -38,6 +38,7 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 - Customers must be able to book routine services instantly where merchant rules allow.
 - The system must support request-and-confirm booking for non-standard cases.
 - The system must show a clear booking state to both customer and merchant.
+- The system must support `pending_verification` and `pending_merchant_confirmation` as distinct pre-confirmation states where appropriate.
 
 ## Onboarding Requirements
 
@@ -87,7 +88,68 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 
 - The system must instrument onboarding completion, first search, booking-start, booking-success, and repeat-booking events.
 - The system must instrument merchant-facing trust signals such as offline booking usage, decline rate, and status-correction activity.
+- The system must instrument verification timeout, payment-protection drop-off, and merchant-response timing so the team can tune booking policy after launch.
 - The system should support a lightweight funnel view for first booking and repeat booking behavior.
+
+## Cross-Functional Launch Requirements
+
+The launch slice should satisfy the stakeholder requirements documented in:
+
+- [stakeholder-readiness.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/stakeholder-readiness.md)
+
+### Product, CEO, and business readiness
+
+- The launch slice must have explicit go, no-go, and pause thresholds.
+- The product must make clear what is shipping, what is deferred, and why the wedge is strategically coherent.
+- Product or GM must own the launch decision log, waivers, and cross-functional review cadence.
+
+### Finance and accounting readiness
+
+- The business must define treatment and reporting for holds, deposits, captures, refunds, forfeitures, and payout timing.
+- The business must define acceptable downside for payment failures, refund volume, disputes, and support load.
+- The product should provide exports, reports, or audit data sufficient for reconciliation and review.
+
+### Operations readiness
+
+- Merchant onboarding, support, escalation, and manual override workflows must be documented before launch.
+- The business must define ownership for verification timeout, merchant-response timeout, late-arrival, and no-show exceptions.
+
+### Support and merchant-success readiness
+
+- Frontline scripts for pending states, payment protection, refunds, and no-show disputes must be documented before launch.
+- Merchant-recovery workflows must be documented for cases where shops drift back to chat-based booking.
+
+### Marketing readiness
+
+- Launch claims must match the actual launch slice and service coverage.
+- Trust messaging for payment protection must be approved alongside acquisition and onboarding messaging.
+
+### Sales and merchant-acquisition readiness
+
+- Merchant acquisition promises and onboarding expectations must match the actual product and support model.
+- Supply-side target list and readiness assumptions should be explicit for launch.
+
+### Legal readiness
+
+- Customer-facing and merchant-facing terms must cover payment protection, cancellation, no-show, and dispute handling.
+- Consent and policy copy for OTP, notifications, and payment authorization must be reviewed before launch.
+
+### Risk, compliance, security, and privacy readiness
+
+- Risk controls for sensitive actions, payment flows, and manual overrides must be reviewed before launch.
+- Privacy, retention, and access-control expectations must be documented for launch operations.
+
+### Technical readiness
+
+- Observability, incident response, rollback, and auditability must be documented for risky booking and payment flows.
+
+### Data and analytics readiness
+
+- Launch metrics, event definitions, and dashboard QA must be owned explicitly before launch.
+
+### External vendor readiness
+
+- PSP, OTP, notification, and other critical third-party dependencies must be validated or have fallback plans before launch.
 
 ## No-Show and Booking Integrity Requirements
 
@@ -112,6 +174,14 @@ Source:
 - Routine bookings should default to card holds.
 - Deposits should be reserved for higher-risk or higher-value services.
 
+### Trust and support
+
+- The system must explain holds, deposits, release conditions, and late-cancel consequences before the customer commits.
+- The system must show the customer the current authorization or deposit state after booking creation.
+- The system must provide a clear fallback path when payment authorization or verification fails.
+- The system must support an auditable trail for disputed holds, deposits, and merchant outcome changes.
+- The system should define an operational support path for payment-protection complaints and exception handling.
+
 ### Arrival and no-show handling
 
 - The system must support a merchant-configurable grace period for late arrival.
@@ -130,6 +200,14 @@ Source:
 - Offline bookings must be entered into the same canonical schedule as online bookings.
 - A slot cannot be considered truly blocked unless required verification and payment conditions are met.
 - Merchants must be able to create an offline booking inside the system and immediately trigger follow-up verification and payment steps.
+
+### Provisional inventory and expiry
+
+- The system must model provisional inventory for `pending_verification` and `pending_merchant_confirmation` bookings.
+- A provisional hold must have an explicit expiry timestamp.
+- The system must auto-release a provisional hold when verification, payment, or merchant review does not complete in time.
+- The system must preserve an audit trail when a provisional hold expires or is manually overridden.
+- The customer and merchant should both be able to see the next required action and expiry expectation for a provisional booking.
 
 ## Reference Requirements From Grab Help
 
@@ -170,4 +248,7 @@ Requirements derived from that guide:
 
 - Which services are always instant-bookable?
 - What exact rules trigger request-and-confirm mode?
+- What should the verification-hold expiry and merchant response SLA be?
 - How much merchant setup is acceptable before the product feels heavier than LINE?
+
+These decisions should be closed through the pilot decision gate before implementation-heavy work is treated as committed.

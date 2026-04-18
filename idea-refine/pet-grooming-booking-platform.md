@@ -23,7 +23,9 @@ The repeat-booking loop should be the center of the product, because the target 
 ## Working Decisions
 
 - First merchant wedge: premium-leaning independent shops in dense central Bangkok neighborhoods
+- Launch posture: ship a narrow launch slice before expanding into the broader MVP roadmap
 - Payment protection default: card hold for routine bookings, deposit only for higher-risk or higher-value services
+- Provisional inventory rule: bookings awaiting verification or merchant review may temporarily hold a slot, but they must auto-release if the required action does not complete within a defined expiry window
 - Merchant correction window: 24 hours after appointment time
 - Reminder schedule: 24 hours before plus same-day reminder
 - Bilingual scope for V1: system-managed Thai and English only
@@ -49,6 +51,27 @@ In scope:
 - basic revenue and booking summary dashboard
 - post-service rating or review capture only if it is simple and tied to completed bookings
 
+## Recommended Launch Slice
+
+The first release should be smaller than the full MVP scope.
+
+Ship first:
+
+- a dense merchant wedge in central Bangkok
+- a narrow list of truly instant-bookable routine services
+- request-confirm for high-variance services and unfamiliar pets
+- customer onboarding, search, booking, and repeat booking
+- merchant availability, booking board, and offline booking capture
+- card hold or deposit protection with explicit trust copy
+- reminders, reconfirmation, and no-show handling
+
+Hold for later unless the pilot proves they are required:
+
+- bulk merchant cleanup actions for larger-volume operators
+- richer reporting beyond operational essentials
+- public review or rating loops beyond lightweight post-service capture
+- broader marketplace discovery depth
+
 ## No-Show and Booking Integrity Requirements
 
 These requirements should be treated as part of the MVP, not as a later payments add-on.
@@ -58,12 +81,14 @@ These requirements should be treated as part of the MVP, not as a later payments
 - Deposit or card-hold support for both app-originated bookings and merchant-entered offline bookings
 - A secure payment link flow for cases where the merchant creates a booking from a phone call, LINE chat, or walk-in inquiry
 - OTP or equivalent phone verification to reduce fake reservations
+- A strict provisional-hold expiry policy so pending verification or pending merchant review cannot block inventory indefinitely
 - A clear grace-period policy for late arrival, after which the slot can be released or marked as no-show
 - Tokenized payment handling so merchants do not handle raw card details
 - Merchant controls for marking arrival, no-show, deposit forfeiture, hold release, and exception handling
 - Merchant controls for declining a request-based booking without conflating that outcome with customer cancellation or no-show
 - Booking cutoff-time controls so online bookings cannot be made too close to service start
 - Onboarding must collect only the minimum required information needed to reach first booking quickly
+- Customer-facing explanation of authorization holds, deposits, release conditions, and support fallback when payment or verification fails
 
 ## Not Doing (and Why)
 
@@ -76,6 +101,9 @@ These requirements should be treated as part of the MVP, not as a later payments
 
 ## Open Questions
 
-- Which services should always be instant-bookable, and which should always require confirmation?
+- Which services should always be instant-bookable, and which should always require confirmation at launch?
 - Should exception handling be triggered by service type, pet profile data, uploaded photos, or all three?
+- What should the verification-hold expiry and merchant response window be so inventory stays truthful?
 - How much of the groomer workflow needs a native dashboard versus a lightweight app plus notification bridge?
+
+These questions must be locked in the `pilot-decision-gate.md` artifact before the implementation plan is treated as final.

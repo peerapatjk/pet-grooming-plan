@@ -9,6 +9,7 @@ Use this folder when you have a rough concept that still needs exploration.
 - `pet-grooming-booking-platform.md` — the current one-pager with the problem framing, provisional recommended direction, assumptions, MVP scope, and "not doing" list.
 - `supporting-notes.md` — the full session notes, including user inputs, product tensions, divergent directions, and Chope reference findings.
 - `prototype-and-eval.md` — the pre-build discovery loop covering prototype variants, falsification tests, and product eval signals.
+- `pilot-decision-gate.md` — the evidence-backed checklist that must be completed before the spec and implementation plan are treated as locked.
 
 ## Session Snapshot
 
@@ -27,6 +28,13 @@ The strongest starting point is not a broad "Chope for pets" clone. It is a repe
 - exception handling for high-variance pets and services
 - card hold / deposit mechanics to reduce no-shows
 - merchant-side tools that make daily scheduling manageable
+
+The discovery package now assumes a narrower `launch slice` before a broader MVP rollout:
+
+- a dense merchant wedge in central Bangkok
+- a tightly defined list of instant-bookable services
+- explicit provisional holds for bookings awaiting verification or merchant review
+- a trust-first booking flow that explains payment protection before scale
 
 ## Related Spec
 

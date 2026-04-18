@@ -104,6 +104,22 @@ Success signal:
 
 - merchants say "I would actually use this instead of LINE" rather than "nice concept"
 
+## Pilot Decision Gate
+
+Before the team deepens the spec or starts implementation-heavy work, the pilot and prototype loop must lock:
+
+- the launch service list for instant booking
+- the request-confirm triggers
+- the provisional-hold behavior for pending verification
+- the merchant response SLA for pending confirmation
+- the payment-protection default by service class
+- the minimum onboarding fields
+- the launch slice versus later roadmap
+
+The working artifact for that handoff lives in:
+
+- [pilot-decision-gate.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/pilot-decision-gate.md)
+
 ## Prototype Variants
 
 ### Variant A: Concierge ops first
@@ -166,6 +182,7 @@ Do these before deep implementation:
 - first-time user completes onboarding and reaches search
 - first-time user completes first booking
 - repeat user rebooks the same pet
+- instant-eligible user completes verification before the provisional hold expires
 - merchant accepts or declines an exception case
 - merchant enters an offline booking without creating shadow inventory
 - merchant resolves late or no-show status correctly
@@ -174,10 +191,31 @@ Do these before deep implementation:
 
 - onboarding is too heavy
 - instant booking promise is false
+- provisional holds block slots for too long and make availability look fake
 - merchants stop updating the schedule
 - payment protection feels punitive
 - bilingual UX is incomplete in critical moments
 - decline vs cancel vs no-show becomes operationally confusing
+
+### What should happen
+
+- routine bookings feel materially faster than chat-based coordination
+- users understand why a booking is instant, pending verification, or pending merchant review
+- pending states show what will happen next and when the slot will expire or be released
+- merchants trust the booking board enough to treat it as the real schedule
+
+### What must never happen
+
+- two customers believe they both hold the same confirmed slot
+- a verification timeout blocks inventory after the customer has dropped
+- a request decline is mistaken for a no-show or customer cancellation
+- customers see a payment hold without understanding the release conditions
+
+### What needs human review
+
+- borderline service types that may be instant for some merchants and pending for others
+- payment disputes, hold-release complaints, and late-arrival exceptions
+- any merchant workflow that causes staff to fall back to a parallel shadow schedule
 
 ### Review cadence
 
@@ -189,9 +227,11 @@ Do these before deep implementation:
 
 - Trust starts with truthful availability, not with branding.
 - The first-run experience must explain payment protection simply.
+- Every pending state needs an expiry rule and visible next step.
 - Decline, cancel, and no-show must be distinct to avoid support chaos.
 - Bilingual support must cover critical system flows, not just marketing surfaces.
 - Onboarding should defer nonessential setup until the user has felt the value.
+- Payment issues need a clear fallback path and support escalation, not just backend policy logic.
 
 ## Distribution and Adoption Plan
 
@@ -221,11 +261,32 @@ Why:
 - concierge setup of services and availability
 - operational coaching on offline booking entry and payment-protection rules
 
+## Launch Slice Recommendation
+
+The first software launch should be narrower than the full roadmap.
+
+Launch first:
+
+- invite-only central Bangkok merchants
+- routine services with a truthful instant path
+- request-confirm for edge cases
+- customer booking and repeat booking
+- merchant booking board and offline booking capture
+- payment-protection trust surfaces
+
+Defer until the booking loop is clearly working:
+
+- bulk operations for higher-volume merchants
+- richer dashboards and reporting depth
+- broader marketplace discovery experiences
+
 ## Next 1-2 Concrete Steps
 
-1. Run the concierge pilot and clickable prototypes before deep implementation.
-2. Use the pilot findings to confirm or revise:
+1. Run the concierge pilot and clickable prototypes, then complete the pilot decision gate before treating the spec as locked.
+2. Use that gate to finalize:
    - instant-bookable service list
+   - request-confirm triggers
+   - verification-hold expiry and merchant response SLA
    - card-hold vs deposit defaults
    - onboarding minimum fields
-   - merchant correction-window policy
+   - launch slice versus post-launch roadmap
