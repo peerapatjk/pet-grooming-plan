@@ -6,6 +6,15 @@ Paste this into Claude Design to generate the **internal operations / support / 
 
 This is distinct from the merchant-facing product. The merchant app is for shops managing their own day-to-day bookings. This control plane is for the platform team managing exceptions, trust, disputes, manual overrides, merchant recovery, and launch operations across the whole system.
 
+## Prompt Contract
+
+- Purpose: show that the business can safely operate the launch slice, not just demo polished customer and merchant screens.
+- Intended users and workflows: operations, support, merchant success, finance or accounting reviewers, risk reviewers, and launch leadership managing incidents, overrides, trust events, and merchant recovery.
+- Source documents: [../docs/product/operations-control-plane-prototype.md](../docs/product/operations-control-plane-prototype.md), [../docs/launch-canon.md](../docs/launch-canon.md), [../spec-driven-development/spec.md](../spec-driven-development/spec.md), [../spec-driven-development/stakeholder-readiness.md](../spec-driven-development/stakeholder-readiness.md).
+- Requirement families expressed: `REQ-LIFECYCLE`, `REQ-READINESS`, `REQ-NFR`, `REQ-ANALYTICS`.
+- Must not imply: merchant-facing self-service permissions for dangerous internal actions, hidden override paths, or an ERP-grade accounting system that is outside launch scope.
+- Review checklist: override actions are visibly dangerous and auditable, queue triage is understandable, and finance or support visibility exists without hiding operational complexity.
+
 ## Prompt
 
 ```text

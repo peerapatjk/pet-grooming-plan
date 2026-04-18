@@ -44,7 +44,7 @@ Use `spec-driven-development/` when discovery has converged enough to define pro
 ## Files
 
 - [spec.md](spec.md) — formal MVP specification and detailed behavior contract
-- [requirements.md](requirements.md) — supporting product requirements focused on booking integrity, launch constraints, and cross-functional obligations
+- [requirements.md](requirements.md) — requirement families and cross-functional obligations that feed the detailed spec, plan, tasks, and prompt traceability
 - [plan.md](plan.md) — implementation plan covering sequencing, dependencies, risks, and verification checkpoints
 - [stakeholder-readiness.md](stakeholder-readiness.md) — launch-readiness requirements across product, business, operational, legal, technical, and vendor stakeholders
 - [stakeholder-readiness-status.md](stakeholder-readiness-status.md) — current readiness snapshot and blocker inventory by stakeholder group
@@ -67,6 +67,7 @@ Use `spec-driven-development/` when discovery has converged enough to define pro
 This folder is ready to hand work forward when:
 
 - detailed behavior is explicit enough that downstream docs do not need to guess
+- requirement families are explicit enough to support traceability into tasks and prompts
 - unresolved policy areas are listed clearly
 - implementation sequencing and risks are reviewable
 - stakeholder-readiness criteria are defined and mapped to packet templates

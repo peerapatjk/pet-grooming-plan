@@ -4,6 +4,15 @@
 
 Paste this into Claude Design to generate a **leadership-ready deck** that explains the product strategy, launch slice, and why this is worth building now.
 
+## Prompt Contract
+
+- Purpose: package the launch slice, risks, proofs needed, and strategic rationale into a decision-oriented leadership narrative.
+- Intended audience: CEO, Product / GM / Launch DRI, Operations, Finance, Accounting, Support, Marketing, Sales / BD, and Tech leadership.
+- Source documents: [../docs/launch-canon.md](../docs/launch-canon.md), [../docs/product/analytics-and-evals.md](../docs/product/analytics-and-evals.md), [../spec-driven-development/spec.md](../spec-driven-development/spec.md), [../idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md).
+- Requirement families expressed: `REQ-BOOK`, `REQ-LANDING`, `REQ-MERCHANT`, `REQ-ANALYTICS`, `REQ-READINESS`.
+- Must not imply: the launch is already evidence-backed, all open policy questions are already closed, or the product is a broad pet marketplace.
+- Review checklist: the deck is explicit about what is still gated, highlights workflow integrity over AI novelty, and gives leadership a clear decision ask rather than a generic inspiration story.
+
 ## Prompt
 
 ```text

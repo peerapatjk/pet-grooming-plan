@@ -6,6 +6,15 @@ Paste this into Claude Design to create a **static marketing landing page** for 
 
 This page should direct users to download the app. It must not behave like a second booking product.
 
+## Prompt Contract
+
+- Purpose: express the acquisition story and launch wedge honestly while protecting the app-first surface boundary.
+- Intended audience: prospective customers discovering the product plus leadership reviewing the public-facing launch story.
+- Source documents: [../docs/product/landing-page-prototype.md](../docs/product/landing-page-prototype.md), [../docs/launch-canon.md](../docs/launch-canon.md), [../spec-driven-development/requirements.md](../spec-driven-development/requirements.md).
+- Requirement families expressed: `REQ-LANDING`, `REQ-BOOK`.
+- Must not imply: website booking, website onboarding, fake availability search, or broader geographic and service coverage than the launch slice allows.
+- Review checklist: the app-download CTA is unmistakable, the trust story stays honest, and the page does not look like a disguised web booking flow.
+
 ## Prompt
 
 ```text

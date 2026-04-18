@@ -6,6 +6,16 @@ Translate the Phase 1 spec into an implementation approach that can be reviewed 
 
 This plan assumes the current spec in [spec.md](spec.md) is directionally correct and incorporates Thai and English support, a minimal onboarding stance, and a premium-leaning independent-shop wedge in central Bangkok.
 
+## Source Of Truth In This Phase
+
+Use this file for implementation order, risk posture, and implementation hypotheses.
+
+This file does not redefine product behavior. It inherits:
+
+- requirement families from [requirements.md](requirements.md)
+- detailed behavior and invariants from [spec.md](spec.md)
+- cross-folder traceability from [../docs/governance/traceability-index.md](../docs/governance/traceability-index.md)
+
 ## Implementation Strategy
 
 Build the system in layers, but only after the discovery loop locks the launch slice and the riskiest policy decisions.
@@ -263,11 +273,6 @@ Dependencies:
 - launch-slice scope
 - payment and policy decisions
 - operational workflow definition
-
-Dependencies:
-
-- backend events
-- localization
 
 ### 11. Prototype and eval loop
 
@@ -620,3 +625,55 @@ This plan is ready to break into tasks when:
 - the booking-unit boundary is explicit
 - the reconfirmation non-response rule is explicit
 - the merchant-cancelled confirmed-booking policy is explicit
+
+## Implementation Hypotheses Appendix
+
+These items are planning inputs and implementation hypotheses. They are useful for preparation, but they are not part of the normative product spec unless later locked explicitly.
+
+### Provisional tech stack
+
+- customer app: React Native with Expo + TypeScript
+- merchant app: React web app with TypeScript, optimized for desktop and tablet
+- API: TypeScript service with REST or RPC endpoints
+- database: PostgreSQL
+- payments: third-party PSP with tokenized cards, holds, captures, refunds, and web payment links
+- notifications: push notifications plus SMS or equivalent OTP provider
+- localization: application-level i18n layer for Thai and English copy
+
+### Illustrative commands
+
+- mobile dev: `pnpm --filter app-mobile dev`
+- merchant dev: `pnpm --filter app-merchant dev`
+- API dev: `pnpm --filter api dev`
+- lint: `pnpm lint`
+- typecheck: `pnpm typecheck`
+- unit tests: `pnpm test -- --runInBand`
+- integration tests: `pnpm test:integration`
+- E2E tests: `pnpm test:e2e`
+- production build: `pnpm build`
+
+### Illustrative project structure
+
+```text
+apps/
+  app-mobile/                    Customer mobile app
+  app-merchant/                  Merchant web or tablet app
+  api/                           Backend service
+packages/
+  domain/                        Booking rules, policy logic, shared types
+  ui/                            Shared UI primitives where appropriate
+  i18n/                          Translation keys, locale config, formatting helpers
+  config/                        Shared lint, TypeScript, and tooling config
+docs/
+  product/                       PRDs, UX flows, policy docs
+  architecture/                  System design and ADRs
+tests/
+  integration/                   Cross-service and API integration tests
+  e2e/                           Customer and merchant journey tests
+idea-refine/
+  pet-grooming-booking-platform.md
+  supporting-notes.md
+spec-driven-development/
+  spec.md                        Phase 1 source of truth
+  requirements.md                Requirement families and obligations
+```

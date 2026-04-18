@@ -4,6 +4,15 @@
 
 Paste this into Claude Design to create a **single-page strategy artifact** you can circulate after meetings or use before a broader stakeholder review.
 
+## Prompt Contract
+
+- Purpose: compress the launch slice into a sharp, circulate-after-review artifact that stays honest about scope, risks, and next decisions.
+- Intended audience: cross-functional stakeholders who need a three-minute strategic summary.
+- Source documents: [../docs/launch-canon.md](../docs/launch-canon.md), [../docs/product/analytics-and-evals.md](../docs/product/analytics-and-evals.md), [../spec-driven-development/spec.md](../spec-driven-development/spec.md), [../idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md).
+- Requirement families expressed: `REQ-LANDING`, `REQ-BOOK`, `REQ-MERCHANT`, `REQ-ANALYTICS`, `REQ-READINESS`.
+- Must not imply: broader launch geography, hidden web booking capability, or evidence certainty that does not exist yet.
+- Review checklist: the launch wedge is clear, the validation gate is explicit, and the artifact can be circulated without requiring a presenter to explain hidden assumptions.
+
 ## Prompt
 
 ```text

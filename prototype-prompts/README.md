@@ -56,6 +56,15 @@ Use these prompts to generate polished prototypes, decks, and one-pagers for sta
 - [05-stakeholder-one-pager.md](05-stakeholder-one-pager.md) — circulate-after-review summary prompt
 - [06-demo-refinement-and-handoff.md](06-demo-refinement-and-handoff.md) — package-wide refinement and handoff prompt
 
+Each prompt file now includes a prompt contract that names:
+
+- the purpose of the artifact
+- the intended user or stakeholder workflow
+- the source documents it inherits from
+- the requirement families it is expressing
+- the non-goals it must not imply
+- the quality checks reviewers should use after generation
+
 ## Brief-To-Prompt Crosswalk
 
 | Supporting brief | Prompt | Notes |

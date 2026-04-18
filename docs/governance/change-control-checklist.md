@@ -26,6 +26,7 @@ Run this checklist when any of the following changes:
 - prototype brief or prompt-pack scope
 - stakeholder-readiness criteria
 - ownership, approval path, or waiver process
+- canonical terminology for product actors, states, or surfaces
 - folder structure or internal link targets
 
 ## Required Update Pass
@@ -56,6 +57,8 @@ Depending on the change, review and update:
 - [../../planning-and-task-breakdown/tasks.md](../../planning-and-task-breakdown/tasks.md)
 - [../readiness/README.md](../readiness/README.md)
 - [../../spec-driven-development/stakeholder-readiness-status.md](../../spec-driven-development/stakeholder-readiness-status.md)
+- [terminology-canon.md](terminology-canon.md) when a cross-folder term changes
+- [../system-map.md](../system-map.md) when authority routing or lane structure changes
 
 ### 4. Reset stale status where needed
 
@@ -68,6 +71,8 @@ Depending on the change, review and update:
 - all repo-internal links remain relative
 - no referenced file is missing
 - no README restates an old authority rule
+- no cross-folder terminology drift remains against [terminology-canon.md](terminology-canon.md)
+- [../system-map.md](../system-map.md) still points readers to the correct authority
 - traceability index still points to the correct downstream artifacts
 
 ## Minimum Definition Of Done
@@ -78,4 +83,5 @@ A documentation change is not complete until:
 - the affected lane README files are updated
 - the affected status docs are updated
 - broken or dead forward references are eliminated
+- terminology and system-map routing still describe the repo accurately
 - the traceability and governance docs still describe the repo accurately

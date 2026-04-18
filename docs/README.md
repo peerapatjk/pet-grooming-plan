@@ -4,6 +4,8 @@ This repository contains ideation, specification, planning, task breakdown, prot
 
 Use this file as the repo spine. Its job is to make the artifact system explicit so contributors do not have to infer what is authoritative, what is exploratory, and what comes next.
 
+For a faster question-to-authority lookup, start with [system-map.md](system-map.md).
+
 ## Document Lanes
 
 Two lanes run through this repo:
@@ -23,6 +25,7 @@ Use this lane to generate prototypes, run stakeholder reviews, and feed evidence
 Supporting layers:
 
 - [governance/README.md](governance/README.md) defines authority, promotion rules, traceability, and linking standards across every lane.
+- [system-map.md](system-map.md) maps common questions to the correct authoritative artifact before you edit the repo.
 - [readiness/README.md](readiness/README.md) turns stakeholder requirements into reviewable launch packets once the spec and plan are mature enough.
 
 ## Document Maturity Model
@@ -44,6 +47,8 @@ Not every artifact should be `evidence-backed` before implementation. The point 
 - [governance/change-control-checklist.md](governance/change-control-checklist.md) is the required update checklist when scope, policy, or ownership changes.
 - [governance/traceability-index.md](governance/traceability-index.md) is the lightweight cross-folder mapping from launch-canon rules to downstream artifacts.
 - [governance/linking-standard.md](governance/linking-standard.md) defines the repo rule for relative internal links and local-only references.
+- [governance/document-quality-standard.md](governance/document-quality-standard.md) defines the minimum quality contract for primary docs and prompt artifacts.
+- [governance/terminology-canon.md](governance/terminology-canon.md) defines the canonical vocabulary for product, workflow, and lane terms.
 - [launch-canon.md](launch-canon.md) is the stable cross-folder summary of the current launch rules.
 - [../spec-driven-development/spec.md](../spec-driven-development/spec.md) is the formal implementation contract when detailed product behavior matters.
 - [../spec-driven-development/plan.md](../spec-driven-development/plan.md) owns implementation sequencing, risks, and checkpoints.
@@ -71,9 +76,9 @@ When a pilot or review session locks a policy decision, update the launch canon 
 Use one of these paths depending on what you are trying to do:
 
 - Orientation pass:
-  [launch-canon.md](launch-canon.md) -> [../idea-refine/README.md](../idea-refine/README.md) -> [../spec-driven-development/README.md](../spec-driven-development/README.md)
+  [system-map.md](system-map.md) -> [launch-canon.md](launch-canon.md) -> [../idea-refine/README.md](../idea-refine/README.md) -> [../spec-driven-development/README.md](../spec-driven-development/README.md)
 - Governance pass:
-  [governance/authority-boundaries.md](governance/authority-boundaries.md) -> [governance/lifecycle-and-promotion.md](governance/lifecycle-and-promotion.md) -> [governance/change-control-checklist.md](governance/change-control-checklist.md)
+  [governance/authority-boundaries.md](governance/authority-boundaries.md) -> [governance/document-quality-standard.md](governance/document-quality-standard.md) -> [governance/terminology-canon.md](governance/terminology-canon.md) -> [governance/lifecycle-and-promotion.md](governance/lifecycle-and-promotion.md) -> [governance/change-control-checklist.md](governance/change-control-checklist.md)
 - Prototype and stakeholder review pass:
   [product/README.md](product/README.md) -> [../prototype-prompts/README.md](../prototype-prompts/README.md) -> [../idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md)
 - Execution pass:

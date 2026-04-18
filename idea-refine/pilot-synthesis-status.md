@@ -46,6 +46,13 @@ These are directionally decided from document synthesis, not from completed live
 - Customer-facing trust copy for holds, deposits, cancellation, and no-show outcomes
 - Evidence-backed thresholds for merchant schedule truth and payment-protection tolerance
 
+## Implementation Blockers
+
+- Verification-hold expiry duration and merchant response SLA are not locked, so the provisional inventory contract is not yet implementation-safe.
+- Request-confirm sequencing is not locked, so the product still lacks one definitive expiry owner when merchant review and verification both apply.
+- The instant-bookable service taxonomy is not locked, so customer, merchant, and operational surfaces should not imply a broader truthful instant-book set than discovery can support.
+- Customer-facing trust copy for holds, deposits, and exception outcomes is not locked, so support and marketing should not treat current wording as approved launch copy.
+
 ## Launch Slice
 
 - In:
@@ -80,6 +87,11 @@ These are directionally decided from document synthesis, not from completed live
   - The most important operational numbers remain assumptions, not validated decisions.
 - What changed:
   - Scope narrowed from a broad "Chope for pets" concept to a Bangkok-first launch slice focused on truthful booking, payment trust, and repeat behavior.
+
+## Deferred Commercial Decisions
+
+- Merchant monetization model is not yet locked and should not be implied downstream as commission, subscription, or hybrid.
+- Merchant acquisition incentives and commercial package design remain separate from launch-flow truth unless they materially change customer pricing, payouts, or merchant promises.
 
 ## Risks Still Open
 

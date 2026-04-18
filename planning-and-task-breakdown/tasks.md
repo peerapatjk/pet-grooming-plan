@@ -45,6 +45,28 @@ It assumes a separate cross-functional readiness gate for:
 - Treat payment-protection explanation, failure fallback, and support visibility as launch requirements, not late copy polish.
 - Keep bulk merchant cleanup and richer dashboards out of the launch slice unless merchant volume proves they are needed.
 
+## Traceability Rule
+
+This document inherits requirement-family IDs from [../spec-driven-development/requirements.md](../spec-driven-development/requirements.md) and the repo-wide mapping in [../docs/governance/traceability-index.md](../docs/governance/traceability-index.md).
+
+Every future ticket or implementation shard created from this plan should carry:
+
+- at least one requirement-family ID
+- the spec or plan section it is implementing
+- the verification evidence expected before it is considered done
+
+## Phase-To-Requirement Mapping
+
+| Phase or task group | Primary requirement families | Primary user or risk outcome |
+| --- | --- | --- |
+| Phase 0 `Task 0-0D` | `REQ-BOOK`, `REQ-LANDING`, `REQ-MERCHANT`, `REQ-LIFECYCLE`, `REQ-ANALYTICS`, `REQ-READINESS` | prove workflow fit, trust tolerance, and launch-readiness assumptions before deep buildout |
+| Phase 1 `Task 1-4` | `REQ-BOOK`, `REQ-INVENTORY`, `REQ-LIFECYCLE`, `REQ-NFR` | lock the domain contract and remove hidden state or policy ambiguity |
+| Phase 2 `Task 5-9` | `REQ-INVENTORY`, `REQ-LIFECYCLE`, `REQ-NFR` | make the canonical schedule, expiry logic, verification, and callback recovery implementation-safe |
+| Phase 3 `Task 10-14` | `REQ-I18N`, `REQ-ONBOARD`, `REQ-LANDING`, `REQ-PET`, `REQ-BOOK` | create a customer journey that is truthful, bilingual, and repeat-friendly |
+| Phase 4 `Task 15-17` | `REQ-MERCHANT`, `REQ-INVENTORY`, `REQ-LIFECYCLE` | give merchants a trustworthy schedule and fast day-of operating flow |
+| Phase 5 `Task 19-20` and `19A-19E` | `REQ-LIFECYCLE`, `REQ-ANALYTICS`, `REQ-READINESS`, `REQ-NFR` | operationalize notifications, trust-event handling, instrumentation, and stakeholder launch packets |
+| Phase 6 `Task 18` and `21` | `REQ-MERCHANT` | add post-launch merchant productivity and reporting only after the core loop is proven |
+
 ## Task List
 
 ### Phase 0: Prototype and Eval

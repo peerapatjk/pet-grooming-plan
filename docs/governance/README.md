@@ -32,6 +32,8 @@ Use these artifacts when you need to answer:
 - repo-wide change-control checklist
 - repo-internal linking standard
 - cross-folder traceability index
+- document quality standard for primary artifacts
+- terminology canon for product and workflow nouns
 
 ## Status
 
@@ -46,6 +48,8 @@ Use these artifacts when you need to answer:
 3. [change-control-checklist.md](change-control-checklist.md)
 4. [traceability-index.md](traceability-index.md)
 5. [linking-standard.md](linking-standard.md)
+6. [document-quality-standard.md](document-quality-standard.md)
+7. [terminology-canon.md](terminology-canon.md)
 
 ## Files
 
@@ -54,6 +58,8 @@ Use these artifacts when you need to answer:
 - [change-control-checklist.md](change-control-checklist.md) — required update checklist when scope, policy, or ownership changes
 - [traceability-index.md](traceability-index.md) — lightweight crosswalk from launch-canon rules to downstream artifacts
 - [linking-standard.md](linking-standard.md) — repo rule for internal links and local-only references
+- [document-quality-standard.md](document-quality-standard.md) — required structure and quality bar for primary docs and prompts
+- [terminology-canon.md](terminology-canon.md) — canonical vocabulary for lanes, actors, and booking concepts
 
 ## Downstream Consumers
 

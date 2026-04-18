@@ -56,6 +56,7 @@ Use `planning-and-task-breakdown/` when the product contract is stable enough to
 This folder is ready to hand work into implementation when:
 
 - every task traces to approved upstream artifacts
+- requirement-family traceability is clear enough that later tickets do not need to guess which product contract they inherit
 - checkpoints are explicit and reviewable
 - no fake dependencies or missing referenced docs remain
 - verification notes are concrete enough to support human review

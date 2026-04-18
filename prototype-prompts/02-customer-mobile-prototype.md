@@ -4,6 +4,15 @@
 
 Paste this into Claude Design after the design-system seed if you want a polished **customer-facing mobile prototype** for CEO and stakeholder demos.
 
+## Prompt Contract
+
+- Purpose: express the first-booking and repeat-booking customer journey without inventing product scope or hiding trust-sensitive states.
+- Intended user and workflow: busy Bangkok pet owner moving from first-use onboarding to routine booking, request-confirm handling, and repeat booking.
+- Source documents: [../docs/product/customer-prototype.md](../docs/product/customer-prototype.md), [../docs/launch-canon.md](../docs/launch-canon.md), [../spec-driven-development/requirements.md](../spec-driven-development/requirements.md), [../spec-driven-development/spec.md](../spec-driven-development/spec.md).
+- Requirement families expressed: `REQ-ONBOARD`, `REQ-BOOK`, `REQ-PET`, `REQ-I18N`, `REQ-LIFECYCLE`.
+- Must not imply: web booking, multi-pet or bundled booking flows, native reschedule, waitlist, or hidden payment-protection rules.
+- Review checklist: users can explain instant vs pending states, trust copy is transparent and calm, and repeat booking feels materially faster than first-time booking.
+
 ## Prompt
 
 ```text

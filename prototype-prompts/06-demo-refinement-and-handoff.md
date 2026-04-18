@@ -6,6 +6,15 @@ Paste this into Claude Design **after** you already have first drafts for the cu
 
 Use it to unify the artifacts into one coherent demo package and prepare a stronger leadership review.
 
+## Prompt Contract
+
+- Purpose: refine an existing prototype package so it stays within the launch canon while becoming more coherent, reviewable, and handoff-ready.
+- Intended outputs: landing page, customer prototype, merchant prototype, operations control plane, CEO deck, stakeholder one-pager, and engineering-facing handoff summary.
+- Source documents: [../docs/launch-canon.md](../docs/launch-canon.md), [../docs/product/README.md](../docs/product/README.md), [../docs/product/analytics-and-evals.md](../docs/product/analytics-and-evals.md), [../spec-driven-development/spec.md](../spec-driven-development/spec.md), [../spec-driven-development/stakeholder-readiness.md](../spec-driven-development/stakeholder-readiness.md).
+- Requirement families expressed: `REQ-LANDING`, `REQ-BOOK`, `REQ-MERCHANT`, `REQ-LIFECYCLE`, `REQ-ANALYTICS`, `REQ-READINESS`, `REQ-NFR`.
+- Must not imply: new scope, softened state semantics, prettier-but-less-honest flows, or undocumented policy invention.
+- Review checklist: all artifacts still feel like one company, the narrow launch slice remains obvious, and the handoff summary is implementation-oriented rather than promotional.
+
 ## Prompt
 
 ```text

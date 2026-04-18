@@ -4,6 +4,15 @@
 
 Paste this into Claude Design **before** you make the customer, merchant, or internal operations prototypes if you want a coherent visual system and a shared demo language across all artifacts.
 
+## Prompt Contract
+
+- Purpose: create one visual language that can express customer trust, merchant schedule truth, internal operational seriousness, and executive storytelling without drifting into generic pet-marketplace aesthetics.
+- Intended surfaces: customer mobile flow, merchant surface, operations control plane, CEO deck, and stakeholder one-pager.
+- Source documents: [../docs/launch-canon.md](../docs/launch-canon.md), [../docs/product/customer-prototype.md](../docs/product/customer-prototype.md), [../docs/product/merchant-prototype.md](../docs/product/merchant-prototype.md), [../docs/product/operations-control-plane-prototype.md](../docs/product/operations-control-plane-prototype.md), [../spec-driven-development/spec.md](../spec-driven-development/spec.md).
+- Requirement families expressed: `REQ-I18N`, `REQ-MERCHANT`, `REQ-LIFECYCLE`.
+- Must not imply: home-service dispatch, playful pet-social product positioning, generic purple SaaS styling, or any scope that contradicts the launch canon.
+- Review checklist: status semantics remain visually distinct, Thai and English support feels planned rather than retrofitted, and all later prototypes can inherit this system without inventing a second brand.
+
 ## Prompt
 
 ```text

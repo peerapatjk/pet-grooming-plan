@@ -4,6 +4,26 @@
 
 How might we let busy Bangkok pet owners book reliable grooming and bathing appointments in under 60 seconds, while giving independent groomers enough pet and payment certainty to reduce no-shows, scheduling chaos, and time spent handling bookings on LINE, Instagram, and Facebook?
 
+## Product Thesis
+
+For busy Bangkok pet owners who need a reliable grooming appointment without chat-based coordination friction, we are testing whether a repeat-first booking product with truthful merchant availability, explicit request-confirm handling, and clear payment protection can outperform today's LINE-, phone-, and social-led workflow.
+
+The launch bet is not "a marketplace for pets." The launch bet is that reliability, repeat speed, and merchant schedule truth are more valuable than broad discovery breadth in the first release.
+
+## Priority Launch Segments
+
+### Customer segment
+
+- busy urban pet owners in dense central Bangkok neighborhoods
+- customers booking routine in-shop grooming or bathing, especially repeat appointments
+- customers who value reliability, speed, and transparent trust policy more than bargain-hunting
+
+### Merchant segment
+
+- premium-leaning independent grooming shops
+- merchants currently coordinating demand across LINE, phone calls, Instagram, Facebook, and walk-ins
+- operators willing to standardize a narrow routine-service set if it reduces admin burden and no-shows
+
 ## Provisional Recommended Direction
 
 The current best direction is a combination of `Hybrid Smart Intake`, `Repeat-First Grooming`, and `No-Show Shield`, starting with premium-leaning independent shops in dense central Bangkok neighborhoods.
@@ -24,7 +44,9 @@ The repeat-booking loop should be the center of the product, because the target 
 
 - First merchant wedge: premium-leaning independent shops in dense central Bangkok neighborhoods
 - Launch posture: ship a narrow launch slice before expanding into the broader MVP roadmap
+- Product promise: optimize first for fulfillment reliability and repeat booking speed, not broad acquisition breadth
 - Payment protection default: card hold for routine bookings, deposit only for higher-risk or higher-value services
+- Pricing promise: prices shown for launch-eligible routine services should be authoritative for the selected service template plus fixed add-ons; exception flows must make any review-needed pricing uncertainty explicit before commitment
 - Provisional inventory rule: bookings awaiting verification or merchant review may temporarily hold a slot, but they must auto-release if the required action does not complete within a defined expiry window
 - Merchant correction window: 24 hours after appointment time
 - Reminder schedule: 24 hours before plus same-day reminder
@@ -111,11 +133,22 @@ These requirements should be treated as part of the MVP, not as a later payments
 - Native reschedule workflows — they add a second lifecycle on top of cancellation and replacement booking before the operational states are proven.
 - Website-based booking or onboarding — the website should stay a static download-and-explanation surface, not a parallel product that splits trust and engineering focus.
 
+## Deferred Commercial Decisions
+
+These items matter, but they should not be treated as secretly resolved product truth inside downstream docs:
+
+- merchant monetization model: commission, subscription, hybrid, or another model
+- merchant acquisition incentives and commercial terms
+- long-term review, loyalty, or promotional mechanics tied to monetization
+
+If one of these decisions changes customer pricing presentation, payout logic, or legal obligations, it must be promoted into the formal requirements and readiness artifacts in the same change.
+
 ## Open Questions
 
 - Which services should always be instant-bookable, and which should always require confirmation at launch?
 - Should exception handling be triggered by service type, pet profile data, uploaded photos, or all three?
 - What should the verification-hold expiry and merchant response window be so inventory stays truthful?
 - How much of the groomer workflow needs a native dashboard versus a lightweight app plus notification bridge?
+- Which commercial model should govern merchant monetization after the launch slice proves workflow truth, and does any part of that choice affect launch pricing, payouts, or merchant promises?
 
 These questions must be locked in the `pilot-decision-gate.md` artifact before the implementation plan is treated as final.

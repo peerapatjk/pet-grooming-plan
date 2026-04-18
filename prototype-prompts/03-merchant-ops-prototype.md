@@ -4,6 +4,15 @@
 
 Paste this into Claude Design to generate the **merchant-facing desktop/tablet prototype** that proves schedule truth and operational trust.
 
+## Prompt Contract
+
+- Purpose: show a merchant surface that can realistically replace chat-and-phone coordination for day-to-day booking operations.
+- Intended user and workflow: merchant owner, manager, or frontline operator handling service setup, booking board work, request-confirm decisions, offline-originated bookings, and day-of status changes.
+- Source documents: [../docs/product/merchant-prototype.md](../docs/product/merchant-prototype.md), [../docs/launch-canon.md](../docs/launch-canon.md), [../spec-driven-development/requirements.md](../spec-driven-development/requirements.md), [../spec-driven-development/spec.md](../spec-driven-development/spec.md).
+- Requirement families expressed: `REQ-MERCHANT`, `REQ-INVENTORY`, `REQ-LIFECYCLE`.
+- Must not imply: shadow schedules outside the system, hidden expiry behavior, bulk-ops-first launch scope, or merchant actions that bypass audit rules.
+- Review checklist: provisional vs confirmed is unmistakable, offline-originated bookings stay inside the canonical schedule, and the board feels fast enough to use in real operations.
+
 ## Prompt
 
 ```text

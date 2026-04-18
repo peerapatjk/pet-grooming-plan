@@ -32,6 +32,19 @@ The team must leave this gate with explicit decisions on:
 
 If any of these are still unresolved, the implementation plan is not ready.
 
+## Gate Rule
+
+This artifact is a real continue, descoping, or stop gate.
+
+Every decision closed here must record:
+
+- decision owner
+- evidence used
+- threshold met or not met
+- what was descoped, deferred, or tightened if evidence was weak
+
+If evidence is missing, the correct output is not a soft "go anyway." The correct output is `No-Go for implementation lock` or an explicit descoped launch slice.
+
 ## Decision Criteria
 
 | Decision area | Evidence required | Proceed threshold | What to do if threshold fails |
@@ -42,6 +55,17 @@ If any of these are still unresolved, the implementation plan is not ready.
 | First-run clarity | Moderated prototype sessions | Most users can explain `instant` versus `pending` without moderator rescue | Simplify routing rules and rewrite booking-state copy |
 | Merchant willingness | Post-pilot merchant debriefs | At least 4 of the first 5 target merchants say they would use the schedule daily | Reduce setup burden or re-scope the first merchant segment |
 | Repeat-value signal | Follow-up interviews and simulated rebooking | Users describe rebooking as materially faster than messaging the shop | Re-center the product around merchant ops until rebooking value is real |
+
+## Kill, Continue, And Descoping Rules
+
+Use these rules if the pilot produces mixed evidence:
+
+| Signal | Continue if... | Descoping action if weak | Stop condition |
+| --- | --- | --- | --- |
+| Customer trust in payment protection | customers understand holds or deposits without moderator rescue and completion remains acceptable | reduce protection on low-risk routine services, simplify trust copy, or move more flows into request-confirm | most qualified users treat payment protection as punitive or deceptive |
+| Merchant schedule truth | merchants can keep availability accurate enough that stale-slot incidents stay rare | narrow the merchant wedge, reduce instant-bookable services, or ship merchant-ops-first first | merchants cannot maintain truthful availability without reverting to shadow scheduling |
+| Routing clarity | users and merchants can explain instant vs request-confirm behavior accurately | narrow the launch taxonomy and reduce routing inputs | the team cannot make routing legible without heavy manual explanation |
+| Operational manual effort | operations can handle exceptions without spreadsheet or chat sprawl | narrow launch volume, narrow channels, or simplify payment and timeout policies | core exception handling still depends on undocumented manual heroics |
 
 ## Inventory Commitment Decisions
 
@@ -97,6 +121,10 @@ Before moving forward, capture:
    - merchant-cancelled confirmed booking reasons
    - whether replacement booking is manual or productized
    - reconfirmation non-response behavior
+8. `Deferred commercial decisions`
+   - merchant monetization model if still unresolved
+   - whether monetization affects launch pricing, payouts, or merchant promises
+   - which commercial assumptions are explicitly deferred versus launch-blocking
 
 ## Output Template
 
@@ -136,4 +164,9 @@ Use this format after the pilot:
 ## Risks Still Open
 - Risk:
 - Mitigation:
+
+## Blocked Implementation Decisions
+- Decision still blocked:
+- Why it is still blocked:
+- What cannot proceed safely while it remains open:
 ```
