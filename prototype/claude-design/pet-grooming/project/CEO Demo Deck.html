@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Pawpoint — CEO demo deck · Nov 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/pawpoint-tokens.css">
+<style>
+  /* Deck-wide */
+  deck-stage section {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    padding: 96px 120px;
+    display: grid;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Masthead strip on every slide */
+  .mast {
+    position: absolute; left: 120px; right: 120px; top: 42px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 16px;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3);
+    padding-bottom: 22px; border-bottom: 1px solid var(--border);
+  }
+  .mast .brand { display: flex; align-items: center; gap: 14px; color: var(--ink); letter-spacing: -0.02em;}
+  .mast .brand .mk {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--ink); color: var(--paper);
+    display: grid; place-items: center;
+    font-family: var(--serif); font-weight: 500; font-style: italic; font-size: 22px;
+  }
+  .mast .brand .nm { font-family: var(--serif); font-size: 26px; font-weight: 500; letter-spacing: -0.02em; text-transform: none; color: var(--ink);}
+  .mast .r { text-align: right;}
+  .mast .r b { color: var(--ink); font-weight: 500;}
+
+  /* Footer strip on every slide */
+  .ft {
+    position: absolute; left: 120px; right: 120px; bottom: 42px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 14px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+    padding-top: 18px; border-top: 1px solid var(--border);
+  }
+  .ft b { color: var(--ink); font-weight: 500; }
+  .ft .pg { font-variant-numeric: tabular-nums;}
+
+  /* Generic type */
+  .eye {
+    font-family: var(--mono); font-size: 16px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--accent-ink);
+  }
+  h1.big {
+    font-family: var(--serif); font-weight: 500; letter-spacing: -0.035em;
+    font-size: 148px; line-height: .95; margin: 0; color: var(--ink);
+  }
+  h1.big em { font-style: italic; color: var(--accent); font-weight: 400;}
+  h2.mid {
+    font-family: var(--serif); font-weight: 500; letter-spacing: -0.03em;
+    font-size: 88px; line-height: 1; margin: 0; color: var(--ink);
+  }
+  h2.mid em { font-style: italic; color: var(--accent); font-weight: 400;}
+  h3.sm {
+    font-family: var(--serif); font-weight: 500; letter-spacing: -0.025em;
+    font-size: 48px; line-height: 1.05; margin: 0; color: var(--ink);
+  }
+  h3.sm em { font-style: italic; color: var(--accent); font-weight: 400;}
+  p.lede {
+    font-size: 26px; line-height: 1.5; color: var(--ink-2); max-width: 38ch;
+    margin: 0;
+  }
+  p.lede b { color: var(--ink); font-weight: 500;}
+  p.lede em { font-style: italic; color: var(--accent-ink); font-weight: 400;}
+
+  /* ─────────────── Slide 01 — Title ─────────────── */
+  .s01 {
+    grid-template-rows: auto 1fr auto;
+    background:
+      radial-gradient(ellipse at 85% 20%, oklch(0.96 0.04 28 / 0.6), transparent 50%),
+      radial-gradient(ellipse at 15% 90%, oklch(0.97 0.02 220 / 0.5), transparent 55%),
+      var(--paper);
+  }
+  .s01 .body { align-self: center; display: grid; grid-template-columns: 1.3fr 1fr; gap: 80px; align-items: center;}
+  .s01 h1 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.04em; font-size: 188px; line-height: .92; margin: 0;}
+  .s01 h1 em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s01 .sub {
+    font-family: var(--serif); font-style: italic; font-size: 42px;
+    line-height: 1.15; color: var(--ink-2); margin-top: 32px; max-width: 22ch;
+  }
+  .s01 .badge-col { display: flex; flex-direction: column; gap: 20px; align-items: flex-start;}
+  .s01 .sigil {
+    width: 280px; height: 280px; border-radius: 50%; background: var(--ink); color: var(--paper);
+    display: grid; place-items: center; position: relative;
+    box-shadow: 0 40px 80px -40px rgba(20,22,30,.4);
+  }
+  .s01 .sigil::before {
+    content: ""; position: absolute; inset: 14px;
+    border: 1px solid rgba(255,255,255,.2); border-radius: 50%;
+  }
+  .s01 .sigil span { font-family: var(--serif); font-weight: 500; font-style: italic; font-size: 160px; line-height: 1;}
+  .s01 .stamp {
+    font-family: var(--mono); font-size: 16px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink-3); border: 1px solid var(--border-strong); padding: 10px 16px;
+  }
+  .s01 .stamp b { color: var(--ink); font-weight: 500; }
+  .s01 .meta {
+    font-family: var(--mono); font-size: 14px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-3); line-height: 1.8; padding-top: 20px; border-top: 1px dashed var(--border-strong);
+    width: 100%;
+  }
+  .s01 .meta b { color: var(--ink); font-weight: 500;}
+
+  /* ─────────────── Slide 02 — The problem ─────────────── */
+  .s02 { grid-template-rows: auto auto 1fr auto; gap: 48px;}
+  .s02 .hd { align-self: end; max-width: 30ch;}
+  .s02 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; align-items: start; margin-top: 24px;}
+  .s02 .stat { border-top: 2px solid var(--ink); padding-top: 22px;}
+  .s02 .stat .nm {
+    font-family: var(--mono); font-size: 13px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .s02 .stat .big {
+    font-family: var(--serif); font-weight: 500; letter-spacing: -0.03em;
+    font-size: 128px; line-height: .95; color: var(--ink); margin-top: 14px;
+  }
+  .s02 .stat .big em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s02 .stat .sub {
+    font-family: var(--serif); font-size: 22px; line-height: 1.35;
+    color: var(--ink-2); margin-top: 14px; max-width: 22ch;
+  }
+  .s02 .source {
+    font-family: var(--mono); font-size: 13px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-3); align-self: end;
+  }
+
+  /* ─────────────── Slide 03 — The insight ─────────────── */
+  .s03 {
+    background: var(--ink); color: var(--paper);
+    grid-template-rows: auto 1fr auto;
+  }
+  .s03 .mast { color: rgba(255,255,255,.55); border-color: rgba(255,255,255,.15);}
+  .s03 .mast .brand { color: var(--paper);}
+  .s03 .mast .brand .nm { color: var(--paper);}
+  .s03 .mast .brand .mk { background: var(--paper); color: var(--ink);}
+  .s03 .mast .r b { color: var(--paper);}
+  .s03 .ft { color: rgba(255,255,255,.45); border-color: rgba(255,255,255,.12);}
+  .s03 .ft b { color: var(--paper); }
+  .s03 .body { align-self: center; display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center;}
+  .s03 .eye { color: var(--accent); }
+  .s03 h2 { color: var(--paper); font-family: var(--serif); font-weight: 500; letter-spacing: -0.03em; font-size: 104px; line-height: .98; margin: 22px 0 0; max-width: 14ch;}
+  .s03 h2 em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s03 .aside {
+    border-left: 1px solid rgba(255,255,255,.2); padding-left: 44px;
+    display: flex; flex-direction: column; gap: 28px;
+  }
+  .s03 .aside p {
+    font-family: var(--serif); font-style: italic; font-size: 28px; line-height: 1.4;
+    color: rgba(255,255,255,.85); margin: 0;
+  }
+  .s03 .aside .who {
+    font-family: var(--mono); font-size: 13px; letter-spacing: .14em;
+    text-transform: uppercase; color: rgba(255,255,255,.5);
+  }
+  .s03 .aside hr { border: none; border-top: 1px dashed rgba(255,255,255,.2); margin: 0;}
+
+  /* ─────────────── Slide 04 — Shield mechanic ─────────────── */
+  .s04 { grid-template-rows: auto auto 1fr auto; gap: 40px;}
+  .s04 .hd { align-self: end; display: grid; grid-template-columns: 1.1fr .9fr; gap: 80px; align-items: end; margin-top: 16px;}
+  .s04 .hd .right { font-size: 22px; line-height: 1.55; color: var(--ink-2); max-width: 38ch;}
+  .s04 .hd .right b { color: var(--ink); font-weight: 500;}
+  .s04 .steps {
+    display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
+    align-items: stretch; gap: 0; margin-top: 10px;
+  }
+  .s04 .step {
+    background: var(--paper-2); border: 1px solid var(--border);
+    padding: 36px 34px; display: flex; flex-direction: column; gap: 18px;
+    min-height: 340px;
+  }
+  .s04 .step.now { background: var(--ink); color: var(--paper); border-color: var(--ink);}
+  .s04 .step .when {
+    font-family: var(--mono); font-size: 13px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .s04 .step.now .when { color: var(--accent); }
+  .s04 .step .amt {
+    font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em;
+    font-size: 72px; line-height: 1; color: var(--ink);
+  }
+  .s04 .step.now .amt { color: var(--paper); }
+  .s04 .step .amt em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s04 .step .amt .b { font-family: var(--serif); font-weight: 500;}
+  .s04 .step .what {
+    font-family: var(--serif); font-size: 22px; line-height: 1.35; color: var(--ink-2); margin-top: auto;
+  }
+  .s04 .step.now .what { color: rgba(255,255,255,.8); }
+  .s04 .arrow {
+    align-self: center; justify-self: center;
+    color: var(--accent); font-family: var(--mono); font-size: 22px; letter-spacing: -0.1em;
+  }
+  .s04 .net {
+    grid-column: 1/-1; margin-top: 20px;
+    border-top: 1px dashed var(--border);
+    padding-top: 20px; font-family: var(--serif); font-style: italic;
+    font-size: 26px; line-height: 1.4; color: var(--ink-2); max-width: 80ch;
+  }
+  .s04 .net b { font-style: normal; color: var(--ink); font-weight: 500;}
+
+  /* ─────────────── Slide 05 — Product (three surfaces) ─────────────── */
+  .s05 { grid-template-rows: auto auto 1fr auto; gap: 44px;}
+  .s05 .hd { align-self: end;}
+  .s05 .rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start;}
+  .s05 .surface {
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .s05 .surface .mock {
+    aspect-ratio: 10/12; background: var(--paper-2);
+    border: 1px solid var(--border); border-radius: 24px;
+    padding: 22px; display: flex; flex-direction: column; gap: 14px;
+    overflow: hidden; position: relative;
+  }
+  /* Customer mock */
+  .s05 .m-customer { background: oklch(0.98 0.008 28); }
+  .s05 .m-customer .bar { height: 8px; background: var(--accent); border-radius: 4px; width: 48px;}
+  .s05 .m-customer h4 { font-family: var(--serif); font-weight: 500; font-size: 26px; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin: 0;}
+  .s05 .m-customer .chip { display: inline-flex; gap: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3);}
+  .s05 .m-customer .card { background: var(--paper); border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: grid; grid-template-columns: 42px 1fr auto; gap: 12px; align-items: center;}
+  .s05 .m-customer .card .sw { width: 42px; height: 42px; border-radius: 10px; background: var(--paper-3);}
+  .s05 .m-customer .card .shp { font-family: var(--serif); font-size: 16px; font-weight: 500; color: var(--ink);}
+  .s05 .m-customer .card .dist { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: .1em; text-transform: uppercase;}
+  .s05 .m-customer .card .star { font-family: var(--mono); font-size: 12px; color: var(--accent-ink);}
+  /* Merchant mock */
+  .s05 .m-merchant { background: oklch(0.96 0.015 220);}
+  .s05 .m-merchant h4 { font-family: var(--serif); font-weight: 500; font-size: 22px; color: var(--ink); margin: 0 0 6px;}
+  .s05 .m-merchant .topbar { display: flex; justify-content: space-between; align-items: center;}
+  .s05 .m-merchant .time { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);}
+  .s05 .m-merchant .col { display: flex; flex-direction: column; gap: 8px;}
+  .s05 .m-merchant .slot { background: var(--paper); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--ink-2); display: flex; justify-content: space-between;}
+  .s05 .m-merchant .slot.now { border-left: 3px solid var(--accent); color: var(--ink); font-weight: 500;}
+  .s05 .m-merchant .slot.done { color: var(--ink-3); text-decoration: line-through;}
+  /* Ops mock */
+  .s05 .m-ops { background: var(--ink); color: var(--paper);}
+  .s05 .m-ops h4 { font-family: var(--serif); font-weight: 500; font-size: 22px; color: var(--paper); margin: 0 0 4px;}
+  .s05 .m-ops .topbar { display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,.4); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;}
+  .s05 .m-ops .num { font-family: var(--serif); font-weight: 500; font-size: 56px; letter-spacing: -0.02em; line-height: 1; color: var(--paper);}
+  .s05 .m-ops .num em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s05 .m-ops .lbl { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.5); letter-spacing: .14em; text-transform: uppercase;}
+  .s05 .m-ops .row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.12); font-family: var(--mono); font-size: 12px; color: rgba(255,255,255,.8);}
+  .s05 .m-ops .row .v { font-family: var(--serif); font-size: 18px; color: var(--paper);}
+
+  .s05 .cap { display: flex; flex-direction: column; gap: 8px;}
+  .s05 .cap .sur { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink);}
+  .s05 .cap h4 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; font-size: 32px; line-height: 1.1; color: var(--ink); margin: 0;}
+  .s05 .cap h4 em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s05 .cap p { font-size: 16px; line-height: 1.5; color: var(--ink-2); margin: 0;}
+
+  /* ─────────────── Slide 06 — Traction ─────────────── */
+  .s06 { grid-template-rows: auto auto 1fr auto; gap: 40px;}
+  .s06 .hd { align-self: end;}
+  .s06 .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 80px; align-items: stretch;}
+  .s06 .numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 56px; align-content: start;}
+  .s06 .numbers .n { }
+  .s06 .numbers .nm { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3);}
+  .s06 .numbers .v {
+    font-family: var(--serif); font-weight: 500; letter-spacing: -0.025em;
+    font-size: 96px; line-height: 1; color: var(--ink); margin-top: 10px;
+  }
+  .s06 .numbers .v em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s06 .numbers .sub { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-top: 10px; display: flex; align-items: center; gap: 8px;}
+  .s06 .numbers .sub .up { color: oklch(0.55 0.13 155); font-weight: 500;}
+  .s06 .chart { background: var(--ink); color: var(--paper); padding: 36px; display: flex; flex-direction: column; gap: 20px; position: relative;}
+  .s06 .chart .lbl { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent);}
+  .s06 .chart h5 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; font-size: 30px; line-height: 1.1; color: var(--paper); margin: 0; max-width: 18ch;}
+  .s06 .chart h5 em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s06 .chart .svg { flex: 1; margin-top: 16px; min-height: 260px;}
+  .s06 .chart .xax { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: rgba(255,255,255,.45); text-transform: uppercase;}
+
+  /* ─────────────── Slide 07 — Unit economics ─────────────── */
+  .s07 { grid-template-rows: auto auto 1fr auto; gap: 32px;}
+  .s07 .hd { align-self: end; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end;}
+  .s07 .hd .r { font-size: 20px; line-height: 1.55; color: var(--ink-2); max-width: 42ch;}
+  .s07 .body { display: grid; grid-template-columns: 1.1fr .9fr; gap: 72px; align-items: start;}
+  .s07 .receipt { font-family: var(--mono); font-size: 18px; line-height: 2.1; color: var(--ink-2);}
+  .s07 .receipt .row { display: grid; grid-template-columns: 1fr auto auto; align-items: baseline; border-bottom: 1px dashed var(--border); padding: 4px 0;}
+  .s07 .receipt .row .nm { color: var(--ink-2);}
+  .s07 .receipt .row .amt { color: var(--ink); font-family: var(--serif); font-size: 22px; font-weight: 500;}
+  .s07 .receipt .row .sign { padding: 0 14px; color: var(--ink-3);}
+  .s07 .receipt .row.take { background: var(--accent-wash); padding: 10px 14px; border-bottom: 1px dashed var(--accent-ink);}
+  .s07 .receipt .row.take .amt { color: var(--accent-ink);}
+  .s07 .receipt .row.total { border-bottom: 3px double var(--ink); padding: 16px 0; margin-top: 10px;}
+  .s07 .receipt .row.total .nm { color: var(--ink); font-family: var(--serif); font-size: 22px; font-weight: 500;}
+  .s07 .receipt .row.total .amt { color: var(--ink); font-size: 40px;}
+  .s07 .notes { display: flex; flex-direction: column; gap: 28px;}
+  .s07 .notes h4 { font-family: var(--serif); font-weight: 500; font-size: 40px; line-height: 1.05; letter-spacing: -0.02em; margin: 0; color: var(--ink);}
+  .s07 .notes h4 em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s07 .notes p { font-size: 20px; line-height: 1.55; color: var(--ink-2); margin: 0;}
+  .s07 .notes p b { color: var(--ink); font-weight: 500;}
+  .s07 .notes .callout {
+    background: var(--ink); color: var(--paper); padding: 26px 28px;
+    margin-top: auto;
+  }
+  .s07 .notes .callout .k { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent);}
+  .s07 .notes .callout .v { font-family: var(--serif); font-weight: 500; font-size: 34px; line-height: 1.15; letter-spacing: -0.02em; margin-top: 8px;}
+  .s07 .notes .callout .v em { font-style: italic; color: var(--accent); font-weight: 400;}
+
+  /* ─────────────── Slide 08 — Why Bangkok / market ─────────────── */
+  .s08 { grid-template-rows: auto auto 1fr auto; gap: 44px;}
+  .s08 .hd { align-self: end; display: grid; grid-template-columns: 1.1fr .9fr; gap: 80px; align-items: end;}
+  .s08 .hd .r { font-size: 22px; line-height: 1.55; color: var(--ink-2); max-width: 42ch;}
+  .s08 .hd .r b { color: var(--ink); font-weight: 500;}
+  .s08 .body { display: grid; grid-template-columns: 1.3fr 1fr; gap: 80px; align-items: stretch;}
+  .s08 .map {
+    background: var(--ink); position: relative; overflow: hidden;
+    padding: 32px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .s08 .map .hd-lbl { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); z-index: 2;}
+  .s08 .map .city { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 36px; color: var(--paper); z-index: 2;}
+  .s08 .map .canvas { flex: 1; position: relative; margin-top: 10px;}
+  .s08 .map .pin { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(217, 119, 87, .2);}
+  .s08 .map .pin.soon { background: transparent; border: 2px solid rgba(255,255,255,.4); box-shadow: none;}
+  .s08 .map .pin.gap { background: transparent; border: 2px dashed rgba(217, 119, 87, .5); width: 28px; height: 28px; box-shadow: none;}
+  .s08 .map .lg {
+    display: flex; gap: 20px; border-top: 1px solid rgba(255,255,255,.15); padding-top: 14px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6);
+  }
+  .s08 .map .lg span { display: inline-flex; align-items: center; gap: 8px;}
+  .s08 .map .lg .d { width: 8px; height: 8px; border-radius: 50%;}
+  .s08 .map .lg .d.live { background: var(--accent);}
+  .s08 .map .lg .d.soon { border: 2px solid rgba(255,255,255,.45); background: transparent;}
+  .s08 .map .lg .d.gap { border: 2px dashed rgba(217, 119, 87, .6); background: transparent; width: 14px; height: 14px; border-radius: 50%;}
+
+  .s08 .facts { display: flex; flex-direction: column; gap: 28px; align-self: stretch;}
+  .s08 .fact { border-top: 1px solid var(--ink); padding-top: 20px;}
+  .s08 .fact:first-child { border-top: 2px solid var(--ink);}
+  .s08 .fact .k { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3);}
+  .s08 .fact .v { font-family: var(--serif); font-weight: 500; font-size: 42px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); margin-top: 10px;}
+  .s08 .fact .v em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s08 .fact .sub { font-size: 16px; color: var(--ink-2); margin-top: 8px; line-height: 1.45;}
+
+  /* ─────────────── Slide 09 — What's next / roadmap ─────────────── */
+  .s09 { grid-template-rows: auto auto 1fr auto; gap: 44px;}
+  .s09 .hd { align-self: end;}
+  .s09 .track {
+    position: relative; padding: 32px 0;
+    background: linear-gradient(90deg, transparent 0, var(--border) 8%, var(--border) 92%, transparent);
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    background-position: 0 50%;
+  }
+  .s09 .lanes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; align-items: start;}
+  .s09 .lane { display: flex; flex-direction: column; gap: 18px;}
+  .s09 .lane .when { font-family: var(--mono); font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); display: flex; align-items: center; gap: 12px;}
+  .s09 .lane .when .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink-3);}
+  .s09 .lane.now .when .dot { background: var(--accent); border-color: var(--accent);}
+  .s09 .lane.now .when { color: var(--accent-ink);}
+  .s09 .lane.soon .when .dot { background: var(--paper); border-color: var(--accent);}
+  .s09 .lane h5 { font-family: var(--serif); font-weight: 500; font-size: 34px; line-height: 1.05; letter-spacing: -0.02em; margin: 0; color: var(--ink);}
+  .s09 .lane h5 em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s09 .lane p { font-size: 16px; line-height: 1.55; color: var(--ink-2); margin: 0;}
+  .s09 .lane p b { color: var(--ink); font-weight: 500;}
+  .s09 .lane .metric { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); padding-top: 10px; border-top: 1px dashed var(--border); margin-top: auto;}
+  .s09 .lane .metric b { color: var(--ink); font-weight: 500;}
+
+  /* ─────────────── Slide 10 — The ask / close ─────────────── */
+  .s10 {
+    background: var(--ink); color: var(--paper);
+    grid-template-rows: auto 1fr auto;
+  }
+  .s10 .mast { color: rgba(255,255,255,.5); border-color: rgba(255,255,255,.15);}
+  .s10 .mast .brand { color: var(--paper);}
+  .s10 .mast .brand .nm { color: var(--paper);}
+  .s10 .mast .brand .mk { background: var(--paper); color: var(--ink);}
+  .s10 .mast .r b { color: var(--paper);}
+  .s10 .ft { color: rgba(255,255,255,.45); border-color: rgba(255,255,255,.12);}
+  .s10 .ft b { color: var(--paper);}
+  .s10 .body { align-self: center; display: grid; grid-template-columns: 1.1fr 1fr; gap: 96px; align-items: center;}
+  .s10 .eye { color: var(--accent);}
+  .s10 h2 {
+    font-family: var(--serif); font-weight: 500; letter-spacing: -0.035em;
+    font-size: 128px; line-height: .95; margin: 24px 0 0; color: var(--paper); max-width: 14ch;
+  }
+  .s10 h2 em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s10 .rhs { display: flex; flex-direction: column; gap: 32px;}
+  .s10 .ask {
+    border: 1px solid rgba(255,255,255,.25); padding: 32px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .s10 .ask .k { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent);}
+  .s10 .ask .v { font-family: var(--serif); font-weight: 500; font-size: 34px; line-height: 1.15; letter-spacing: -0.02em; color: var(--paper);}
+  .s10 .ask .v em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .s10 .ask p { font-size: 17px; line-height: 1.5; color: rgba(255,255,255,.75); margin: 0;}
+  .s10 .ask p b { color: var(--paper); font-weight: 500;}
+  .s10 .contact {
+    display: grid; grid-template-columns: auto 1fr; gap: 8px 24px;
+    font-family: var(--mono); font-size: 14px; letter-spacing: .1em; color: rgba(255,255,255,.7);
+    padding-top: 24px; border-top: 1px dashed rgba(255,255,255,.2);
+  }
+  .s10 .contact b { color: var(--paper); font-weight: 500;}
+  .s10 .contact .k { color: var(--accent); letter-spacing: .16em; text-transform: uppercase;}
+</style>
+</head>
+<body>
+
+<!-- Speaker notes (CEO full-script style) -->
+<script type="application/json" id="speaker-notes">
+[
+"Thanks for making the time. Before I open anything, I want to give you the whole story in two sentences. In Bangkok, pet-care bookings are still a group chat — a LINE message, a shrug, and a hope. Pawpoint is the receipt, and the reason it works is a refundable deposit we call Shield. That's the whole business. Everything else on the next ten slides is evidence.",
+
+"Here's what I mean by 'group chat.' These aren't survey numbers — we walked into forty-one shops over eight weeks and watched. Fifty-eight percent of pet parents we spoke to had shown up to a booking the shop had no record of. Shops lose an hour a day reconciling LINE messages with what actually happened. And a third of their Saturdays — their best day — evaporate to no-shows. The market isn't broken for lack of demand. It's broken for lack of a shared source of truth.",
+
+"The reason the existing group-chat system persists is subtle. It's not that shops don't want software — they've tried. It's that every time someone tried to charge up-front, pet parents walked. Bangkok's middle class has been burned by deposit scams; they read 'deposit' as 'I'm about to lose my money.' So the shops gave up and trusted on a handshake — and absorbed the no-shows. The insight is: the money has to be real to the shop, but invisible to the customer. That's Shield.",
+
+"This is the mechanic, and I'd love for you to stop me if any piece is unclear, because the whole pitch hangs here. At booking, we place a 450-baht hold on the customer's card. No charge. When they walk in, they scan the shop's QR code, the hold releases in full, and the shop sees confirmation. If they don't show, we capture the 450, pay the shop their time, and the customer gets one warning before they're cut off. The money is real. The conversation about money never happens. That's the trick.",
+
+"Shield is the mechanic; this is how it ships. Three surfaces, one booking. The customer app is what pet parents see — discover nearby shops, book in three taps, one QR to scan on arrival. The merchant console runs on an iPad on the shop counter; it's glanceable from across the room. And the ops room — the control tower — is where our team rescues the handful of bookings each day that get stuck, in under a minute. A booking created on the customer app becomes a live card on the iPad and, if it stalls, a red row on the ops pulse. Same booking, three views.",
+
+"Here's where we are. Eight months in, forty-one live shops in Bangkok, 1,842 pet parents onboarded. We're running roughly 2.41 million baht GMV monthly, growing 100% quarter over quarter from a small base. But the two numbers I'd point you to are on the right. Saturday retention — the share of Saturday-booking parents who rebook within 14 days — is up 22 points since we launched Shield v1. And our no-show rate is 2.8% and falling, against an industry baseline around 19. Shield is doing what we said it would.",
+
+"Unit economics. On an average basket of 640 baht, the shop takes 85%, payment processing runs 2.7, and our attributable cost to serve — ops time, SMS, compute, fraud review — is 18 baht. That leaves 63.52 of contribution per booking. At our current 3,770 bookings a month that's about 8,200 USD contribution, which covers variable cost and half of fixed. We hit cash-flow positive in March on the current trajectory, without raising. Important: we are not fundraising on this slide. I just want you to know the math works.",
+
+"Why Bangkok, and why now. Two and a half million urban pet households, a stable 4–5% annual growth in pet ownership, and a thicker veterinary wedge right behind grooming — about 4x the market, same Shield mechanic. We have 41 live shops but the right number for full city coverage is 60, and we have line of sight to all 60. The map on the left shows live, onboarding, and the three neighbourhood gaps we're closing this quarter — Ladprao, Bang Kapi, Nonthaburi. We don't need Thailand; we need Bangkok, and the pattern extends.",
+
+"Twelve weeks. This month — Shield v2, which moves from day-of pre-authorisation to 72-hour delayed capture; halves chargebacks and removes the confused support thread. December — we launch a separate cat-only vertical with six feline specialists already signed, because cat owners want a different flow. January — we close the three Bangkok coverage gaps and hit 60 shops. February — we pilot the veterinary wedge with three clinics. If that holds up, the market doubles, and we start the conversation about leaving Bangkok.",
+
+"So the ask. We are not fundraising this quarter. What I need from this room is two things: intros to two shop chains we've been chasing and a vet group — names on the next page — and anyone who knows Bangkok's pet-insurance market. Pet insurance is the only surface where the Shield mechanic breaks down, and I want to meet it with a plan, not a surprise. Series A conversations start in Q2 and I'll come back to you then with a harder number. Until then — thank you, and let's play with the live product."
+]
+</script>
+
+<deck-stage width="1920" height="1080">
+
+<!-- ─────────── 01 ─────────── -->
+<section class="s01" data-label="Title">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Confidential · <b>Nov 2025</b> · Bangkok</div>
+  </div>
+  <div class="body">
+    <div>
+      <div class="eye" style="margin-bottom: 28px;">A demo, not a deck</div>
+      <h1>Bangkok's<br>grooming book<br>is a <em>group chat</em>.</h1>
+      <div class="sub">We're building the receipt.</div>
+    </div>
+    <div class="badge-col">
+      <div class="sigil"><span>p</span></div>
+      <div class="stamp"><b>Wit S.</b> · Founder &amp; CEO</div>
+      <div class="meta">
+        <b>Pawpoint, Ltd.</b><br>
+        Sathorn · Bangkok, Thailand<br>
+        wit@pawpoint.co · +66 8x xxx 9000
+      </div>
+    </div>
+  </div>
+  <div class="ft">
+    <span>Grooming · booking · Shield</span>
+    <span class="pg">01 / 10</span>
+  </div>
+</section>
+
+<!-- ─────────── 02 ─────────── -->
+<section class="s02" data-label="The problem">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 01 · <b>the problem</b></div>
+  </div>
+  <div class="hd">
+    <div class="eye" style="margin-bottom: 24px;">The problem</div>
+    <h2 class="mid">Nobody remembers the booking — <em>except the dog</em>.</h2>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="nm">Ghosted arrivals</div>
+      <div class="big">58<em>%</em></div>
+      <div class="sub">of pet parents we interviewed have shown up to a salon that had no record of the booking.</div>
+    </div>
+    <div class="stat">
+      <div class="nm">Shop time lost</div>
+      <div class="big">1<em>hr</em></div>
+      <div class="sub">per shop per day, reconciling LINE messages with what actually happened at the counter.</div>
+    </div>
+    <div class="stat">
+      <div class="nm">Saturday no-shows</div>
+      <div class="big">33<em>%</em></div>
+      <div class="sub">of best-day capacity evaporates to people who don't arrive. No warning, no charge, no consequence.</div>
+    </div>
+  </div>
+  <div class="source">Source · Pawpoint field interviews · 41 shops, 120 parents, Q3 2025</div>
+</section>
+
+<!-- ─────────── 03 ─────────── -->
+<section class="s03" data-label="The insight">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 02 · <b>the insight</b></div>
+  </div>
+  <div class="body">
+    <div>
+      <div class="eye">The insight</div>
+      <h2>The money has to be <em>real</em><br>to the shop, and<br><em>invisible</em> to the customer.</h2>
+    </div>
+    <div class="aside">
+      <div>
+        <p>&ldquo;Before, I'd lose two Saturdays a month to no-shows. Now I just don't take bookings outside Pawpoint.&rdquo;</p>
+        <div class="who" style="margin-top: 14px;">Pim V. · Owner, Aroon Grooming · 11 yrs</div>
+      </div>
+      <hr>
+      <div>
+        <p>&ldquo;I trust it because my money is sitting somewhere until I walk in the door. It's like a tab, not a bill.&rdquo;</p>
+        <div class="who" style="margin-top: 14px;">Praew S. · Customer · 2 cats + 1 retriever</div>
+      </div>
+    </div>
+  </div>
+  <div class="ft">
+    <span>Bangkok · field interviews · Q3 2025</span>
+    <span class="pg">03 / 10</span>
+  </div>
+</section>
+
+<!-- ─────────── 04 ─────────── -->
+<section class="s04" data-label="Shield — the mechanic">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 03 · <b>the mechanic</b> · Shield</div>
+  </div>
+  <div class="hd">
+    <div>
+      <div class="eye" style="margin-bottom: 24px;">Shield</div>
+      <h2 class="mid">A deposit that <em>evaporates</em><br>the moment the dog arrives.</h2>
+    </div>
+    <div class="right">A 450-baht hold is placed on the card at booking. <b>Not a charge.</b> When the customer scans the shop's QR on arrival, the hold releases automatically — the shop sees confirmation, the customer sees nothing. No awkward conversation about money; no no-shows.</div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="when">T – 3 days · booking</div>
+      <div class="amt">฿<span class="b">450</span></div>
+      <div class="what">Refundable hold placed. Customer's card is held, not charged. A bank-level auth, not a transaction.</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="step now">
+      <div class="when">On arrival · QR scan</div>
+      <div class="amt"><em>QR</em></div>
+      <div class="what">Customer scans the shop's QR at the counter. Hold releases to shop in full. Zero tap for both sides.</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="step">
+      <div class="when">If no-show · T + 24h</div>
+      <div class="amt">฿<span class="b">450</span></div>
+      <div class="what">Shop is paid for the lost slot. Customer gets one strike before they're locked out of the platform.</div>
+    </div>
+    <div class="net"><b>Net effect:</b> merchants stop accepting bookings they don't trust; customers stop ghosting shops they've never paid. The platform handles the awkwardness — so humans don't have to.</div>
+  </div>
+</section>
+
+<!-- ─────────── 05 ─────────── -->
+<section class="s05" data-label="The product — three surfaces">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 04 · <b>the product</b></div>
+  </div>
+  <div class="hd">
+    <div class="eye" style="margin-bottom: 20px;">The product</div>
+    <h2 class="mid">One <em>spine</em>, three screens.</h2>
+  </div>
+  <div class="rail">
+    <div class="surface">
+      <div class="mock m-customer">
+        <div class="bar"></div>
+        <h4>Nearby groomers</h4>
+        <div class="chip">Sukhumvit · open now · 9</div>
+        <div class="card"><div class="sw"></div><div><div class="shp">Aroon Grooming</div><div class="dist">0.8 km · open till 19:00</div></div><div class="star">★ 4.9</div></div>
+        <div class="card"><div class="sw"></div><div><div class="shp">Paws &amp; Tails Phrom Phong</div><div class="dist">1.2 km · 2 slots left</div></div><div class="star">★ 4.8</div></div>
+        <div class="card"><div class="sw"></div><div><div class="shp">The Dog Room Thonglor</div><div class="dist">1.6 km · book to hold</div></div><div class="star">★ 4.8</div></div>
+        <div class="card"><div class="sw"></div><div><div class="shp">Siam Pet Spa</div><div class="dist">2.1 km · cat specialist</div></div><div class="star">★ 4.9</div></div>
+      </div>
+      <div class="cap">
+        <div class="sur">Surface 01 · customer</div>
+        <h4>The app pet parents actually <em>open</em>.</h4>
+        <p>Discover, book in three taps, remember the groomer. Bilingual Thai/English; pet profile carries medication and preferences shop-to-shop.</p>
+      </div>
+    </div>
+    <div class="surface">
+      <div class="mock m-merchant">
+        <div class="topbar"><h4>Today · Saturday</h4><div class="time">10:42 · 14 bookings</div></div>
+        <div class="col">
+          <div class="slot done"><span>09:00 · Milo · shampoo</span><span>paid</span></div>
+          <div class="slot done"><span>09:45 · Kuma · full groom</span><span>paid</span></div>
+          <div class="slot now"><span>10:30 · Pepper · full groom</span><span>in chair</span></div>
+          <div class="slot"><span>11:15 · Biscuit · nails</span><span>shield held</span></div>
+          <div class="slot"><span>12:00 · Mochi · full groom</span><span>shield held</span></div>
+          <div class="slot"><span>12:45 · Nori · bath</span><span>pending</span></div>
+          <div class="slot"><span>13:30 · Luna · full groom</span><span>shield held</span></div>
+        </div>
+      </div>
+      <div class="cap">
+        <div class="sur">Surface 02 · merchant</div>
+        <h4>An iPad on the counter that <em>runs the shop</em>.</h4>
+        <p>Glanceable timeline, scan-to-arrive, auto-accept rules. Designed to live beside the till; 68% of bookings confirm themselves.</p>
+      </div>
+    </div>
+    <div class="surface">
+      <div class="mock m-ops">
+        <div class="topbar"><span>Network · today</span><span>11:03</span></div>
+        <h4>Bangkok pulse</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 2px;">
+          <div><div class="num">241<em>k</em></div><div class="lbl">GMV today</div></div>
+          <div><div class="num">3<em>→</em></div><div class="lbl">rescues in flight</div></div>
+        </div>
+        <div style="margin-top: 18px; display: flex; flex-direction: column;">
+          <div class="row"><span>Live shops</span><span class="v">41</span></div>
+          <div class="row"><span>Pending &gt; 40 min</span><span class="v">2</span></div>
+          <div class="row"><span>Shield disputes open</span><span class="v">1</span></div>
+          <div class="row"><span>No-show rate · 7d</span><span class="v">2.8%</span></div>
+          <div class="row"><span>Saturday retention</span><span class="v" style="color: var(--accent);">+22 pt</span></div>
+        </div>
+      </div>
+      <div class="cap">
+        <div class="sur">Surface 03 · ops (internal)</div>
+        <h4>A control room that <em>saves the saves</em>.</h4>
+        <p>Pawpoint staff watch the network pulse, rescue stuck bookings in under a minute, and decide which neighbourhood gets the next shop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── 06 ─────────── -->
+<section class="s06" data-label="Traction">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 05 · <b>traction</b></div>
+  </div>
+  <div class="hd">
+    <div class="eye" style="margin-bottom: 20px;">90 days in · numbers</div>
+    <h2 class="mid">The <em>receipts</em>.</h2>
+  </div>
+  <div class="grid">
+    <div class="numbers">
+      <div class="n">
+        <div class="nm">GMV · monthly</div>
+        <div class="v">฿2.41<em>M</em></div>
+        <div class="sub"><span class="up">▲ 100%</span> · quarter over quarter</div>
+      </div>
+      <div class="n">
+        <div class="nm">Live shops · Bangkok</div>
+        <div class="v">41</div>
+        <div class="sub">18 onboarding · 7 gaps left</div>
+      </div>
+      <div class="n">
+        <div class="nm">Pet parents onboarded</div>
+        <div class="v">1,842</div>
+        <div class="sub"><span class="up">▲ 31%</span> · month over month</div>
+      </div>
+      <div class="n">
+        <div class="nm">No-show rate · 7d</div>
+        <div class="v">2.8<em>%</em></div>
+        <div class="sub">industry baseline · ~19%</div>
+      </div>
+    </div>
+    <div class="chart">
+      <div class="lbl">Shield effect</div>
+      <h5>Saturday retention, <em>14-day rebook</em>.</h5>
+      <svg class="svg" viewBox="0 0 480 280" preserveAspectRatio="none">
+        <!-- Grid -->
+        <g stroke="rgba(255,255,255,.1)" stroke-width="1">
+          <line x1="0" y1="60" x2="480" y2="60"/>
+          <line x1="0" y1="120" x2="480" y2="120"/>
+          <line x1="0" y1="180" x2="480" y2="180"/>
+          <line x1="0" y1="240" x2="480" y2="240"/>
+        </g>
+        <!-- Pre-Shield baseline -->
+        <path d="M 0,170 C 80,168 160,172 240,170" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+        <!-- Post-Shield curve -->
+        <path d="M 240,170 C 300,140 360,100 420,70 L 460,62" stroke="oklch(0.68 0.13 28)" stroke-width="3" fill="none"/>
+        <!-- Shield launch marker -->
+        <line x1="240" y1="20" x2="240" y2="260" stroke="rgba(255,255,255,.25)" stroke-dasharray="3 5" stroke-width="1"/>
+        <text x="245" y="34" fill="rgba(255,255,255,.7)" font-family="IBM Plex Mono" font-size="11" letter-spacing="1.5">SHIELD V1 · AUG</text>
+        <!-- Dots -->
+        <circle cx="0" cy="170" r="3" fill="rgba(255,255,255,.5)"/>
+        <circle cx="240" cy="170" r="4" fill="#fff"/>
+        <circle cx="460" cy="62" r="5" fill="oklch(0.68 0.13 28)"/>
+        <text x="440" y="55" fill="oklch(0.68 0.13 28)" font-family="Fraunces" font-size="18" font-style="italic" text-anchor="end">+22 pt</text>
+      </svg>
+      <div class="xax"><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── 07 ─────────── -->
+<section class="s07" data-label="Unit economics">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 06 · <b>unit economics</b></div>
+  </div>
+  <div class="hd">
+    <div>
+      <div class="eye" style="margin-bottom: 20px;">Per booking · Q4'25 actuals</div>
+      <h2 class="mid">The <em>math</em>.</h2>
+    </div>
+    <div class="r">At 3,770 bookings a month we cover variable cost and half of fixed. <b>Cash-flow positive in March</b> — our published target — without raising a round.</div>
+  </div>
+  <div class="body">
+    <div class="receipt">
+      <div class="row"><span class="nm">Average basket</span><span class="sign">฿</span><span class="amt">640.00</span></div>
+      <div class="row"><span class="nm">Shop payout (85%)</span><span class="sign">–฿</span><span class="amt">544.00</span></div>
+      <div class="row"><span class="nm">Payment processing (2.7%)</span><span class="sign">–฿</span><span class="amt">14.08</span></div>
+      <div class="row take"><span class="nm">Pawpoint take</span><span class="sign">฿</span><span class="amt">81.92</span></div>
+      <div class="row"><span class="nm">Attributable cost to serve</span><span class="sign">–฿</span><span class="amt">18.40</span></div>
+      <div class="row total"><span class="nm">Contribution per booking</span><span class="sign">฿</span><span class="amt">63.52</span></div>
+    </div>
+    <div class="notes">
+      <h4>Contribution <em>compounds</em>.</h4>
+      <p>Shield is the unlock: every no-show we prevent is a full 640-baht basket the shop keeps, and a basket that doesn't require our ops team to rescue it. <b>Our cost to serve falls</b> as the network gets denser.</p>
+      <div class="callout">
+        <div class="k">At 3,770 bookings / month</div>
+        <div class="v">≈ <em>$8,200</em> monthly contribution — covers variable cost + 50% fixed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── 08 ─────────── -->
+<section class="s08" data-label="Why Bangkok">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 07 · <b>the market</b></div>
+  </div>
+  <div class="hd">
+    <div>
+      <div class="eye" style="margin-bottom: 20px;">The market</div>
+      <h2 class="mid">We don't need Thailand.<br>We need <em>Bangkok</em>.</h2>
+    </div>
+    <div class="r">The grooming surface is the wedge. <b>Veterinary is 4× the size</b>, sits next door, and uses the same Shield mechanic with one extra field. Pet insurance — a pilot away — is the adjacent layer above.</div>
+  </div>
+  <div class="body">
+    <div class="map">
+      <div class="hd-lbl">Coverage · Bangkok Metro</div>
+      <div class="city">กรุงเทพฯ</div>
+      <div class="canvas">
+        <!-- Live pins -->
+        <div class="pin" style="left: 22%; top: 34%;"></div>
+        <div class="pin" style="left: 28%; top: 42%;"></div>
+        <div class="pin" style="left: 34%; top: 38%;"></div>
+        <div class="pin" style="left: 40%; top: 48%;"></div>
+        <div class="pin" style="left: 46%; top: 52%;"></div>
+        <div class="pin" style="left: 52%; top: 46%;"></div>
+        <div class="pin" style="left: 38%; top: 58%;"></div>
+        <div class="pin" style="left: 44%; top: 62%;"></div>
+        <div class="pin" style="left: 50%; top: 68%;"></div>
+        <div class="pin" style="left: 58%; top: 40%;"></div>
+        <div class="pin" style="left: 64%; top: 46%;"></div>
+        <div class="pin" style="left: 56%; top: 58%;"></div>
+        <div class="pin" style="left: 62%; top: 62%;"></div>
+        <div class="pin" style="left: 32%; top: 52%;"></div>
+        <div class="pin" style="left: 48%; top: 36%;"></div>
+        <div class="pin" style="left: 70%; top: 52%;"></div>
+        <div class="pin" style="left: 26%; top: 62%;"></div>
+        <div class="pin" style="left: 54%; top: 30%;"></div>
+        <div class="pin" style="left: 42%; top: 70%;"></div>
+        <!-- Onboarding -->
+        <div class="pin soon" style="left: 30%; top: 30%;"></div>
+        <div class="pin soon" style="left: 66%; top: 36%;"></div>
+        <div class="pin soon" style="left: 48%; top: 72%;"></div>
+        <div class="pin soon" style="left: 36%; top: 66%;"></div>
+        <div class="pin soon" style="left: 60%; top: 50%;"></div>
+        <!-- Gaps -->
+        <div class="pin gap" style="left: 20%; top: 60%;"></div>
+        <div class="pin gap" style="left: 72%; top: 66%;"></div>
+        <div class="pin gap" style="left: 76%; top: 42%;"></div>
+      </div>
+      <div class="lg">
+        <span><span class="d live"></span>41 live</span>
+        <span><span class="d soon"></span>18 onboarding</span>
+        <span><span class="d gap"></span>3 gaps · Q1</span>
+      </div>
+    </div>
+    <div class="facts">
+      <div class="fact">
+        <div class="k">Urban pet households</div>
+        <div class="v">2.5<em>M</em></div>
+        <div class="sub">Bangkok Metro · growing 4–5% annually (NSO)</div>
+      </div>
+      <div class="fact">
+        <div class="k">Annual grooming spend</div>
+        <div class="v">฿6.2<em>B</em></div>
+        <div class="sub">currently &lt; 2% booked digitally</div>
+      </div>
+      <div class="fact">
+        <div class="k">Veterinary wedge</div>
+        <div class="v">≈ 4<em>×</em> grooming</div>
+        <div class="sub">same Shield mechanic · Feb pilot with 3 clinics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── 09 ─────────── -->
+<section class="s09" data-label="Twelve weeks">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 08 · <b>next 12 weeks</b></div>
+  </div>
+  <div class="hd">
+    <div class="eye" style="margin-bottom: 20px;">Twelve weeks</div>
+    <h2 class="mid">What <em>happens</em> now.</h2>
+  </div>
+  <div class="track">
+    <div class="lanes">
+      <div class="lane now">
+        <div class="when"><span class="dot"></span>Nov 2025 · this month</div>
+        <h5>Ship <em>Shield v2</em>.</h5>
+        <p>Move from day-of pre-auth to <b>72-hour delayed capture</b>. Halves chargebacks; removes the confused support thread.</p>
+        <div class="metric">Target · <b>chargebacks −50%</b></div>
+      </div>
+      <div class="lane soon">
+        <div class="when"><span class="dot"></span>Dec · week 2</div>
+        <h5>Cat-only <em>vertical</em>.</h5>
+        <p>Six feline-specialist shops already signed; launch a separate discovery flow and taxonomy. Cat owners book differently.</p>
+        <div class="metric">Target · <b>6 shops · +400 parents</b></div>
+      </div>
+      <div class="lane soon">
+        <div class="when"><span class="dot"></span>Jan 2026</div>
+        <h5>Bangkok <em>coverage</em>.</h5>
+        <p>Close Ladprao, Bang Kapi, Nonthaburi. Hit <b>60 live shops</b> — the number for full city density.</p>
+        <div class="metric">Target · <b>60 live · 0 gaps</b></div>
+      </div>
+      <div class="lane">
+        <div class="when"><span class="dot"></span>Feb 2026</div>
+        <h5>Vet <em>wedge</em> pilot.</h5>
+        <p>Same Shield mechanic, new category. Three clinics. If this holds for shots and check-ups, the <b>market doubles</b>.</p>
+        <div class="metric">Target · <b>3 clinics · 1 signed</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── 10 ─────────── -->
+<section class="s10" data-label="The ask">
+  <div class="mast">
+    <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint.</div></div>
+    <div class="r">Ch. 09 · <b>the close</b></div>
+  </div>
+  <div class="body">
+    <div>
+      <div class="eye">The ask</div>
+      <h2>Help us <em>find</em><br>the two rooms<br>we can't walk into.</h2>
+    </div>
+    <div class="rhs">
+      <div class="ask">
+        <div class="k">Ask · 01</div>
+        <div class="v">Intros to <em>2 shop chains</em> and <em>1 vet group</em>.</div>
+        <p>Names on the follow-up page. Every chain we've landed came from a warm intro; cold outreach converts &lt;5%. <b>Warm intros convert 60%.</b></p>
+      </div>
+      <div class="ask">
+        <div class="k">Ask · 02</div>
+        <div class="v">Anyone who knows Bangkok's <em>pet insurance</em> space.</div>
+        <p>The only adjacent surface where Shield breaks down on first principles. We want to meet it with a plan, <b>not a surprise</b>.</p>
+      </div>
+      <div class="contact">
+        <span class="k">Founder</span><span><b>Wit S.</b> · wit@pawpoint.co</span>
+        <span class="k">Phone</span><span>+66 8x xxx 9000</span>
+        <span class="k">Series A</span><span>Q2 2026 · conversation only · not raising this quarter</span>
+      </div>
+    </div>
+  </div>
+  <div class="ft">
+    <span>Thank you.</span>
+    <span class="pg">10 / 10</span>
+  </div>
+</section>
+
+</deck-stage>
+
+<script src="shared/deck-stage.js"></script>
+</body>
+</html>

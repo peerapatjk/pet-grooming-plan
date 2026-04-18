@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Pawpoint — Design System Seed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  const TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
+    "primaryHue": 220,
+    "accentHue": 28,
+    "paperTint": 48,
+    "serifAccents": true
+  }/*EDITMODE-END*/;
+</script>
+<style>
+  :root{
+    --primary-hue: 220;
+    --accent-hue: 28;
+    --paper-tint: 48;
+
+    /* Paper / ink — warm bone + deep ink */
+    --paper:        oklch(0.985 0.006 var(--paper-tint));
+    --paper-2:      oklch(0.965 0.01 var(--paper-tint));
+    --paper-3:      oklch(0.93 0.012 var(--paper-tint));
+    --border:       oklch(0.88 0.012 var(--paper-tint));
+    --border-strong:oklch(0.78 0.015 var(--paper-tint));
+    --ink:          oklch(0.22 0.02 var(--paper-tint));
+    --ink-2:        oklch(0.38 0.018 var(--paper-tint));
+    --ink-3:        oklch(0.55 0.015 var(--paper-tint));
+
+    /* Primary — deep, calm trust */
+    --primary:      oklch(0.32 0.09 var(--primary-hue));
+    --primary-ink:  oklch(0.24 0.08 var(--primary-hue));
+    --primary-mid:  oklch(0.58 0.1  var(--primary-hue));
+    --primary-wash: oklch(0.96 0.02 var(--primary-hue));
+
+    /* Accent — burnished copper */
+    --accent:       oklch(0.68 0.13 var(--accent-hue));
+    --accent-ink:   oklch(0.45 0.11 var(--accent-hue));
+    --accent-wash:  oklch(0.96 0.025 var(--accent-hue));
+
+    /* Semantic */
+    --ok:           oklch(0.55 0.09 155);
+    --ok-wash:      oklch(0.96 0.025 155);
+    --warn:         oklch(0.68 0.13 75);
+    --warn-wash:    oklch(0.965 0.035 75);
+    --danger:       oklch(0.52 0.16 27);
+    --danger-wash:  oklch(0.96 0.035 27);
+    --info:         oklch(0.58 0.08 230);
+    --info-wash:    oklch(0.965 0.02 230);
+
+    /* Type */
+    --sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+    --serif: "Fraunces", "Noto Serif", ui-serif, Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --thai: "Noto Sans Thai", var(--sans);
+
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --shadow-sm: 0 1px 2px rgba(20,22,30,.04), 0 1px 1px rgba(20,22,30,.03);
+    --shadow: 0 1px 2px rgba(20,22,30,.04), 0 8px 24px -12px rgba(20,22,30,.10);
+    --shadow-lg: 0 2px 4px rgba(20,22,30,.04), 0 24px 48px -18px rgba(20,22,30,.18);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01","ss02","cv11";
+  }
+  a{color:inherit}
+  h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-0.01em}
+  p{margin:0}
+  .mono{font-family: var(--mono); font-size:12px; letter-spacing:.02em}
+  .serif{font-family: var(--serif); font-weight: 500; letter-spacing: -0.015em}
+  .thai{font-family: var(--thai)}
+
+  /* Page scaffolding */
+  .page{max-width:1440px;margin:0 auto;padding:0 56px}
+  .rule{height:1px;background:var(--border)}
+
+  /* Header / masthead */
+  .masthead{
+    border-bottom:1px solid var(--border);
+    padding:20px 0;
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:center;
+    gap:24px;
+  }
+  .mark{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-0.02em;font-size:18px}
+  .mark-dot{
+    width:22px;height:22px;border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, var(--accent) 0 35%, var(--primary) 36% 100%);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);
+    position:relative;
+  }
+  .mark-dot::after{
+    content:"";position:absolute;inset:auto 4px 4px auto;width:5px;height:5px;border-radius:50%;
+    background: var(--paper);
+  }
+  .masthead-meta{display:flex;gap:24px;justify-content:flex-end;color:var(--ink-3);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+  .masthead-nav{display:flex;gap:28px;font-size:13px;color:var(--ink-2);justify-content:center;white-space:nowrap}
+  .masthead-nav a{text-decoration:none;color:inherit}
+  .masthead-nav a:hover{color:var(--ink)}
+
+  /* Hero */
+  .hero{padding:88px 0 72px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns: 1.35fr 1fr;gap:56px;align-items:end}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--ink-3);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em}
+  .eyebrow::before{content:"";display:inline-block;width:18px;height:1px;background:var(--ink-3)}
+  .hero h1{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(56px, 7vw, 104px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin-top:24px;
+    color:var(--ink);
+  }
+  .hero h1 em{font-style: italic; color: var(--primary); font-weight:400}
+  .hero-sub{
+    margin-top:40px;max-width:58ch;font-size:18px;line-height:1.55;color:var(--ink-2);
+  }
+  .hero-card{
+    border:1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--paper-2);
+    padding:28px;
+    display:flex;flex-direction:column;gap:18px;
+    box-shadow: var(--shadow);
+  }
+  .hero-card-row{display:grid;grid-template-columns: 110px 1fr;gap:20px;align-items:start;padding:12px 0;border-top:1px dashed var(--border)}
+  .hero-card-row:first-of-type{border-top:0;padding-top:0}
+  .hero-card-label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3)}
+
+  /* Section header */
+  .section{padding:88px 0;border-bottom:1px solid var(--border)}
+  .sec-head{display:grid;grid-template-columns: 180px 1fr 360px;gap:40px;align-items:baseline;margin-bottom:48px}
+  .sec-num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-3)}
+  .sec-title{font-family:var(--serif);font-size:44px;letter-spacing:-0.025em;line-height:1.05;font-weight:500}
+  .sec-kicker{color:var(--ink-2);font-size:14px;line-height:1.55}
+
+  /* Principles */
+  .principles{display:grid;grid-template-columns: repeat(3, 1fr);gap:24px}
+  .principle{border:1px solid var(--border);border-radius: var(--radius-lg);padding:28px;background:var(--paper-2);min-height:260px;display:flex;flex-direction:column;gap:16px}
+  .principle h3{font-family:var(--serif);font-weight:500;font-size:24px;letter-spacing:-0.02em}
+  .principle p{color:var(--ink-2);font-size:14px}
+  .principle-num{font-family:var(--mono);font-size:12px;color:var(--accent-ink);letter-spacing:.14em}
+  .principle-notgoal{margin-top:auto;font-size:12px;color:var(--ink-3);border-top:1px dashed var(--border);padding-top:14px}
+  .principle-notgoal b{color:var(--ink-2);font-weight:500}
+
+  /* Color */
+  .color-grid{display:grid;grid-template-columns: 2fr 1fr;gap:40px}
+  .palette{display:grid;grid-template-columns: repeat(6,1fr);gap:12px}
+  .swatch{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--paper-2)}
+  .swatch-fill{height:120px}
+  .swatch-body{padding:12px 14px}
+  .swatch-name{font-size:13px;font-weight:500}
+  .swatch-meta{color:var(--ink-3);font-family:var(--mono);font-size:11px;margin-top:4px}
+  .semantic{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
+  .semantic-cell{border:1px solid var(--border);border-radius:var(--radius);padding:14px;background:var(--paper-2);display:flex;gap:12px;align-items:center}
+  .semantic-swatch{width:28px;height:28px;border-radius:8px;border:1px solid rgba(0,0,0,.08)}
+  .semantic-name{font-size:13px;font-weight:500}
+  .semantic-use{font-size:12px;color:var(--ink-3)}
+
+  /* Type */
+  .type-stack{display:grid;grid-template-columns: 1.6fr 1fr;gap:40px;align-items:start}
+  .type-spec{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:var(--paper-2)}
+  .type-row{padding:18px 0;border-bottom:1px dashed var(--border);display:grid;grid-template-columns: 120px 1fr;gap:20px;align-items:baseline}
+  .type-row:last-child{border-bottom:0;padding-bottom:0}
+  .type-row:first-child{padding-top:0}
+  .type-label{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.14em}
+  .type-demo{line-height:1}
+  .type-demo.display{font-family:var(--serif);font-weight:500;font-size:64px;letter-spacing:-0.03em}
+  .type-demo.h1{font-family:var(--serif);font-weight:500;font-size:44px;letter-spacing:-0.025em}
+  .type-demo.h2{font-family:var(--sans);font-weight:600;font-size:28px;letter-spacing:-0.015em}
+  .type-demo.h3{font-family:var(--sans);font-weight:600;font-size:20px}
+  .type-demo.body{font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.5}
+  .type-demo.caption{font-family:var(--sans);font-weight:500;font-size:12px;letter-spacing:.04em;color:var(--ink-2);text-transform:uppercase}
+  .type-demo.data{font-family:var(--mono);font-weight:500;font-size:16px;letter-spacing:.02em}
+  .type-pairing{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:linear-gradient(180deg,var(--primary-wash),var(--paper-2))}
+  .type-pairing h4{font-family:var(--serif);font-weight:500;font-size:40px;letter-spacing:-0.02em;line-height:1.05;color:var(--primary-ink)}
+  .type-pairing p{margin-top:14px;color:var(--ink-2);font-size:14px}
+  .type-pairing .thai-demo{margin-top:28px;padding-top:20px;border-top:1px dashed var(--border)}
+  .type-pairing .thai-demo .caption{display:block;margin-bottom:6px}
+  .type-pairing .thai-demo .th{font-family:var(--thai);font-size:24px;font-weight:600;color:var(--ink)}
+
+  /* Components */
+  .cmp-grid{display:grid;grid-template-columns: repeat(12,1fr);gap:24px}
+  .cmp-card{
+    grid-column: span 4;
+    border:1px solid var(--border);border-radius:var(--radius-lg);
+    padding:24px;background:var(--paper-2);display:flex;flex-direction:column;gap:20px;min-height:260px
+  }
+  .cmp-card.wide{grid-column: span 6}
+  .cmp-card.full{grid-column: span 12}
+  .cmp-card header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;gap:12px;white-space:nowrap}
+  .cmp-card h3{font-size:15px;font-weight:600}
+  .cmp-card .cmp-label{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase}
+  .cmp-surface{background: var(--paper);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:14px;flex:1}
+
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:500;border:1px solid transparent;cursor:pointer;font-family:inherit;line-height:1;letter-spacing:-0.005em}
+  .btn.primary{background:var(--primary);color:var(--paper);box-shadow:inset 0 0 0 1px var(--primary-ink)}
+  .btn.primary:hover{background:var(--primary-ink)}
+  .btn.secondary{background:var(--paper);color:var(--ink);border-color:var(--border-strong)}
+  .btn.ghost{background:transparent;color:var(--primary-ink);padding-left:4px;padding-right:4px}
+  .btn.accent{background:var(--accent);color:var(--paper);box-shadow:inset 0 0 0 1px var(--accent-ink)}
+  .btn.danger{background:var(--paper);color:var(--danger);border-color:var(--danger)}
+  .btn-sm{padding:7px 12px;font-size:12px}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px}
+
+  /* Segmented */
+  .segmented{display:inline-flex;padding:3px;background:var(--paper-3);border-radius:999px;gap:2px}
+  .segmented button{all:unset;padding:7px 14px;font-size:12px;border-radius:999px;cursor:pointer;color:var(--ink-2);font-weight:500}
+  .segmented button.on{background:var(--paper);color:var(--ink);box-shadow:var(--shadow-sm)}
+
+  /* Chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 8px;border-radius:999px;background:var(--paper);border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--ink-2)}
+  .chip .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+  .chip.on{background:var(--primary-wash);color:var(--primary-ink);border-color:transparent}
+  .chip.on .dot{background:var(--primary)}
+  .chip.accent{background:var(--accent-wash);color:var(--accent-ink);border-color:transparent}
+  .chip.accent .dot{background:var(--accent)}
+
+  /* Search bar */
+  .searchbar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--paper);border:1px solid var(--border-strong);border-radius:999px;box-shadow:var(--shadow-sm)}
+  .searchbar input{all:unset;flex:1;font-family:inherit;font-size:13px;color:var(--ink)}
+  .searchbar .searchbar-divider{width:1px;height:16px;background:var(--border)}
+  .searchbar .searchbar-filter{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em}
+
+  /* Cards */
+  .shop-card{background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column}
+  .shop-card .img{
+    aspect-ratio: 16/9;
+    background:
+      repeating-linear-gradient(135deg, rgba(0,0,0,.04) 0 8px, transparent 8px 18px),
+      linear-gradient(180deg, var(--primary-wash), var(--paper-3));
+    display:flex;align-items:flex-end;justify-content:space-between;padding:12px;
+  }
+  .shop-card .img .tag{background:var(--paper);border-radius:999px;padding:4px 10px;font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2)}
+  .shop-card .body{padding:16px;display:flex;flex-direction:column;gap:8px}
+  .shop-card .name{font-weight:600;font-size:15px}
+  .shop-card .meta{display:flex;gap:12px;font-size:12px;color:var(--ink-3)}
+  .shop-card .meta b{color:var(--ink-2);font-weight:500}
+
+  /* Timeline / status chips */
+  .status{display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 8px;border-radius:8px;font-size:12px;font-weight:500;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase}
+  .status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+  .status.s-instant{background: var(--ok-wash); color: var(--ok)}
+  .status.s-pend-v  {background: var(--warn-wash); color: var(--warn)}
+  .status.s-pend-m  {background: var(--info-wash); color: var(--info)}
+  .status.s-confirm {background: var(--primary-wash); color: var(--primary-ink)}
+  .status.s-arrived {background: oklch(0.96 0.02 190); color: oklch(0.42 0.08 200)}
+  .status.s-in-serv {background: oklch(0.96 0.02 260); color: oklch(0.42 0.09 260)}
+  .status.s-done    {background: var(--paper-3); color: var(--ink-2)}
+  .status.s-canc-c  {background: var(--paper-3); color: var(--ink-3); text-decoration: line-through}
+  .status.s-canc-m  {background: var(--danger-wash); color: var(--danger)}
+  .status.s-no-show {background: oklch(0.96 0.03 10); color: oklch(0.45 0.14 15)}
+  .status.s-hold    {background: var(--accent-wash); color: var(--accent-ink)}
+  .status.s-dep     {background: var(--accent-wash); color: var(--accent-ink); box-shadow:inset 0 0 0 1px var(--accent)}
+  .status.s-pay-iss {background: var(--danger-wash); color: var(--danger); box-shadow:inset 0 0 0 1px var(--danger)}
+
+  /* Alert */
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:var(--radius);background:var(--accent-wash);border:1px solid color-mix(in oklab, var(--accent) 20%, transparent)}
+  .alert .alert-ic{width:22px;height:22px;border-radius:6px;background:var(--accent);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:var(--mono);flex:none}
+  .alert .alert-body b{font-weight:600}
+  .alert .alert-body p{font-size:13px;color:var(--ink-2);margin-top:2px}
+
+  /* Banner (danger) */
+  .alert.danger{background:var(--danger-wash);border-color:color-mix(in oklab, var(--danger) 20%, transparent)}
+  .alert.danger .alert-ic{background:var(--danger)}
+
+  /* Scheduling cell */
+  .sched{display:grid;grid-template-columns: 72px repeat(6, 1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .sched .th, .sched .td{background:var(--paper-2);padding:10px 12px;font-size:11px;font-family:var(--mono);color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em}
+  .sched .th.hr{background:var(--paper-3)}
+  .sched .td{background:var(--paper);min-height:56px;position:relative}
+  .sched .slot{position:absolute;inset:4px 4px;border-radius:6px;padding:6px 8px;font-size:11px;line-height:1.2;display:flex;flex-direction:column;gap:2px}
+  .sched .slot b{font-weight:600;font-size:12px}
+  .sched .slot.confirm{background:var(--primary-wash);color:var(--primary-ink);border:1px solid color-mix(in oklab, var(--primary) 20%, transparent)}
+  .sched .slot.pendm  {background:var(--info-wash);color:var(--info);border:1px solid color-mix(in oklab, var(--info) 20%, transparent)}
+  .sched .slot.hold   {background:var(--accent-wash);color:var(--accent-ink);border:1px solid color-mix(in oklab, var(--accent) 25%, transparent)}
+  .sched .slot.inserv {background: oklch(0.96 0.02 260); color: oklch(0.42 0.09 260); border: 1px solid color-mix(in oklab, oklch(0.5 0.12 260) 25%, transparent)}
+  .sched .slot.blocked{background: repeating-linear-gradient(135deg, var(--paper-3) 0 6px, transparent 6px 12px); color: var(--ink-3)}
+
+  /* Booking state table */
+  .state-table{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--paper-2)}
+  .state-row{display:grid;grid-template-columns: 220px 1fr 200px 1fr;gap:24px;padding:18px 24px;border-bottom:1px solid var(--border);align-items:center}
+  .state-row:last-child{border-bottom:0}
+  .state-row.head{background:var(--paper-3);color:var(--ink-3);font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.16em;padding:10px 24px}
+  .state-row .token{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+
+  /* Bottom sheet mock */
+  .sheet{background:var(--paper);border:1px solid var(--border);border-radius:22px 22px 0 0;padding:20px;box-shadow: var(--shadow-lg);position:relative;max-width:360px;margin-left:auto;margin-right:auto}
+  .sheet::before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:36px;height:4px;background:var(--paper-3);border-radius:999px}
+  .sheet h4{font-size:17px;margin-top:10px;font-weight:600}
+  .sheet .row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px dashed var(--border);font-size:13px}
+  .sheet .row:nth-of-type(1){border-top:0}
+  .sheet .row b{font-weight:500}
+
+  /* Desktop side panel mock */
+  .sidepanel{background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;display:grid;grid-template-rows: auto 1fr auto;min-height: 340px}
+  .sidepanel header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .sidepanel .sp-body{padding:20px;display:flex;flex-direction:column;gap:14px}
+  .sidepanel footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:10px;background:var(--paper-2)}
+
+  /* Deck slide */
+  .slide{
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-lg);
+    overflow:hidden;border:1px solid var(--border);
+    background:
+      radial-gradient(ellipse at 85% 100%, color-mix(in oklab, var(--accent) 22%, transparent) 0, transparent 50%),
+      radial-gradient(ellipse at 0% 0%, color-mix(in oklab, var(--primary) 22%, transparent) 0, transparent 55%),
+      linear-gradient(180deg, var(--paper), var(--paper-2));
+    position:relative; padding: 56px;
+    display:grid; grid-template-rows: auto 1fr auto; gap:24px;
+  }
+  .slide .slide-top{display:flex;justify-content:space-between;align-items:center;color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .slide h2{font-family:var(--serif);font-size:88px;font-weight:500;letter-spacing:-0.035em;line-height:0.95;color:var(--ink)}
+  .slide h2 em{font-style:italic;color:var(--primary);font-weight:400}
+  .slide .slide-bot{display:flex;justify-content:space-between;align-items:flex-end;color:var(--ink-2);font-size:13px}
+  .slide .slide-bot .meta{display:flex;gap:24px}
+  .slide .slide-bot .meta b{font-weight:500;color:var(--ink)}
+
+  /* Samples */
+  .samples{display:grid;grid-template-columns: 360px 1fr;gap:48px;align-items:start}
+
+  /* iPhone frame */
+  .phone{
+    width:360px;height:740px;border-radius:48px;background:#0c0e14;padding:12px;box-shadow: var(--shadow-lg);
+    position:relative;
+  }
+  .phone-screen{
+    width:100%;height:100%;border-radius:38px;background:var(--paper);overflow:hidden;display:flex;flex-direction:column;position:relative
+  }
+  .phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:110px;height:28px;background:#0c0e14;border-radius:999px;z-index:5}
+  .phone-status{display:flex;justify-content:space-between;padding:12px 24px 0;font-size:12px;font-weight:600;color:var(--ink)}
+  .mob{padding:48px 20px 20px;display:flex;flex-direction:column;gap:16px;overflow:hidden;height:100%}
+  .mob-hello{display:flex;justify-content:space-between;align-items:center}
+  .mob-hello h3{font-family:var(--serif);font-weight:500;font-size:24px;letter-spacing:-0.02em;line-height:1.1;max-width:200px}
+  .mob-hello h3 em{font-style:italic;color:var(--primary);font-weight:400}
+  .mob-ava{width:34px;height:34px;border-radius:50%;background:var(--primary);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+  .mob-pet{
+    border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;display:flex;gap:12px;align-items:center;background: linear-gradient(180deg, var(--paper-2), var(--paper))
+  }
+  .mob-pet .ring{width:44px;height:44px;border-radius:50%;background:var(--accent-wash);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:500;font-size:17px;color:var(--accent-ink)}
+  .mob-pet b{font-weight:600;font-size:14px}
+  .mob-pet span{color:var(--ink-3);font-size:12px;display:block}
+  .mob-repeat{border:1px solid var(--primary);background:var(--primary);color:var(--paper);border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column;gap:10px}
+  .mob-repeat .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.7}
+  .mob-repeat h4{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.015em;line-height:1.1}
+  .mob-repeat .meta{display:flex;justify-content:space-between;font-size:12px;opacity:.9}
+  .mob-repeat .cta{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+  .mob-repeat .cta b{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .mob-sec{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+  .mob-sec h5{font-size:13px;font-weight:600}
+  .mob-sec a{font-size:12px;color:var(--ink-3)}
+  .mob-list{display:flex;flex-direction:column;gap:10px}
+  .mob-item{display:grid;grid-template-columns: 40px 1fr auto;gap:12px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:var(--radius)}
+  .mob-item .sw{width:40px;height:40px;border-radius:10px;background:var(--paper-3)}
+  .mob-item b{font-size:13px;font-weight:500;display:block}
+  .mob-item span{font-size:11px;color:var(--ink-3)}
+  .mob-item .tg{font-family:var(--mono);font-size:10px;color:var(--ok);background:var(--ok-wash);padding:4px 7px;border-radius:6px;text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+  .mob-nav{margin-top:auto;border-top:1px solid var(--border);padding-top:12px;display:grid;grid-template-columns: repeat(4,1fr);gap:6px}
+  .mob-nav div{text-align:center;font-size:10px;color:var(--ink-3);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .mob-nav div.on{color:var(--primary-ink)}
+  .mob-nav div::before{content:"";display:block;width:18px;height:18px;border-radius:5px;background:var(--paper-3);margin:0 auto 6px}
+  .mob-nav div.on::before{background:var(--primary)}
+
+  /* Merchant desktop */
+  .desktop{
+    border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--paper);overflow:hidden;
+    display:grid;grid-template-columns: 220px 1fr;min-height:520px
+  }
+  .desktop-side{border-right:1px solid var(--border);padding:18px;display:flex;flex-direction:column;gap:6px;background: var(--paper-2)}
+  .desktop-side .brand{display:flex;gap:10px;align-items:center;font-weight:600;font-size:14px;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:10px}
+  .desktop-side a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--ink-2);text-decoration:none}
+  .desktop-side a.on{background:var(--paper);color:var(--ink);box-shadow: var(--shadow-sm);font-weight:500}
+  .desktop-side a .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+  .desktop-side a.on .dot{background:var(--accent)}
+  .desktop-main{display:flex;flex-direction:column}
+  .desktop-top{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border)}
+  .desktop-top h3{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.015em}
+  .desktop-top .tag{color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .desktop-body{padding:24px;display:flex;flex-direction:column;gap:16px}
+  .desktop-kpis{display:grid;grid-template-columns: repeat(4,1fr);gap:12px}
+  .kpi{border:1px solid var(--border);border-radius:var(--radius);padding:14px;background:var(--paper-2);display:flex;flex-direction:column;gap:6px}
+  .kpi .lbl{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase}
+  .kpi .v{font-family:var(--serif);font-weight:500;font-size:28px;letter-spacing:-0.015em}
+  .kpi .trend{font-size:11px;color:var(--ok)}
+
+  /* Alternates */
+  .alt-grid{display:grid;grid-template-columns: repeat(3,1fr);gap:24px}
+  .alt-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;min-height:340px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden}
+  .alt-card .alt-swatches{display:flex;gap:8px}
+  .alt-card .alt-swatches div{flex:1;height:40px;border-radius:8px;border:1px solid var(--border)}
+  .alt-card h3{font-family:var(--serif);font-weight:500;font-size:26px;letter-spacing:-0.02em}
+  .alt-card p{font-size:13px;color:var(--ink-2);line-height:1.55}
+  .alt-card .pill{position:absolute;top:20px;right:20px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);background:var(--paper-2);padding:4px 8px;border-radius:999px;border:1px solid var(--border)}
+  .alt-card.recommended{background:var(--primary);color:var(--paper);border:none}
+  .alt-card.recommended .alt-swatches div{border-color: rgba(255,255,255,.12)}
+  .alt-card.recommended p{color:rgba(255,255,255,.8)}
+  .alt-card.recommended .pill{background:rgba(255,255,255,.12);color:var(--paper);border-color:rgba(255,255,255,.15)}
+
+  /* Footer */
+  .footer{padding:56px 0 80px;display:flex;justify-content:space-between;color:var(--ink-3);font-size:12px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+
+  /* Tweaks panel */
+  .tweaks{
+    position:fixed;right:20px;bottom:20px;background:var(--paper);border:1px solid var(--border-strong);
+    border-radius:var(--radius-lg);padding:18px;width:280px;box-shadow:var(--shadow-lg);z-index:100;
+    display:none;flex-direction:column;gap:14px;font-size:12px;
+  }
+  .tweaks.on{display:flex}
+  .tweaks h5{font-size:12px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0}
+  .tweaks label{display:flex;flex-direction:column;gap:6px;font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono)}
+  .tweaks input[type=range]{width:100%}
+  .tweaks .val{color:var(--ink);font-family:var(--mono);font-size:11px}
+  .tweaks button{all:unset;cursor:pointer;padding:8px 10px;border-radius:8px;background:var(--paper-3);font-size:11px;text-align:center;color:var(--ink-2);letter-spacing:.08em;text-transform:uppercase;font-family:var(--mono)}
+  .tweaks .row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+
+  /* Utilities */
+  .two-col{display:grid;grid-template-columns: 1fr 1fr;gap:24px;align-items:start}
+  .three-col{display:grid;grid-template-columns: 1fr 1fr 1fr;gap:24px;align-items:start}
+  .g-8{display:flex;gap:8px;flex-wrap:wrap}
+  .g-12{display:flex;gap:12px;flex-wrap:wrap}
+  .col{display:flex;flex-direction:column;gap:12px}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="page">
+  <header class="masthead">
+    <div class="mark">
+      <span class="mark-dot" aria-hidden="true"></span>
+      Pawpoint
+    </div>
+    <nav class="masthead-nav">
+      <a href="#principles">Principles</a>
+      <a href="#color">Color</a>
+      <a href="#type">Type</a>
+      <a href="#components">Components</a>
+      <a href="#states">Booking states</a>
+      <a href="#samples">Samples</a>
+      <a href="#directions">Alternates</a>
+    </nav>
+    <div class="masthead-meta">
+      <span>v0.1 seed</span>
+      <span>Bangkok · Launch slice</span>
+    </div>
+  </header>
+</div>
+
+<!-- HERO -->
+<section class="hero" data-screen-label="01 Brand Cover">
+  <div class="page hero-grid">
+    <div>
+      <span class="eyebrow">Pawpoint design system · brand + system seed</span>
+      <h1>Booking that <em>earns</em> the<br/>next appointment.</h1>
+      <p class="hero-sub">A trust-first visual system for the Bangkok-first pet grooming booking platform. Built to express schedule truth, payment protection, and repeat-booking speed across a customer mobile app, a merchant desktop surface, an internal operations control plane, and an executive deck — without drifting into generic pet-marketplace aesthetics.</p>
+    </div>
+    <aside class="hero-card">
+      <div class="hero-card-row">
+        <span class="hero-card-label">Built for</span>
+        <span>Busy central-Bangkok pet owners and premium-leaning independent grooming shops.</span>
+      </div>
+      <div class="hero-card-row">
+        <span class="hero-card-label">Expressing</span>
+        <span>Trust-first booking, schedule truth, request-confirm clarity, no-show shielding.</span>
+      </div>
+      <div class="hero-card-row">
+        <span class="hero-card-label">Not</span>
+        <span>A dog-walker app. A pet-social community. A coupon-heavy marketplace. Default AI purple.</span>
+      </div>
+      <div class="hero-card-row">
+        <span class="hero-card-label">Inherits</span>
+        <span class="mono" style="font-size:11px;color:var(--ink-2)">launch-canon.md · spec.md · customer-prototype.md · merchant-prototype.md</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section id="principles" class="section" data-screen-label="02 Principles">
+  <div class="page">
+    <div class="sec-head">
+      <span class="sec-num">01 / Principles</span>
+      <h2 class="sec-title">Six principles that hold the product together.</h2>
+      <p class="sec-kicker">Principles are decisions, not decoration. Each one describes a visible choice a designer can defend and a reviewer can reject.</p>
+    </div>
+    <div class="principles">
+      <div class="principle">
+        <span class="principle-num">P · 01</span>
+        <h3>Schedule truth over marketplace noise.</h3>
+        <p>Availability, duration, and price are authoritative or honestly absent. We never suggest a slot we cannot honor.</p>
+        <div class="principle-notgoal"><b>Not:</b> browse-first, editorial discovery, "shops you might love".</div>
+      </div>
+      <div class="principle">
+        <span class="principle-num">P · 02</span>
+        <h3>Repeat, not rediscover.</h3>
+        <p>The product opens on last groomer, last pet, last service. One tap rebooks. Discovery is secondary, not hero.</p>
+        <div class="principle-notgoal"><b>Not:</b> infinite feeds, featured shops, weekly editors' picks.</div>
+      </div>
+      <div class="principle">
+        <span class="principle-num">P · 03</span>
+        <h3>Trust is a spoken promise.</h3>
+        <p>Card holds, deposits, release windows and cancellation actors are explained in plain language at the moment of commitment.</p>
+        <div class="principle-notgoal"><b>Not:</b> hidden fees, fine-print modals, surprise authorisations.</div>
+      </div>
+      <div class="principle">
+        <span class="principle-num">P · 04</span>
+        <h3>Request-confirm is a first-class flow.</h3>
+        <p>High-variance cases route to request-confirm with the same care as instant booking. It is not a degraded fallback.</p>
+        <div class="principle-notgoal"><b>Not:</b> a generic "contact merchant" detour.</div>
+      </div>
+      <div class="principle">
+        <span class="principle-num">P · 05</span>
+        <h3>Thai-first, English-ready.</h3>
+        <p>Thai script is a primary citizen in layout, type scale, and line rhythm. English is the considered companion, not the canonical source.</p>
+        <div class="principle-notgoal"><b>Not:</b> localisation as an afterthought.</div>
+      </div>
+      <div class="principle">
+        <span class="principle-num">P · 06</span>
+        <h3>Operationally serious, humanely warm.</h3>
+        <p>Merchant and ops surfaces are dense without hostility. Consumer surfaces are warm without cartoon.</p>
+        <div class="principle-notgoal"><b>Not:</b> gamified UI, emoji mascots, Figma-template polish.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR -->
+<section id="color" class="section" data-screen-label="03 Color">
+  <div class="page">
+    <div class="sec-head">
+      <span class="sec-num">02 / Color</span>
+      <h2 class="sec-title">A calm palette, built for money and schedules.</h2>
+      <p class="sec-kicker">Defined in <span class="mono">oklch</span> so hue can shift at the token layer without re-balancing lightness. Trust-sensitive surfaces default to <b>Graphite Ink</b> on <b>Bone</b>, with Signal Indigo as the committed-action hue.</p>
+    </div>
+
+    <div class="color-grid">
+      <div class="col">
+        <span class="eyebrow">Core palette</span>
+        <div class="palette">
+          <!-- Paper / ink -->
+          <div class="swatch"><div class="swatch-fill" style="background:var(--paper)"></div><div class="swatch-body"><div class="swatch-name">Bone</div><div class="swatch-meta">paper · bg</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--paper-2)"></div><div class="swatch-body"><div class="swatch-name">Paper</div><div class="swatch-meta">surface-1</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--paper-3)"></div><div class="swatch-body"><div class="swatch-name">Sandstone</div><div class="swatch-meta">surface-2</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--border)"></div><div class="swatch-body"><div class="swatch-name">Seam</div><div class="swatch-meta">border</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--ink-2)"></div><div class="swatch-body"><div class="swatch-name">Smoke</div><div class="swatch-meta">ink-2</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--ink)"></div><div class="swatch-body"><div class="swatch-name">Graphite</div><div class="swatch-meta">ink</div></div></div>
+
+          <!-- primary -->
+          <div class="swatch"><div class="swatch-fill" style="background:var(--primary-wash)"></div><div class="swatch-body"><div class="swatch-name">Indigo Wash</div><div class="swatch-meta">trust-bg</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--primary-mid)"></div><div class="swatch-body"><div class="swatch-name">Indigo Mid</div><div class="swatch-meta">accent-line</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--primary)"></div><div class="swatch-body"><div class="swatch-name">Signal Indigo</div><div class="swatch-meta">primary</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--primary-ink)"></div><div class="swatch-body"><div class="swatch-name">Indigo Ink</div><div class="swatch-meta">primary-dk</div></div></div>
+
+          <!-- accent -->
+          <div class="swatch"><div class="swatch-fill" style="background:var(--accent-wash)"></div><div class="swatch-body"><div class="swatch-name">Copper Wash</div><div class="swatch-meta">hold-bg</div></div></div>
+          <div class="swatch"><div class="swatch-fill" style="background:var(--accent)"></div><div class="swatch-body"><div class="swatch-name">Burnished Copper</div><div class="swatch-meta">accent</div></div></div>
+        </div>
+      </div>
+
+      <div class="col">
+        <span class="eyebrow">Semantic roles</span>
+        <div class="semantic">
+          <div class="semantic-cell"><div class="semantic-swatch" style="background:var(--ok)"></div><div><div class="semantic-name">Green Ledger</div><div class="semantic-use">success · instant-bookable</div></div></div>
+          <div class="semantic-cell"><div class="semantic-swatch" style="background:var(--warn)"></div><div><div class="semantic-name">Amber Ledger</div><div class="semantic-use">warning · pending verification</div></div></div>
+          <div class="semantic-cell"><div class="semantic-swatch" style="background:var(--danger)"></div><div><div class="semantic-name">Signal Red</div><div class="semantic-use">danger · payment issue, no-show</div></div></div>
+          <div class="semantic-cell"><div class="semantic-swatch" style="background:var(--info)"></div><div><div class="semantic-name">Slate Blue</div><div class="semantic-use">info · pending merchant confirm</div></div></div>
+          <div class="semantic-cell"><div class="semantic-swatch" style="background:var(--accent)"></div><div><div class="semantic-name">Copper</div><div class="semantic-use">payment hold · deposit</div></div></div>
+          <div class="semantic-cell"><div class="semantic-swatch" style="background:var(--primary)"></div><div><div class="semantic-name">Indigo</div><div class="semantic-use">confirmed · committed action</div></div></div>
+        </div>
+        <p style="font-size:12px;color:var(--ink-3);margin-top:10px">No green for money, no red for "selected". Semantic roles are colour-blind checked at AA. All pigment is warm-shifted to 48° to keep whites off the blue-screen default.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE -->
+<section id="type" class="section" data-screen-label="04 Type">
+  <div class="page">
+    <div class="sec-head">
+      <span class="sec-num">03 / Typography</span>
+      <h2 class="sec-title">Two voices, one hierarchy.</h2>
+      <p class="sec-kicker">A contemporary serif carries brand and executive moments. A neutral neo-grotesque carries product truth. A monospace carries data, timestamps, and tokens. Thai uses <b>Noto Sans Thai</b> tuned to the body scale for legibility parity.</p>
+    </div>
+
+    <div class="type-stack">
+      <div class="type-spec">
+        <div class="type-row"><span class="type-label">Display / Fraunces</span><div class="type-demo display">Booking, kept honest.</div></div>
+        <div class="type-row"><span class="type-label">H1 / Fraunces</span><div class="type-demo h1">A groomer you know, on the day you need.</div></div>
+        <div class="type-row"><span class="type-label">H2 / Inter Tight</span><div class="type-demo h2">This week at Soi Thonglor 13</div></div>
+        <div class="type-row"><span class="type-label">H3 / Inter Tight</span><div class="type-demo h3">Confirmed, with hold released in 24h.</div></div>
+        <div class="type-row"><span class="type-label">Body / Inter Tight</span><div class="type-demo body">Standard services are bookable instantly. Higher-variance cases — a first visit, a nervous dog, an unfamiliar breed — route to request-confirm so your groomer can review the pet profile first.</div></div>
+        <div class="type-row"><span class="type-label">Caption / Inter Tight</span><div class="type-demo caption">Thu 24 Oct · 10:30 · Bath &amp; Tidy · 85 min</div></div>
+        <div class="type-row"><span class="type-label">Data / IBM Plex Mono</span><div class="type-demo data">฿1,280.00   |   HOLD · BKG-41A7   |   +66 81 234 5678</div></div>
+      </div>
+      <div class="type-pairing">
+        <span class="eyebrow">Bilingual sample</span>
+        <h4 style="margin-top:20px">Book a trusted groomer in under a minute.</h4>
+        <p>Fraunces for warmth and authority. Inter Tight for function. The serif gets the editorial moments — the app store hero, the deck cover, the "thank you" screen. Everywhere else, Inter does the work so the product reads fast.</p>
+        <div class="thai-demo">
+          <span class="caption">ไทย · Noto Sans Thai</span>
+          <div class="th">จองช่างอาบน้ำตัดขนที่เชื่อถือได้ในเวลาไม่ถึงหนึ่งนาที</div>
+          <p style="margin-top:10px;font-size:13px">Thai is sized 1.08× body English so the Latin and Thai cap-heights sit on the same line ruler. No Thai text is ever italicised — italics are reserved for Fraunces headline accents.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPONENTS -->
+<section id="components" class="section" data-screen-label="05 Components">
+  <div class="page">
+    <div class="sec-head">
+      <span class="sec-num">04 / Components</span>
+      <h2 class="sec-title">One component library. Two densities.</h2>
+      <p class="sec-kicker">Consumer surfaces inherit the loose rhythm on the left. Merchant and ops surfaces inherit the dense rhythm on the right. Same tokens, tighter spacing ramp.</p>
+    </div>
+
+    <div class="cmp-grid">
+      <!-- Buttons -->
+      <div class="cmp-card">
+        <header><h3>Buttons</h3><span class="cmp-label">pill · 999r</span></header>
+        <div class="cmp-surface">
+          <div class="btn-row">
+            <button class="btn primary">Book this slot</button>
+            <button class="btn secondary">Save for later</button>
+          </div>
+          <div class="btn-row">
+            <button class="btn accent">Authorise hold</button>
+            <button class="btn danger btn-sm">Cancel booking</button>
+            <button class="btn ghost btn-sm">View pet profile →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Segmented + chips -->
+      <div class="cmp-card">
+        <header><h3>Segmented · Chips</h3><span class="cmp-label">filters · modes</span></header>
+        <div class="cmp-surface">
+          <div class="segmented">
+            <button class="on">Instant</button>
+            <button>Request</button>
+            <button>All</button>
+          </div>
+          <div class="chips">
+            <span class="chip on"><span class="dot"></span>Thonglor</span>
+            <span class="chip on"><span class="dot"></span>Bath &amp; Tidy</span>
+            <span class="chip"><span class="dot"></span>&lt; 90 min</span>
+            <span class="chip accent"><span class="dot"></span>Fear-free</span>
+            <span class="chip"><span class="dot"></span>Small breed</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="cmp-card">
+        <header><h3>Search bar</h3><span class="cmp-label">primary surface</span></header>
+        <div class="cmp-surface">
+          <div class="searchbar">
+            <span class="mono" style="color:var(--ink-3)">⌕</span>
+            <input placeholder="Groomer, shop, service…" />
+            <span class="searchbar-divider"></span>
+            <span class="searchbar-filter">Thonglor · Sat</span>
+          </div>
+          <p style="font-size:12px;color:var(--ink-3)">Always carries a location and intent scope. Empty state teaches repeat-first ("Try: Rebook last groom").</p>
+        </div>
+      </div>
+
+      <!-- Shop card -->
+      <div class="cmp-card">
+        <header><h3>Shop card</h3><span class="cmp-label">consumer</span></header>
+        <div class="cmp-surface" style="padding:0;background:transparent;border:0">
+          <div class="shop-card">
+            <div class="img"><span class="tag">4 slots today</span><span class="status s-instant">Instant</span></div>
+            <div class="body">
+              <div class="name">Soi Sala Groomery</div>
+              <div class="meta"><span>Thonglor 13</span><span>·</span><span><b>฿850</b> · Bath &amp; Tidy</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div class="cmp-card wide">
+        <header><h3>Alerts &amp; banners</h3><span class="cmp-label">trust copy</span></header>
+        <div class="cmp-surface">
+          <div class="alert">
+            <div class="alert-ic">฿</div>
+            <div class="alert-body">
+              <b>A ฿850 hold sits on your card until 24h after the appointment.</b>
+              <p>Nothing is charged unless you no-show. You'll see the hold on your statement as <span class="mono">PAWPOINT AUTH</span>.</p>
+            </div>
+          </div>
+          <div class="alert danger">
+            <div class="alert-ic">!</div>
+            <div class="alert-body">
+              <b>Payment method failed verification.</b>
+              <p>Your booking is still held for 12 more minutes while we retry. <a href="#" style="color:var(--danger);font-weight:500">Try a different card →</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scheduling cell -->
+      <div class="cmp-card wide">
+        <header><h3>Scheduling cells</h3><span class="cmp-label">merchant</span></header>
+        <div class="cmp-surface" style="padding:14px">
+          <div class="sched">
+            <div class="th hr">Time</div>
+            <div class="th">Mon 21</div><div class="th">Tue 22</div><div class="th">Wed 23</div><div class="th">Thu 24</div><div class="th">Fri 25</div><div class="th">Sat 26</div>
+
+            <div class="td"><span class="mono" style="color:var(--ink-3)">09:00</span></div>
+            <div class="td"><div class="slot confirm"><b>Luna · Shih-tzu</b>Bath &amp; Tidy · 60m</div></div>
+            <div class="td"><div class="slot pendm"><b>Mochi · Poodle</b>Full groom · review</div></div>
+            <div class="td"></div>
+            <div class="td"><div class="slot confirm"><b>Dash · Corgi</b>Bath · 45m</div></div>
+            <div class="td"><div class="slot blocked">Staff off</div></div>
+            <div class="td"><div class="slot hold"><b>฿400 hold</b>BKG-41A7</div></div>
+
+            <div class="td"><span class="mono" style="color:var(--ink-3)">10:00</span></div>
+            <div class="td"><div class="slot inserv"><b>In service</b>Milo · 20m left</div></div>
+            <div class="td"></div>
+            <div class="td"><div class="slot confirm"><b>Bolt</b>Tidy · 30m</div></div>
+            <div class="td"></div>
+            <div class="td"></div>
+            <div class="td"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline / status chips -->
+      <div class="cmp-card full">
+        <header><h3>Status tokens</h3><span class="cmp-label">booking lifecycle</span></header>
+        <div class="cmp-surface" style="flex-direction:row;flex-wrap:wrap">
+          <span class="status s-instant">Instant</span>
+          <span class="status s-pend-v">Pending · verification</span>
+          <span class="status s-pend-m">Pending · merchant</span>
+          <span class="status s-confirm">Confirmed</span>
+          <span class="status s-arrived">Arrived</span>
+          <span class="status s-in-serv">In service</span>
+          <span class="status s-done">Completed</span>
+          <span class="status s-canc-c">Cancelled · customer</span>
+          <span class="status s-canc-m">Cancelled · merchant</span>
+          <span class="status s-no-show">No-show</span>
+          <span class="status s-hold">Hold ฿850</span>
+          <span class="status s-dep">Deposit required</span>
+          <span class="status s-pay-iss">Payment issue</span>
+        </div>
+      </div>
+
+      <!-- Bottom sheet -->
+      <div class="cmp-card">
+        <header><h3>Bottom sheet</h3><span class="cmp-label">mobile</span></header>
+        <div class="cmp-surface" style="background:var(--paper-3);padding:12px 12px 0">
+          <div class="sheet">
+            <h4>Confirm your hold</h4>
+            <div class="row"><span>Bath &amp; Tidy · Luna</span><b>฿850</b></div>
+            <div class="row"><span>Hold until</span><b>Fri 10:30</b></div>
+            <div class="row"><span>Free cancel by</span><b>Thu 10:30</b></div>
+            <button class="btn primary" style="margin-top:12px;justify-content:center;width:100%">Authorise &amp; book</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side panel -->
+      <div class="cmp-card wide">
+        <header><h3>Desktop side panel</h3><span class="cmp-label">merchant · booking detail</span></header>
+        <div class="cmp-surface" style="padding:0;background:transparent;border:0">
+          <div class="sidepanel">
+            <header>
+              <div>
+                <div style="font-weight:600">Mochi · Toy Poodle · 3.4 kg</div>
+                <div style="font-size:12px;color:var(--ink-3)">BKG-41A7 · First visit</div>
+              </div>
+              <span class="status s-pend-m">Pending · merchant</span>
+            </header>
+            <div class="sp-body">
+              <div style="display:flex;gap:18px">
+                <div style="flex:1"><div class="mono" style="color:var(--ink-3);font-size:11px;text-transform:uppercase">Requested</div><div>Thu 24 Oct · 10:30</div></div>
+                <div style="flex:1"><div class="mono" style="color:var(--ink-3);font-size:11px;text-transform:uppercase">Service</div><div>Full groom · 120m</div></div>
+                <div style="flex:1"><div class="mono" style="color:var(--ink-3);font-size:11px;text-transform:uppercase">Hold</div><div>฿1,280 · Copper</div></div>
+              </div>
+              <div style="font-size:13px;color:var(--ink-2);padding:12px 14px;background:var(--paper-2);border-radius:var(--radius);border-left:3px solid var(--accent)">
+                <b>Customer note.</b> "Mochi gets nervous with dryers — a cage dryer is okay if supervised. Allergic to oatmeal shampoo."
+              </div>
+            </div>
+            <footer>
+              <button class="btn secondary">Decline with reason</button>
+              <div class="g-8"><button class="btn ghost btn-sm">Ask a question</button><button class="btn primary">Accept request</button></div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING STATE SEMANTICS -->
+<section id="states" class="section" data-screen-label="06 States">
+  <div class="page">
+    <div class="sec-head">
+      <span class="sec-num">05 / Booking-state semantics</span>
+      <h2 class="sec-title">One state map, rendered the same everywhere.</h2>
+      <p class="sec-kicker">Mapped directly to the spec lifecycle. A single color, a single token, a single copy pattern — reused by customer, merchant, ops, and the CEO deck.</p>
+    </div>
+
+    <div class="state-table">
+      <div class="state-row head">
+        <span>State</span><span>Meaning</span><span>Token</span><span>Copy pattern</span>
+      </div>
+      <div class="state-row"><span class="status s-instant">Instant</span><span>Customer booked a standard service within the routine set.</span><span class="token">color.ok · icon.zap</span><span>"Booked. Luna on Thu 10:30."</span></div>
+      <div class="state-row"><span class="status s-pend-v">Pending · verification</span><span>OTP or payment verification outstanding. Holds a slot provisionally.</span><span class="token">color.warn · with timer</span><span>"Holding your slot for 12m while we verify your card."</span></div>
+      <div class="state-row"><span class="status s-pend-m">Pending · merchant</span><span>Request-confirm: merchant must accept or decline before slot is honored.</span><span class="token">color.info · with timer</span><span>"Sala Groomery is reviewing your request."</span></div>
+      <div class="state-row"><span class="status s-confirm">Confirmed</span><span>Slot is locked. Reminders will fire at 24h and same-day.</span><span class="token">color.primary</span><span>"Confirmed. We'll remind you Thursday morning."</span></div>
+      <div class="state-row"><span class="status s-arrived">Arrived</span><span>Merchant has marked the pet present at the shop.</span><span class="token">color.info.teal</span><span>"Luna's in — have a great groom."</span></div>
+      <div class="state-row"><span class="status s-in-serv">In service</span><span>Service has started. Timer runs against template duration.</span><span class="token">color.info.violet</span><span>"In service · 20 min remaining."</span></div>
+      <div class="state-row"><span class="status s-done">Completed</span><span>Service ended. 24h correction window opens.</span><span class="token">color.ink-2</span><span>"All done. Rate this groom?"</span></div>
+      <div class="state-row"><span class="status s-canc-c">Cancelled · customer</span><span>Customer-initiated cancellation. Never conflate with no-show.</span><span class="token">color.ink-3 · strike</span><span>"You cancelled this booking."</span></div>
+      <div class="state-row"><span class="status s-canc-m">Cancelled · merchant</span><span>Confirmed booking cancelled by merchant. Requires explicit reason.</span><span class="token">color.danger</span><span>"Sala Groomery cancelled: staff unavailable. Hold released."</span></div>
+      <div class="state-row"><span class="status s-no-show">No-show</span><span>Customer did not arrive within grace window. May forfeit hold.</span><span class="token">color.danger.deep</span><span>"Marked no-show at 10:55. ฿850 charged."</span></div>
+      <div class="state-row"><span class="status s-hold">Hold ฿850</span><span>Authorisation active. Card not charged unless policy triggers.</span><span class="token">color.accent · wash</span><span>"Hold on your card — not a charge."</span></div>
+      <div class="state-row"><span class="status s-dep">Deposit required</span><span>Higher-risk case. Non-refundable deposit needed to confirm.</span><span class="token">color.accent · outlined</span><span>"฿400 deposit secures this slot."</span></div>
+      <div class="state-row"><span class="status s-pay-iss">Payment issue</span><span>Declined / expired / revoked. Blocks state progression.</span><span class="token">color.danger · outlined</span><span>"Your card was declined. Retry or switch cards."</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SAMPLES -->
+<section id="samples" class="section" data-screen-label="07 Samples">
+  <div class="page">
+    <div class="sec-head">
+      <span class="sec-num">06 / Samples</span>
+      <h2 class="sec-title">The same tokens, three surfaces.</h2>
+      <p class="sec-kicker">A customer mobile home, a merchant desktop board, and a CEO-deck title. Each one is assembled entirely from the tokens above — no new decisions.</p>
+    </div>
+
+    <!-- Mobile + merchant row -->
+    <div class="samples" style="margin-bottom:56px">
+      <!-- Phone -->
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><span>● ●●●  ⌁ 87%</span></div>
+          <div class="mob">
+            <div class="mob-hello">
+              <h3>Good morning,<br/><em>Nook.</em></h3>
+              <div class="mob-ava">N</div>
+            </div>
+            <div class="mob-pet">
+              <div class="ring">L</div>
+              <div style="flex:1">
+                <b>Luna</b>
+                <span>Shih-tzu · 5.2 kg · last groom 4 wks ago</span>
+              </div>
+              <span class="chip" style="font-size:10px;padding:3px 8px">Switch</span>
+            </div>
+            <div class="mob-repeat">
+              <span class="lbl">Rebook · same groomer</span>
+              <h4>Bath &amp; Tidy with Khun Ploy</h4>
+              <div class="meta"><span>Sala Groomery · Thonglor 13</span><span>฿850</span></div>
+              <div class="cta">
+                <span>Thu 24 Oct · 10:30</span>
+                <b>Book →</b>
+              </div>
+            </div>
+            <div class="mob-sec"><h5>Shops near you</h5><a>See all</a></div>
+            <div class="mob-list">
+              <div class="mob-item"><div class="sw"></div><div><b>Petite Poodle</b><span>Ekkamai · 0.8 km</span></div><span class="tg">Instant</span></div>
+              <div class="mob-item"><div class="sw"></div><div><b>Pawplex Thonglor</b><span>Thonglor 10 · 1.1 km</span></div><span class="status s-pend-m" style="font-size:9px">Request</span></div>
+            </div>
+            <div class="mob-nav">
+              <div class="on">Home</div><div>Shops</div><div>Bookings</div><div>Luna</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Merchant -->
+      <div class="desktop">
+        <aside class="desktop-side">
+          <div class="brand"><span class="mark-dot" style="width:18px;height:18px"></span>Pawpoint · Shop</div>
+          <a class="on"><span class="dot"></span>Today's board</a>
+          <a><span class="dot"></span>Requests <span style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--accent-ink)">3</span></a>
+          <a><span class="dot"></span>Customers</a>
+          <a><span class="dot"></span>Services</a>
+          <a><span class="dot"></span>Payouts</a>
+          <a><span class="dot"></span>Settings</a>
+        </aside>
+        <main class="desktop-main">
+          <div class="desktop-top">
+            <h3>Thursday · 24 Oct</h3>
+            <div class="g-12">
+              <div class="segmented"><button class="on">Day</button><button>Week</button><button>List</button></div>
+              <span class="tag">Sala Groomery · Thonglor</span>
+            </div>
+          </div>
+          <div class="desktop-body">
+            <div class="desktop-kpis">
+              <div class="kpi"><span class="lbl">Bookings today</span><span class="v">14</span><span class="trend">+3 vs. last Thu</span></div>
+              <div class="kpi"><span class="lbl">Pending requests</span><span class="v" style="color:var(--info)">3</span><span class="trend" style="color:var(--ink-3)">2 expire in &lt;1h</span></div>
+              <div class="kpi"><span class="lbl">Holds active</span><span class="v" style="color:var(--accent-ink)">฿6,140</span><span class="trend" style="color:var(--ink-3)">across 7 bookings</span></div>
+              <div class="kpi"><span class="lbl">Repeat rate · 28d</span><span class="v">34%</span><span class="trend">target 30%</span></div>
+            </div>
+            <div class="sched" style="--rows:6">
+              <div class="th hr">Time</div><div class="th">Ploy</div><div class="th">Nuey</div><div class="th">Tar</div><div class="th">Gaem</div><div class="th">Walk-in</div><div class="th">Offline</div>
+              <div class="td"><span class="mono" style="color:var(--ink-3)">10:00</span></div>
+              <div class="td"><div class="slot confirm"><b>Luna · Shih-tzu</b>Bath &amp; Tidy · 60m</div></div>
+              <div class="td"><div class="slot inserv"><b>Milo</b>20m left</div></div>
+              <div class="td"></div>
+              <div class="td"><div class="slot pendm"><b>Mochi · Poodle</b>Full groom · review</div></div>
+              <div class="td"><div class="slot blocked">Blocked</div></div>
+              <div class="td"><div class="slot hold"><b>LINE chat</b>฿400 dep · BKG-41A7</div></div>
+              <div class="td"><span class="mono" style="color:var(--ink-3)">11:00</span></div>
+              <div class="td"></div>
+              <div class="td"><div class="slot confirm"><b>Dash</b>Tidy · 30m</div></div>
+              <div class="td"><div class="slot pendm"><b>Coco</b>Request · first visit</div></div>
+              <div class="td"></div>
+              <div class="td"></div>
+              <div class="td"></div>
+            </div>
+            <div class="alert">
+              <div class="alert-ic">!</div>
+              <div class="alert-body">
+                <b>Mochi's request expires at 11:15.</b>
+                <p>Accept now to lock the slot and release the hold window. Decline to free inventory.</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Deck title slide -->
+    <div class="slide" data-screen-label="08 Deck title">
+      <div class="slide-top">
+        <span>Pawpoint · Board review · Q4</span>
+        <span>01 / Title</span>
+      </div>
+      <div>
+        <span class="eyebrow" style="color:var(--ink-3)">Bangkok-first pet grooming · launch slice</span>
+        <h2 style="margin-top:20px">Make <em>the next</em><br/>appointment inevitable.</h2>
+      </div>
+      <div class="slide-bot">
+        <div class="meta">
+          <span><b>Launch</b> · Thonglor / Ekkamai / Phrom Phong</span>
+          <span><b>Promise</b> · 60-second booking, truthful schedule, zero LINE chaos</span>
+          <span><b>Target</b> · 30% repeat rate</span>
+        </div>
+        <span class="mono">v0.1 · confidential</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALTERNATES -->
+<section id="directions" class="section" data-screen-label="09 Alternates">
+  <div class="page">
+    <div class="sec-head">
+      <span class="sec-num">07 / Alternate directions</span>
+      <h2 class="sec-title">One recommended. Two on the table.</h2>
+      <p class="sec-kicker">The prompt asks for a premium-editorial and an operational-product alternate alongside the primary. All three are built from the same token layer, so migration is a hue and weight change — not a rebuild.</p>
+    </div>
+
+    <div class="alt-grid">
+      <div class="alt-card recommended">
+        <span class="pill">Recommended</span>
+        <div class="alt-swatches">
+          <div style="background:var(--paper)"></div>
+          <div style="background:var(--primary-mid)"></div>
+          <div style="background:var(--primary)"></div>
+          <div style="background:var(--accent)"></div>
+          <div style="background:var(--ink)"></div>
+        </div>
+        <h3 style="color:var(--paper)">Primary · The Merger</h3>
+        <p>Editorial serif accents on warm paper with operational density at the product layer. Reads premium in the deck, reads dense in the merchant board, reads warm in the customer app. One system, no fork.</p>
+        <p style="color:rgba(255,255,255,.7);font-size:12px;border-top:1px solid rgba(255,255,255,.15);padding-top:14px;margin-top:auto"><b style="color:var(--paper)">Use for</b> · customer app, merchant ops, control plane, CEO deck, one-pager.</p>
+      </div>
+      <div class="alt-card" style="background:linear-gradient(180deg,#f6f0e6,#eee3d2);border:0">
+        <span class="pill" style="background:rgba(0,0,0,.08);border:0">Alt A · Premium editorial</span>
+        <div class="alt-swatches">
+          <div style="background:#f6f0e6"></div>
+          <div style="background:#dbcfb7"></div>
+          <div style="background:#1e2a44"></div>
+          <div style="background:#b25a3a"></div>
+          <div style="background:#0e1221"></div>
+        </div>
+        <h3>Leaning editorial.</h3>
+        <p>Paper goes warmer, Fraunces takes more hero moments, body goes to a longer line length. Feels magazine-premium; photos of real shops carry the weight.</p>
+        <p style="font-size:12px;color:var(--ink-3);border-top:1px dashed rgba(0,0,0,.12);padding-top:14px;margin-top:auto"><b>Risk</b> · merchant board gets precious; dense data feels hostile against a warm background.</p>
+      </div>
+      <div class="alt-card" style="background:#f3f5f8;border:0">
+        <span class="pill" style="background:#e4e9ef;border:0">Alt B · Operational product</span>
+        <div class="alt-swatches">
+          <div style="background:#ffffff"></div>
+          <div style="background:#d4dae3"></div>
+          <div style="background:#1a2a4a"></div>
+          <div style="background:#d97e3a"></div>
+          <div style="background:#0b1020"></div>
+        </div>
+        <h3>Leaning operational.</h3>
+        <p>Inter Tight takes every hero moment, paper goes cooler, serif is reserved for a single deck slide. Merchant board hums; customer home reads slightly more utilitarian.</p>
+        <p style="font-size:12px;color:var(--ink-3);border-top:1px dashed rgba(0,0,0,.12);padding-top:14px;margin-top:auto"><b>Risk</b> · CEO deck loses editorial warmth; the brand starts to read like a B2B SaaS admin.</p>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:40px">
+      <div style="border-left:3px solid var(--primary);padding:6px 0 6px 20px">
+        <span class="eyebrow">Recommendation</span>
+        <p style="font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.015em;line-height:1.25;margin-top:10px">Ship <em style="color:var(--primary);font-style:italic">the merger</em>. The editorial system is too soft for the merchant board, and the operational system does not earn the CEO deck. The merged system lets the same team demo customer, merchant, ops, and investor decks without switching brands mid-walkthrough.</p>
+      </div>
+      <div style="background:var(--paper-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px">
+        <span class="eyebrow">What a pivot costs later</span>
+        <ul style="margin:14px 0 0;padding-left:20px;color:var(--ink-2);font-size:13px;line-height:1.6">
+          <li>Primary hue shift · one token value · cascade across all surfaces</li>
+          <li>Serif swap · one font face · 6 usage sites to recheck</li>
+          <li>Paper tint shift · one <span class="mono">oklch</span> hue parameter</li>
+          <li>Density ramp · switch density class on merchant and ops surfaces only</li>
+        </ul>
+        <p style="margin-top:14px;font-size:12px;color:var(--ink-3)">Alternates are not trashed — they remain available as named token sets so a future segment (enterprise merchant, b2b payouts) can adopt one without a second design effort.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="page">
+  <footer class="footer">
+    <span>Pawpoint · design system seed v0.1</span>
+    <span>Inherits launch-canon.md · spec.md</span>
+    <span>Bangkok · 2026</span>
+  </footer>
+</div>
+
+<!-- TWEAKS PANEL -->
+<aside class="tweaks" id="tweaks">
+  <div class="row"><h5>Tweaks</h5><button id="tw-reset">Reset</button></div>
+  <label>Primary hue <span class="val" id="v-primary"></span>
+    <input id="t-primary" type="range" min="180" max="280" step="1" />
+  </label>
+  <label>Accent hue <span class="val" id="v-accent"></span>
+    <input id="t-accent" type="range" min="0" max="60" step="1" />
+  </label>
+  <label>Paper warmth <span class="val" id="v-paper"></span>
+    <input id="t-paper" type="range" min="20" max="90" step="1" />
+  </label>
+  <p style="font-size:11px;color:var(--ink-3);line-height:1.5;margin:0">Hue shifts reveal the recommended "merger" direction — or rotate toward <b>editorial</b> (paper 70°, accent 30°) or <b>operational</b> (primary 230°, paper 250°).</p>
+</aside>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  const state = Object.assign({}, TWEAK_DEFAULS);
+  const apply = () => {
+    root.style.setProperty('--primary-hue', state.primaryHue);
+    root.style.setProperty('--accent-hue', state.accentHue);
+    root.style.setProperty('--paper-tint', state.paperTint);
+    const byId = (id) => document.getElementById(id);
+    byId('t-primary').value = state.primaryHue;
+    byId('t-accent').value = state.accentHue;
+    byId('t-paper').value = state.paperTint;
+    byId('v-primary').textContent = state.primaryHue + '°';
+    byId('v-accent').textContent = state.accentHue + '°';
+    byId('v-paper').textContent = state.paperTint + '°';
+  };
+  const persist = () => {
+    window.parent.postMessage({type:'__edit_mode_set_keys', edits: state}, '*');
+  };
+
+  // Edit mode
+  let active = false;
+  window.addEventListener('message', (e) => {
+    const t = e?.data?.type;
+    if (t === '__activate_edit_mode'){ active = true; document.getElementById('tweaks').classList.add('on'); }
+    if (t === '__deactivate_edit_mode'){ active = false; document.getElementById('tweaks').classList.remove('on'); }
+  });
+  window.parent.postMessage({type:'__edit_mode_available'}, '*');
+
+  // Wire controls
+  apply();
+  const bind = (id, key) => {
+    document.getElementById(id).addEventListener('input', (e) => {
+      state[key] = Number(e.target.value);
+      apply(); persist();
+    });
+  };
+  bind('t-primary','primaryHue');
+  bind('t-accent','accentHue');
+  bind('t-paper','paperTint');
+  document.getElementById('tw-reset').addEventListener('click', () => {
+    Object.assign(state, {primaryHue:220, accentHue:28, paperTint:48});
+    apply(); persist();
+  });
+})();
+</script>
+
+</body>
+</html>

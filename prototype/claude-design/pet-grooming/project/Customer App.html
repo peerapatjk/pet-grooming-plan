@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Pawpoint — Customer app (mobile prototype)</title>
+<link rel="stylesheet" href="shared/pawpoint-tokens.css"/>
+<link rel="stylesheet" href="customer/customer.css?v=2"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body{background:#f0eee9}
+  .canvas-head{padding:48px 60px 8px;max-width:1800px;display:flex;flex-direction:column;gap:14px}
+  .canvas-head .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+  .canvas-head h1{font-family:var(--serif);font-size:58px;letter-spacing:-0.03em;font-weight:500;line-height:1.02;max-width:22ch}
+  .canvas-head h1 em{font-style:italic;color:var(--primary);font-weight:400}
+  .canvas-head p{font-size:16px;color:var(--ink-2);max-width:70ch;line-height:1.55}
+  .canvas-head .facts{display:flex;gap:28px;flex-wrap:wrap;padding-top:8px;border-top:1px dashed var(--border);margin-top:6px;padding-top:18px}
+  .canvas-head .facts div{display:flex;flex-direction:column;gap:2px}
+  .canvas-head .facts b{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.015em}
+  .canvas-head .facts span{font-size:11px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .flow-band{
+    padding:36px 60px 60px;position:relative;
+  }
+  .flow-band h2{font-family:var(--serif);font-weight:500;font-size:36px;letter-spacing:-0.02em;line-height:1.05}
+  .flow-band h2 em{font-style:italic;color:var(--primary);font-weight:400}
+  .flow-band .intro{display:flex;gap:56px;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap}
+  .flow-band .intro .lede{max-width:60ch;color:var(--ink-2);font-size:15px;line-height:1.6}
+  .flow-band .flow-num{font-family:var(--mono);font-size:12px;color:var(--accent-ink);letter-spacing:.16em;text-transform:uppercase}
+  .flow-band .rail{display:flex;gap:40px;align-items:flex-start;overflow-x:auto;padding:10px 4px 28px;scroll-snap-type:x mandatory}
+  .flow-band .rail::-webkit-scrollbar{height:8px}
+  .flow-band .rail::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px}
+  .flow-band .rail > *{scroll-snap-align:start}
+  .flow-band + .flow-band{border-top:1px solid var(--border)}
+  .flow-band.stripe{background:
+    linear-gradient(180deg, color-mix(in oklab, var(--primary-wash) 55%, transparent), transparent 65%),
+    var(--paper)
+  }
+  .flow-band.stripe-accent{background:
+    linear-gradient(180deg, color-mix(in oklab, var(--accent-wash) 70%, transparent), transparent 65%),
+    var(--paper)
+  }
+  .flow-band.dark{background:var(--ink);color:var(--paper)}
+  .flow-band.dark .intro .lede{color:rgba(255,255,255,.7)}
+  .flow-band.dark .flow-num{color:var(--accent)}
+  .anno-card{
+    max-width:none;padding:16px;border:1px dashed color-mix(in oklab, var(--accent) 55%, transparent);
+    background:color-mix(in oklab, var(--accent-wash) 55%, transparent);
+    border-radius:2px;color:var(--ink);
+    font-size:13px;line-height:1.55;
+  }
+  .anno-card h5{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px}
+  .anno-card b{font-family:var(--serif);font-size:16px;font-weight:500;letter-spacing:-0.01em;display:block;margin-bottom:4px;color:var(--ink)}
+  .anno-card p + p{margin-top:8px}
+  .flow-band.dark .anno-card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.8)}
+  .flow-band.dark .anno-card b{color:#fff}
+  .foot{padding:36px 60px 80px;color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .foot b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<div id="top" class="canvas-head">
+  <div class="kicker">Prompt 02 · customer mobile prototype · iOS</div>
+  <h1>Fifteen screens where <em>trust</em> becomes a booking — and a booking becomes a rebook.</h1>
+  <p>A walk‑through of Pawpoint’s customer app: onboarding, discovery, the deposit‑protected booking flow, the three states a request can land in (instant, pending, declined), and the account surfaces that turn one visit into a relationship. All screens use shared tokens from the design system seed so color, status, and type stay canonical.</p>
+  <div class="facts">
+    <div><span>Flows</span><b>4</b></div>
+    <div><span>Screens</span><b>15</b></div>
+    <div><span>Booking states</span><b>3 shown</b></div>
+    <div><span>Device</span><b>iPhone 15 · 390 × 812</b></div>
+    <div><span>Languages</span><b>TH · EN · ZH</b></div>
+  </div>
+</div>
+
+<div id="root"></div>
+
+<div class="foot"><b>Pawpoint</b> · Customer prototype · made for the Grooming Booking brief · horizontal scroll within each flow · tap-through not wired in this static pass</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="customer/primitives.jsx"></script>
+<script type="text/babel" src="customer/screens-a.jsx"></script>
+<script type="text/babel" src="customer/screens-b.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const flows = [
+  {
+    num:'Flow A',
+    title:<>First <em>impression</em>, earned in 90 seconds</>,
+    lede:'A fast, Thai‑first onboarding. We ask only what shops genuinely need — language, phone, and the one pet who triggered the download.',
+    band:'stripe',
+    note:'Brand serif carries the promise throughout. LINE is offered inline on the OTP screen because most Bangkok users already live there.',
+    screens:[
+      {C:Screen01_Welcome, label:'Welcome'},
+      {C:Screen02_Language,label:'Language'},
+      {C:Screen03_OTP,     label:'OTP + LINE'},
+      {C:Screen04_Pet,     label:'Pet profile'},
+    ],
+  },
+  {
+    num:'Flow B',
+    title:<>Discover, pick a time, hold the <em>spot</em></>,
+    lede:'The hero loop. Rebook pinned first. Discovery lists show today’s real slots; the time picker distinguishes instant‑confirm from staff‑review; review & pay makes the ฿200 deposit contract unmistakably clear.',
+    band:'',
+    note:'Accent copper is reserved for money‑in‑motion (deposits, refunds, money diagrams). Primary blue stays navigational. The deposit‑flow diagram on the Review screen is the cornerstone: three beats, money literally moves from left to right.',
+    screens:[
+      {C:Screen05_Home,    label:'Home + rebook'},
+      {C:Screen06_Shop,    label:'Shop detail'},
+      {C:Screen07_Time,    label:'Time picker'},
+      {C:Screen08_Review,  label:'Review (deposit flow)'},
+      {C:Screen09_Pay,     label:'Payment hold'},
+    ],
+  },
+  {
+    num:'Flow C',
+    title:<>Three <em>endings</em> of a booking request</>,
+    lede:'Same request, three outcomes. The app must feel equally confident in all of them.',
+    band:'stripe-accent',
+    note:'Confirmed celebrates with a timeline showing where the deposit lives. Pending trades anxiety for agency — a real countdown dial, plus instant alternatives one tap away. Declined carries the user’s service and notes straight into the replacement shop list, no re‑entry.',
+    screens:[
+      {C:Screen10_Confirmed,label:'Confirmed'},
+      {C:Screen11_Pending,  label:'Pending'},
+      {C:Screen12_Declined, label:'Declined · alternatives'},
+    ],
+  },
+  {
+    num:'Flow D',
+    title:<>The <em>account</em> is a rebook engine</>,
+    lede:'Visits, pets, and rating surfaces are designed to produce the next booking — not decorate history. Post‑visit goes dark to feel like a moment.',
+    band:'dark',
+    note:'Rating + receipt + rebook live on one screen, dark, because it is a moment — not a form. The rebook card at the bottom is bigger than the submit‑review button on purpose.',
+    screens:[
+      {C:Screen13_Visits,  label:'Visits'},
+      {C:Screen14_You,     label:'You · pets · payment'},
+      {C:Screen15_Rate,    label:'Rate + rebook'},
+    ],
+  },
+];
+
+function FlowBand({f, startIdx}){
+  return (
+    <div className={"flow-band "+f.band}>
+      <div className="intro">
+        <div style={{flex:1,minWidth:380}}>
+          <div className="flow-num">{f.num}</div>
+          <h2 style={{marginTop:6}}>{f.title}</h2>
+        </div>
+        <div style={{flex:1,minWidth:320,display:'flex',flexDirection:'column',gap:12}}>
+          <div className="lede">{f.lede}</div>
+          <div className="anno-card"><h5>Design note</h5>{f.note}</div>
+        </div>
+      </div>
+      <div className="rail">
+        {f.screens.map((s,i)=>(
+          <PhoneShell key={i} idx={startIdx+i} label={s.label} total={15}>
+            <s.C/>
+          </PhoneShell>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  let i=1;
+  return <>
+    {flows.map((f,idx)=>{
+      const band = <FlowBand key={idx} f={f} startIdx={i}/>;
+      i += f.screens.length;
+      return band;
+    })}
+  </>;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

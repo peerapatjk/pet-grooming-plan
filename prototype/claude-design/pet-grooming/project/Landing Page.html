@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pawpoint — Bangkok pet grooming, booked right</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/pawpoint-tokens.css">
+<style>
+  body{background:var(--paper)}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+
+  /* Top nav */
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;position:sticky;top:0;background:color-mix(in oklab, var(--paper) 92%, transparent);backdrop-filter: blur(12px);z-index:50;border-bottom:1px solid transparent}
+  .nav.scrolled{border-bottom-color:var(--border)}
+  .nav-links{display:flex;gap:28px;color:var(--ink-2);font-size:13px}
+  .nav-links a{text-decoration:none}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:flex;gap:10px;align-items:center}
+  .lang-toggle{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase;display:flex;gap:6px;align-items:center}
+  .lang-toggle b{color:var(--ink)}
+
+  /* Hero */
+  .hero{padding:60px 0 96px;position:relative;overflow:hidden}
+  .hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:32px}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:var(--paper-2);border:1px solid var(--border);border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .hero-badge .tiny-dot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+  .hero-grid{display:grid;grid-template-columns: 1.2fr 1fr;gap:64px;align-items:end}
+  .hero h1{
+    font-family:var(--serif);font-weight:500;
+    font-size: clamp(52px, 6.2vw, 108px);
+    line-height: 1.0;letter-spacing:-0.035em;color:var(--ink)
+  }
+  .hero h1 em{font-style:italic;color:var(--primary);font-weight:400}
+  .hero-sub{margin-top:32px;font-size:19px;line-height:1.55;color:var(--ink-2);max-width:54ch}
+  .hero-ctas{margin-top:36px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .store{display:inline-flex;align-items:center;gap:12px;padding:10px 18px 10px 14px;border-radius:14px;background:var(--ink);color:var(--paper);text-decoration:none;min-height:56px}
+  .store .store-ic{width:28px;height:28px;flex:none;display:flex;align-items:center;justify-content:center}
+  .store .store-text{line-height:1.1}
+  .store .store-text small{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;display:block}
+  .store .store-text b{font-size:17px;font-weight:500;font-family:var(--serif);letter-spacing:-0.01em}
+  .hero-ctas .ghost-link{color:var(--ink-2);font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:8px 10px}
+  .hero-ctas .ghost-link::after{content:"→"}
+
+  /* Hero phones */
+  .hero-phones{position:relative;height:640px;display:flex;align-items:flex-end;justify-content:center}
+  .p-shell{width:280px;height:580px;border-radius:40px;background:#0c0e14;padding:10px;box-shadow: var(--shadow-lg);position:absolute}
+  .p-shell.back{transform:rotate(-6deg) translate(-80px, 30px);width:252px;height:530px;opacity:.92}
+  .p-shell.front{transform:rotate(4deg) translate(70px, 0)}
+  .p-screen{width:100%;height:100%;border-radius:32px;background:var(--paper);overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .p-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:90px;height:24px;background:#0c0e14;border-radius:999px;z-index:3}
+  .p-status{padding:10px 22px 0;font-size:11px;font-weight:600;display:flex;justify-content:space-between;color:var(--ink)}
+  .phone-hero{padding:44px 16px 16px;display:flex;flex-direction:column;gap:12px;height:100%;overflow:hidden}
+  .phone-hero h5{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.02em;line-height:1.15}
+  .phone-hero .searchbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--border-strong);border-radius:999px;background:var(--paper);font-size:12px;color:var(--ink-3)}
+  .pill-bar{display:flex;gap:6px;overflow:hidden}
+  .pill{padding:6px 10px;background:var(--paper-3);border-radius:999px;font-size:11px;color:var(--ink-2)}
+  .pill.on{background:var(--primary);color:var(--paper)}
+  .pet-card-mini{padding:12px;border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg,var(--paper-2),var(--paper));display:flex;gap:10px;align-items:center}
+  .pet-card-mini .ring{width:38px;height:38px;border-radius:50%;background:var(--accent-wash);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);color:var(--accent-ink);font-size:15px;font-weight:500}
+  .pet-card-mini b{font-size:13px;font-weight:600;display:block}
+  .pet-card-mini span{font-size:11px;color:var(--ink-3)}
+  .repeat-card{background:var(--primary);color:var(--paper);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+  .repeat-card .lbl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+  .repeat-card h6{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:-0.01em;line-height:1.1}
+  .repeat-card .meta{display:flex;justify-content:space-between;font-size:11px;opacity:.9}
+  .repeat-card .cta{display:flex;justify-content:space-between;align-items:center;margin-top:2px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+
+  /* Back phone content = confirmation */
+  .confirm-card{padding:44px 16px 16px;display:flex;flex-direction:column;gap:14px;height:100%}
+  .confirm-big{padding:22px 16px;border:1px solid var(--border);border-radius:14px;background:var(--primary-wash);display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+  .confirm-big .status{background:var(--primary);color:var(--paper)}
+  .confirm-big h6{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.02em;line-height:1.1}
+  .detail-row{display:flex;justify-content:space-between;padding:9px 0;border-top:1px dashed var(--border);font-size:12px}
+  .detail-row:first-of-type{border-top:0;padding-top:4px}
+  .detail-row b{font-weight:500}
+
+  /* Proof strip */
+  .proof{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:40px;color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;flex-wrap:wrap}
+  .proof .item{display:flex;align-items:center;gap:10px}
+  .proof .item::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+  /* Section */
+  section{padding:120px 0;border-bottom:1px solid var(--border)}
+  .sec-top{display:grid;grid-template-columns: 180px 1fr 360px;gap:40px;align-items:baseline;margin-bottom:56px}
+  .sec-num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-3)}
+  .sec-title{font-family:var(--serif);font-size:52px;letter-spacing:-0.025em;line-height:1.05;font-weight:500;max-width:22ch}
+  .sec-kicker{color:var(--ink-2);font-size:15px;line-height:1.55}
+
+  /* Problem framing */
+  .problem-grid{display:grid;grid-template-columns: repeat(3,1fr);gap:24px}
+  .prob-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:var(--paper-2);min-height:260px;display:flex;flex-direction:column;gap:14px}
+  .prob-card .chat{display:flex;flex-direction:column;gap:6px;padding:10px 0}
+  .msg{padding:7px 10px;border-radius:12px;font-size:12px;max-width:80%;line-height:1.35;color:var(--ink-2)}
+  .msg.them{background:var(--paper-3);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.me{background:var(--primary-wash);color:var(--primary-ink);align-self:flex-end;border-bottom-right-radius:4px}
+  .prob-card h3{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.02em}
+  .prob-card p{font-size:13px;color:var(--ink-2)}
+
+  /* Difference — feature rows */
+  .diff-row{display:grid;grid-template-columns: 1fr 1.3fr;gap:64px;align-items:center;padding:72px 0;border-top:1px dashed var(--border)}
+  .diff-row:first-child{border-top:0;padding-top:0}
+  .diff-row.flip{grid-template-columns: 1.3fr 1fr}
+  .diff-row.flip .diff-visual{order:2}
+  .diff-row .num{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.14em;margin-bottom:16px}
+  .diff-row h3{font-family:var(--serif);font-weight:500;font-size:40px;letter-spacing:-0.025em;line-height:1.08;margin-bottom:16px}
+  .diff-row h3 em{font-style:italic;color:var(--primary)}
+  .diff-row p{color:var(--ink-2);font-size:15px;line-height:1.6;max-width:44ch}
+  .diff-row .bullets{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+  .diff-row .bullets div{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2)}
+  .diff-row .bullets div::before{content:"";width:14px;height:14px;margin-top:3px;flex:none;background:var(--accent);mask: radial-gradient(circle at center, transparent 40%, black 41%);-webkit-mask: radial-gradient(circle at center, transparent 40%, black 41%)}
+
+  .diff-visual{border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;background:var(--paper-2);min-height:420px;display:flex;flex-direction:column;gap:16px;justify-content:center}
+
+  /* Visual 1 — timeline compare */
+  .timeline-compare{display:grid;gap:20px}
+  .tl{display:grid;grid-template-columns: 80px 1fr;gap:16px;align-items:center}
+  .tl .who{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .tl .bar{display:flex;gap:3px;align-items:center}
+  .tl .seg{height:22px;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-size:10px;font-family:var(--mono);letter-spacing:.06em;color:var(--paper);white-space:nowrap}
+  .tl .seg.chat{background:var(--ink-3)}
+  .tl .seg.wait{background:var(--warn);color:var(--ink)}
+  .tl .seg.confirmed{background:var(--primary)}
+  .tl .seg.instant{background:var(--ok);color:var(--paper)}
+  .tl .mins{font-size:11px;color:var(--ink-3);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+
+  /* Visual 2 — instant vs pending */
+  .rail{display:grid;grid-template-columns: 1fr 1fr;gap:14px}
+  .rail-card{padding:20px;border-radius:14px;display:flex;flex-direction:column;gap:10px}
+  .rail-card.instant{background:var(--ok-wash);border:1px solid color-mix(in oklab, var(--ok) 30%, transparent)}
+  .rail-card.pending{background:var(--warn-wash);border:1px solid color-mix(in oklab, var(--warn) 30%, transparent)}
+  .rail-card h6{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:-0.015em}
+  .rail-card p{font-size:12px;color:var(--ink-2);line-height:1.45}
+  .rail-card .status{align-self:flex-start}
+
+  /* Visual 3 — repeat booking */
+  .repeat-vis{display:flex;flex-direction:column;gap:12px}
+  .repeat-vis .row2{display:flex;gap:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--paper);align-items:center;justify-content:space-between}
+  .repeat-vis .row2 .left{display:flex;gap:10px;align-items:center}
+  .repeat-vis .row2 .ring{width:36px;height:36px;border-radius:50%;background:var(--accent-wash);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);color:var(--accent-ink);font-weight:500;font-size:14px}
+  .repeat-vis .row2 b{font-size:13px;font-weight:500;display:block}
+  .repeat-vis .row2 span{font-size:11px;color:var(--ink-3)}
+  .repeat-vis .btn{padding:8px 14px;font-size:12px}
+  .repeat-vis .hint{font-size:11px;font-family:var(--mono);letter-spacing:.1em;color:var(--ink-3);text-align:center;padding-top:4px}
+
+  /* Trust */
+  .trust-grid{display:grid;grid-template-columns: repeat(4,1fr);gap:20px}
+  .trust-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:var(--paper-2);display:flex;flex-direction:column;gap:14px;min-height:260px}
+  .trust-card .ic{width:32px;height:32px;border-radius:8px;background:var(--primary-wash);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:500}
+  .trust-card h4{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.02em}
+  .trust-card p{font-size:13px;color:var(--ink-2);line-height:1.55}
+  .trust-card .meta{margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase;padding-top:12px;border-top:1px dashed var(--border)}
+
+  /* Merchant section */
+  .merchant{background:var(--ink);color:var(--paper)}
+  .merchant .sec-title{color:var(--paper)}
+  .merchant .sec-kicker{color:rgba(255,255,255,.7)}
+  .merchant .sec-num{color:rgba(255,255,255,.45)}
+  .merchant-grid{display:grid;grid-template-columns: 1fr 1.1fr;gap:56px;align-items:start}
+  .merchant-bullets{display:flex;flex-direction:column;gap:18px}
+  .m-bul{display:grid;grid-template-columns: 44px 1fr;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.08)}
+  .m-bul:first-child{border-top:0}
+  .m-bul .n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);padding-top:4px}
+  .m-bul h4{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.015em;margin-bottom:4px;color:var(--paper)}
+  .m-bul p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.55}
+  .merchant-visual{border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);padding:20px;background:rgba(255,255,255,.03);display:flex;flex-direction:column;gap:14px}
+  .m-board-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .m-board-head h5{font-family:var(--serif);font-weight:500;font-size:18px;color:var(--paper)}
+  .m-board-head span{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.14em;text-transform:uppercase}
+  .m-board{display:grid;grid-template-columns: 60px repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:8px;overflow:hidden}
+  .m-board .cell{background:var(--ink);padding:8px 10px;font-size:10px;color:rgba(255,255,255,.55);font-family:var(--mono);letter-spacing:.08em;min-height:48px}
+  .m-board .cell.h{background:#191b25;color:rgba(255,255,255,.35);text-transform:uppercase;font-size:9px}
+  .m-board .slot-m{background:var(--primary);color:var(--paper);padding:6px 8px;border-radius:4px;margin:3px;font-family:var(--sans);font-size:11px;line-height:1.2;font-weight:500}
+  .m-board .slot-m.pend{background:transparent;border:1px dashed rgba(255,255,255,.35);color:rgba(255,255,255,.7)}
+  .m-board .slot-m.hold{background:var(--accent);color:var(--ink)}
+
+  /* Launch wedge */
+  .wedge-grid{display:grid;grid-template-columns: repeat(3,1fr);gap:24px}
+  .wedge-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;min-height:300px;display:flex;flex-direction:column;gap:18px;background:var(--paper-2)}
+  .wedge-card .num{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--accent-ink)}
+  .wedge-card h3{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-0.025em;line-height:1.1}
+  .wedge-card p{font-size:13px;color:var(--ink-2);line-height:1.6}
+  .wedge-card .not{margin-top:auto;padding-top:14px;border-top:1px dashed var(--border);font-size:11px;color:var(--ink-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em}
+
+  /* Download CTA */
+  .cta-block{padding:140px 0;background:radial-gradient(ellipse at 80% 20%,var(--accent-wash) 0,transparent 50%),radial-gradient(ellipse at 0% 90%,var(--primary-wash) 0,transparent 55%),var(--paper);text-align:center}
+  .cta-block h2{font-family:var(--serif);font-weight:500;font-size: clamp(48px, 6vw, 92px);letter-spacing:-0.035em;line-height:1.0;max-width:18ch;margin:0 auto}
+  .cta-block h2 em{font-style:italic;color:var(--primary)}
+  .cta-block p{margin-top:24px;color:var(--ink-2);font-size:17px;max-width:48ch;margin-left:auto;margin-right:auto;line-height:1.55}
+  .cta-stores{margin-top:40px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .cta-fine{margin-top:24px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+
+  /* Footer */
+  footer{padding:64px 0 48px;background:var(--paper-2);border-top:1px solid var(--border)}
+  .foot-grid{display:grid;grid-template-columns: 1.5fr 1fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+  .foot-grid h6{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px}
+  .foot-grid ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--ink-2)}
+  .foot-grid .lead{font-family:var(--serif);font-size:20px;line-height:1.35;color:var(--ink);letter-spacing:-0.015em;max-width:30ch;margin-top:14px}
+  .foot-bot{padding-top:32px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
+
+  @media (max-width: 900px){
+    .hero-grid,.merchant-grid,.trust-grid,.wedge-grid,.problem-grid,.diff-row,.diff-row.flip{grid-template-columns:1fr !important}
+    .hero-phones{height:auto;min-height:400px}
+    .sec-top{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="wrap">
+  <nav class="nav">
+    <a class="mark" href="#" style="text-decoration:none">
+      <span class="mark-dot"></span> Pawpoint
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#trust">Trust</a>
+      <a href="#merchants">For groomers</a>
+      <a href="#launch">Launching in</a>
+    </div>
+    <div class="nav-cta">
+      <span class="lang-toggle"><b>EN</b> · TH</span>
+      <a class="btn primary btn-sm" href="#download">Download app</a>
+    </div>
+  </nav>
+</div>
+
+<!-- HERO -->
+<div class="wrap">
+  <section class="hero" id="top">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="hero-badge"><span class="tiny-dot"></span>Now booking · Sathorn · Thonglor · Ari</span>
+        </div>
+        <h1>A grooming appointment<br/>that <em>holds its word.</em></h1>
+        <p class="hero-sub">Book routine grooming for your dog or cat in about a minute. Real availability from trusted Bangkok shops. No chasing LINE replies, no ghosted slots, no guessing whether you're actually booked.</p>
+        <div class="hero-ctas">
+          <a class="store" href="#download">
+            <span class="store-ic" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.54c-.02-2.31 1.88-3.42 1.96-3.47-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.15-2.77.84-3.49.84-.72 0-1.83-.82-3.01-.8-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.69 2.36 2.9 2.32 1.16-.05 1.6-.75 3-.75 1.4 0 1.8.75 3.03.72 1.25-.02 2.04-1.13 2.81-2.24.89-1.29 1.25-2.54 1.27-2.6-.03-.01-2.43-.94-2.46-3.72zM14.72 5.59c.63-.78 1.06-1.85.94-2.92-.91.04-2.03.62-2.69 1.39-.59.68-1.11 1.78-.97 2.82 1.03.08 2.08-.52 2.72-1.29z"/></svg>
+            </span>
+            <div class="store-text"><small>Download on the</small><b>App Store</b></div>
+          </a>
+          <a class="store" href="#download">
+            <span class="store-ic" aria-hidden="true">
+              <svg width="22" height="24" viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C33 7.3 23.7 20.7 23.7 38.1v435.7c0 17.4 9.3 30.8 23.3 38.1l256.4-256L47 0zm425.6 225.2l-58.9-34-65.7 64.5 65.7 64.5 60.1-34c18-14.3 18-46.6-1.2-60.9zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+            </span>
+            <div class="store-text"><small>Get it on</small><b>Google Play</b></div>
+          </a>
+          <a class="ghost-link" href="#how">See how it works</a>
+        </div>
+      </div>
+      <div class="hero-phones" aria-hidden="true">
+        <!-- Back phone: booking confirmation -->
+        <div class="p-shell back">
+          <div class="p-screen">
+            <div class="p-notch"></div>
+            <div class="p-status"><span>9:41</span><span>●●●</span></div>
+            <div class="confirm-card">
+              <div class="mono muted">Booking · #BK-21408</div>
+              <div class="confirm-big">
+                <span class="status s-confirm">Confirmed</span>
+                <h6>Luna · Bath &amp; Tidy</h6>
+                <div class="muted" style="font-size:11px">Fri 22 Nov · 10:30 AM</div>
+              </div>
+              <div class="detail-row"><span class="muted">Groomer</span><b>Khun Ploy</b></div>
+              <div class="detail-row"><span class="muted">Shop</span><b>Ari Pet Salon</b></div>
+              <div class="detail-row"><span class="muted">Card hold</span><b>฿850 · until Fri 10:30</b></div>
+              <div class="detail-row"><span class="muted">Free cancel</span><b>Thu 10:30</b></div>
+            </div>
+          </div>
+        </div>
+        <!-- Front phone: home -->
+        <div class="p-shell front">
+          <div class="p-screen">
+            <div class="p-notch"></div>
+            <div class="p-status"><span>9:41</span><span>●●●</span></div>
+            <div class="phone-hero">
+              <div class="row between">
+                <h5>Good morning,<br/>Praew</h5>
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--primary);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">P</div>
+              </div>
+              <div class="searchbar">🔍 Search shop or service</div>
+              <div class="pill-bar">
+                <div class="pill on">Near me</div>
+                <div class="pill">This week</div>
+                <div class="pill">Dog · bath</div>
+              </div>
+              <div class="repeat-card">
+                <span class="lbl">Rebook in one tap</span>
+                <h6>Bath &amp; Tidy · Luna</h6>
+                <div class="meta"><span>Ari Pet Salon</span><span>฿850</span></div>
+                <div class="cta"><b>Fri 10:30 avail</b><span>→</span></div>
+              </div>
+              <div class="pet-card-mini">
+                <div class="ring">L</div>
+                <div><b>Luna</b><span>Shih Tzu · 4kg · sensitive coat</span></div>
+              </div>
+              <div style="margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase;text-align:center">Home · Browse · Bookings · Pets</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof">
+      <span class="item">Instant routine bookings</span>
+      <span class="item">Card hold, not charge</span>
+      <span class="item">Thai + English</span>
+      <span class="item">Free cancel window</span>
+      <span class="item">One-tap rebook</span>
+    </div>
+  </section>
+</div>
+
+<!-- PROBLEM -->
+<div class="wrap">
+  <section id="problem">
+    <div class="sec-top">
+      <div class="sec-num">01 · The problem</div>
+      <h2 class="sec-title">Booking a groomer in Bangkok shouldn't be a group chat.</h2>
+      <p class="sec-kicker">Today, scheduling a bath or full groom means ping-ponging across LINE, Instagram, Facebook, and the shop's phone. Nobody can tell if a slot is actually yours until someone replies. Pawpoint fixes the coordination, not the craft.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="prob-card">
+        <div class="mono muted">Tuesday, 8:42 PM</div>
+        <div class="chat">
+          <div class="msg me">สวัสดีค่ะ ว่างวันเสาร์เช้ามั้ยคะ</div>
+          <div class="msg them">รอสอบถามก่อนนะคะ 🙏</div>
+          <div class="msg them">(อ่านแล้ว 9:17)</div>
+          <div class="msg me">📱 …?</div>
+        </div>
+        <h3>Chat is slow and unclear</h3>
+        <p>Availability lives in a groomer's head. "Let me check" is often as far as it gets.</p>
+      </div>
+      <div class="prob-card">
+        <div class="row gap-8" style="justify-content:flex-start">
+          <span class="status s-confirm">Confirmed?</span>
+          <span class="status s-no-show">No-show?</span>
+        </div>
+        <div style="height:120px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:var(--radius);background:var(--paper);font-family:var(--serif);font-size:22px;color:var(--ink-3);letter-spacing:-0.015em">"I think you're booked?"</div>
+        <h3>No-shows &amp; ghost slots</h3>
+        <p>Without a commitment step, both sides lose time. Shops overbook defensively; owners drop off their pet to closed shutters.</p>
+      </div>
+      <div class="prob-card">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:90px">
+          <div style="background:var(--paper-3);border-radius:4px"></div>
+          <div style="background:var(--paper-3);border-radius:4px"></div>
+          <div style="background:var(--accent-wash);border:1px solid var(--accent);border-radius:4px"></div>
+          <div style="background:var(--paper-3);border-radius:4px"></div>
+          <div style="background:var(--paper-3);border-radius:4px"></div>
+          <div style="background:var(--accent-wash);border:1px solid var(--accent);border-radius:4px"></div>
+          <div style="background:var(--paper-3);border-radius:4px"></div>
+          <div style="background:var(--paper-3);border-radius:4px"></div>
+        </div>
+        <h3>Rebooking starts from zero</h3>
+        <p>Every repeat visit restarts the same negotiation — breed, coat, temperament, cut length. Nothing carries over.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- HOW / DIFFERENCE -->
+<div class="wrap">
+  <section id="how">
+    <div class="sec-top">
+      <div class="sec-num">02 · How Pawpoint works</div>
+      <h2 class="sec-title">Fast for routine. Honest about the rest.</h2>
+      <p class="sec-kicker">Not every groom fits a neat 45-minute box — that's the truth most apps quietly break. Pawpoint separates services that can be instant-booked from cases that genuinely need the shop to review, and treats both with the same care.</p>
+    </div>
+
+    <div class="diff-row">
+      <div class="diff-visual">
+        <div class="timeline-compare">
+          <div class="tl">
+            <div class="who">Before</div>
+            <div class="bar">
+              <div class="seg chat" style="width:60px">DM</div>
+              <div class="seg wait" style="width:90px">Wait 3h</div>
+              <div class="seg chat" style="width:50px">Reply</div>
+              <div class="seg wait" style="width:70px">Wait 6h</div>
+              <div class="seg confirmed" style="width:80px">Maybe?</div>
+            </div>
+          </div>
+          <div class="tl"><div></div><div class="mins">~ 1 day elapsed · 6 messages</div></div>
+          <div class="tl">
+            <div class="who">Pawpoint</div>
+            <div class="bar">
+              <div class="seg instant" style="width:110px">Pick slot</div>
+              <div class="seg confirmed" style="width:120px">Confirmed instantly</div>
+            </div>
+          </div>
+          <div class="tl"><div></div><div class="mins">~ 45 seconds · 0 messages</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="num">01 · ROUTINE SPEED</div>
+        <h3>Routine bookings<br/><em>in under a minute.</em></h3>
+        <p>Bath, tidy, nail trim, ear cleaning — a defined set of routine services are instantly bookable at participating Bangkok shops, with real slot availability published by the groomer themselves.</p>
+        <div class="bullets">
+          <div>Real next-available times — not "please enquire"</div>
+          <div>Clear routine pricing before you commit</div>
+          <div>Card hold, not a charge, to reduce no-shows</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diff-row flip">
+      <div>
+        <div class="num">02 · TRUTHFUL EXCEPTIONS</div>
+        <h3>When a groom is tricky,<br/>the app <em>says so.</em></h3>
+        <p>Matted coats, anxious dogs, first-time large breeds, unfamiliar cats — these cases route into a short request-confirm flow. The shop reviews, you get a clear response window, and you always know what happens next.</p>
+        <div class="bullets">
+          <div>Instant vs pending is unmistakable in the UI</div>
+          <div>Every pending booking shows an expected response time</div>
+          <div>If the shop declines or time runs out, the hold releases cleanly</div>
+        </div>
+      </div>
+      <div class="diff-visual">
+        <div class="rail">
+          <div class="rail-card instant">
+            <span class="status s-instant">Instant</span>
+            <h6>Bath &amp; Tidy · Luna</h6>
+            <p>Routine service. Duration is predictable, the slot is held the moment you confirm.</p>
+          </div>
+          <div class="rail-card pending">
+            <span class="status s-pend-m">Pending review</span>
+            <h6>Full Groom · Mochi</h6>
+            <p>Poodle, first visit, matted coat. The shop will respond within 2 hours or the hold releases.</p>
+          </div>
+        </div>
+        <div class="anno" style="margin-top:6px"><b>Design decision</b>Routine vs. review is a product contract, not a styling choice. Both states share the same shape so customers learn them fast.</div>
+      </div>
+    </div>
+
+    <div class="diff-row">
+      <div class="diff-visual">
+        <div class="repeat-vis">
+          <div class="row2">
+            <div class="left"><div class="ring">L</div><div><b>Luna · Bath &amp; Tidy</b><span>Ari Pet Salon · Khun Ploy</span></div></div>
+            <a class="btn primary btn-sm" href="#download">Rebook Fri</a>
+          </div>
+          <div class="row2">
+            <div class="left"><div class="ring" style="background:var(--primary-wash);border-color:var(--primary);color:var(--primary-ink)">M</div><div><b>Mochi · Full Groom</b><span>Soi 55 Groomers · Khun Nat</span></div></div>
+            <a class="btn secondary btn-sm" href="#download">Rebook Sat</a>
+          </div>
+          <div class="row2">
+            <div class="left"><div class="ring" style="background:var(--info-wash);border-color:var(--info);color:var(--info)">K</div><div><b>Kobe · Nails</b><span>Thonglor Paws</span></div></div>
+            <a class="btn secondary btn-sm" href="#download">Rebook next</a>
+          </div>
+          <div class="hint">One tap · same shop · same stylist · same notes</div>
+        </div>
+      </div>
+      <div>
+        <div class="num">03 · REPEAT-FIRST</div>
+        <h3>The second booking<br/>is where it <em>clicks.</em></h3>
+        <p>Your pet, your shop, your stylist, your preferred cut — remembered. Rebooking takes one tap and picks up exactly where last time left off, because that's where most grooming actually lives.</p>
+        <div class="bullets">
+          <div>Pet profile: breed, size, coat, temperament, allergies</div>
+          <div>Stylist notes carry forward across visits</div>
+          <div>Same card, same hold rules, no forms to refill</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TRUST -->
+<div class="wrap">
+  <section id="trust">
+    <div class="sec-top">
+      <div class="sec-num">03 · Trust, explained</div>
+      <h2 class="sec-title">Payment protection in plain language.</h2>
+      <p class="sec-kicker">We use card holds and — for higher-risk cases — small deposits to cut no-shows. These are protections, not penalties. Pawpoint is up-front about every rule, every timer, and every way to get your hold released.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="ic">¶</div>
+        <h4>Card hold, not a charge</h4>
+        <p>Routine bookings place a temporary card authorisation. Nothing is captured until the appointment completes — and the hold lifts automatically if you cancel in the free window.</p>
+        <div class="meta">Authorisation · no capture</div>
+      </div>
+      <div class="trust-card">
+        <div class="ic">§</div>
+        <h4>Deposits, only when they fit</h4>
+        <p>Full grooms or higher-value services may ask for a small deposit. The amount, the refund window, and what happens on a no-show are stated before you commit.</p>
+        <div class="meta">Explicit policy · per service</div>
+      </div>
+      <div class="trust-card">
+        <div class="ic">✦</div>
+        <h4>Reminders &amp; reconfirm</h4>
+        <p>You get a friendly reminder the day before and the morning of. A single tap reconfirms. If you can't make it, cancelling is the same one tap — no phone call required.</p>
+        <div class="meta">24h before · day-of</div>
+      </div>
+      <div class="trust-card">
+        <div class="ic">◎</div>
+        <h4>Every state is named</h4>
+        <p>Instant, pending, confirmed, declined, arrived, completed, cancelled — you always see the current state of your booking, and what needs to happen next.</p>
+        <div class="meta">13 named states</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- MERCHANT -->
+<section class="merchant" id="merchants">
+  <div class="wrap">
+    <div class="sec-top">
+      <div class="sec-num">04 · For grooming shops</div>
+      <h2 class="sec-title">One canonical schedule. Not six chat windows.</h2>
+      <p class="sec-kicker">Pawpoint's merchant app replaces the mental tracking and LINE archaeology with a single board that every booking — online, phone, walk-in — lives inside.</p>
+    </div>
+    <div class="merchant-grid">
+      <div class="merchant-bullets">
+        <div class="m-bul">
+          <div class="n">01</div>
+          <div>
+            <h4>Truthful availability</h4>
+            <p>You set routine services, durations, online-booking hours, and cut-offs. The slots customers see are the slots you actually have.</p>
+          </div>
+        </div>
+        <div class="m-bul">
+          <div class="n">02</div>
+          <div>
+            <h4>Offline bookings live in the same board</h4>
+            <p>Phone call, LINE message, walk-in — capture the booking inside Pawpoint and it shares the same slot logic and payment protection.</p>
+          </div>
+        </div>
+        <div class="m-bul">
+          <div class="n">03</div>
+          <div>
+            <h4>Request-confirm, not first-come-first-hope</h4>
+            <p>High-variance jobs route for your review. Approve, decline with an explicit reason, or let the timeout expire cleanly — the outcome is always auditable.</p>
+          </div>
+        </div>
+        <div class="m-bul">
+          <div class="n">04</div>
+          <div>
+            <h4>No-shows get quieter</h4>
+            <p>Card holds and deposits do the work reminders can't. You get paid for the slot even when the customer doesn't show — and the policy is never a surprise.</p>
+          </div>
+        </div>
+      </div>
+      <div class="merchant-visual" aria-hidden="true">
+        <div class="m-board-head"><h5>Friday · 22 Nov</h5><span>Ari Pet Salon · Khun Ploy</span></div>
+        <div class="m-board">
+          <div class="cell h">Time</div>
+          <div class="cell h">Bath</div>
+          <div class="cell h">Full Groom</div>
+          <div class="cell h">Nails</div>
+
+          <div class="cell">09:00</div>
+          <div class="cell"><div class="slot-m">Luna · Shih Tzu<br/><small style="opacity:.75">Bath &amp; Tidy · 45m</small></div></div>
+          <div class="cell"></div>
+          <div class="cell"><div class="slot-m hold">Kobe · Labrador<br/><small style="opacity:.85">Nails · 15m · ฿120 hold</small></div></div>
+
+          <div class="cell">10:00</div>
+          <div class="cell"></div>
+          <div class="cell"><div class="slot-m pend">Mochi · Poodle<br/><small style="opacity:.75">Pending review · 2h SLA</small></div></div>
+          <div class="cell"></div>
+
+          <div class="cell">11:00</div>
+          <div class="cell"><div class="slot-m">Coco · Bichon<br/><small style="opacity:.75">Bath · 30m</small></div></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+
+          <div class="cell">12:00</div>
+          <div class="cell" style="background:#191b25;font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.12em">Lunch</div>
+          <div class="cell" style="background:#191b25"></div>
+          <div class="cell" style="background:#191b25"></div>
+        </div>
+        <div class="row between" style="color:rgba(255,255,255,.55);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding-top:6px">
+          <span>Confirmed · Pending · Hold</span>
+          <span>Live merchant board</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCH WEDGE -->
+<div class="wrap">
+  <section id="launch">
+    <div class="sec-top">
+      <div class="sec-num">05 · What's launching</div>
+      <h2 class="sec-title">A deliberately narrow start.</h2>
+      <p class="sec-kicker">We're launching a tight slice on purpose. Pawpoint is Bangkok-first, in-shop only, and focused on a small set of premium-leaning independent shops in dense neighborhoods. Breadth can wait until the core booking is actually trusted.</p>
+    </div>
+    <div class="wedge-grid">
+      <div class="wedge-card">
+        <div class="num">WHERE · AREA</div>
+        <h3>Central Bangkok,<br/>dense neighborhoods.</h3>
+        <p>Sathorn, Thonglor, Ari, Phrom Phong, and Sukhumvit sois — clusters where a great shop is minutes away, not an expedition.</p>
+        <div class="not">Not yet: suburbs, other cities</div>
+      </div>
+      <div class="wedge-card">
+        <div class="num">WHO · SHOPS</div>
+        <h3>Independent shops,<br/>premium-leaning.</h3>
+        <p>Owner-operated grooming studios who care about craft, already have repeat clientele, and are tired of running a schedule out of LINE.</p>
+        <div class="not">Not yet: chain salons, franchise PET+</div>
+      </div>
+      <div class="wedge-card">
+        <div class="num">WHAT · SERVICES</div>
+        <h3>In-shop grooming,<br/>one pet at a time.</h3>
+        <p>Bath, tidy, full grooms, nails, ear care — for one pet with an optional set of fixed add-ons. Predictable enough to actually be truthful about slots.</p>
+        <div class="not">Not yet: home service, multi-pet, bundles</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- DOWNLOAD CTA -->
+<section class="cta-block" id="download">
+  <div class="wrap">
+    <h2>Book the groom.<br/><em>Get on with the day.</em></h2>
+    <p>Pawpoint is a mobile app. Download it, add your pet once, and rebook in a tap. Booking lives in the app, not on this page — that's on purpose.</p>
+    <div class="cta-stores">
+      <a class="store" href="#">
+        <span class="store-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.54c-.02-2.31 1.88-3.42 1.96-3.47-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.15-2.77.84-3.49.84-.72 0-1.83-.82-3.01-.8-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.69 2.36 2.9 2.32 1.16-.05 1.6-.75 3-.75 1.4 0 1.8.75 3.03.72 1.25-.02 2.04-1.13 2.81-2.24.89-1.29 1.25-2.54 1.27-2.6-.03-.01-2.43-.94-2.46-3.72zM14.72 5.59c.63-.78 1.06-1.85.94-2.92-.91.04-2.03.62-2.69 1.39-.59.68-1.11 1.78-.97 2.82 1.03.08 2.08-.52 2.72-1.29z"/></svg></span>
+        <div class="store-text"><small>Download on the</small><b>App Store</b></div>
+      </a>
+      <a class="store" href="#">
+        <span class="store-ic"><svg width="22" height="24" viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C33 7.3 23.7 20.7 23.7 38.1v435.7c0 17.4 9.3 30.8 23.3 38.1l256.4-256L47 0zm425.6 225.2l-58.9-34-65.7 64.5 65.7 64.5 60.1-34c18-14.3 18-46.6-1.2-60.9zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg></span>
+        <div class="store-text"><small>Get it on</small><b>Google Play</b></div>
+      </a>
+    </div>
+    <div class="cta-fine">Free to download · Bangkok launch · Thai + English</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="mark" href="#top" style="text-decoration:none"><span class="mark-dot"></span> Pawpoint</a>
+        <p class="lead">A booking that earns the next appointment. Bangkok-first, in-shop grooming, built for repeat.</p>
+      </div>
+      <div>
+        <h6>Product</h6>
+        <ul>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#trust">Payment protection</a></li>
+          <li><a href="#download">Download</a></li>
+          <li>Pet profiles</li>
+        </ul>
+      </div>
+      <div>
+        <h6>Shops</h6>
+        <ul>
+          <li><a href="#merchants">For groomers</a></li>
+          <li>Merchant app</li>
+          <li>Apply to join</li>
+          <li>Pricing</li>
+        </ul>
+      </div>
+      <div>
+        <h6>Company</h6>
+        <ul>
+          <li>About</li>
+          <li>Contact</li>
+          <li>Privacy</li>
+          <li>Terms &amp; policies</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2024 Pawpoint · Bangkok</span>
+      <span>EN · TH</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav border on scroll
+  const nav = document.querySelector('.nav');
+  addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', scrollY > 8);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Pawpoint — Stakeholder one-pager</title>
+<link rel="stylesheet" href="shared/pawpoint-tokens.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sheet-w: 1587px;
+    --sheet-h: 1123px;
+    --gutter: 32px;
+    --paper-warm: #f4f1ea;
+    --rule: color-mix(in oklab, var(--ink) 14%, transparent);
+    --rule-strong: color-mix(in oklab, var(--ink) 30%, transparent);
+  }
+
+  @page { size: A3 landscape; margin: 0; }
+  html, body { margin:0; padding:0; background:#2a2722; }
+  body { font-family: var(--sans); color: var(--ink); }
+
+  /* Wrapper lets the sheet sit centered on dark when viewed on screen */
+  .stage {
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:32px;
+  }
+  .sheet {
+    width: var(--sheet-w);
+    height: var(--sheet-h);
+    background: var(--paper-warm);
+    position: relative;
+    box-shadow: 0 40px 120px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.2);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  /* subtle paper texture */
+  .sheet::before {
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(circle at 22% 14%, rgba(180,120,80,.04) 0, transparent 50%),
+      radial-gradient(circle at 78% 86%, rgba(120,160,180,.03) 0, transparent 50%);
+  }
+
+  /* ── masthead ─────────────────────────────────────────── */
+  .mast {
+    padding: 28px 44px 20px;
+    border-bottom: 1px solid var(--rule-strong);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: baseline;
+    background: #fff;
+  }
+  .mast .logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mast .mark {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--ink); position: relative;
+    box-shadow: inset 0 -6px 0 var(--accent);
+  }
+  .mast .mark::after {
+    content:''; position:absolute; inset:0; border-radius:50%;
+    background: radial-gradient(circle at 36% 40%, #fff 0 3px, transparent 4px),
+                radial-gradient(circle at 60% 40%, #fff 0 3px, transparent 4px);
+  }
+  .mast .brand {
+    font-family: var(--serif); font-size: 26px; font-weight: 500; letter-spacing: -0.02em;
+  }
+  .mast .brand em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+  .mast .kicker {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .mast .kicker b { color: var(--ink); font-weight: 500; }
+
+  .mast .dateline {
+    text-align: right;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--ink-3); text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .mast .dateline b { color: var(--ink); font-weight: 500; }
+
+  /* ── body grid: 12-col with lead story on top row ──────── */
+  .body {
+    padding: 20px 44px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto 1fr;
+    gap: 18px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* rows 1: headline + shield diagram */
+  .headline { grid-column: 1 / span 7; grid-row: 1; min-width: 0; }
+  .headline h1 {
+    font-family: var(--serif); font-weight: 500; letter-spacing: -0.03em;
+    font-size: 56px; line-height: 0.98; margin: 0 0 14px; max-width: 18ch;
+  }
+  .headline h1 em { font-style: italic; color: var(--accent); font-weight: 500; }
+  .headline .lede {
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px;
+    font-size: 12.5px; line-height: 1.5; color: var(--ink); max-width: none;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: 12px 0;
+  }
+  .headline .lede .col-a, .headline .lede .col-b { }
+  .headline .lede p:first-child::first-letter {
+    font-family: var(--serif); font-weight: 500; float: left;
+    font-size: 52px; line-height: 0.9; padding: 4px 10px 0 0; color: var(--accent);
+  }
+  .headline .lede p { margin: 0 0 10px; }
+  .headline .sig {
+    margin-top: 14px; display: flex; gap: 18px; align-items: baseline;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .headline .sig b { color: var(--ink); font-weight: 500; }
+
+  /* Shield mechanism panel */
+  .shield { grid-column: 8 / span 5; grid-row: 1; background: var(--ink); color: var(--paper); padding: 22px 22px; position: relative; align-self: start; }
+  .shield .eye { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .shield h2 { font-family: var(--serif); font-weight: 500; font-size: 26px; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 14px; }
+  .shield h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .shield .mech { display: grid; grid-template-columns: 1fr 16px 1fr 16px 1fr; align-items: start; gap: 0; margin: 14px 0 14px; }
+  .shield .node { display:flex; flex-direction:column; gap:4px; }
+  .shield .node .amt { font-family: var(--serif); font-weight: 500; font-size: 28px; color: #fff; letter-spacing: -0.015em; line-height: 1; }
+  .shield .node .amt em { font-style: normal; color: var(--accent); }
+  .shield .node .who { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+  .shield .node .lbl { font-size: 11.5px; color: rgba(255,255,255,.85); line-height: 1.35;}
+  .shield .arrow { align-self: center; color: var(--accent); font-family: var(--mono); font-size: 13px; padding-top: 22px; text-align: center; letter-spacing: -0.1em;}
+  .shield .foot { border-top: 1px dashed rgba(255,255,255,.22); padding-top: 10px; font-size: 11.5px; color: rgba(255,255,255,.65); line-height: 1.45; }
+  .shield .foot b { color: #fff; font-weight: 500; }
+
+  /* row 2: surfaces */
+  .surfaces { grid-column: 1 / -1; grid-row: 2; border-top: 1px solid var(--rule-strong); border-bottom: 1px solid var(--rule-strong); padding: 14px 0; }
+  .surfaces-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 12px; }
+  .surfaces-head .eye { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3);}
+  .surfaces-head h3 { font-family: var(--serif); font-weight: 500; font-size: 22px; letter-spacing: -0.015em; margin: 0; }
+  .surfaces-head h3 em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .surfaces-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
+  .surf { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; }
+  .surf .dev { background: var(--ink); border-radius: 12px; padding: 4px; height: 80px; display: flex; align-items: center; justify-content: center; }
+  .surf .dev.phone { width: 44px; height: 72px; border-radius: 8px; margin: 4px 10px; }
+  .surf .dev.laptop { width: 64px; height: 44px; border-radius: 5px; margin: 18px 0; position: relative; }
+  .surf .dev.laptop::after { content:''; position: absolute; left:-4px; right:-4px; bottom:-4px; height:3px; background: var(--ink-2); border-radius: 0 0 6px 6px;}
+  .surf .dev .screen { background: var(--paper-warm); width: 90%; height: 90%; border-radius: 4px; }
+  .surf .txt .idx { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--accent-ink); text-transform: uppercase; }
+  .surf .txt h4 { font-family: var(--serif); font-weight: 500; font-size: 18px; letter-spacing: -0.01em; margin: 3px 0 4px; }
+  .surf .txt h4 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .surf .txt p { font-size: 12px; line-height: 1.5; color: var(--ink-2); margin: 0;}
+  .surf .txt .meta { margin-top: 6px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; color: var(--ink-3); text-transform: uppercase;}
+
+  /* row 3: 4 columns */
+  .r3 { grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-columns: 3fr 3fr 3fr 3fr; gap: var(--gutter); align-items: stretch; }
+
+  .col h3 { font-family: var(--serif); font-weight: 500; font-size: 20px; letter-spacing: -0.015em; margin: 0 0 4px; }
+  .col h3 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .col .eye { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; display: block;}
+
+  /* Col A: early numbers */
+  .nums { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 14px; margin-top: 6px;}
+  .num { padding: 0;}
+  .num b { font-family: var(--serif); font-weight: 500; font-size: 34px; letter-spacing: -0.02em; line-height: 1; display: block;}
+  .num b em { font-style: italic; color: var(--accent);}
+  .num .lbl { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-top: 5px; line-height: 1.4;}
+  .num.big { grid-column: 1 / -1;}
+  .num.big b { font-size: 54px;}
+
+  .delta { font-family: var(--mono); font-size: 10px; color: var(--ok); letter-spacing: .06em; margin-top: 3px;}
+  .delta.down { color: var(--danger); }
+
+  /* Col B: voices */
+  .voices { display: flex; flex-direction: column; gap: 12px; margin-top: 6px;}
+  .voice { border-left: 2px solid var(--accent); padding: 4px 0 4px 14px;}
+  .voice q {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: 15.5px; line-height: 1.4; color: var(--ink); display: block; quotes: none;
+  }
+  .voice q::before { content: '“'; color: var(--accent); margin-right: 2px;}
+  .voice q::after { content: '”'; color: var(--accent); margin-left: 2px;}
+  .voice .who { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-top: 6px;}
+  .voice .who b { color: var(--ink); font-weight: 500; }
+
+  /* Col C: unit economics */
+  .econ { margin-top: 6px; font-family: var(--mono); font-size: 11px;}
+  .econ .line { display: grid; grid-template-columns: 1fr auto; padding: 5px 0; border-bottom: 1px dashed var(--rule);}
+  .econ .line.hi { background: var(--accent-wash); margin: 4px -6px; padding: 7px 6px; border: 0; border-top: 1px solid var(--accent); border-bottom: 1px solid var(--accent);}
+  .econ .line.total { border: 0; margin-top: 6px; padding-top: 8px; border-top: 2px solid var(--ink);}
+  .econ .line b { font-weight: 500; color: var(--ink); }
+  .econ .line .amt { color: var(--ink); font-weight: 500;}
+  .econ .line.neg .amt { color: var(--ink-2);}
+  .econ .line.total .amt { font-family: var(--serif); font-size: 18px; letter-spacing: -0.01em;}
+  .econ .foot { margin-top: 10px; font-size: 11px; color: var(--ink-3); font-family: var(--sans); line-height: 1.5;}
+
+  /* Col D: next 12 weeks / ask */
+  .timeline { margin-top: 6px; position: relative;}
+  .timeline::before {
+    content:''; position:absolute; left: 7px; top: 10px; bottom: 10px;
+    width: 1px; background: var(--rule-strong);
+  }
+  .tlrow { display: grid; grid-template-columns: 16px 1fr; gap: 10px; padding: 3px 0; align-items: start;}
+  .tlrow .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--paper-warm); border: 2px solid var(--ink-3); margin-top: 4px; position: relative; z-index: 1;}
+  .tlrow.now .dot { background: var(--accent); border-color: var(--accent);}
+  .tlrow.soon .dot { background: var(--paper-warm); border-color: var(--accent); }
+  .tlrow .when { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .tlrow .what { font-size: 11.5px; line-height: 1.4; color: var(--ink); margin-top: 1px;}
+  .tlrow .what b { font-weight: 500;}
+
+  .ask { margin-top: 8px; background: var(--ink); color: var(--paper); padding: 10px 12px; position: relative;}
+  .ask .eye { font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent);}
+  .ask .big { font-family: var(--serif); font-weight: 500; font-size: 15px; letter-spacing: -0.015em; line-height: 1.2; margin-top: 4px;}
+  .ask .big em { font-style: italic; color: var(--accent); font-weight: 400;}
+  .ask .sub { font-size: 11px; color: rgba(255,255,255,.7); margin-top: 6px; line-height: 1.4;}
+
+  /* page footer (sheet-level) */
+  .pgfoot {
+    border-top: 1px solid var(--rule-strong);
+    padding: 14px 44px; background: #fff;
+    display: flex; align-items: center; gap: 22px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .pgfoot b { color: var(--ink); font-weight: 500; }
+  .pgfoot .sp { flex: 1;}
+  .pgfoot .confid {
+    background: var(--ink); color: var(--paper); padding: 3px 10px;
+    letter-spacing: .2em; font-size: 9.5px;
+  }
+
+  /* Bangkok map inside Col A */
+  .bkk-mini {
+    grid-column: 1 / -1; margin-top: 8px;
+    background: var(--ink); border-radius: 4px; padding: 10px 14px;
+    color: var(--paper); position: relative; height: 86px;
+    overflow: hidden;
+  }
+  .bkk-mini .lbl { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; color: rgba(255,255,255,.6); text-transform: uppercase;}
+  .bkk-mini .big { font-family: var(--serif); font-weight: 500; font-size: 18px; color: #fff; line-height: 1.1; margin-top: 4px; max-width: 18ch;}
+  .bkk-mini .big em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .bkk-mini .dots { position: absolute; inset: 0; pointer-events: none;}
+  .bkk-mini .dots b {
+    position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 22%, transparent);
+  }
+  .bkk-mini .dots i {
+    position: absolute; width: 5px; height: 5px; border-radius: 50%; background: transparent;
+    border: 1.5px dashed rgba(255,255,255,.5);
+  }
+
+  /* print */
+  @media print {
+    body { background: #fff; }
+    .stage { padding: 0; }
+    .sheet { box-shadow: none; width: 100%; height: 100vh; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="sheet">
+
+  <!-- MASTHEAD -->
+  <div class="mast">
+    <div class="logo">
+      <div class="mark"></div>
+      <div class="brand">Pawpoint<em>.</em></div>
+    </div>
+    <div class="kicker">
+      Bangkok · pet-care booking &amp; payments · <b>stakeholder one-pager</b>
+    </div>
+    <div class="dateline">
+      Vol. 01 · Issue 03<br/>
+      <b>Nov 2025 · Confidential</b>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Headline + lede -->
+    <section class="headline">
+      <h1>Bangkok's grooming book is a <em>group chat</em>. We're building the <em>receipt</em>.</h1>
+      <div class="lede">
+        <div class="col-a"><p>In Bangkok, booking a groomer is a LINE message, a shrug, and a drive across town hoping the shop remembers. Fifty-eight percent of pet owners we interviewed said they've shown up to a salon that had no record of the booking. Shops, meanwhile, lose an hour a day to phone tag and a third of their Saturdays to no-shows.</p></div>
+        <div class="col-b"><p>Pawpoint is a booking spine for the whole market — one customer app, one shop console, one ops room — held together by <b>Shield</b>, a refundable deposit that makes every confirmation real. We are 41 shops and 1,842 pet owners into Bangkok. Saturday retention is up 22 points. The next twelve weeks are the ones that matter.</p></div>
+      </div>
+      <div class="sig">
+        <span>Filed by <b>Wit S., Founder</b></span>
+        <span>·</span>
+        <span><b>wit@pawpoint.co</b></span>
+        <span>·</span>
+        <span><b>+66 8x xxx 9000</b></span>
+      </div>
+    </section>
+
+    <!-- Shield mechanism -->
+    <aside class="shield">
+      <div class="eye">The mechanism · Shield</div>
+      <h2>A deposit that <em>evaporates</em> the moment the dog arrives.</h2>
+      <div class="mech">
+        <div class="node">
+          <div class="who">T &minus; 3 days</div>
+          <div class="amt">฿<em>450</em></div>
+          <div class="lbl">Booked. Customer's card is held, not charged.</div>
+        </div>
+        <div class="arrow">━▶</div>
+        <div class="node">
+          <div class="who">On arrival</div>
+          <div class="amt">QR</div>
+          <div class="lbl">Scan at the counter. Hold releases to shop in full.</div>
+        </div>
+        <div class="arrow">━▶</div>
+        <div class="node">
+          <div class="who">If no-show</div>
+          <div class="amt">฿<em>450</em></div>
+          <div class="lbl">Shop gets paid. Customer gets one warn, then a strike.</div>
+        </div>
+      </div>
+      <div class="foot">
+        <b>Net effect:</b> merchants stop accepting bookings they don't trust. Customers stop ghosting shops they've never paid. The platform handles the awkwardness, so humans don't have to.
+      </div>
+    </aside>
+
+    <!-- Three surfaces -->
+    <section class="surfaces">
+      <div class="surfaces-head">
+        <span class="eye">The product, in <b>three surfaces</b></span>
+        <h3>One <em>spine</em>, three screens.</h3>
+      </div>
+      <div class="surfaces-row">
+        <div class="surf">
+          <div class="dev phone"><div class="screen"></div></div>
+          <div class="txt">
+            <div class="idx">Surface 01 · Customer</div>
+            <h4>The app pet parents actually <em>open</em></h4>
+            <p>Discover nearby shops, book in 3 taps, see what's happening with the dog live. Bilingual (TH/EN). Pet profile remembers allergies, meds, the groomer who did it right last time.</p>
+            <div class="meta">iOS · Android · 12 screens modeled</div>
+          </div>
+        </div>
+        <div class="surf">
+          <div class="dev phone" style="background:var(--primary)"><div class="screen"></div></div>
+          <div class="txt">
+            <div class="idx">Surface 02 · Merchant</div>
+            <h4>An iPad on the counter that <em>runs the shop</em></h4>
+            <p>Today's timeline, pending requests, a kanban board for groomers in motion. Handles arrivals with a QR scan; auto-accept rules mean 68% of bookings confirm instantly.</p>
+            <div class="meta">iPad 10.9" · 8 screens modeled</div>
+          </div>
+        </div>
+        <div class="surf">
+          <div class="dev laptop" style="background:var(--ink-2)"><div class="screen"></div></div>
+          <div class="txt">
+            <div class="idx">Surface 03 · Ops (internal)</div>
+            <h4>A control room that <em>saves the saves</em></h4>
+            <p>Pawpoint staff watch the network pulse, rescue stuck bookings in under a minute, and decide which Bangkok neighbourhood gets a shop next. Used daily by 3 roles.</p>
+            <div class="meta">Desktop · 6 screens modeled</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Row 3 -->
+    <section class="r3">
+
+      <!-- Col A: numbers + map -->
+      <div class="col">
+        <span class="eye">90 days in · numbers</span>
+        <h3>The <em>receipts</em>.</h3>
+        <div class="nums">
+          <div class="num big">
+            <b>฿<em>2.41</em>M</b>
+            <div class="lbl">GMV / month · <span class="delta">▲ 180% QoQ</span></div>
+          </div>
+          <div class="num">
+            <b>41</b>
+            <div class="lbl">Live shops · Bangkok</div>
+          </div>
+          <div class="num">
+            <b>1,842</b>
+            <div class="lbl">Pet owners onboarded</div>
+          </div>
+          <div class="num">
+            <b>89<em>%</em></b>
+            <div class="lbl">Shop accept rate<br/><span class="delta">▲ 2.1pt MoM</span></div>
+          </div>
+          <div class="num">
+            <b>2.8<em>%</em></b>
+            <div class="lbl">No-show rate<br/><span class="delta down">▼ from 19%</span></div>
+          </div>
+        </div>
+
+        <div class="bkk-mini">
+          <span class="lbl">Coverage · Bangkok metro</span>
+          <div class="big">41 live, 18 onboarding, <em>9 gaps</em></div>
+          <div class="dots">
+            <!-- scattered live shops -->
+            <b style="left:28%;top:44%"></b><b style="left:38%;top:36%"></b>
+            <b style="left:46%;top:52%"></b><b style="left:54%;top:46%"></b>
+            <b style="left:60%;top:58%"></b><b style="left:68%;top:42%"></b>
+            <b style="left:44%;top:66%"></b><b style="left:56%;top:70%"></b>
+            <b style="left:72%;top:60%"></b><b style="left:36%;top:74%"></b>
+            <!-- gaps -->
+            <i style="left:82%;top:34%"></i><i style="left:22%;top:72%"></i><i style="left:86%;top:72%"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col B: voices -->
+      <div class="col">
+        <span class="eye">The <b>people</b> · interviews · Nov 2025</span>
+        <h3>What they actually <em>say</em>.</h3>
+        <div class="voices">
+          <div class="voice">
+            <q>Before, I'd lose two Saturdays a month to no-shows. Now I just don't take bookings outside Pawpoint.</q>
+            <div class="who"><b>Pim V.</b> · owner, Aroon Grooming · Sathorn · 11 yrs in business</div>
+          </div>
+          <div class="voice">
+            <q>I trust it because my money is sitting somewhere until I walk in the door. It's like a tab, not a bill.</q>
+            <div class="who"><b>Praew S.</b> · customer · 2 cats + 1 retriever · Thonglor</div>
+          </div>
+          <div class="voice">
+            <q>The iPad tells me the dog's name before the owner does. I look like a wizard.</q>
+            <div class="who"><b>Jai T.</b> · senior groomer, Maew &amp; Mhaa · 6 yrs grooming</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col C: unit economics -->
+      <div class="col">
+        <span class="eye">Per-booking economics · Q4'25 actuals</span>
+        <h3>The <em>math</em>.</h3>
+        <div class="econ">
+          <div class="line"><b>Average basket</b><span class="amt">฿ 640.00</span></div>
+          <div class="line neg"><span>&nbsp;&nbsp;Shop payout (85%)</span><span class="amt">− ฿ 544.00</span></div>
+          <div class="line neg"><span>&nbsp;&nbsp;Payment processing (2.2%)</span><span class="amt">− ฿ 14.08</span></div>
+          <div class="line hi"><b>Pawpoint take</b><span class="amt"><b>฿ 81.92</b></span></div>
+          <div class="line neg"><span>&nbsp;&nbsp;Attributable cost to serve</span><span class="amt">− ฿ 18.40</span></div>
+          <div class="line total"><b>Contribution / booking</b><span class="amt">฿ 63.52</span></div>
+        </div>
+        <div class="foot" style="padding:0;background:transparent;color:var(--ink-3);border:0;text-transform:none;font-family:var(--sans);font-size:11.5px;letter-spacing:0;margin-top:10px">
+          At <b style="color:var(--ink)">3,770 bookings/month</b> across the network we cover variable cost and half of fixed. At <b style="color:var(--ink)">8,200/month</b> — our March target — the business is cash-flow positive without raising.
+        </div>
+      </div>
+
+      <!-- Col D: next 12 weeks + ask -->
+      <div class="col">
+        <span class="eye">Next <b>12 weeks</b></span>
+        <h3>What <em>happens</em> now.</h3>
+        <div class="timeline">
+          <div class="tlrow now">
+            <div class="dot"></div>
+            <div>
+              <div class="when">Nov 2025 · this month</div>
+              <div class="what"><b>Ship Shield v2</b> — delayed-capture with 72h holds; halve chargebacks.</div>
+            </div>
+          </div>
+          <div class="tlrow soon">
+            <div class="dot"></div>
+            <div>
+              <div class="when">Dec · week 2</div>
+              <div class="what"><b>Cat-only vertical</b> — 6 feline shops signed; separate discovery flow.</div>
+            </div>
+          </div>
+          <div class="tlrow soon">
+            <div class="dot"></div>
+            <div>
+              <div class="when">Jan 2026</div>
+              <div class="what"><b>Bangkok · 60 shops</b> — close Ladprao, Bang Kapi, Nonthaburi gaps.</div>
+            </div>
+          </div>
+          <div class="tlrow">
+            <div class="dot"></div>
+            <div>
+              <div class="when">Feb 2026</div>
+              <div class="what"><b>Veterinary wedge</b> — same Shield mechanic, vaccinations &amp; check-ups.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ask">
+          <div class="eye">The ask</div>
+          <div class="big">Intros to <em>2 shop chains</em>, 1 vet group, and anyone who knows Bangkok's <em>pet insurance</em> space.</div>
+          <div class="sub">Not fundraising this quarter. Building a partner bench for Feb.</div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="pgfoot">
+    <b>Pawpoint</b>
+    <span>·</span>
+    <span>one page · no appendix · by design</span>
+    <div class="sp"></div>
+    <span>pawpoint.co/partners</span>
+    <span>·</span>
+    <span>+66 8x xxx 9000</span>
+    <span>·</span>
+    <span class="confid">Confidential</span>
+  </div>
+</div>
+</div>
+</body>
+</html>
