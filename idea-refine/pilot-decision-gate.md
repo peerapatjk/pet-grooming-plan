@@ -25,6 +25,9 @@ The team must leave this gate with explicit decisions on:
 - minimum onboarding fields
 - customer-facing trust copy for holds, deposits, cancellations, and no-shows
 - merchant response SLA for request-based bookings
+- the launch booking-unit boundary, including whether add-ons stay inside truthful instant booking
+- the confirmed-booking disruption policy when a merchant can no longer honor a slot
+- the reconfirmation non-response rule for V1
 
 If any of these are still unresolved, the implementation plan is not ready.
 
@@ -82,6 +85,14 @@ Before moving forward, capture:
    - what ships first
    - what moves to post-launch
    - what is explicitly not in the first release
+6. `Booking-unit boundary`
+   - single-pet versus multi-pet support
+   - single-service versus bundled-service support
+   - which fixed add-ons stay inside the launch slice
+7. `Confirmed-booking exception policy`
+   - merchant-cancelled confirmed booking reasons
+   - whether replacement booking is manual or productized
+   - reconfirmation non-response behavior
 
 ## Output Template
 
@@ -103,6 +114,9 @@ Use this format after the pilot:
 - Merchant response SLA:
 - Payment-protection defaults:
 - Minimum onboarding fields:
+- Booking-unit boundary:
+- Confirmed-booking disruption policy:
+- Reconfirmation non-response rule:
 
 ## Launch Slice
 - In:

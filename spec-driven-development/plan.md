@@ -45,6 +45,9 @@ That gate must lock:
 - payment-protection defaults
 - minimum onboarding fields
 - launch slice versus post-launch scope
+- booking-unit boundary for launch
+- confirmed-booking disruption policy
+- reconfirmation non-response policy
 
 ## Launch Posture
 
@@ -93,6 +96,7 @@ Core responsibilities:
 - service eligibility and duration logic
 - instant-book vs request-confirm routing
 - merchant-decline outcome handling
+- merchant-cancelled confirmed-booking handling with explicit reason codes
 - cancellation and no-show policy resolution
 - hold, deposit, release, capture, and refund decision rules
 - merchant correction-window rules
@@ -135,6 +139,7 @@ Core responsibilities:
 - reminder and reconfirmation workflow
 - payment-link orchestration
 - payment provider callbacks or webhooks
+- idempotent external-event processing and late-callback recovery behavior
 
 Dependencies:
 
@@ -267,6 +272,9 @@ Deliverables:
 - locked request-confirm triggers
 - locked verification-hold expiry and merchant response SLA
 - locked launch slice versus deferred roadmap
+- locked booking-unit boundary
+- locked confirmed-booking disruption policy
+- locked reconfirmation non-response policy
 
 Checkpoint:
 
@@ -282,6 +290,7 @@ Deliverables:
 - instant vs request-confirm routing rules
 - bilingual translation-key inventory for system-managed flows
 - explicit decline outcome for request-based bookings
+- explicit merchant-cancelled confirmed-booking reasons
 
 Checkpoint:
 
@@ -298,6 +307,7 @@ Deliverables:
 - online and offline booking ingestion
 - OTP verification hooks
 - payment-protection orchestration
+- idempotent OTP and payment callback processing
 
 Checkpoint:
 
@@ -342,6 +352,7 @@ Deliverables:
 - payment-protection trust surfaces and fallback states
 - no-show and grace-period handling
 - activation, booking, and repeat-behavior instrumentation
+- merchant-cancelled confirmed-booking handling and support traceability
 
 Checkpoint:
 
@@ -403,6 +414,22 @@ Mitigation:
 - surface expiry expectations to both customer and merchant
 - instrument timeout rates and stale-slot incidents from launch
 
+### Risk: merchant approval and merchant-side disruption paths stay implicit
+
+Mitigation:
+
+- model `pending_merchant_confirmation -> confirmed` explicitly in domain and API contracts
+- capture merchant-cancelled confirmed bookings with structured reason codes
+- keep native rescheduling out of V1 so confirmed-booking disruption stays auditable and bounded
+
+### Risk: late or duplicate provider callbacks resurrect expired bookings or double-apply payment outcomes
+
+Mitigation:
+
+- require idempotent processing for PSP and OTP success events
+- define stale-callback recovery rules before implementation
+- test duplicate and late callback paths before launch sign-off
+
 ### Risk: bilingual support expands into full content translation
 
 Mitigation:
@@ -418,6 +445,14 @@ Mitigation:
 - collect only required identity, language, and booking-critical setup upfront
 - defer optional profile enrichment until it is needed
 - test onboarding against time-to-first-search and time-to-first-booking goals
+
+### Risk: appointment shape expands before the launch slice is operationally truthful
+
+Mitigation:
+
+- keep launch bookings to one pet plus one primary service template with fixed add-ons only
+- keep multi-pet and bundled multi-service flows out of V1
+- validate add-on combinations during the pilot before calling them instant-bookable
 
 ### Risk: payment protection is correct in code but unclear to users
 
@@ -498,6 +533,7 @@ Verify:
 - all booking states are explicit
 - cancellation, no-show, and grace-period outcomes are deterministic
 - late-cancel and no-show policies are testable
+- merchant approval and merchant-cancelled confirmed-booking paths are testable
 
 ### Checkpoint 2: Schedule integrity
 
@@ -506,6 +542,7 @@ Verify:
 - online and offline bookings both block capacity in the same schedule
 - double-booking is impossible through ordinary flows
 - merchant corrections are audited
+- late or duplicate provider callbacks cannot re-block expired inventory
 
 ### Checkpoint 3: Localization readiness
 
@@ -523,6 +560,7 @@ Verify:
 - customer exception booking works end to end
 - customer onboarding works end to end
 - merchant offline booking flow works end to end
+- merchant approval and merchant-cancelled confirmed-booking flows work end to end
 - merchant no-show and cancellation cleanup works end to end
 - merchant search and inventory controls work end to end
 - activation and repeat-behavior instrumentation works end to end
@@ -530,6 +568,9 @@ Verify:
 ## Decisions Needed Before TASKS
 
 - Define the exact list of instant-bookable services in V1.
+- Lock the booking-unit boundary for V1, including add-on rules.
+- Lock the reconfirmation non-response policy.
+- Lock the merchant-cancelled confirmed-booking policy.
 
 ## Exit Criteria For PLAN Phase
 
@@ -539,3 +580,6 @@ This plan is ready to break into tasks when:
 - bilingual scope is confirmed
 - payment-protection defaults are directionally agreed
 - the merchant correction window is chosen or at least narrowed
+- the booking-unit boundary is explicit
+- the reconfirmation non-response rule is explicit
+- the merchant-cancelled confirmed-booking policy is explicit

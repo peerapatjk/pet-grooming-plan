@@ -65,13 +65,13 @@ If some functions are combined in your company, the same person may cover multip
 ### Operations
 
 - Merchant onboarding and setup must have a repeatable checklist.
-- Support must know how to handle verification timeout, failed payment, no-show dispute, and merchant decline cases.
+- Support must know how to handle verification timeout, failed payment, no-show dispute, merchant decline, merchant-cancelled confirmed bookings, and late-success recovery cases.
 - Manual override permissions must be limited and logged.
 - Merchant response SLA and customer communication timing must be operationally realistic.
 
 ### Customer Support / Merchant Success
 
-- Frontline teams must have approved scripts for holds, deposits, pending states, late arrival, and no-show disputes.
+- Frontline teams must have approved scripts for holds, deposits, pending states, merchant-cancelled confirmed bookings, late arrival, and no-show disputes.
 - Merchant success must know how to recover merchants who fall back to chat or shadow scheduling.
 - Queue ownership and handoff between support, operations, finance, and tech must be explicit.
 - Escalations must have time expectations and named owners.
@@ -85,7 +85,7 @@ If some functions are combined in your company, the same person may cover multip
 
 ### Legal
 
-- Customer terms must clearly cover holds, deposits, cancellation, late arrival, no-show, and dispute handling.
+- Customer terms must clearly cover holds, deposits, customer and merchant cancellation, late arrival, no-show, and dispute handling.
 - Merchant terms must clearly cover payout, forfeiture, overrides, and liability boundaries.
 - Consent language for messages, OTP, and payment protection must be reviewed.
 - Privacy and data-retention expectations must be documented for both customer and merchant data.
@@ -103,6 +103,7 @@ This document does not replace legal advice. Counsel review is still required be
 
 - Provisional inventory, payment events, and manual overrides must all be auditable.
 - Timeout and expiry behavior must be observable in production.
+- Late or duplicate provider callbacks and their recovery handling must be observable in production.
 - There must be a rollback or feature-disable path for risky flows.
 - PSP, OTP, notification, and localization dependencies must be validated in launch-like conditions.
 

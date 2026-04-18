@@ -31,6 +31,10 @@ The repeat-booking loop should be the center of the product, because the target 
 - Bilingual scope for V1: system-managed Thai and English only
 - Waitlist and slot-offer flows: explicitly out of V1
 - Payment method timing: collect only when first required by booking policy, not during onboarding
+- Launch booking unit: one pet plus one primary service template, with only merchant-defined fixed add-ons; multi-pet and bundled multi-service bookings are out of the launch slice
+- Merchant-side disruption policy: a confirmed booking may still be merchant-cancelled with an explicit operational reason such as shop closure, staff unavailability, or safety mismatch; native reschedule flows are out of V1 and should be handled as cancel plus replacement booking
+- Reconfirmation policy for V1: a missed reconfirmation response should not silently release a previously confirmed slot; it should create a visible merchant follow-up signal and preserve an audit trail
+- External event safety rule: OTP and payment success callbacks must be idempotent, and any success event that arrives after a provisional hold has expired must not silently re-confirm the booking or re-block capacity
 
 ## MVP Scope
 
@@ -42,6 +46,7 @@ In scope:
 - customer search for shops by area, service, and relevant next-available times
 - pet profiles with breed, size, coat type, temperament, allergies, and notes
 - groomer-defined service templates with duration and price logic
+- single-pet booking composition with optional fixed add-ons from the selected service template
 - hybrid booking flow: instant for routine services, approval required for edge cases
 - card hold or deposit during booking
 - customer and groomer notifications for booking status changes
@@ -77,18 +82,21 @@ Hold for later unless the pilot proves they are required:
 These requirements should be treated as part of the MVP, not as a later payments add-on.
 
 - Automated reminder and reconfirmation messages before the appointment
-- A customer action to confirm or cancel before the slot becomes operationally locked
+- A customer-facing reconfirmation action to confirm or cancel before the appointment, with explicit merchant-visible handling if the customer does not respond
 - Deposit or card-hold support for both app-originated bookings and merchant-entered offline bookings
 - A secure payment link flow for cases where the merchant creates a booking from a phone call, LINE chat, or walk-in inquiry
 - OTP or equivalent phone verification to reduce fake reservations
 - A strict provisional-hold expiry policy so pending verification or pending merchant review cannot block inventory indefinitely
 - A clear grace-period policy for late arrival, after which the slot can be released or marked as no-show
 - Tokenized payment handling so merchants do not handle raw card details
+- Explicit cancellation actor and reason metadata so customer cancellation, merchant cancellation, and system timeout are operationally distinct
 - Merchant controls for marking arrival, no-show, deposit forfeiture, hold release, and exception handling
 - Merchant controls for declining a request-based booking without conflating that outcome with customer cancellation or no-show
+- Merchant controls for cancelling a previously confirmed booking with an explicit operational reason when the shop can no longer honor the slot
 - Booking cutoff-time controls so online bookings cannot be made too close to service start
 - Onboarding must collect only the minimum required information needed to reach first booking quickly
 - Customer-facing explanation of authorization holds, deposits, release conditions, and support fallback when payment or verification fails
+- Late or duplicate payment and OTP success events must be recorded safely without resurrecting an expired booking or double-applying a payment outcome
 
 ## Not Doing (and Why)
 
@@ -98,6 +106,8 @@ These requirements should be treated as part of the MVP, not as a later payments
 - Rich social/discovery content — users mainly want a reliable booking action, not a lifestyle media app.
 - Complex public review mechanics before transaction volume exists — moderation and trust systems are expensive early, and completed-booking reviews are enough for v1.
 - Waitlist, queue, and cancellation-fill "offered slot" flows — these are valuable, but they should follow only after the core booking and merchant-ops workflow is stable.
+- Multi-pet and bundled multi-service bookings — they create pricing, duration, and repeat-booking complexity before the single-pet launch slice is stable.
+- Native reschedule workflows — they add a second lifecycle on top of cancellation and replacement booking before the operational states are proven.
 
 ## Open Questions
 

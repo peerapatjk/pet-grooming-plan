@@ -46,6 +46,10 @@ For MVP, AI is an accelerant at most, not the product.
 - Bilingual scope: system-managed Thai and English only for V1.
 - Waitlist and offered-slot flows: explicitly out of V1.
 - Payment method timing: collect only when first required by booking policy, not during onboarding.
+- Launch booking unit: one pet plus one primary service template, with only fixed add-ons that are already encoded in merchant pricing and duration logic.
+- Confirmed-booking disruption policy: merchant-initiated cancellations are allowed with explicit operational reason codes, but native rescheduling remains out of V1.
+- Reconfirmation policy for V1: non-response should create merchant follow-up visibility, not a hidden inventory release.
+- External callback policy: late or duplicate OTP or payment success events must be idempotent and must not re-confirm an expired provisional booking.
 
 ## Top Hypotheses
 
@@ -115,6 +119,9 @@ Before the team deepens the spec or starts implementation-heavy work, the pilot 
 - the payment-protection default by service class
 - the minimum onboarding fields
 - the launch slice versus later roadmap
+- the booking-unit boundary for launch, including whether any add-on combinations remain safely instant-bookable
+- the confirmed-booking disruption policy for merchant-side failures after confirmation
+- the reconfirmation non-response rule
 
 The working artifact for that handoff lives in:
 
@@ -184,7 +191,9 @@ Do these before deep implementation:
 - repeat user rebooks the same pet
 - instant-eligible user completes verification before the provisional hold expires
 - merchant accepts or declines an exception case
+- merchant approves an exception case and the booking becomes confirmed without creating a second slot
 - merchant enters an offline booking without creating shadow inventory
+- merchant cancels a previously confirmed booking with an explicit operational reason and the customer sees the right explanation and next step
 - merchant resolves late or no-show status correctly
 
 ### Failure modes
@@ -196,6 +205,9 @@ Do these before deep implementation:
 - payment protection feels punitive
 - bilingual UX is incomplete in critical moments
 - decline vs cancel vs no-show becomes operationally confusing
+- merchant-initiated cancellation after confirmation is logged as a generic customer cancellation
+- a late OTP or payment success callback re-confirms an expired booking or double-applies a payment outcome
+- multi-pet or bundled-service requests sneak into the launch slice and break duration truth
 
 ### What should happen
 
@@ -210,10 +222,13 @@ Do these before deep implementation:
 - a verification timeout blocks inventory after the customer has dropped
 - a request decline is mistaken for a no-show or customer cancellation
 - customers see a payment hold without understanding the release conditions
+- a late provider callback silently resurrects inventory that was already released
+- a merchant-side disruption is attributed to the customer and contaminates trust, analytics, or payment policy
 
 ### What needs human review
 
 - borderline service types that may be instant for some merchants and pending for others
+- borderline booking compositions such as multiple pets, multiple services, or add-on-heavy appointments
 - payment disputes, hold-release complaints, and late-arrival exceptions
 - any merchant workflow that causes staff to fall back to a parallel shadow schedule
 

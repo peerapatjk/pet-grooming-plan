@@ -35,6 +35,8 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 
 - Customers must be able to search shops by location, service, and relevant availability.
 - Customers must be able to create and reuse pet profiles.
+- The launch slice must treat one booking as one pet plus one primary service template, with only merchant-defined fixed add-ons included inside the same booking unit.
+- Multi-pet and bundled multi-service bookings are out of V1 unless explicitly approved later.
 - Customers must be able to book routine services instantly where merchant rules allow.
 - The system must support request-and-confirm booking for non-standard cases.
 - The system must show a clear booking state to both customer and merchant.
@@ -58,6 +60,7 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 
 - Groomers must be able to define service templates, durations, and pricing logic.
 - Groomers must be able to open, close, and edit availability.
+- Groomers must be able to approve or decline request-based bookings explicitly.
 - Groomers must be able to manage booking states such as confirmed, declined by merchant, arrived, in service, completed, cancelled, and no-show.
 - Groomers must be able to see a summary dashboard for bookings and revenue.
 - Groomers must be able to update booking outcomes quickly on desktop, tablet, and mobile.
@@ -81,8 +84,12 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 ## Booking Lifecycle and Notification Requirements
 
 - The system must distinguish `declined_by_merchant` from customer cancellation and no-show.
+- The system must preserve structured cancellation metadata so actor and reason remain explicit for customer cancellation, merchant cancellation, and system timeout cases.
+- The system must support merchant-initiated cancellation of previously confirmed bookings with explicit operational reason codes and customer notification.
+- Native self-serve rescheduling is out of V1; when a booking needs a new slot, it should be represented as a cancellation plus a replacement booking or another equally auditable mechanism.
 - The system must support transactional notifications for booking creation, confirmation, decline, reminder, and reconfirmation where relevant.
 - The system should support merchant-facing notification surfaces for new bookings, edits, cancellations, and deposit or verification updates.
+- Reconfirmation non-response must follow one explicit launch policy and must not create hidden inventory transitions.
 
 ## Analytics and Feedback Requirements
 
@@ -208,6 +215,8 @@ Source:
 - The system must auto-release a provisional hold when verification, payment, or merchant review does not complete in time.
 - The system must preserve an audit trail when a provisional hold expires or is manually overridden.
 - The customer and merchant should both be able to see the next required action and expiry expectation for a provisional booking.
+- Late or duplicate OTP and payment success events must be handled idempotently and must not silently re-confirm or re-block an expired booking.
+- Recovery handling for a late success event must be explicit and auditable.
 
 ## Reference Requirements From Grab Help
 

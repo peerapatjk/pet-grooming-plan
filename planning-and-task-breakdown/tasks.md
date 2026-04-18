@@ -32,9 +32,13 @@ It assumes a separate cross-functional readiness gate for:
 - Build around one canonical booking schedule shared by online and offline-originated bookings.
 - Treat payment-protection policy and booking state transitions as domain logic, not UI logic.
 - Model provisional inventory explicitly for pending verification and pending merchant confirmation.
+- Keep the launch booking unit to one pet plus one primary service template with fixed add-ons only.
 - Build Thai and English localization into system-managed flows from the start.
 - Keep merchant-generated bilingual content out of V1 unless approved separately.
 - Treat merchant decline as distinct from cancellation and no-show.
+- Model cancellation actor and cancellation reason separately from terminal booking status.
+- Treat reconfirmation non-response in V1 as a follow-up signal, not a silent inventory release.
+- Require idempotent OTP and payment callback handling so late success cannot resurrect expired bookings.
 - Keep waitlist and offered-slot flows out of V1 unless separately approved.
 - Default to card holds for routine bookings and deposits for higher-risk or higher-value services.
 - Default to a 24-hour merchant correction window and a 24-hours-plus-same-day reminder cadence.
@@ -118,6 +122,8 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] The launch service taxonomy is locked for instant booking versus request-confirm.
 - [ ] Verification-hold expiry and merchant response SLA are locked.
 - [ ] Payment-protection defaults and onboarding minimum fields are locked.
+- [ ] Booking-unit boundary and add-on rules are locked for the launch slice.
+- [ ] Confirmed-booking disruption policy and reconfirmation non-response policy are locked.
 - [ ] Launch-slice versus post-launch scope is explicit.
 
 **Verification:**
@@ -172,6 +178,7 @@ It assumes a separate cross-functional readiness gate for:
 **Acceptance criteria:**
 - [ ] Shared domain module exists for bookings, pets, services, availability, and payment protection.
 - [ ] Canonical booking states are defined in one location.
+- [ ] Cancellation actor and reason types are defined in the shared layer.
 - [ ] Domain types are importable by backend and app surfaces without duplication.
 
 **Verification:**
@@ -192,13 +199,15 @@ It assumes a separate cross-functional readiness gate for:
 
 ## Task 2: Implement booking state machine and transition guards
 
-**Description:** Encode the full booking lifecycle so that state transitions are explicit, validated, and testable before any UI or API begins relying on them, including a distinct merchant-decline outcome for request-based bookings and explicit timeout behavior for provisional states.
+**Description:** Encode the full booking lifecycle so that state transitions are explicit, validated, and testable before any UI or API begins relying on them, including a distinct merchant-decline outcome for request-based bookings, explicit timeout behavior for provisional states, and structured cancellation metadata for merchant and system-originated cancellations.
 
 **Acceptance criteria:**
 - [ ] Valid transitions for all canonical booking states are implemented.
 - [ ] Invalid transitions are rejected with explicit errors.
+- [ ] Request-based bookings can transition from `pending_merchant_confirmation` to `confirmed`.
 - [ ] Request-based bookings can transition into a merchant-decline outcome that is distinct from cancellation and no-show.
 - [ ] Timeout-based system cancellations are represented explicitly for verification and merchant-response expiry.
+- [ ] Confirmed bookings can be merchant-cancelled with structured reason metadata.
 - [ ] Merchant correction-window rules are represented in the transition logic.
 
 **Verification:**
@@ -279,6 +288,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Online and offline bookings share the same booking table or equivalent canonical model.
 - [ ] Availability and booking data can represent capacity without a parallel shadow schedule.
 - [ ] Schema includes provisional-hold expiry metadata and auditable timeout reasons.
+- [ ] Schema stores structured cancellation actor or reason data and provider-event audit metadata.
 - [ ] Audit fields exist for status changes and operator actions.
 
 **Verification:**
@@ -370,6 +380,30 @@ It assumes a separate cross-functional readiness gate for:
 
 **Estimated scope:** Medium
 
+## Task 7A: Build merchant decision API for request approval and confirmed-booking cancellation
+
+**Description:** Implement the backend API that lets merchants approve or decline request-based bookings and cancel previously confirmed bookings with explicit operational reasons.
+
+**Acceptance criteria:**
+- [ ] Merchants can approve `pending_merchant_confirmation` bookings into `confirmed`.
+- [ ] Merchants can decline request-based bookings into `declined_by_merchant`.
+- [ ] Merchants can cancel confirmed bookings with explicit structured reason codes.
+- [ ] API records actor, reason, and audit metadata for every merchant decision.
+
+**Verification:**
+- [ ] Integration tests pass: `pnpm test:integration -- --grep "merchant-decision"`
+- [ ] Typecheck passes: `pnpm typecheck`
+- [ ] Manual check: merchant approval and merchant-cancelled confirmed-booking flows match the spec state machine
+
+**Dependencies:** Task 2, Task 5, Task 6A, Task 7
+
+**Files likely touched:**
+- `apps/api/src/routes/bookings/merchant-decision.ts`
+- `apps/api/src/services/merchant-booking-decision-service.ts`
+- `tests/integration/merchant-booking-decision.test.ts`
+
+**Estimated scope:** Medium
+
 ## Task 8: Build offline booking ingestion and payment-link flow
 
 **Description:** Implement the merchant-originated booking path so phone, LINE, Instagram, Facebook, or walk-in inquiries enter the same system and can request payment verification.
@@ -395,6 +429,31 @@ It assumes a separate cross-functional readiness gate for:
 
 **Estimated scope:** Medium
 
+## Task 8A: Implement idempotent provider callback processing and late-success recovery
+
+**Description:** Build the provider-event processing layer for OTP and payment callbacks so duplicate or late success events are handled safely and cannot resurrect expired bookings or double-apply payment outcomes.
+
+**Acceptance criteria:**
+- [ ] OTP and payment callbacks are processed idempotently.
+- [ ] Late success events after provisional expiry do not re-confirm the booking or re-block capacity.
+- [ ] Recovery actions for late success events are explicit, auditable, and traceable.
+- [ ] Provider-event processing can safely handle retries and out-of-order arrival.
+
+**Verification:**
+- [ ] Integration tests pass: `pnpm test:integration -- --grep "provider-callback|late-success|idempotency"`
+- [ ] Typecheck passes: `pnpm typecheck`
+- [ ] Manual check: duplicate and late callbacks leave booking and payment state coherent
+
+**Dependencies:** Task 5, Task 6A, Task 7, Task 8
+
+**Files likely touched:**
+- `apps/api/src/routes/providers/payment-callback.ts`
+- `apps/api/src/routes/providers/otp-callback.ts`
+- `apps/api/src/services/provider-event-service.ts`
+- `tests/integration/provider-event-processing.test.ts`
+
+**Estimated scope:** Medium
+
 ## Task 9: Build OTP verification and booking reconfirmation backend
 
 **Description:** Implement verification endpoints and background-ready logic for OTP completion and reconfirmation events that can move bookings toward confirmation or updated status.
@@ -404,13 +463,14 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Reconfirmation status is stored separately from initial confirmation.
 - [ ] Verification failures do not incorrectly confirm a booking.
 - [ ] Verification failures or timeouts do not leave provisional holds active.
+- [ ] Reconfirmation non-response follows the locked launch policy without silently releasing confirmed inventory.
 
 **Verification:**
 - [ ] Integration tests pass: `pnpm test:integration -- --grep "otp|reconfirmation"`
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: bookings cannot enter confirmed state until required verification completes
 
-**Dependencies:** Task 2, Task 5, Task 6A, Task 7, Task 8
+**Dependencies:** Task 2, Task 5, Task 6A, Task 7, Task 8, Task 8A
 
 **Files likely touched:**
 - `apps/api/src/routes/bookings/verify-booking.ts`
@@ -425,7 +485,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Canonical schedule exists for online and offline bookings
 - [ ] Availability prevents ordinary double-booking
 - [ ] Provisional holds expire and release inventory correctly
-- [ ] Booking creation, offline ingestion, and verification tests pass
+- [ ] Booking creation, merchant decision, offline ingestion, provider-callback, and verification tests pass
 - [ ] Review with human before UI tasks
 
 ### Phase 3: Localization Foundation and Customer Flow
@@ -509,6 +569,7 @@ It assumes a separate cross-functional readiness gate for:
 **Acceptance criteria:**
 - [ ] Customer can search shops by location, service, and relevant availability through the mobile flow.
 - [ ] Customer can complete a routine booking through the mobile flow.
+- [ ] Flow enforces the launch booking-unit boundary of one pet plus one primary service template with fixed add-ons only.
 - [ ] Flow shows instant confirmation when routing allows it.
 - [ ] Flow explains pending verification and expiry expectations when payment protection or OTP is still outstanding.
 - [ ] Flow renders system-managed copy in Thai and English.
@@ -637,12 +698,14 @@ It assumes a separate cross-functional readiness gate for:
 
 ## Task 16: Build merchant booking board, booking search, and single-booking status actions
 
-**Description:** Implement the merchant booking board with search for current and upcoming bookings and quick actions for arrival, decline, cancellation, late state, completion, and no-show on individual bookings.
+**Description:** Implement the merchant booking board with search for current and upcoming bookings and quick actions for approval, decline, cancellation, late state, completion, and no-show on individual bookings.
 
 **Acceptance criteria:**
 - [ ] Merchant can view the booking board from desktop and tablet-friendly layouts.
 - [ ] Merchant can search current and upcoming bookings quickly.
-- [ ] Merchant can update one booking’s status through allowed transitions, including merchant decline where relevant.
+- [ ] Merchant can approve or decline request-based bookings through allowed transitions.
+- [ ] Merchant can cancel confirmed bookings with explicit operational reason capture.
+- [ ] Merchant can update one booking’s status through allowed transitions without bypassing the shared state machine.
 - [ ] Booking board UI is localized for Thai and English system-managed copy.
 
 **Verification:**
@@ -650,7 +713,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Build succeeds: `pnpm build`
 - [ ] Manual check: merchant can update a booking through the normal operational flow
 
-**Dependencies:** Task 2, Task 7, Task 10, Task 15
+**Dependencies:** Task 2, Task 7, Task 7A, Task 10, Task 15
 
 **Files likely touched:**
 - `apps/app-merchant/src/screens/bookings/BookingBoard.tsx`
@@ -691,6 +754,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Merchant can define services and availability
 - [ ] Merchant can operate booking board with online and offline bookings
 - [ ] Merchant can see and act on provisional versus confirmed bookings without falling back to a second shadow schedule
+- [ ] Merchant approval and merchant-cancelled confirmed-booking flows are operationally clear
 - [ ] Review with human before operational automation
 
 ### Phase 5: Notifications and Launch Readiness
@@ -701,6 +765,7 @@ It assumes a separate cross-functional readiness gate for:
 
 **Acceptance criteria:**
 - [ ] Booking-created, confirmed, and declined notifications are supported where relevant.
+- [ ] Merchant-cancelled confirmed bookings send the right customer and merchant notifications.
 - [ ] Reminder timing is configurable according to product decision.
 - [ ] Reconfirmation messages are localized in Thai and English.
 - [ ] Reminder jobs do not send for cancelled or completed bookings.
@@ -711,7 +776,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: localized reminder output renders correctly for both locales
 
-**Dependencies:** Task 9, Task 10, Task 12, Task 13
+**Dependencies:** Task 7A, Task 8A, Task 9, Task 10, Task 12, Task 13
 
 **Files likely touched:**
 - `apps/api/src/jobs/reminder-job.ts`
@@ -727,8 +792,9 @@ It assumes a separate cross-functional readiness gate for:
 
 **Acceptance criteria:**
 - [ ] Customer events exist for onboarding completion, first search, booking start, booking success, and repeat booking.
-- [ ] Merchant events exist for offline booking creation, decline actions, and correction-window edits.
+- [ ] Merchant events exist for offline booking creation, approval actions, decline actions, merchant-cancelled confirmed bookings, and correction-window edits.
 - [ ] Verification timeout, payment-protection drop-off, and merchant-response timing events are implemented.
+- [ ] Late-success recovery and duplicate-callback suppression events are implemented.
 - [ ] Event naming and properties match the agreed analytics schema.
 
 **Verification:**
@@ -736,7 +802,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Build succeeds: `pnpm build`
 - [ ] Manual check: event traces are visible for the critical user journeys
 
-**Dependencies:** Task 0B, Task 9, Task 10A, Task 12, Task 13, Task 13A, Task 16
+**Dependencies:** Task 0B, Task 7A, Task 8A, Task 9, Task 10A, Task 12, Task 13, Task 13A, Task 16
 
 **Files likely touched:**
 - `packages/domain/src/analytics-events.ts`
@@ -776,13 +842,14 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] SOPs exist for merchant onboarding, verification timeout, merchant-response timeout, late arrival, no-show, and disputes.
 - [ ] Escalation owners and SLA expectations are documented.
 - [ ] Manual override permissions and audit expectations are documented.
+- [ ] Merchant-cancelled confirmed-booking and late-success recovery workflows are documented.
 - [ ] Support scripts and merchant-success recovery playbooks are documented.
 
 **Verification:**
 - [ ] Manual check: Operations and Support packet exists and is reviewable
 - [ ] Manual check: operational flows match the actual product states and policies
 
-**Dependencies:** Task 9, Task 16, Task 17, Task 20
+**Dependencies:** Task 7A, Task 8A, Task 9, Task 16, Task 17, Task 20
 
 **Files likely touched:**
 - `spec-driven-development/stakeholder-readiness.md`
@@ -798,6 +865,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Marketing launch audience, value proposition, and approved claims are documented.
 - [ ] Trust messaging for holds, deposits, cancellations, and pending states is documented.
 - [ ] Sales or BD merchant promises and acquisition assumptions are documented.
+- [ ] Terms and trust messaging cover merchant-cancelled confirmed bookings and late-success recovery cases where relevant.
 - [ ] Customer and merchant terms, consent copy, and policy review requirements are documented for legal review.
 - [ ] Risk, privacy, security, or compliance review requirements are documented.
 
@@ -805,7 +873,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Manual check: Marketing, Sales, Legal, and Risk packet exists and is reviewable
 - [ ] Manual check: launch claims match the actual launch slice and product behavior
 
-**Dependencies:** Task 13A, Task 19
+**Dependencies:** Task 8A, Task 13A, Task 19
 
 **Files likely touched:**
 - `spec-driven-development/stakeholder-readiness.md`
@@ -867,6 +935,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Typecheck succeeds: `pnpm typecheck`
 - [ ] Core customer and merchant journeys work end to end
 - [ ] Provisional holds, payment trust, and timeout paths work end to end
+- [ ] Merchant approval, merchant-cancelled confirmed-booking, and late-callback recovery paths work end to end
 - [ ] Thai and English system-managed experiences are working
 - [ ] Product / GM, CEO, Finance, Accounting, Operations, Customer Support / Merchant Success, Marketing, Legal, Risk, Tech, Data, Sales / BD, and external vendors each have a reviewable readiness packet
 - [ ] Ready for human review before launch
@@ -935,6 +1004,8 @@ It assumes a separate cross-functional readiness gate for:
 | Hybrid routing logic is unclear to users | High | Keep rules narrow in V1 and expose reason codes for pending confirmation |
 | Merchant workflow is slower than LINE or phone coordination | High | Prioritize offline booking capture and fast status actions early |
 | We build before validating workflow fit | High | Run concierge pilot and clickable prototypes before deep implementation |
+| Late or duplicate provider callbacks corrupt booking or payment state | High | Add idempotent provider-event processing and test duplicate or stale-success paths explicitly |
+| Multi-pet or bundled bookings sneak into the launch slice and break duration truth | Medium | Keep launch booking unit narrow and enforce one-pet one-primary-service boundaries |
 | Bilingual support becomes content-translation scope creep | Medium | Restrict V1 to system-managed copy unless explicitly expanded |
 | Bulk status actions create audit ambiguity | Medium | Record actor, timestamp, previous state, and new state for every bulk update |
 | Waitlist or offered-slot scope sneaks into MVP | Medium | Keep those flows explicitly out of V1 unless the state model is expanded and approved |

@@ -17,6 +17,10 @@
 13. Reminder schedule defaults to 24 hours before plus same-day reminder.
 14. The first software launch should be a narrower launch slice, not the entire roadmap in one release.
 15. `pending_verification` and `pending_merchant_confirmation` may hold inventory provisionally, but those holds must expire automatically if the required action does not happen in time.
+16. The launch booking unit is one pet plus one primary service template, with only fixed add-ons already encoded in merchant pricing and duration rules.
+17. Multi-pet and bundled multi-service bookings are out of the launch slice unless explicitly approved later.
+18. A missed reconfirmation response in V1 should not silently release previously confirmed inventory; it should raise merchant attention and remain auditable.
+19. OTP and payment success callbacks must be idempotent, and late success after expiry must not resurrect a released booking or double-apply a payment outcome.
 
 Correct these before Phase 2 if any are wrong. The plan should not proceed on hidden assumptions.
 
@@ -141,6 +145,17 @@ export type BookingStatus =
   | "late"
   | "no_show";
 
+export type BookingCancellationActor = "customer" | "merchant" | "system";
+
+export type BookingCancellationReason =
+  | "customer_cancelled_in_policy"
+  | "customer_cancelled_late"
+  | "merchant_shop_closed"
+  | "merchant_staff_unavailable"
+  | "merchant_service_mismatch"
+  | "system_verification_timeout"
+  | "system_merchant_response_timeout";
+
 export interface BookingPolicy {
   paymentProtection: "none" | "card_hold" | "deposit";
   gracePeriodMinutes: number;
@@ -154,6 +169,7 @@ Conventions:
 - Use descriptive domain names such as `BookingPolicy`, `PetProfile`, and `MerchantAvailabilityRule`.
 - Keep booking rules in shared domain modules, not scattered across UI handlers.
 - Prefer explicit state transitions over boolean flags like `isLate` and `isConfirmed`.
+- Model cancellation actor and cancellation reason separately from terminal booking status.
 - Treat offline-originated bookings as first-class objects, not special-case notes.
 - Do not hardcode user-facing copy outside the translation layer.
 
@@ -166,18 +182,22 @@ Testing must prove schedule truth, payment-protection behavior, and operational 
   - service-duration and slot-eligibility rules
   - deposit, hold, release, and forfeiture policy logic
   - instant-book vs request-book routing
+  - cancellation actor and reason handling
 - Integration tests:
   - booking creation against merchant availability
+  - merchant approval of an exception booking into `confirmed`
   - offline booking entry followed by payment-link verification
   - booking-status notification rendering for Thai and English
   - OTP verification and reconfirmation flows
-  - webhook or callback processing from the payment provider
+  - webhook or callback processing from the payment provider, including duplicate and late events
   - locale-sensitive notification rendering for Thai and English
 - E2E tests:
   - customer completes onboarding and reaches booking-ready state
   - customer creates a pet profile and books a routine service
   - merchant confirms an exception booking
+  - merchant cancels a confirmed booking with explicit operational reason
   - provisional hold expires and releases inventory correctly
+  - late provider callback does not resurrect an expired booking
   - reminder and reconfirmation behavior before appointment time
   - merchant marks arrived, completed, cancelled, and no-show outcomes
   - customer and merchant flows render correctly in Thai and English
@@ -193,6 +213,7 @@ Coverage expectations:
 - Always:
   - keep the booking board as the canonical schedule
   - model policy logic explicitly for cancellation, no-show, and hold or deposit outcomes
+  - keep booking-unit boundaries explicit for launch-slice logic
   - support both online and offline booking ingestion in the same system
   - route system-managed copy through the Thai and English localization layer
   - write or update tests for domain rules before merging behavior changes
@@ -215,6 +236,7 @@ Coverage expectations:
 - customer onboarding with language choice, phone or account verification, and first-use setup
 - customer search by location, service, and relevant near-term availability
 - customer pet profiles with booking-relevant attributes
+- single-pet booking unit with optional fixed add-ons
 - merchant-defined service templates and duration rules
 - hybrid booking flow with instant and request-based paths
 - deposits and/or card holds
@@ -242,6 +264,8 @@ Coverage expectations:
 - loyalty marketplace and deal ecosystem
 - social content and editorial discovery
 - waitlist, queue, and offered-slot cancellation-fill workflows
+- native self-serve reschedule flows
+- multi-pet and bundled multi-service booking workflows
 - broad multi-city rollout
 - deep public-review moderation systems
 - enterprise multi-branch management beyond simple support for future expansion
@@ -256,7 +280,7 @@ Coverage expectations:
    - complete essential first-use policy and permission steps
 2. Search shop by area, service, and relevant next-available time
 3. Select pet profile or create one
-4. Choose service
+4. Choose one primary service template and any fixed add-ons allowed inside that template
 5. See eligible booking mode:
    - instant confirmation for standard cases with no extra blocking step
    - pending verification for cases that need OTP or payment completion before confirmation
@@ -274,10 +298,10 @@ Coverage expectations:
 
 1. Define services, durations, buffers, availability, and online booking cutoff controls
 2. Search current and upcoming bookings
-3. Accept online bookings and manually add offline bookings
+3. Approve or decline request-based bookings, and manually add offline bookings
 4. Trigger payment link or verification when needed
 5. Update status quickly from desktop, tablet, or mobile
-6. Mark arrival, in-service, completion, decline, cancellation, or no-show
+6. Mark arrival, in-service, completion, decline, merchant cancellation, customer cancellation, or no-show with explicit reason capture where required
 7. Lock bookings to a groomer or station and block resources from online booking when needed
 8. Use bulk status updates later if operator volume proves they are necessary
 9. Review daily bookings and, later, revenue summary when reporting is added
@@ -299,6 +323,8 @@ Rules:
 - The same slot must not remain provisionally blocked after the expiry timestamp passes.
 - Customers and merchants should be able to see the next required action and time expectation for a provisional hold.
 - The system must audit auto-releases and manual overrides.
+- Only `pending_verification` and `pending_merchant_confirmation` may consume provisional inventory in V1.
+- Reconfirmation non-response must not silently transition confirmed inventory into released inventory.
 
 ## Booking State Machine
 
@@ -324,8 +350,12 @@ State transition rules:
 - A request-based booking may become `declined_by_merchant` without being conflated with `cancelled` or `no_show`.
 - `pending_verification` and `pending_merchant_confirmation` must carry expiry behavior for any provisional inventory hold.
 - When a provisional hold expires, the booking must release inventory and move to `cancelled` with an explicit system reason such as verification timeout or merchant response timeout.
+- A merchant decision on a request-based booking must be explicit: `pending_merchant_confirmation` can move to either `confirmed` or `declined_by_merchant`.
 - A confirmed booking may become `reconfirmed` after reminder response.
 - A confirmed or reconfirmed booking may become `late`, `arrived`, `cancelled`, or `no_show`.
+- `cancelled` must preserve structured actor and reason metadata so customer cancellation, merchant cancellation, and system timeout remain operationally distinct.
+- A confirmed booking may be merchant-cancelled for explicit operational reasons such as shop closure, staff unavailability, or safety mismatch.
+- Reconfirmation non-response in V1 must not silently release confirmed inventory. It should instead create a visible follow-up signal for the merchant and support tooling.
 - A merchant must be able to correct booking outcome status within a defined post-appointment window.
 
 Future note:
@@ -341,10 +371,12 @@ This matrix is part of the product, not just operations copy.
 | Merchant declines request-based booking | Slot remains available | Hold released or no charge captured per policy | Mark declined_by_merchant |
 | Customer cancels within policy | Slot reopens | Hold released or deposit refunded per policy | Mark cancelled |
 | Customer cancels late | Slot may stay blocked if too late to refill | Hold captured or deposit forfeited per policy | Mark cancelled with late-cancel reason |
-| Customer does not respond to reconfirmation | Policy-driven | Hold may remain until expiry or be released | Review or auto-handle |
+| Merchant cancels a confirmed booking | Slot reopens or replacement booking is created manually | Hold released or deposit refunded per policy | Mark cancelled with merchant reason |
+| Customer does not respond to reconfirmation | Booking remains confirmed in V1 | Payment outcome unchanged before appointment outcome | Flag merchant follow-up |
 | Customer arrives on time | Slot consumed | Hold released or converted as configured | Mark arrived |
 | Customer arrives late within grace period | Slot may be preserved | Payment outcome unchanged until service decision | Mark late or arrived |
 | Customer misses grace period | Slot may be released | Hold or deposit follows no-show policy | Mark no_show |
+| OTP or payment success arrives after provisional expiry | Slot remains released | Apply deterministic recovery rule; never silently re-confirm | Record late-success event for review |
 
 ## Customer Trust and Support
 
@@ -355,6 +387,7 @@ These are launch requirements, not polish:
 - After booking, the customer must be able to see the current verification and payment-protection state.
 - Failed authorization, failed OTP, or timeout states must have a clear next step.
 - Operations and support must have an audit trail for booking-state changes, payment-protection events, and manual overrides.
+- Merchant-initiated cancellations and late-success recovery cases must remain explainable to support and visible in audit history.
 
 ## Cross-Functional Readiness Requirements
 
@@ -382,8 +415,10 @@ The spec is successful when the MVP can satisfy all of these conditions:
 - A repeat customer can rebook the same pet and service in under 60 seconds.
 - Routine services can be instantly booked without causing schedule conflicts in the canonical schedule.
 - Exception cases are clearly routed into merchant confirmation without misleading the customer.
+- Merchants can explicitly approve exception cases into confirmed bookings and can merchant-cancel confirmed bookings with auditable reasons when necessary.
 - Pending verification and pending merchant confirmation holds auto-release correctly when they expire.
 - Both online and offline-originated bookings can trigger deposits or card holds and verification flows.
+- Late or duplicate provider callbacks do not resurrect expired bookings or double-apply payment outcomes.
 - Booking-created, confirmed, declined, and reminder notifications render correctly in Thai and English.
 - Merchants can mark arrival, cancellation, and no-show from desktop, tablet, and mobile.
 - Merchants can search current and upcoming bookings and manage online inventory with cutoff and resource controls.
