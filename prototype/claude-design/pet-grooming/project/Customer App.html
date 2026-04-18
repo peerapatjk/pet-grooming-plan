@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Pawpoint — Customer app (mobile prototype)</title>
+<link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="shared/pawpoint-tokens.css"/>
 <link rel="stylesheet" href="customer/customer.css?v=2"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
@@ -68,7 +69,7 @@
     <div><span>Screens</span><b>15</b></div>
     <div><span>Booking states</span><b>3 shown</b></div>
     <div><span>Device</span><b>iPhone 15 · 390 × 812</b></div>
-    <div><span>Languages</span><b>TH · EN · ZH</b></div>
+    <div><span>Languages</span><b>TH · EN</b></div>
   </div>
 </div>
 
@@ -78,6 +79,16 @@
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script>
+  (() => {
+    const originalWarn = console.warn;
+    console.warn = (...args) => {
+      const first = typeof args[0] === 'string' ? args[0] : '';
+      if (first.includes('You are using the in-browser Babel transformer')) return;
+      return originalWarn.apply(console, args);
+    };
+  })();
+</script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <script type="text/babel">
@@ -166,10 +177,6 @@ function Screen02_Language(){return(
         </div>
         <div className="lang-card">
           <div><h3>English</h3><div className="sub">Pricing shown in THB</div></div>
-          <div className="check"/>
-        </div>
-        <div className="lang-card">
-          <div><h3>中文</h3><div className="sub">Simplified · Beta</div></div>
           <div className="check"/>
         </div>
       </div>
@@ -334,7 +341,7 @@ function Screen06_Shop(){return(
         <div className="row between" style={{alignItems:'flex-end'}}>
           <div style={{display:'flex',flexDirection:'column',gap:4}}>
             <div className="strip"><span>★ 4.9 · 312 reviews</span></div>
-            <div className="strip"><span>EN · <span className="th">ไทย</span> · 中文</span></div>
+            <div className="strip"><span>EN · <span className="th">ไทย</span></span></div>
           </div>
           <div style={{display:'flex'}}>
             {[['P','var(--accent)'],['N','var(--info)'],['T','var(--ok)'],['+2','rgba(255,255,255,.22)']].map(([n,c],i)=>(

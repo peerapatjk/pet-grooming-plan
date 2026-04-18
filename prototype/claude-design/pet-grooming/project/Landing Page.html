@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Pawpoint — Bangkok pet grooming, booked right</title>
+<meta name="description" content="Pawpoint is a Bangkok-first pet grooming booking app built around truthful availability, fast repeat booking, and clear payment protection." />
+<link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -64,15 +66,18 @@
   .pet-card-mini span{font-size:11px;color:var(--ink-3)}
   .repeat-card{background:var(--primary);color:var(--paper);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
   .repeat-card .lbl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
-  .repeat-card h6{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:-0.01em;line-height:1.1}
+  .repeat-card .card-title{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:-0.01em;line-height:1.1}
   .repeat-card .meta{display:flex;justify-content:space-between;font-size:11px;opacity:.9}
   .repeat-card .cta{display:flex;justify-content:space-between;align-items:center;margin-top:2px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
 
   /* Back phone content = confirmation */
   .confirm-card{padding:44px 16px 16px;display:flex;flex-direction:column;gap:14px;height:100%}
+  .confirm-card .muted,
+  .detail-row .muted{color:var(--ink-2)}
   .confirm-big{padding:22px 16px;border:1px solid var(--border);border-radius:14px;background:var(--primary-wash);display:flex;flex-direction:column;gap:10px;align-items:flex-start}
   .confirm-big .status{background:var(--primary);color:var(--paper)}
-  .confirm-big h6{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.02em;line-height:1.1}
+  .confirm-big .card-title{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.02em;line-height:1.1}
+  .confirm-big .muted{color:color-mix(in oklab, var(--primary-ink) 72%, white);font-weight:500}
   .detail-row{display:flex;justify-content:space-between;padding:9px 0;border-top:1px dashed var(--border);font-size:12px}
   .detail-row:first-of-type{border-top:0;padding-top:4px}
   .detail-row b{font-weight:500}
@@ -93,6 +98,7 @@
   .problem-grid{display:grid;grid-template-columns: repeat(3,1fr);gap:24px}
   .prob-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:var(--paper-2);min-height:260px;display:flex;flex-direction:column;gap:14px}
   .prob-card .chat{display:flex;flex-direction:column;gap:6px;padding:10px 0}
+  .prob-card .mono{color:var(--ink-2)}
   .msg{padding:7px 10px;border-radius:12px;font-size:12px;max-width:80%;line-height:1.35;color:var(--ink-2)}
   .msg.them{background:var(--paper-3);align-self:flex-start;border-bottom-left-radius:4px}
   .msg.me{background:var(--primary-wash);color:var(--primary-ink);align-self:flex-end;border-bottom-right-radius:4px}
@@ -117,23 +123,25 @@
   /* Visual 1 — timeline compare */
   .timeline-compare{display:grid;gap:20px}
   .tl{display:grid;grid-template-columns: 80px 1fr;gap:16px;align-items:center}
-  .tl .who{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .tl .who{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
   .tl .bar{display:flex;gap:3px;align-items:center}
   .tl .seg{height:22px;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-size:10px;font-family:var(--mono);letter-spacing:.06em;color:var(--paper);white-space:nowrap}
   .tl .seg.chat{background:var(--ink-3)}
   .tl .seg.wait{background:var(--warn);color:var(--ink)}
   .tl .seg.confirmed{background:var(--primary)}
-  .tl .seg.instant{background:var(--ok);color:var(--paper)}
-  .tl .mins{font-size:11px;color:var(--ink-3);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .tl .seg.instant{background:color-mix(in oklab, var(--ok) 86%, black);color:var(--paper)}
+  .tl .mins{font-size:11px;color:var(--ink-2);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
 
   /* Visual 2 — instant vs pending */
   .rail{display:grid;grid-template-columns: 1fr 1fr;gap:14px}
   .rail-card{padding:20px;border-radius:14px;display:flex;flex-direction:column;gap:10px}
   .rail-card.instant{background:var(--ok-wash);border:1px solid color-mix(in oklab, var(--ok) 30%, transparent)}
   .rail-card.pending{background:var(--warn-wash);border:1px solid color-mix(in oklab, var(--warn) 30%, transparent)}
-  .rail-card h6{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:-0.015em}
+  .rail-card .card-title{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:-0.015em}
   .rail-card p{font-size:12px;color:var(--ink-2);line-height:1.45}
   .rail-card .status{align-self:flex-start}
+  .rail-card.instant .status{color:color-mix(in oklab, var(--ok) 84%, black);background:color-mix(in oklab, var(--ok-wash) 72%, white)}
+  .rail-card.pending .status{color:color-mix(in oklab, var(--info) 78%, black);background:color-mix(in oklab, var(--info-wash) 82%, white)}
 
   /* Visual 3 — repeat booking */
   .repeat-vis{display:flex;flex-direction:column;gap:12px}
@@ -143,27 +151,27 @@
   .repeat-vis .row2 b{font-size:13px;font-weight:500;display:block}
   .repeat-vis .row2 span{font-size:11px;color:var(--ink-3)}
   .repeat-vis .btn{padding:8px 14px;font-size:12px}
-  .repeat-vis .hint{font-size:11px;font-family:var(--mono);letter-spacing:.1em;color:var(--ink-3);text-align:center;padding-top:4px}
+  .repeat-vis .hint{font-size:11px;font-family:var(--mono);letter-spacing:.1em;color:var(--ink-2);text-align:center;padding-top:4px}
 
   /* Trust */
   .trust-grid{display:grid;grid-template-columns: repeat(4,1fr);gap:20px}
   .trust-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:var(--paper-2);display:flex;flex-direction:column;gap:14px;min-height:260px}
   .trust-card .ic{width:32px;height:32px;border-radius:8px;background:var(--primary-wash);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:500}
-  .trust-card h4{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.02em}
+  .trust-card .card-title{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.02em}
   .trust-card p{font-size:13px;color:var(--ink-2);line-height:1.55}
-  .trust-card .meta{margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase;padding-top:12px;border-top:1px dashed var(--border)}
+  .trust-card .meta{margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--ink-2);letter-spacing:.14em;text-transform:uppercase;padding-top:12px;border-top:1px dashed var(--border)}
 
   /* Merchant section */
   .merchant{background:var(--ink);color:var(--paper)}
   .merchant .sec-title{color:var(--paper)}
   .merchant .sec-kicker{color:rgba(255,255,255,.7)}
-  .merchant .sec-num{color:rgba(255,255,255,.45)}
+  .merchant .sec-num{color:rgba(255,255,255,.5)}
   .merchant-grid{display:grid;grid-template-columns: 1fr 1.1fr;gap:56px;align-items:start}
   .merchant-bullets{display:flex;flex-direction:column;gap:18px}
   .m-bul{display:grid;grid-template-columns: 44px 1fr;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.08)}
   .m-bul:first-child{border-top:0}
-  .m-bul .n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);padding-top:4px}
-  .m-bul h4{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.015em;margin-bottom:4px;color:var(--paper)}
+  .m-bul .n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.52);padding-top:4px}
+  .m-bul .card-title{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.015em;margin-bottom:4px;color:var(--paper)}
   .m-bul p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.55}
   .merchant-visual{border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);padding:20px;background:rgba(255,255,255,.03);display:flex;flex-direction:column;gap:14px}
   .m-board-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -195,7 +203,7 @@
   /* Footer */
   footer{padding:64px 0 48px;background:var(--paper-2);border-top:1px solid var(--border)}
   .foot-grid{display:grid;grid-template-columns: 1.5fr 1fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
-  .foot-grid h6{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px}
+  .foot-grid .section-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px}
   .foot-grid ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--ink-2)}
   .foot-grid .lead{font-family:var(--serif);font-size:20px;line-height:1.35;color:var(--ink);letter-spacing:-0.015em;max-width:30ch;margin-top:14px}
   .foot-bot{padding-top:32px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
@@ -230,6 +238,7 @@
   </nav>
 </div>
 
+<main id="main-content">
 <!-- HERO -->
 <div class="wrap">
   <section class="hero" id="top">
@@ -263,10 +272,10 @@
             <div class="p-notch"></div>
             <div class="p-status"><span>9:41</span><span>●●●</span></div>
             <div class="confirm-card">
-              <div class="mono muted">Booking · #BK-21408</div>
-              <div class="confirm-big">
-                <span class="status s-confirm">Confirmed</span>
-                <h6>Luna · Bath &amp; Tidy</h6>
+            <div class="mono muted">Booking · #BK-21408</div>
+            <div class="confirm-big">
+              <span class="status s-confirm">Confirmed</span>
+                <div class="card-title">Luna · Bath &amp; Tidy</div>
                 <div class="muted" style="font-size:11px">Fri 22 Nov · 10:30 AM</div>
               </div>
               <div class="detail-row"><span class="muted">Groomer</span><b>Khun Ploy</b></div>
@@ -294,7 +303,7 @@
               </div>
               <div class="repeat-card">
                 <span class="lbl">Rebook in one tap</span>
-                <h6>Bath &amp; Tidy · Luna</h6>
+                <div class="card-title">Bath &amp; Tidy · Luna</div>
                 <div class="meta"><span>Ari Pet Salon</span><span>฿850</span></div>
                 <div class="cta"><b>Fri 10:30 avail</b><span>→</span></div>
               </div>
@@ -426,12 +435,12 @@
         <div class="rail">
           <div class="rail-card instant">
             <span class="status s-instant">Instant</span>
-            <h6>Bath &amp; Tidy · Luna</h6>
+            <div class="card-title">Bath &amp; Tidy · Luna</div>
             <p>Routine service. Duration is predictable, the slot is held the moment you confirm.</p>
           </div>
           <div class="rail-card pending">
             <span class="status s-pend-m">Pending review</span>
-            <h6>Full Groom · Mochi</h6>
+            <div class="card-title">Full Groom · Mochi</div>
             <p>Poodle, first visit, matted coat. The shop will respond within 2 hours or the hold releases.</p>
           </div>
         </div>
@@ -482,25 +491,25 @@
     <div class="trust-grid">
       <div class="trust-card">
         <div class="ic">¶</div>
-        <h4>Card hold, not a charge</h4>
+        <div class="card-title">Card hold, not a charge</div>
         <p>Routine bookings place a temporary card authorisation. Nothing is captured until the appointment completes — and the hold lifts automatically if you cancel in the free window.</p>
         <div class="meta">Authorisation · no capture</div>
       </div>
       <div class="trust-card">
         <div class="ic">§</div>
-        <h4>Deposits, only when they fit</h4>
+        <div class="card-title">Deposits, only when they fit</div>
         <p>Full grooms or higher-value services may ask for a small deposit. The amount, the refund window, and what happens on a no-show are stated before you commit.</p>
         <div class="meta">Explicit policy · per service</div>
       </div>
       <div class="trust-card">
         <div class="ic">✦</div>
-        <h4>Reminders &amp; reconfirm</h4>
+        <div class="card-title">Reminders &amp; reconfirm</div>
         <p>You get a friendly reminder the day before and the morning of. A single tap reconfirms. If you can't make it, cancelling is the same one tap — no phone call required.</p>
         <div class="meta">24h before · day-of</div>
       </div>
       <div class="trust-card">
         <div class="ic">◎</div>
-        <h4>Every state is named</h4>
+        <div class="card-title">Every state is named</div>
         <p>Instant, pending, confirmed, declined, arrived, completed, cancelled — you always see the current state of your booking, and what needs to happen next.</p>
         <div class="meta">13 named states</div>
       </div>
@@ -521,28 +530,28 @@
         <div class="m-bul">
           <div class="n">01</div>
           <div>
-            <h4>Truthful availability</h4>
+            <div class="card-title">Truthful availability</div>
             <p>You set routine services, durations, online-booking hours, and cut-offs. The slots customers see are the slots you actually have.</p>
           </div>
         </div>
         <div class="m-bul">
           <div class="n">02</div>
           <div>
-            <h4>Offline bookings live in the same board</h4>
+            <div class="card-title">Offline bookings live in the same board</div>
             <p>Phone call, LINE message, walk-in — capture the booking inside Pawpoint and it shares the same slot logic and payment protection.</p>
           </div>
         </div>
         <div class="m-bul">
           <div class="n">03</div>
           <div>
-            <h4>Request-confirm, not first-come-first-hope</h4>
+            <div class="card-title">Request-confirm, not first-come-first-hope</div>
             <p>High-variance jobs route for your review. Approve, decline with an explicit reason, or let the timeout expire cleanly — the outcome is always auditable.</p>
           </div>
         </div>
         <div class="m-bul">
           <div class="n">04</div>
           <div>
-            <h4>No-shows get quieter</h4>
+            <div class="card-title">No-shows get quieter</div>
             <p>Card holds and deposits do the work reminders can't. You get paid for the slot even when the customer doesn't show — and the policy is never a surprise.</p>
           </div>
         </div>
@@ -633,6 +642,7 @@
     <div class="cta-fine">Free to download · Bangkok launch · Thai + English</div>
   </div>
 </section>
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -643,7 +653,7 @@
         <p class="lead">A booking that earns the next appointment. Bangkok-first, in-shop grooming, built for repeat.</p>
       </div>
       <div>
-        <h6>Product</h6>
+        <div class="section-label">Product</div>
         <ul>
           <li><a href="#how">How it works</a></li>
           <li><a href="#trust">Payment protection</a></li>
@@ -652,7 +662,7 @@
         </ul>
       </div>
       <div>
-        <h6>Shops</h6>
+        <div class="section-label">Shops</div>
         <ul>
           <li><a href="#merchants">For groomers</a></li>
           <li>Merchant app</li>
@@ -661,7 +671,7 @@
         </ul>
       </div>
       <div>
-        <h6>Company</h6>
+        <div class="section-label">Company</div>
         <ul>
           <li>About</li>
           <li>Contact</li>

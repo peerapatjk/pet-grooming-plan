@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Pawpoint — Stakeholder one-pager</title>
+<link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml"/>
 <link rel="stylesheet" href="shared/pawpoint-tokens.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -60,14 +61,14 @@
     display: flex; align-items: center; gap: 10px;
   }
   .mast .mark {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--ink); position: relative;
-    box-shadow: inset 0 -6px 0 var(--accent);
+    width: 30px; height: 30px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--accent) 0 35%, var(--primary) 36% 100%);
+    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.14);
   }
   .mast .mark::after {
-    content:''; position:absolute; inset:0; border-radius:50%;
-    background: radial-gradient(circle at 36% 40%, #fff 0 3px, transparent 4px),
-                radial-gradient(circle at 60% 40%, #fff 0 3px, transparent 4px);
+    content:''; position:absolute; inset:auto 6px 6px auto; width:7px; height:7px;
+    border-radius:50%; background:#fff;
   }
   .mast .brand {
     font-family: var(--serif); font-size: 26px; font-weight: 500; letter-spacing: -0.02em;
@@ -270,7 +271,7 @@
   <div class="mast">
     <div class="logo">
       <div class="mark"></div>
-      <div class="brand">Pawpoint<em>.</em></div>
+      <div class="brand">Pawpoint</div>
     </div>
     <div class="kicker">
       Bangkok · pet-care booking &amp; payments · <b>stakeholder one-pager</b>
@@ -341,7 +342,7 @@
             <div class="idx">Surface 01 · Customer</div>
             <h4>The app pet parents actually <em>open</em></h4>
             <p>Discover nearby shops, book in 3 taps, see what's happening with the dog live. Bilingual (TH/EN). Pet profile remembers allergies, meds, the groomer who did it right last time.</p>
-            <div class="meta">iOS · Android · 12 screens modeled</div>
+            <div class="meta">iOS · Android · 15 screens modeled</div>
           </div>
         </div>
         <div class="surf">

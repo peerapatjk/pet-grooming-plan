@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Pawpoint — Concept package · Index &amp; handoff</title>
+<link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,14 +24,9 @@
     padding-bottom: 22px; border-bottom: 1px solid var(--ink);
     margin-bottom: 32px;
   }
-  .masthead .brand { display: flex; align-items: center; gap: 12px;}
-  .masthead .mark {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--ink); color: var(--paper);
-    display: grid; place-items: center;
-    font-family: var(--serif); font-weight: 500; font-style: italic; font-size: 20px;
-  }
-  .masthead .name { font-family: var(--serif); font-weight: 500; font-size: 26px; letter-spacing: -0.02em;}
+  .masthead .brand { display: flex; align-items: center; }
+  .masthead .brand .mark { font-size: 22px; }
+  .masthead .brand .mark-dot { width: 28px; height: 28px; }
   .masthead .meta {
     font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--ink-3); text-align: right;
@@ -199,8 +195,7 @@
   <!-- MASTHEAD -->
   <header class="masthead">
     <div class="brand">
-      <div class="mark">p</div>
-      <div class="name">Pawpoint.</div>
+      <div class="mark"><span class="mark-dot" aria-hidden="true"></span>Pawpoint</div>
     </div>
     <div class="meta">
       Concept package · v1<br>
@@ -213,7 +208,7 @@
     <div class="eye">Index &amp; handoff note</div>
     <h1>Six artifacts, one <em>receipt</em>.</h1>
     <p class="lede">
-      Pawpoint is a booking spine for Bangkok's pet-care market — built around <b>Shield</b>, a refundable deposit that makes every confirmation real. This package is the whole argument: one customer app, one merchant console, one ops room, a brand layer, a stakeholder one-pager, and a public landing page. Everything here is a working prototype — click through, play with the tweaks, look at the numbers. Start wherever is useful; the pages cross-reference each other where the details rhyme.
+      Pawpoint is a booking spine for Bangkok's pet-care market — built around <b>Shield</b>, a refundable deposit that makes every confirmation real. This package is the whole argument: one customer app, one merchant console, one ops room, a brand layer, a stakeholder one-pager, and a public landing page. Everything here is a working prototype package — open the surfaces, inspect the tweaks, and look at the numbers. Start wherever is useful; the pages cross-reference each other where the details rhyme.
     </p>
   </section>
 
@@ -236,8 +231,8 @@
       <div class="num">02 <span class="dash"></span> Customer</div>
       <div class="arrow">↗</div>
       <h2>The pet-parent <em>app</em>.</h2>
-      <div class="format">Format · <b>iPhone prototype</b> · 9 screens · clickable</div>
-      <p>Discover shops, book in three taps, scan-to-arrive QR, pet profile with groomer memory, bilingual TH/EN. Try the Tweaks panel to toggle language, personas, and Shield states.</p>
+      <div class="format">Format · <b>iPhone prototype</b> · 15 screens · guided walkthrough</div>
+      <p>Discover shops, book in three taps, scan-to-arrive QR, pet profile with groomer memory, bilingual TH/EN. Use the Tweaks panel to inspect language, persona, and Shield-state variants.</p>
       <div class="look">
         <b>What to look at</b>
         The booking flow (Home → Shop → Book → Confirm), the Shield receipt, and the arrival QR screen — that's the whole Pawpoint loop in 90 seconds.
@@ -248,7 +243,7 @@
       <div class="num">03 <span class="dash"></span> Merchant</div>
       <div class="arrow">↗</div>
       <h2>The shop <em>console</em>.</h2>
-      <div class="format">Format · <b>iPad prototype</b> · 8 screens · clickable</div>
+      <div class="format">Format · <b>iPad prototype</b> · 8 screens · guided walkthrough</div>
       <p>Today's timeline, a kanban board for groomers in motion, pending-requests triage, scan-to-arrive handoff, payouts. Designed to live on a counter and be glanceable from across the room.</p>
       <div class="look">
         <b>What to look at</b>
@@ -260,7 +255,7 @@
       <div class="num">04 <span class="dash"></span> Ops</div>
       <div class="arrow">↗</div>
       <h2>The <em>control room</em>.</h2>
-      <div class="format">Format · <b>Desktop prototype</b> · 6 screens · clickable</div>
+      <div class="format">Format · <b>Desktop prototype</b> · 6 screens · guided walkthrough</div>
       <p>Network pulse, stuck-booking triage, neighbourhood coverage map, Shield disputes, onboarding pipeline. Used daily by three roles — CX, Growth, Finance.</p>
       <div class="look">
         <b>What to look at</b>
@@ -320,7 +315,7 @@
           </li>
           <li>
             <div class="k">Fidelity</div>
-            <div class="v">Hi-fi clickable for the three product surfaces <em>— one-pager and landing page are pixel-final print/web</em></div>
+            <div class="v">Hi-fi guided walkthroughs for the three product surfaces <em>— one-pager and landing page are pixel-final print/web</em></div>
           </li>
         </ul>
       </div>
