@@ -1,0 +1,231 @@
+# Prototype and Eval Plan
+
+## Stage
+
+Discovery moving into prototype.
+
+This product should not jump directly from documents into full-stack implementation. The highest-risk questions are workflow fit, merchant trust, and customer willingness to accept payment-protection rules.
+
+## One-Sentence Problem
+
+Busy Bangkok pet owners need a faster, more reliable way to book grooming than LINE and phone calls, while independent groomers need one trustworthy schedule that reduces no-shows and manual coordination.
+
+## What Are We Building and Why?
+
+We are building a repeat-first pet grooming booking product for Bangkok that combines:
+
+- fast routine booking
+- merchant approval for high-variance cases
+- card-hold or deposit protection
+- merchant operations that replace fragmented chat-based scheduling
+
+Why now:
+
+- mobile booking behavior is normal
+- fragmented chat workflows are still common in this category
+- no-show controls and merchant trust can create immediate operational value
+
+## AI or Not AI?
+
+AI is not the core product here.
+
+The core product is workflow, inventory truth, and payment trust. AI may become useful later for:
+
+- pet-photo intake classification
+- service recommendation
+- merchant-side assistance or support automation
+
+For MVP, AI is an accelerant at most, not the product.
+
+## Key Decisions Made For This Package
+
+- Merchant wedge: premium-leaning independent grooming shops in dense central Bangkok neighborhoods.
+- Booking model: hybrid.
+- Payment protection default: card hold for routine bookings, deposit only for higher-risk or higher-value services.
+- Merchant correction window: 24 hours after appointment time.
+- Bilingual scope: system-managed Thai and English only for V1.
+- Waitlist and offered-slot flows: explicitly out of V1.
+- Payment method timing: collect only when first required by booking policy, not during onboarding.
+
+## Top Hypotheses
+
+1. Pet owners will tolerate a card hold if the booking is materially faster and more reliable than messaging a shop.
+2. Groomers will maintain schedule truth if the merchant workflow is faster than LINE and phone coordination.
+3. Repeat booking for the same pet and service will drive retention more than marketplace browsing or deals.
+
+## Fastest Falsification Tests
+
+### Test 1: Concierge booking pilot
+
+Run a manual pilot with 5-10 target grooming shops and 20-30 pet owners using a lightweight operator workflow.
+
+What to simulate:
+
+- routine instant-like booking
+- request-confirm exceptions
+- offline booking entry
+- card-hold or deposit policy communication
+- reminders and day-of confirmation
+
+What would kill the idea:
+
+- merchants refuse to maintain real availability
+- customers strongly resist payment protection
+- request-confirm volume is so high that "instant" becomes fake
+
+### Test 2: Customer clickable prototype
+
+Build a clickable mobile prototype for:
+
+- onboarding
+- search
+- routine booking
+- request-confirm booking
+- repeat booking
+
+Success signal:
+
+- users understand the instant vs pending distinction without explanation
+- time-to-first-booking feels clearly faster than current chat workflows
+
+### Test 3: Merchant ops prototype
+
+Build a merchant-side prototype for:
+
+- service templates
+- availability
+- booking search
+- offline booking entry
+- status changes
+- decline handling
+- inventory controls
+
+Success signal:
+
+- merchants say "I would actually use this instead of LINE" rather than "nice concept"
+
+## Prototype Variants
+
+### Variant A: Concierge ops first
+
+Human-operated scheduling layer using a simple internal tool.
+
+Best for learning:
+
+- real merchant behavior
+- operational edge cases
+- payment-protection friction
+
+### Variant B: Customer-first interactive demo
+
+High-fidelity mobile prototype emphasizing onboarding, search, and booking speed.
+
+Best for learning:
+
+- first-run clarity
+- onboarding friction
+- speed perception
+
+### Variant C: Merchant-console demo
+
+Interactive merchant ops prototype focused on schedule truth.
+
+Best for learning:
+
+- workflow fit
+- inventory control needs
+- trust in canonical schedule
+
+## Demo Before Memo
+
+Do these before deep implementation:
+
+1. Clickable customer demo for onboarding to booking
+2. Clickable merchant demo for availability to no-show cleanup
+3. Concierge pilot with live merchants and customers
+
+## Eval and Feedback Loop
+
+### North-star outcome
+
+- 30% repeat booking rate at 6 months
+
+### Leading indicators
+
+- onboarding completion rate
+- time to first search
+- time to first booking
+- search-to-book conversion
+- percent of bookings that are truly instant-confirmed
+- no-show rate
+- merchant schedule-trust score
+- 30-day repeat booking rate
+
+### Critical user journeys
+
+- first-time user completes onboarding and reaches search
+- first-time user completes first booking
+- repeat user rebooks the same pet
+- merchant accepts or declines an exception case
+- merchant enters an offline booking without creating shadow inventory
+- merchant resolves late or no-show status correctly
+
+### Failure modes
+
+- onboarding is too heavy
+- instant booking promise is false
+- merchants stop updating the schedule
+- payment protection feels punitive
+- bilingual UX is incomplete in critical moments
+- decline vs cancel vs no-show becomes operationally confusing
+
+### Review cadence
+
+- daily review during concierge pilot
+- weekly product review on leading indicators
+- biweekly merchant workflow review with traces and examples
+
+## Quality, Trust, and Risks
+
+- Trust starts with truthful availability, not with branding.
+- The first-run experience must explain payment protection simply.
+- Decline, cancel, and no-show must be distinct to avoid support chaos.
+- Bilingual support must cover critical system flows, not just marketing surfaces.
+- Onboarding should defer nonessential setup until the user has felt the value.
+
+## Distribution and Adoption Plan
+
+### Initial supply wedge
+
+- premium-leaning independent shops in central Bangkok
+
+Why:
+
+- higher digital readiness
+- denser repeat demand
+- stronger willingness to adopt process improvements
+
+### Initial demand wedge
+
+- busy urban pet owners with repeat grooming needs
+
+Why:
+
+- higher urgency
+- stronger rebooking frequency
+- more likely to value time savings
+
+### Merchant adoption motion
+
+- white-glove onboarding
+- concierge setup of services and availability
+- operational coaching on offline booking entry and payment-protection rules
+
+## Next 1-2 Concrete Steps
+
+1. Run the concierge pilot and clickable prototypes before deep implementation.
+2. Use the pilot findings to confirm or revise:
+   - instant-bookable service list
+   - card-hold vs deposit defaults
+   - onboarding minimum fields
+   - merchant correction-window policy

@@ -8,6 +8,7 @@ Use this folder when you have a rough concept that still needs exploration.
 
 - `pet-grooming-booking-platform.md` — the current one-pager with the problem framing, provisional recommended direction, assumptions, MVP scope, and "not doing" list.
 - `supporting-notes.md` — the full session notes, including user inputs, product tensions, divergent directions, and Chope reference findings.
+- `prototype-and-eval.md` — the pre-build discovery loop covering prototype variants, falsification tests, and product eval signals.
 
 ## Session Snapshot
 

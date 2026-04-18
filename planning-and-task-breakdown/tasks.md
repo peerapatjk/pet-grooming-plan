@@ -14,8 +14,81 @@ The goal is to leave the system in a working state after each small cluster of t
 - Keep merchant-generated bilingual content out of V1 unless approved separately.
 - Treat merchant decline as distinct from cancellation and no-show.
 - Keep waitlist and offered-slot flows out of V1 unless separately approved.
+- Default to card holds for routine bookings and deposits for higher-risk or higher-value services.
+- Default to a 24-hour merchant correction window and a 24-hours-plus-same-day reminder cadence.
 
 ## Task List
+
+### Phase 0: Prototype and Eval
+
+## Task 0: Run concierge booking pilot design
+
+**Description:** Define and prepare a lightweight concierge pilot with target merchants and customers to validate workflow fit, payment-protection tolerance, and merchant schedule trust before deep implementation.
+
+**Acceptance criteria:**
+- [ ] Pilot scope defines target merchant wedge, customer profile, and booking scenarios.
+- [ ] Pilot includes routine bookings, exception bookings, offline bookings, and no-show policy communication.
+- [ ] Success and failure thresholds are documented before the pilot starts.
+
+**Verification:**
+- [ ] Manual check: pilot brief exists and is reviewable by stakeholders
+- [ ] Manual check: riskiest assumptions are attached to observable outcomes
+
+**Dependencies:** None
+
+**Files likely touched:**
+- `idea-refine/prototype-and-eval.md`
+- `docs/product/concierge-pilot.md`
+
+**Estimated scope:** Small
+
+## Task 0A: Create customer and merchant clickable prototypes
+
+**Description:** Produce lightweight clickable prototypes that make the onboarding, search, booking, and merchant-ops workflows real enough to test with users and merchants.
+
+**Acceptance criteria:**
+- [ ] Customer prototype covers onboarding, search, routine booking, exception booking, and repeat booking.
+- [ ] Merchant prototype covers availability, booking search, offline booking capture, and status actions.
+- [ ] Prototype feedback can be captured against explicit success criteria.
+
+**Verification:**
+- [ ] Manual check: prototypes are usable in review sessions
+- [ ] Manual check: customer and merchant flows can be walked end to end
+
+**Dependencies:** Task 0
+
+**Files likely touched:**
+- `docs/product/customer-prototype.md`
+- `docs/product/merchant-prototype.md`
+
+**Estimated scope:** Small
+
+## Task 0B: Define analytics and eval schema
+
+**Description:** Define the event taxonomy and review loop for onboarding, first booking, merchant trust, and repeat booking so the team can learn from both the pilot and the MVP.
+
+**Acceptance criteria:**
+- [ ] Event list exists for onboarding completion, first search, booking start, booking success, and repeat booking.
+- [ ] Merchant trust signals such as offline booking usage, decline rate, and status corrections are defined.
+- [ ] Review cadence and success thresholds are documented.
+
+**Verification:**
+- [ ] Manual check: event taxonomy is explicit and tied to product hypotheses
+- [ ] Manual check: north-star and leading-indicator definitions are consistent with the spec
+
+**Dependencies:** Task 0
+
+**Files likely touched:**
+- `idea-refine/prototype-and-eval.md`
+- `docs/product/analytics-and-evals.md`
+
+**Estimated scope:** Small
+
+### Checkpoint: Prototype Gate
+
+- [ ] Concierge pilot and clickable prototypes are defined
+- [ ] Learning plan exists for first booking, merchant trust, and repeat booking
+- [ ] Review with human before deep implementation
 
 ### Phase 1: Foundation
 
@@ -536,6 +609,31 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Estimated scope:** Medium
 
+## Task 19A: Implement product analytics instrumentation
+
+**Description:** Implement the event instrumentation and reporting hooks needed to observe onboarding completion, first booking conversion, merchant trust, and repeat-booking behavior in production.
+
+**Acceptance criteria:**
+- [ ] Customer events exist for onboarding completion, first search, booking start, booking success, and repeat booking.
+- [ ] Merchant events exist for offline booking creation, decline actions, and correction-window edits.
+- [ ] Event naming and properties match the agreed analytics schema.
+
+**Verification:**
+- [ ] Tests pass: `pnpm test -- --grep "analytics"`
+- [ ] Build succeeds: `pnpm build`
+- [ ] Manual check: event traces are visible for the critical user journeys
+
+**Dependencies:** Task 0B, Task 10A, Task 12, Task 13, Task 16
+
+**Files likely touched:**
+- `packages/domain/src/analytics-events.ts`
+- `apps/app-mobile/src/lib/analytics.ts`
+- `apps/app-merchant/src/lib/analytics.ts`
+- `apps/api/src/services/analytics-service.ts`
+- `tests/integration/analytics-events.test.ts`
+
+**Estimated scope:** Medium
+
 ## Task 20: Build grace-period, no-show, and correction-window handling
 
 **Description:** Implement the operational automation and UI support for late arrival, no-show resolution, and post-appointment correction windows.
@@ -598,6 +696,7 @@ The goal is to leave the system in a working state after each small cluster of t
 | Payment provider does not support required hold behavior in Thailand | High | Validate provider capabilities before finalizing adapter and policy defaults |
 | Hybrid routing logic is unclear to users | High | Keep rules narrow in V1 and expose reason codes for pending confirmation |
 | Merchant workflow is slower than LINE or phone coordination | High | Prioritize offline booking capture and fast status actions early |
+| We build before validating workflow fit | High | Run concierge pilot and clickable prototypes before deep implementation |
 | Bilingual support becomes content-translation scope creep | Medium | Restrict V1 to system-managed copy unless explicitly expanded |
 | Bulk status actions create audit ambiguity | Medium | Record actor, timestamp, previous state, and new state for every bulk update |
 | Waitlist or offered-slot scope sneaks into MVP | Medium | Keep those flows explicitly out of V1 unless the state model is expanded and approved |
@@ -605,8 +704,3 @@ The goal is to leave the system in a working state after each small cluster of t
 ## Open Questions
 
 - Which exact services are instant-bookable in V1?
-- What is the default payment-protection policy for Thailand?
-- What is the final merchant correction window after appointment time?
-- Is merchant-generated content bilingual in V1, or only system-managed text?
-- What is the first merchant wedge in Bangkok for rollout?
-- Is waitlist or slot-offer behavior explicitly excluded from V1?

@@ -45,7 +45,8 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 - The onboarding flow must support Thai and English.
 - The onboarding flow must collect the minimum information required to reach first search and first booking.
 - The onboarding flow must support phone verification or equivalent account verification.
-- Optional setup such as deeper pet-profile completion or payment-method setup should be deferrable unless required by booking policy.
+- Optional setup such as deeper pet-profile completion should be deferrable.
+- Payment-method setup should happen only when first required by booking policy, not during default onboarding.
 
 ### Pet profile
 
@@ -56,7 +57,7 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 
 - Groomers must be able to define service templates, durations, and pricing logic.
 - Groomers must be able to open, close, and edit availability.
-- Groomers must be able to manage booking states such as confirmed, arrived, in service, done, cancelled, and no-show.
+- Groomers must be able to manage booking states such as confirmed, declined by merchant, arrived, in service, completed, cancelled, and no-show.
 - Groomers must be able to see a summary dashboard for bookings and revenue.
 - Groomers must be able to update booking outcomes quickly on desktop, tablet, and mobile.
 - Groomers should be able to perform bulk status updates where operationally useful.
@@ -74,13 +75,19 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 - The system must support both Thai and English for transactional notifications and booking-state copy.
 - The system should persist a user language preference or honor device language where appropriate.
 - The product should avoid hardcoded single-language UI strings.
-- Whether merchant-generated content must be bilingual in V1 remains an explicit product decision.
+- Merchant-generated content does not need bilingual support in V1.
 
 ## Booking Lifecycle and Notification Requirements
 
 - The system must distinguish `declined_by_merchant` from customer cancellation and no-show.
 - The system must support transactional notifications for booking creation, confirmation, decline, reminder, and reconfirmation where relevant.
 - The system should support merchant-facing notification surfaces for new bookings, edits, cancellations, and deposit or verification updates.
+
+## Analytics and Feedback Requirements
+
+- The system must instrument onboarding completion, first search, booking-start, booking-success, and repeat-booking events.
+- The system must instrument merchant-facing trust signals such as offline booking usage, decline rate, and status-correction activity.
+- The system should support a lightweight funnel view for first booking and repeat booking behavior.
 
 ## No-Show and Booking Integrity Requirements
 
@@ -102,6 +109,8 @@ Source:
 - The system must support these protections for both online bookings and merchant-entered offline bookings.
 - The system must support sending a secure payment link when the merchant captures a booking from phone, LINE, Instagram, Facebook, or walk-in channels.
 - The system must use tokenized payment handling so merchants do not access raw card details.
+- Routine bookings should default to card holds.
+- Deposits should be reserved for higher-risk or higher-value services.
 
 ### Arrival and no-show handling
 
@@ -114,6 +123,7 @@ Source:
   - late arrival
   - no-show
 - The system should define a post-appointment editing window during which merchants can correct booking outcomes.
+- The default correction window is 24 hours after appointment time.
 
 ### Schedule integrity
 
@@ -146,7 +156,7 @@ Requirements derived from that guide:
 - The product should provide resource-level inventory controls such as lock and block behavior.
 - The product should provide session-level online booking hour and cutoff-time controls.
 - The product should treat decline, cancellation, no-show, and waiting-style states as distinct operational concepts.
-- Waitlist and offered-slot flows are useful, but should remain explicit future scope unless the MVP state model expands to support them.
+- Waitlist and offered-slot flows are explicitly out of V1.
 
 ## Non-Goals for V1
 
@@ -160,8 +170,4 @@ Requirements derived from that guide:
 
 - Which services are always instant-bookable?
 - What exact rules trigger request-and-confirm mode?
-- Which payment protection model should be default in Thailand: deposit, hold, or service-type-based rules?
-- What is the best reminder schedule: 24 hours, same day, or both?
 - How much merchant setup is acceptable before the product feels heavier than LINE?
-- What should the merchant status-correction window be after an appointment has passed?
-- Is waitlist or slot-offer behavior explicitly excluded from V1?

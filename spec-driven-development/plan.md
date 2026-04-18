@@ -4,7 +4,7 @@
 
 Translate the Phase 1 spec into an implementation approach that can be reviewed before task breakdown and code.
 
-This plan assumes the current spec in [spec.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/spec.md) is directionally correct and incorporates the newly added Thai and English support requirement.
+This plan assumes the current spec in [spec.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/spec.md) is directionally correct and incorporates Thai and English support, a minimal onboarding stance, and a premium-leaning independent-shop wedge in central Bangkok.
 
 ## Implementation Strategy
 
@@ -14,11 +14,22 @@ The order matters:
 
 1. Define canonical booking rules and status transitions.
 2. Build the backend around one source of truth for schedule, booking, verification, and payment state.
-3. Add the customer flow for online bookings.
-4. Add the merchant flow for availability, offline bookings, and operational status cleanup.
-5. Add reminders, reconfirmation, localization, and reporting.
+3. Validate workflow fit quickly with a concierge prototype and clickable demos.
+4. Add the customer flow for online bookings.
+5. Add the merchant flow for availability, offline bookings, and operational status cleanup.
+6. Add reminders, reconfirmation, localization, reporting, and instrumentation.
 
 The system should not begin with UI-first prototyping that bypasses domain rules. The hard part is policy correctness, not screens.
+
+## Pre-Implementation Gate
+
+Before deep implementation, run a fast discovery loop:
+
+- concierge pilot with target merchants and customers
+- clickable customer prototype for onboarding to booking
+- clickable merchant prototype for schedule truth and offline booking capture
+
+This loop exists to validate the biggest risks before building the full product system.
 
 ## Major Components
 
@@ -139,6 +150,7 @@ Core responsibilities:
 - reconfirmation prompts
 - late-arrival and no-show policy messages
 - booking and revenue summaries
+- onboarding, booking, and repeat-behavior instrumentation
 - localized transactional content
 
 Dependencies:
@@ -146,7 +158,33 @@ Dependencies:
 - backend events
 - localization
 
+### 8. Prototype and eval loop
+
+Core responsibilities:
+
+- concierge pilot design
+- prototype variants for customer and merchant flows
+- leading-indicator instrumentation plan
+- falsification criteria for the riskiest assumptions
+
+Dependencies:
+
+- product decisions, not code scaffolding
+
 ## Recommended Implementation Order
+
+### Phase 0: Prototype and eval
+
+Deliverables:
+
+- concierge pilot plan
+- clickable customer prototype
+- clickable merchant prototype
+- eval rubric for onboarding, booking trust, and merchant workflow fit
+
+Checkpoint:
+
+- We have evidence on merchant willingness, customer payment-protection tolerance, and first-run clarity before deep buildout.
 
 ### Phase A: Domain foundation
 
@@ -216,6 +254,7 @@ Deliverables:
 - booking-status notifications, reminder jobs, and reconfirmation jobs
 - no-show and grace-period handling
 - revenue summary and operational dashboard
+- activation, booking, and repeat-behavior instrumentation
 
 Checkpoint:
 
@@ -244,7 +283,7 @@ Mitigation:
 Mitigation:
 
 - scope V1 bilingual support to system-managed text unless otherwise approved
-- keep merchant-generated content translation as a separate product decision
+- keep merchant-generated content out of bilingual scope for V1
 - establish translation keys before UI implementation
 
 ### Risk: onboarding becomes too heavy and kills first-booking conversion
@@ -254,6 +293,14 @@ Mitigation:
 - collect only required identity, language, and booking-critical setup upfront
 - defer optional profile enrichment until it is needed
 - test onboarding against time-to-first-search and time-to-first-booking goals
+
+### Risk: we build a polished system before proving merchant and user behavior
+
+Mitigation:
+
+- run the concierge pilot first
+- use clickable prototypes to validate first-run clarity
+- instrument first-booking and repeat-booking signals early
 
 ### Risk: waitlist or cancellation-fill scope sneaks into MVP without proper state design
 
@@ -337,16 +384,11 @@ Verify:
 - merchant offline booking flow works end to end
 - merchant no-show and cancellation cleanup works end to end
 - merchant search and inventory controls work end to end
+- activation and repeat-behavior instrumentation works end to end
 
 ## Decisions Needed Before TASKS
 
 - Define the exact list of instant-bookable services in V1.
-- Choose the default payment-protection policy for the Thai market.
-- Choose the merchant correction window after appointment time.
-- Decide whether merchant-generated content is bilingual in V1 or only system-managed text is bilingual.
-- Choose the first merchant wedge in Bangkok.
-- Confirm whether waitlist and offered-slot flows are explicitly out of V1.
-- Decide when payment method setup happens in onboarding versus booking.
 
 ## Exit Criteria For PLAN Phase
 

@@ -6,7 +6,7 @@ How might we let busy Bangkok pet owners book reliable grooming and bathing appo
 
 ## Provisional Recommended Direction
 
-The current best direction is a combination of `Hybrid Smart Intake`, `Repeat-First Grooming`, and `No-Show Shield`.
+The current best direction is a combination of `Hybrid Smart Intake`, `Repeat-First Grooming`, and `No-Show Shield`, starting with premium-leaning independent shops in dense central Bangkok neighborhoods.
 
 This means standard services should be truly bookable instantly, while high-variance cases move into a request-and-confirm flow. Grooming is not the same as restaurant booking: duration depends on breed, size, coat condition, temperament, and add-ons. If the app pretends all services fit fixed slots, the inventory becomes misleading and shops lose trust in it quickly.
 
@@ -19,6 +19,16 @@ The repeat-booking loop should be the center of the product, because the target 
 - [ ] A hybrid model is operationally better than forcing everything into pure instant booking or pure request booking.
 - [ ] Repeat booking, pet profiles, and saved groom history will matter more for retention than deals, loyalty points, or editorial discovery.
 - [ ] Groomers are willing to adopt a lightweight merchant dashboard if it saves them time compared with LINE and phone coordination.
+
+## Working Decisions
+
+- First merchant wedge: premium-leaning independent shops in dense central Bangkok neighborhoods
+- Payment protection default: card hold for routine bookings, deposit only for higher-risk or higher-value services
+- Merchant correction window: 24 hours after appointment time
+- Reminder schedule: 24 hours before plus same-day reminder
+- Bilingual scope for V1: system-managed Thai and English only
+- Waitlist and slot-offer flows: explicitly out of V1
+- Payment method timing: collect only when first required by booking policy, not during onboarding
 
 ## MVP Scope
 
@@ -33,7 +43,7 @@ In scope:
 - hybrid booking flow: instant for routine services, approval required for edge cases
 - card hold or deposit during booking
 - customer and groomer notifications for booking status changes
-- merchant booking board with confirmed, declined, arrived, in-service, done, cancelled, and no-show states
+- merchant booking board with confirmed, declined, arrived, in-service, completed, cancelled, and no-show states
 - merchant search for current and upcoming bookings
 - merchant inventory controls for locking a booking to a groomer or station, blocking resources from online booking, and setting online booking hours or cutoff times
 - basic revenue and booking summary dashboard
@@ -68,8 +78,4 @@ These requirements should be treated as part of the MVP, not as a later payments
 
 - Which services should always be instant-bookable, and which should always require confirmation?
 - Should exception handling be triggered by service type, pet profile data, uploaded photos, or all three?
-- What hold or deposit model fits Thai payment rails and user expectations best?
 - How much of the groomer workflow needs a native dashboard versus a lightweight app plus notification bridge?
-- Is the first wedge premium salons in central Bangkok, neighborhood independents, or a mix?
-- Should waitlist and slot-offer flows be explicitly deferred from V1 or partially included?
-- Should payment method be added during onboarding, during first booking, or only when required by service policy?

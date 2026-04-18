@@ -12,6 +12,9 @@
 8. Thai and English support in V1 applies at minimum to system-managed UI, transactional messages, and booking-state copy. Merchant-entered content is not automatically translated unless explicitly added to scope later.
 9. Waitlist, queue, and offered-slot flows are not included in V1 unless explicitly approved later.
 10. Customer onboarding in V1 should be minimal and optimized for time-to-first-booking rather than full profile completion upfront.
+11. Routine bookings default to card holds; deposits are reserved for higher-risk or higher-value services.
+12. The merchant correction window defaults to 24 hours after appointment time.
+13. Reminder schedule defaults to 24 hours before plus same-day reminder.
 
 Correct these before Phase 2 if any are wrong. The plan should not proceed on hidden assumptions.
 
@@ -90,6 +93,7 @@ Favor explicit domain modeling over loose status strings and ad hoc conditionals
 export type BookingStatus =
   | "pending_verification"
   | "pending_merchant_confirmation"
+  | "declined_by_merchant"
   | "confirmed"
   | "reconfirmed"
   | "arrived"
@@ -132,6 +136,7 @@ Testing must prove schedule truth, payment-protection behavior, and operational 
   - webhook or callback processing from the payment provider
   - locale-sensitive notification rendering for Thai and English
 - E2E tests:
+  - customer completes onboarding and reaches booking-ready state
   - customer creates a pet profile and books a routine service
   - merchant confirms an exception booking
   - reminder and reconfirmation behavior before appointment time
@@ -185,6 +190,7 @@ Coverage expectations:
 - merchant offline booking entry with payment-link follow-up
 - basic daily revenue and booking summary
 - repeat booking for the same pet and service
+- product analytics for onboarding, first booking, merchant schedule trust, and repeat behavior
 
 ### Out of Scope for MVP
 
@@ -291,18 +297,12 @@ The spec is successful when the MVP can satisfy all of these conditions:
 - A missed offline manual update does not create a second hidden schedule; every capacity-consuming booking must exist in the same booking system.
 - The policy engine can determine release, refund, capture, or forfeiture behavior for each appointment outcome.
 - Customer and merchant system-managed journeys are usable in both Thai and English.
+- The team can observe onboarding completion, first booking conversion, merchant schedule trust, and repeat booking through instrumentation.
 
 ## Open Questions
 
 - Which services are always instant-bookable in V1?
 - What exact inputs should trigger request-and-confirm mode: service type, pet profile, uploaded photos, or a combination?
-- Should the default Thai-market payment protection be a card hold, a deposit, or service-level configuration?
-- What should the merchant correction window be after appointment time: same day, 24 hours, or 48 hours?
-- What reminder schedule should V1 use: 24 hours before, same day, or both?
-- What is the first supply wedge in Bangkok: premium salons, neighborhood independents, or a mixed cohort?
-- Does V1 bilingual support apply only to system-managed text, or must merchant-generated content also support bilingual entry?
-- Is waitlist or slot-offer behavior explicitly out of V1, or do we want a thin first version of it?
-- Should payment method collection happen during onboarding, at first booking, or only when required by policy?
 
 ## References
 

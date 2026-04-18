@@ -40,6 +40,15 @@ Payment concept:
 - Six-month success metric: 30% repeat booking rate
 - Current alternatives: phone calls, LINE chat, Instagram DMs, Facebook inbox, walk-ins
 
+## Working Decisions
+
+- Merchant wedge: premium-leaning independent grooming shops in central Bangkok first
+- Payment protection default: card hold for routine bookings, deposit for higher-risk or higher-value services
+- Merchant correction window: 24 hours after appointment time
+- Bilingual scope: system-managed Thai and English only for V1
+- Waitlist and slot-offer flows: explicitly out of V1
+- Payment method timing: collect only when required by booking policy, not during onboarding
+
 ## How Might We Frame It
 
 How might we make grooming appointments as easy to book as a restaurant table, without hiding the real complexity of pet-specific service duration, merchant approval, and no-show risk?
@@ -258,6 +267,7 @@ The stronger angle is:
 - Pet profile data meaningfully speeds up future bookings.
 - Completed-booking reviews improve trust without requiring heavy moderation too early.
 - Bangkok users want an app-based flow more than another LINE-heavy coordination layer.
+- Premium-leaning independent shops in central Bangkok are the best first supply wedge.
 
 ### Might be true
 
@@ -480,10 +490,6 @@ Saved research artifact:
 ## Open Questions for the Next Ideation Pass
 
 - What is the exact rule set for switching from instant booking to request booking?
-- Which merchant segment should be the first wedge in Bangkok?
 - How much mandatory pet intake is needed before friction outweighs trust?
 - Should a completed booking automatically trigger review collection, rebooking suggestion, and next-visit reminder?
 - What is the thinnest useful merchant dashboard that still replaces chat-heavy coordination?
-- What should the allowed post-appointment status-edit window be for merchants: immediate only, same day, or up to 48 hours?
-- Do we want any waitlist or slot-offer behavior in V1, or should it be explicitly deferred?
-- What is the minimum onboarding required before the user can search, book, and save a pet profile?
