@@ -23,6 +23,7 @@ These are directionally decided from document synthesis, not from completed live
 
 ## Not Yet Locked
 
+- landing-page messaging and CTA framing that make app-download intent clear without implying web booking
 - Exact launch service taxonomy for instant booking versus request-confirm
 - Exact routing inputs: service type, pet-profile conditions, and photo-review rules
 - Verification-hold expiry duration
@@ -34,6 +35,7 @@ These are directionally decided from document synthesis, not from completed live
 ## Launch Slice
 
 - In:
+  - static landing page with app-download CTA only
   - customer onboarding, search, booking, and repeat booking
   - merchant availability, booking board, and offline booking capture
   - truthful instant booking for a narrow routine-service set
@@ -60,6 +62,7 @@ These are directionally decided from document synthesis, not from completed live
   - The spec, plan, and task breakdown are internally consistent with the narrowed launch slice.
 - What failed:
   - No live pilot, merchant walkthrough, customer prototype evidence, or internal operations prototype evidence is captured yet.
+  - No landing-page prototype evidence is captured yet.
   - The most important operational numbers remain assumptions, not validated decisions.
 - What changed:
   - Scope narrowed from a broad "Chope for pets" concept to a Bangkok-first launch slice focused on truthful booking, payment trust, and repeat behavior.

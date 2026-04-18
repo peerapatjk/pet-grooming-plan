@@ -51,6 +51,13 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 - Optional setup such as deeper pet-profile completion should be deferrable.
 - Payment-method setup should happen only when first required by booking policy, not during default onboarding.
 
+## Launch Marketing Surface Requirements
+
+- The launch slice may include a static marketing landing page focused on product explanation and app-download CTAs.
+- The landing page must not offer booking, search, onboarding, or any parallel web flow that duplicates app behavior.
+- The landing page should make it clear that booking happens in the app.
+- Landing-page claims must stay within the actual Bangkok-first launch slice and should not imply broader coverage or functionality.
+
 ### Pet profile
 
 - The system must store breed, size, coat type, temperament, allergies, and special notes.

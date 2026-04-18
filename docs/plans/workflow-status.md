@@ -21,6 +21,7 @@ The project already has substantial workflow artifacts, but it is not ready to e
 - Stakeholder gate definition: `spec-driven-development/stakeholder-readiness.md`
 - Stakeholder status: `spec-driven-development/stakeholder-readiness-status.md`
 - Task breakdown: `planning-and-task-breakdown/tasks.md`
+- Landing page prototype brief: `docs/product/landing-page-prototype.md`
 - Operations prototype brief: `docs/product/operations-control-plane-prototype.md`
 
 ## What Is Ready
@@ -30,6 +31,7 @@ The project already has substantial workflow artifacts, but it is not ready to e
 - The implementation sequencing and task breakdown are detailed enough to guide delivery later.
 - Draft artifacts now exist for:
   - concierge pilot planning
+  - landing page prototype scope
   - customer prototype scope
   - merchant prototype scope
   - operations control-plane prototype scope

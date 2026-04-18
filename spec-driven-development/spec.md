@@ -233,6 +233,7 @@ Coverage expectations:
 
 ### Launch Slice for First Release
 
+- static marketing landing page with app-download CTAs only
 - customer onboarding with language choice, phone or account verification, and first-use setup
 - customer search by location, service, and relevant near-term availability
 - customer pet profiles with booking-relevant attributes
@@ -293,6 +294,15 @@ Coverage expectations:
 8. Receive booking-created, confirmed, declined, reminder, and reconfirmation messages as appropriate
 9. Receive reminder and reconfirmation before appointment
 10. View system-managed booking copy in Thai or English
+
+### Static landing-page workflow
+
+1. Visitor lands on a static marketing site
+2. Visitor understands the product, launch wedge, and trust model at a high level
+3. Visitor clicks App Store or Play Store style CTA
+4. Visitor downloads the app to continue into the real booking experience
+
+The landing page must not create a parallel web booking flow.
 
 ### Merchant workflow
 

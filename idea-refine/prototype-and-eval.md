@@ -92,6 +92,19 @@ Success signal:
 - users understand the instant vs pending distinction without explanation
 - time-to-first-booking feels clearly faster than current chat workflows
 
+### Test 2A: Static landing page prototype
+
+Build a static marketing landing page prototype for:
+
+- product framing
+- trust explanation
+- launch-wedge clarity
+- app-download CTA
+
+Success signal:
+
+- users understand the product quickly, want to download the app, and do not expect booking to happen on the website
+
 ### Test 3: Merchant ops prototype
 
 Build a merchant-side prototype for:
@@ -189,9 +202,10 @@ Best for learning:
 Do these before deep implementation:
 
 1. Clickable customer demo for onboarding to booking
-2. Clickable merchant demo for availability to no-show cleanup
-3. Clickable internal operations demo for disputes, timeouts, overrides, and merchant recovery
-4. Concierge pilot with live merchants and customers
+2. Clickable static landing page demo for positioning and app-download intent
+3. Clickable merchant demo for availability to no-show cleanup
+4. Clickable internal operations demo for disputes, timeouts, overrides, and merchant recovery
+5. Concierge pilot with live merchants and customers
 
 ## Eval and Feedback Loop
 
@@ -230,6 +244,7 @@ Do these before deep implementation:
 - merchants stop updating the schedule
 - payment protection feels punitive
 - bilingual UX is incomplete in critical moments
+- the landing page implies web booking or a broader launch than actually exists
 - decline vs cancel vs no-show becomes operationally confusing
 - merchant-initiated cancellation after confirmation is logged as a generic customer cancellation
 - a late OTP or payment success callback re-confirms an expired booking or double-applies a payment outcome
@@ -239,6 +254,7 @@ Do these before deep implementation:
 ### What should happen
 
 - routine bookings feel materially faster than chat-based coordination
+- users understand that the website is for learning and downloading, while booking happens in the app
 - users understand why a booking is instant, pending verification, or pending merchant review
 - pending states show what will happen next and when the slot will expire or be released
 - merchants trust the booking board enough to treat it as the real schedule

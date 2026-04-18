@@ -108,24 +108,28 @@ I want the deck to include:
 9. Customer prototype showcase
 - visually embed or simulate the strongest 2-3 moments from the customer flow
 
-10. Merchant prototype showcase
+10. Landing page showcase
+- visually embed or simulate the static marketing site and app-download CTA surface
+- make it clear that the website is acquisition only, not a second booking flow
+
+11. Merchant prototype showcase
 - visually embed or simulate the strongest 2-3 moments from the merchant flow
 
-11. Operations control-plane showcase
+12. Operations control-plane showcase
 - visually embed or simulate the strongest 2-3 moments from the internal operations surface
 - show why launch readiness depends on incident triage, override safety, merchant recovery, and trust-event visibility
 
-12. Why repeat booking is the real moat
+13. Why repeat booking is the real moat
 - saved pet context
 - faster rebooking
 - merchant trust + history
 
-13. Launch slice vs later roadmap
+14. Launch slice vs later roadmap
 - what is in
 - what is out
 - what is deferred
 
-14. Risks and what must be validated
+15. Risks and what must be validated
 - service taxonomy
 - request-confirm triggers
 - provisional-hold expiry
@@ -133,14 +137,16 @@ I want the deck to include:
 - onboarding minimum fields
 - customer tolerance for payment protection
 
-15. Discovery and pilot plan
+16. Discovery and pilot plan
 - concierge pilot
+- clickable landing-page prototype
 - clickable customer prototype
 - clickable merchant prototype
 - clickable internal operations control-plane prototype
 - analytics and evals
 
-16. What success looks like
+17. What success looks like
+- landing-page clarity and download intent
 - first-booking clarity
 - schedule-truth thresholds
 - payment-protection tolerance
@@ -148,7 +154,7 @@ I want the deck to include:
 - internal team incident-manageability
 - repeat-booking signal
 
-17. Closing slide
+18. Closing slide
 - why this launch slice is strategically coherent
 - what decision we want from leadership next
 

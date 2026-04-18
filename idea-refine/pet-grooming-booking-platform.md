@@ -63,6 +63,7 @@ The first release should be smaller than the full MVP scope.
 Ship first:
 
 - a dense merchant wedge in central Bangkok
+- a static landing page that explains the product and drives app downloads without offering web booking
 - a narrow list of truly instant-bookable routine services
 - request-confirm for high-variance services and unfamiliar pets
 - customer onboarding, search, booking, and repeat booking
@@ -108,6 +109,7 @@ These requirements should be treated as part of the MVP, not as a later payments
 - Waitlist, queue, and cancellation-fill "offered slot" flows — these are valuable, but they should follow only after the core booking and merchant-ops workflow is stable.
 - Multi-pet and bundled multi-service bookings — they create pricing, duration, and repeat-booking complexity before the single-pet launch slice is stable.
 - Native reschedule workflows — they add a second lifecycle on top of cancellation and replacement booking before the operational states are proven.
+- Website-based booking or onboarding — the website should stay a static download-and-explanation surface, not a parallel product that splits trust and engineering focus.
 
 ## Open Questions
 

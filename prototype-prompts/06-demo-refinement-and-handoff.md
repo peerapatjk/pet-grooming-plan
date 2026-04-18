@@ -10,6 +10,7 @@ Use it to unify the artifacts into one coherent demo package and prepare a stron
 
 ```text
 I already have first-draft artifacts in this workspace for:
+- static landing page prototype
 - customer mobile prototype
 - merchant operations prototype
 - internal operations control-plane prototype
@@ -28,6 +29,7 @@ Please do all of the following:
 - remove anything that feels generic, inconsistent, or obviously AI-generated
 
 2. Strengthen the product story
+- landing page should clearly drive download intent without implying web booking
 - customer flow should clearly show speed and trust
 - merchant flow should clearly show operational control and schedule truth
 - internal operations flow should clearly show launch readiness, auditability, and incident manageability
@@ -35,6 +37,7 @@ Please do all of the following:
 - one-pager should clearly summarize the strategy without ambiguity
 
 3. Strengthen the key proof points
+- static marketing site with direct-to-download CTA only
 - routine instant booking
 - request-confirm for high-variance cases
 - payment protection explanation
@@ -67,12 +70,14 @@ Please do all of the following:
 - keep this handoff summary high-signal and implementation-oriented, not verbose
 
 Important constraints:
+- do not turn the landing page into a web booking or onboarding surface
 - do not add waitlist, native reschedule, multi-pet bundles, home service, or broad marketplace complexity
 - do not weaken the distinction between provisional and confirmed states
 - do not hide payment protection or operational edge cases
 - do not make the artifacts prettier at the expense of honesty
 
 Output I want:
+- refined static landing page prototype
 - refined customer prototype
 - refined merchant prototype
 - refined internal operations control-plane prototype

@@ -12,6 +12,7 @@ This schema exists to answer whether the product is improving booking speed, sch
 
 ## Launch Leading Indicators
 
+- landing-page view-to-download click-through rate
 - onboarding completion rate
 - time to first search
 - time to first booking
@@ -37,6 +38,8 @@ This schema exists to answer whether the product is improving booking speed, sch
 
 | Event | Actor | When it fires | Key properties |
 |---|---|---|---|
+| `landing_page_viewed` | visitor | marketing landing page is viewed | acquisition_source, locale, device_type |
+| `app_download_cta_clicked` | visitor | App Store / Play Store CTA is clicked | acquisition_source, locale, platform_target |
 | `onboarding_started` | customer | customer begins onboarding | language, acquisition_source |
 | `onboarding_completed` | customer | minimum booking-ready onboarding completes | language, steps_completed, deferred_fields |
 | `first_search_performed` | customer | first meaningful search occurs | area, service_type, pet_known |
@@ -65,6 +68,7 @@ This schema exists to answer whether the product is improving booking speed, sch
 
 ### Speed
 
+- Does the landing page explain the product quickly enough to drive download intent?
 - How long does it take to reach first search?
 - How long does it take to complete a routine booking?
 - Is repeat booking materially faster than first-time booking?
@@ -108,5 +112,6 @@ The pilot and prototype loop is complete only when:
 - request-confirm triggers are locked
 - provisional-hold expiry and merchant response SLA are locked
 - payment-protection defaults are evidence-backed
+- the static landing page clearly drives app downloads without creating a false expectation of web booking
 - onboarding field set is minimized based on observed friction
 - the team can explain how the launch slice will be measured after release

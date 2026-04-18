@@ -16,17 +16,19 @@ They are optimized for **CEO and stakeholder demos**, not implementation-perfect
 
 1. `01-brand-and-design-system-seed.md`
    - Use first if you want Claude Design to establish a coherent visual system before prototyping.
-2. `02-customer-mobile-prototype.md`
+2. `02a-landing-page-static-site.md`
+   - Use to generate the static marketing landing page with app-download CTAs only.
+3. `02-customer-mobile-prototype.md`
    - Use to generate the customer-facing prototype.
-3. `03-merchant-ops-prototype.md`
+4. `03-merchant-ops-prototype.md`
    - Use to generate the merchant-facing operations prototype.
-4. `03b-operations-control-plane-prototype.md`
+5. `03b-operations-control-plane-prototype.md`
    - Use to generate the internal company operations / support / merchant-success control plane.
-5. `04-ceo-demo-deck.md`
+6. `04-ceo-demo-deck.md`
    - Use to create a crisp narrative deck for leadership review.
-6. `05-stakeholder-one-pager.md`
+7. `05-stakeholder-one-pager.md`
    - Use to create a summary artifact for broader review circulation.
-7. `06-demo-refinement-and-handoff.md`
+8. `06-demo-refinement-and-handoff.md`
    - Use after the first drafts exist to align the visuals, tighten the storyline, and prepare a handoff bundle.
 
 ## How To Use In Claude Design
@@ -46,10 +48,11 @@ They are optimized for **CEO and stakeholder demos**, not implementation-perfect
 For leadership demos, the strongest sequence is:
 
 1. Show the **customer routine booking** flow.
-2. Show the **customer exception / request-confirm** flow.
-3. Show the **merchant booking board** and offline booking capture.
-4. Show the **internal operations control plane** for disputes, timeouts, overrides, and merchant recovery.
-5. Show the **deck** that frames why this is a tight launch slice rather than a broad marketplace.
+2. Show the **static landing page** that drives app downloads and frames the launch honestly.
+3. Show the **customer exception / request-confirm** flow.
+4. Show the **merchant booking board** and offline booking capture.
+5. Show the **internal operations control plane** for disputes, timeouts, overrides, and merchant recovery.
+6. Show the **deck** that frames why this is a tight launch slice rather than a broad marketplace.
 
 This is more credible than showing generic "AI made a pretty UI" screens.
 
@@ -58,6 +61,7 @@ This is more credible than showing generic "AI made a pretty UI" screens.
 The prompts intentionally enforce the current product boundaries:
 
 - Bangkok-first launch slice
+- static marketing landing page with direct-to-download CTAs only
 - in-shop grooming only
 - one pet plus one primary service template
 - routine services can be instant-booked
@@ -68,6 +72,7 @@ The prompts intentionally enforce the current product boundaries:
 - merchant cancellation of confirmed bookings must use explicit operational reasons
 - reconfirmation non-response must create follow-up visibility, not a silent inventory release
 - internal operations must be able to investigate incidents, manage exceptions, and keep overrides auditable
+- the landing page must not become a second booking surface
 
 ## Important Note
 

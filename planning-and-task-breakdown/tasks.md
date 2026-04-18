@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document decomposes the approved spec and implementation plan into small, verifiable tasks. The task order follows the dependency graph: domain rules first, then canonical schedule and backend flows, then customer, merchant, and internal operations surfaces, then operational automation.
+This document decomposes the approved spec and implementation plan into small, verifiable tasks. The task order follows the dependency graph: domain rules first, then canonical schedule and backend flows, then landing-page, customer, merchant, and internal operations surfaces, then operational automation.
 
 The goal is to leave the system in a working state after each small cluster of tasks rather than building all backend, then all UI, then attempting to connect everything at the end.
 
@@ -70,11 +70,12 @@ It assumes a separate cross-functional readiness gate for:
 
 **Estimated scope:** Small
 
-## Task 0A: Create customer, merchant, and operations clickable prototypes
+## Task 0A: Create landing page, customer, merchant, and operations clickable prototypes
 
-**Description:** Produce lightweight clickable prototypes that make the onboarding, search, booking, merchant-ops, and internal operations-control-plane workflows real enough to test with users and stakeholders.
+**Description:** Produce lightweight clickable prototypes that make the static landing page, onboarding, search, booking, merchant-ops, and internal operations-control-plane workflows real enough to test with users and stakeholders.
 
 **Acceptance criteria:**
+- [ ] Landing page prototype clearly explains the product and drives app-download intent without offering web booking.
 - [ ] Customer prototype covers onboarding, search, routine booking, exception booking, and repeat booking.
 - [ ] Merchant prototype covers availability, booking search, offline booking capture, and status actions.
 - [ ] Operations control-plane prototype covers exception triage, booking investigation, manual override, merchant recovery, and trust-event review.
@@ -82,11 +83,12 @@ It assumes a separate cross-functional readiness gate for:
 
 **Verification:**
 - [ ] Manual check: prototypes are usable in review sessions
-- [ ] Manual check: customer, merchant, and internal operations flows can be walked end to end
+- [ ] Manual check: landing page, customer, merchant, and internal operations flows can be walked end to end
 
 **Dependencies:** Task 0
 
 **Files likely touched:**
+- `docs/product/landing-page-prototype.md`
 - `docs/product/customer-prototype.md`
 - `docs/product/merchant-prototype.md`
 - `docs/product/operations-control-plane-prototype.md`
@@ -540,6 +542,31 @@ It assumes a separate cross-functional readiness gate for:
 
 **Estimated scope:** Medium
 
+## Task 10B: Build static launch landing page with app-download CTA
+
+**Description:** Implement a static marketing site that explains the launch slice clearly and drives users to download the app without introducing web booking or onboarding functionality.
+
+**Acceptance criteria:**
+- [ ] Landing page clearly explains the product, launch wedge, and trust model.
+- [ ] Landing page includes app-download CTAs only and does not offer booking, search, or onboarding.
+- [ ] Landing-page copy stays within the actual Bangkok-first launch slice and does not imply broader coverage.
+- [ ] Landing-page UI is responsive and polished enough for launch and stakeholder review.
+
+**Verification:**
+- [ ] Tests pass: `pnpm test -- --grep "landing-page"`
+- [ ] Build succeeds: `pnpm build`
+- [ ] Manual check: a visitor understands that booking happens in the app, not on the website
+
+**Dependencies:** Task 5, Task 7, Task 10
+
+**Files likely touched:**
+- `apps/web-marketing/src/pages/index.tsx`
+- `apps/web-marketing/src/components/Hero.tsx`
+- `apps/web-marketing/src/components/TrustSection.tsx`
+- `apps/web-marketing/tests/landing-page.test.tsx`
+
+**Estimated scope:** Small
+
 ## Task 11: Build customer pet profile flow
 
 **Description:** Implement the customer flow for creating and reusing pet profiles with booking-relevant attributes.
@@ -668,6 +695,7 @@ It assumes a separate cross-functional readiness gate for:
 ### Checkpoint: Customer Flow
 
 - [ ] Thai and English localization foundation is in place
+- [ ] Static launch landing page works and drives app-download intent without implying web booking
 - [ ] Customer onboarding works
 - [ ] Pet profile, routine booking, exception booking, payment-trust, and repeat booking flows work
 - [ ] Review with human before merchant operations tasks

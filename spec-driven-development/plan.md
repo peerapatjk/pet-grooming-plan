@@ -27,6 +27,7 @@ The system should not begin with UI-first prototyping that bypasses domain rules
 Before deep implementation, run a fast discovery loop:
 
 - concierge pilot with target merchants and customers
+- clickable static landing page prototype for positioning and app-download intent
 - clickable customer prototype for onboarding to booking
 - clickable merchant prototype for schedule truth and offline booking capture
 - clickable internal operations control-plane prototype for exceptions, overrides, merchant recovery, and trust-event review
@@ -164,7 +165,22 @@ Why early:
 
 - localization should be foundational, not retrofitted after UI is built
 
-### 5. Customer application
+### 5. Static acquisition landing page
+
+Core responsibilities:
+
+- explain the product and launch wedge clearly
+- frame the trust model at a high level
+- drive App Store or Play Store downloads
+- remain static and avoid becoming a second booking surface
+
+Dependencies:
+
+- product positioning
+- brand system
+- launch-slice truthfulness
+
+### 6. Customer application
 
 Core responsibilities:
 
@@ -181,7 +197,7 @@ Dependencies:
 - backend booking endpoints
 - localization layer
 
-### 6. Merchant application
+### 7. Merchant application
 
 Core responsibilities:
 
@@ -200,7 +216,7 @@ Dependencies:
 - backend scheduling and booking endpoints
 - localization layer
 
-### 7. Notifications and operational reporting
+### 8. Notifications and operational reporting
 
 Core responsibilities:
 
@@ -212,7 +228,7 @@ Core responsibilities:
 - onboarding, booking, and repeat-behavior instrumentation
 - localized transactional content
 
-### 8. Internal operations control plane
+### 9. Internal operations control plane
 
 Core responsibilities:
 
@@ -229,7 +245,7 @@ Dependencies:
 - audit trail design
 - payment and booking state semantics
 
-### 9. Cross-functional launch readiness
+### 10. Cross-functional launch readiness
 
 Core responsibilities:
 
@@ -253,11 +269,12 @@ Dependencies:
 - backend events
 - localization
 
-### 10. Prototype and eval loop
+### 11. Prototype and eval loop
 
 Core responsibilities:
 
 - concierge pilot design
+- landing-page prototype
 - prototype variants for customer, merchant, and internal operations flows
 - leading-indicator instrumentation plan
 - falsification criteria for the riskiest assumptions
@@ -273,6 +290,7 @@ Dependencies:
 Deliverables:
 
 - concierge pilot plan
+- clickable static landing page prototype
 - clickable customer prototype
 - clickable merchant prototype
 - clickable internal operations control-plane prototype

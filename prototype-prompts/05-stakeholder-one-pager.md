@@ -42,6 +42,7 @@ I want the one-pager to include these sections:
 - customer segment
 
 4. What ships in the launch slice
+- static landing page with app-download CTA only
 - customer onboarding, search, booking, repeat booking
 - merchant booking board and offline booking capture
 - internal operations control plane for disputes, overrides, merchant recovery, and trust-event review
@@ -71,6 +72,7 @@ I want the one-pager to include these sections:
 - clearer payment and booking semantics
 
 8. What must be validated before implementation-heavy work
+- landing-page messaging and download intent clarity
 - launch service taxonomy
 - request-confirm triggers
 - merchant SLA
@@ -80,6 +82,7 @@ I want the one-pager to include these sections:
 
 9. Next step
 - concierge pilot
+- clickable landing-page prototype
 - clickable prototypes
 - evidence-backed decision gate
 
