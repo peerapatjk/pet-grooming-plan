@@ -108,6 +108,21 @@ Success signal:
 
 - merchants say "I would actually use this instead of LINE" rather than "nice concept"
 
+### Test 4: Internal operations control-plane prototype
+
+Build an internal platform-operations prototype for:
+
+- launch health dashboard
+- exception queue
+- booking investigation workspace
+- manual override flow
+- merchant recovery workflow
+- finance and trust-event review
+
+Success signal:
+
+- operations, support, merchant success, and finance stakeholders believe the launch slice can be run without relying on Slack threads, side spreadsheets, or undocumented tribal knowledge
+
 ## Pilot Decision Gate
 
 Before the team deepens the spec or starts implementation-heavy work, the pilot and prototype loop must lock:
@@ -159,13 +174,24 @@ Best for learning:
 - inventory control needs
 - trust in canonical schedule
 
+### Variant D: Internal operations control-plane demo
+
+Interactive internal operations prototype focused on triage, auditability, and recovery.
+
+Best for learning:
+
+- whether the launch slice is operationally manageable
+- whether support and operations can resolve incidents from one place
+- whether finance and trust-sensitive events are visible enough before launch
+
 ## Demo Before Memo
 
 Do these before deep implementation:
 
 1. Clickable customer demo for onboarding to booking
 2. Clickable merchant demo for availability to no-show cleanup
-3. Concierge pilot with live merchants and customers
+3. Clickable internal operations demo for disputes, timeouts, overrides, and merchant recovery
+4. Concierge pilot with live merchants and customers
 
 ## Eval and Feedback Loop
 
@@ -207,6 +233,7 @@ Do these before deep implementation:
 - decline vs cancel vs no-show becomes operationally confusing
 - merchant-initiated cancellation after confirmation is logged as a generic customer cancellation
 - a late OTP or payment success callback re-confirms an expired booking or double-applies a payment outcome
+- support and operations still need Slack, spreadsheets, or memory to resolve incidents
 - multi-pet or bundled-service requests sneak into the launch slice and break duration truth
 
 ### What should happen
@@ -215,6 +242,7 @@ Do these before deep implementation:
 - users understand why a booking is instant, pending verification, or pending merchant review
 - pending states show what will happen next and when the slot will expire or be released
 - merchants trust the booking board enough to treat it as the real schedule
+- internal teams can triage incidents and overrides without depending on side channels
 
 ### What must never happen
 
@@ -224,6 +252,7 @@ Do these before deep implementation:
 - customers see a payment hold without understanding the release conditions
 - a late provider callback silently resurrects inventory that was already released
 - a merchant-side disruption is attributed to the customer and contaminates trust, analytics, or payment policy
+- internal operators can change risky states without clear audit trails or permission boundaries
 
 ### What needs human review
 

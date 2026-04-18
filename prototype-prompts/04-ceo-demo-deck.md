@@ -111,17 +111,21 @@ I want the deck to include:
 10. Merchant prototype showcase
 - visually embed or simulate the strongest 2-3 moments from the merchant flow
 
-11. Why repeat booking is the real moat
+11. Operations control-plane showcase
+- visually embed or simulate the strongest 2-3 moments from the internal operations surface
+- show why launch readiness depends on incident triage, override safety, merchant recovery, and trust-event visibility
+
+12. Why repeat booking is the real moat
 - saved pet context
 - faster rebooking
 - merchant trust + history
 
-12. Launch slice vs later roadmap
+13. Launch slice vs later roadmap
 - what is in
 - what is out
 - what is deferred
 
-13. Risks and what must be validated
+14. Risks and what must be validated
 - service taxonomy
 - request-confirm triggers
 - provisional-hold expiry
@@ -129,20 +133,22 @@ I want the deck to include:
 - onboarding minimum fields
 - customer tolerance for payment protection
 
-14. Discovery and pilot plan
+15. Discovery and pilot plan
 - concierge pilot
 - clickable customer prototype
 - clickable merchant prototype
+- clickable internal operations control-plane prototype
 - analytics and evals
 
-15. What success looks like
+16. What success looks like
 - first-booking clarity
 - schedule-truth thresholds
 - payment-protection tolerance
 - merchant daily-use willingness
+- internal team incident-manageability
 - repeat-booking signal
 
-16. Closing slide
+17. Closing slide
 - why this launch slice is strategically coherent
 - what decision we want from leadership next
 

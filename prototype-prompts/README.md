@@ -20,11 +20,13 @@ They are optimized for **CEO and stakeholder demos**, not implementation-perfect
    - Use to generate the customer-facing prototype.
 3. `03-merchant-ops-prototype.md`
    - Use to generate the merchant-facing operations prototype.
-4. `04-ceo-demo-deck.md`
+4. `03b-operations-control-plane-prototype.md`
+   - Use to generate the internal company operations / support / merchant-success control plane.
+5. `04-ceo-demo-deck.md`
    - Use to create a crisp narrative deck for leadership review.
-5. `05-stakeholder-one-pager.md`
+6. `05-stakeholder-one-pager.md`
    - Use to create a summary artifact for broader review circulation.
-6. `06-demo-refinement-and-handoff.md`
+7. `06-demo-refinement-and-handoff.md`
    - Use after the first drafts exist to align the visuals, tighten the storyline, and prepare a handoff bundle.
 
 ## How To Use In Claude Design
@@ -46,7 +48,8 @@ For leadership demos, the strongest sequence is:
 1. Show the **customer routine booking** flow.
 2. Show the **customer exception / request-confirm** flow.
 3. Show the **merchant booking board** and offline booking capture.
-4. Show the **deck** that frames why this is a tight launch slice rather than a broad marketplace.
+4. Show the **internal operations control plane** for disputes, timeouts, overrides, and merchant recovery.
+5. Show the **deck** that frames why this is a tight launch slice rather than a broad marketplace.
 
 This is more credible than showing generic "AI made a pretty UI" screens.
 
@@ -64,6 +67,7 @@ The prompts intentionally enforce the current product boundaries:
 - no waitlist, no offered-slot flow, no native reschedule flow in V1
 - merchant cancellation of confirmed bookings must use explicit operational reasons
 - reconfirmation non-response must create follow-up visibility, not a silent inventory release
+- internal operations must be able to investigate incidents, manage exceptions, and keep overrides auditable
 
 ## Important Note
 

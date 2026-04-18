@@ -44,6 +44,7 @@ I want the one-pager to include these sections:
 4. What ships in the launch slice
 - customer onboarding, search, booking, repeat booking
 - merchant booking board and offline booking capture
+- internal operations control plane for disputes, overrides, merchant recovery, and trust-event review
 - hybrid instant / request-confirm model
 - payment protection
 - reminders and reconfirmation
@@ -66,6 +67,7 @@ I want the one-pager to include these sections:
 - faster than chat-based coordination
 - stronger repeat loop
 - stronger merchant trust
+- stronger internal operational control
 - clearer payment and booking semantics
 
 8. What must be validated before implementation-heavy work

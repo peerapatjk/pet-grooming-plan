@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document decomposes the approved spec and implementation plan into small, verifiable tasks. The task order follows the dependency graph: domain rules first, then canonical schedule and backend flows, then customer and merchant surfaces, then operational automation.
+This document decomposes the approved spec and implementation plan into small, verifiable tasks. The task order follows the dependency graph: domain rules first, then canonical schedule and backend flows, then customer, merchant, and internal operations surfaces, then operational automation.
 
 The goal is to leave the system in a working state after each small cluster of tasks rather than building all backend, then all UI, then attempting to connect everything at the end.
 
@@ -70,24 +70,26 @@ It assumes a separate cross-functional readiness gate for:
 
 **Estimated scope:** Small
 
-## Task 0A: Create customer and merchant clickable prototypes
+## Task 0A: Create customer, merchant, and operations clickable prototypes
 
-**Description:** Produce lightweight clickable prototypes that make the onboarding, search, booking, and merchant-ops workflows real enough to test with users and merchants.
+**Description:** Produce lightweight clickable prototypes that make the onboarding, search, booking, merchant-ops, and internal operations-control-plane workflows real enough to test with users and stakeholders.
 
 **Acceptance criteria:**
 - [ ] Customer prototype covers onboarding, search, routine booking, exception booking, and repeat booking.
 - [ ] Merchant prototype covers availability, booking search, offline booking capture, and status actions.
+- [ ] Operations control-plane prototype covers exception triage, booking investigation, manual override, merchant recovery, and trust-event review.
 - [ ] Prototype feedback can be captured against explicit success criteria.
 
 **Verification:**
 - [ ] Manual check: prototypes are usable in review sessions
-- [ ] Manual check: customer and merchant flows can be walked end to end
+- [ ] Manual check: customer, merchant, and internal operations flows can be walked end to end
 
 **Dependencies:** Task 0
 
 **Files likely touched:**
 - `docs/product/customer-prototype.md`
 - `docs/product/merchant-prototype.md`
+- `docs/product/operations-control-plane-prototype.md`
 
 **Estimated scope:** Small
 

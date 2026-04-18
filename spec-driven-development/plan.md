@@ -29,6 +29,7 @@ Before deep implementation, run a fast discovery loop:
 - concierge pilot with target merchants and customers
 - clickable customer prototype for onboarding to booking
 - clickable merchant prototype for schedule truth and offline booking capture
+- clickable internal operations control-plane prototype for exceptions, overrides, merchant recovery, and trust-event review
 
 This loop exists to validate the biggest risks before building the full product system.
 
@@ -211,6 +212,23 @@ Core responsibilities:
 - onboarding, booking, and repeat-behavior instrumentation
 - localized transactional content
 
+### 8. Internal operations control plane
+
+Core responsibilities:
+
+- launch health dashboard
+- exception queue for timeouts, failed payment or OTP flows, disputes, and merchant-side incidents
+- booking investigation workspace with timeline and audit trail
+- controlled manual override flows with permission and reason capture
+- merchant recovery workflows for shops drifting back to shadow scheduling
+- finance and trust-event review surfaces for holds, deposits, refunds, forfeitures, and payout-impacting events
+
+Dependencies:
+
+- backend events
+- audit trail design
+- payment and booking state semantics
+
 ### 9. Cross-functional launch readiness
 
 Core responsibilities:
@@ -235,12 +253,12 @@ Dependencies:
 - backend events
 - localization
 
-### 8. Prototype and eval loop
+### 10. Prototype and eval loop
 
 Core responsibilities:
 
 - concierge pilot design
-- prototype variants for customer and merchant flows
+- prototype variants for customer, merchant, and internal operations flows
 - leading-indicator instrumentation plan
 - falsification criteria for the riskiest assumptions
 
@@ -257,6 +275,7 @@ Deliverables:
 - concierge pilot plan
 - clickable customer prototype
 - clickable merchant prototype
+- clickable internal operations control-plane prototype
 - eval rubric for onboarding, booking trust, and merchant workflow fit
 
 Checkpoint:

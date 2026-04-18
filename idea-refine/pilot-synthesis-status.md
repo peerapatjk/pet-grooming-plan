@@ -59,7 +59,7 @@ These are directionally decided from document synthesis, not from completed live
   - The product has a strong launch-slice posture instead of trying to ship a full marketplace immediately.
   - The spec, plan, and task breakdown are internally consistent with the narrowed launch slice.
 - What failed:
-  - No live pilot, merchant walkthrough, or customer prototype evidence is captured yet.
+  - No live pilot, merchant walkthrough, customer prototype evidence, or internal operations prototype evidence is captured yet.
   - The most important operational numbers remain assumptions, not validated decisions.
 - What changed:
   - Scope narrowed from a broad "Chope for pets" concept to a Bangkok-first launch slice focused on truthful booking, payment trust, and repeat behavior.

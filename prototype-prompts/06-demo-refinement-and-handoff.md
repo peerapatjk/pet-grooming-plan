@@ -2,7 +2,7 @@
 
 ## When To Use
 
-Paste this into Claude Design **after** you already have first drafts for the customer prototype, merchant prototype, deck, or one-pager.
+Paste this into Claude Design **after** you already have first drafts for the customer prototype, merchant prototype, internal operations prototype, deck, or one-pager.
 
 Use it to unify the artifacts into one coherent demo package and prepare a stronger leadership review.
 
@@ -12,6 +12,7 @@ Use it to unify the artifacts into one coherent demo package and prepare a stron
 I already have first-draft artifacts in this workspace for:
 - customer mobile prototype
 - merchant operations prototype
+- internal operations control-plane prototype
 - CEO deck
 - stakeholder one-pager
 
@@ -29,6 +30,7 @@ Please do all of the following:
 2. Strengthen the product story
 - customer flow should clearly show speed and trust
 - merchant flow should clearly show operational control and schedule truth
+- internal operations flow should clearly show launch readiness, auditability, and incident manageability
 - deck should clearly show why this is a narrow, intelligent launch slice
 - one-pager should clearly summarize the strategy without ambiguity
 
@@ -39,6 +41,7 @@ Please do all of the following:
 - repeat-booking advantage
 - merchant canonical schedule
 - offline booking capture inside the same system
+- internal exception triage and override safety
 
 4. Tighten copy everywhere
 - remove hype and vague filler
@@ -72,6 +75,7 @@ Important constraints:
 Output I want:
 - refined customer prototype
 - refined merchant prototype
+- refined internal operations control-plane prototype
 - refined CEO deck
 - refined stakeholder one-pager
 - one "best live demo path" recommendation

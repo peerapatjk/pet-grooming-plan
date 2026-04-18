@@ -2,7 +2,7 @@
 
 ## When To Use
 
-Paste this into Claude Design **before** you make the customer or merchant prototypes if you want a coherent visual system and a shared demo language across all artifacts.
+Paste this into Claude Design **before** you make the customer, merchant, or internal operations prototypes if you want a coherent visual system and a shared demo language across all artifacts.
 
 ## Prompt
 

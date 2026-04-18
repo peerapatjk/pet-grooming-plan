@@ -21,6 +21,7 @@ The project already has substantial workflow artifacts, but it is not ready to e
 - Stakeholder gate definition: `spec-driven-development/stakeholder-readiness.md`
 - Stakeholder status: `spec-driven-development/stakeholder-readiness-status.md`
 - Task breakdown: `planning-and-task-breakdown/tasks.md`
+- Operations prototype brief: `docs/product/operations-control-plane-prototype.md`
 
 ## What Is Ready
 
@@ -31,6 +32,7 @@ The project already has substantial workflow artifacts, but it is not ready to e
   - concierge pilot planning
   - customer prototype scope
   - merchant prototype scope
+  - operations control-plane prototype scope
   - analytics and eval schema
 
 ## What Is Not Ready
