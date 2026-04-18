@@ -10,7 +10,7 @@ Use these prompts to generate polished prototypes, decks, and one-pagers for sta
 
 - Stage: `PROTOTYPE / DEMO`
 - Primary audience: product, design, founders, and leadership reviewers
-- Authority boundary: these prompts are for exploration and communication. They must stay inside [../docs/launch-canon.md](../docs/launch-canon.md) and the supporting briefs in [../docs/product/README.md](../docs/product/README.md)
+- Authority boundary: these prompts are for exploration and communication. They must stay inside [../docs/launch-canon.md](../docs/launch-canon.md), the supporting briefs in [../docs/product/README.md](../docs/product/README.md), and the repo-wide authority rules in [../docs/governance/authority-boundaries.md](../docs/governance/authority-boundaries.md)
 
 ## Inputs
 
@@ -101,6 +101,20 @@ These prompts intentionally enforce the current product boundaries:
 - explicit merchant-cancel reasons for confirmed bookings
 - reconfirmation non-response creates follow-up visibility rather than silent inventory release
 - internal operations keep incident handling and overrides auditable
+
+## Promotion Criteria
+
+This folder is ready for live use when:
+
+- the prompt pack matches the current launch canon and product briefs
+- no prompt expands scope or invents policy
+- the crosswalk to source briefs is current
+- demo outputs are expected to feed findings back into [../idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md)
+
+## Next Stop
+
+- review sessions and clickable prototype generation
+- [../idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md) for evidence-backed policy lock
 
 ## Shared Launch Canon
 

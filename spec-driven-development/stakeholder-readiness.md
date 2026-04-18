@@ -14,6 +14,13 @@ The launch slice should not go live because product and engineering feel ready. 
 
 If some functions are combined in your company, the same person may cover multiple stakeholder roles. The role still needs explicit coverage.
 
+Companion packet templates live in:
+
+- [../docs/readiness/finance-accounting-readiness.md](../docs/readiness/finance-accounting-readiness.md)
+- [../docs/readiness/operations-support-readiness.md](../docs/readiness/operations-support-readiness.md)
+- [../docs/readiness/marketing-sales-legal-risk-readiness.md](../docs/readiness/marketing-sales-legal-risk-readiness.md)
+- [../docs/readiness/product-ceo-tech-data-vendor-readiness.md](../docs/readiness/product-ceo-tech-data-vendor-readiness.md)
+
 ## Stakeholder Matrix
 
 | Stakeholder | What must be true for them to be satisfied | Evidence required before launch | Owner |
@@ -188,34 +195,4 @@ Before launch, the team should have a reviewable packet containing:
    - OTP and notification validation
    - vendor fallback plan
 
-## Status Template
-
-```md
-# Stakeholder Readiness Status
-
-## Status
-- Product / GM / Launch DRI:
-- CEO:
-- Finance:
-- Accounting:
-- Operations:
-- Customer Support / Merchant Success:
-- Marketing:
-- Legal:
-- Risk / Compliance / Security / Privacy:
-- Tech:
-- Data / Analytics:
-- Sales / BD / Merchant Acquisition:
-- External Critical Vendors:
-
-## Blockers
-- Stakeholder:
-- Blocker:
-- Owner:
-- Target date:
-
-## Waivers
-- Stakeholder:
-- Temporary waiver:
-- Expiry:
-```
+Use [stakeholder-readiness-status.md](stakeholder-readiness-status.md) for the live snapshot of current owners, blockers, dates, and waivers.

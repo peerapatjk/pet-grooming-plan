@@ -113,7 +113,7 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 
 The launch slice should satisfy the stakeholder requirements documented in:
 
-- [stakeholder-readiness.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/stakeholder-readiness.md)
+- [stakeholder-readiness.md](stakeholder-readiness.md)
 
 ### Product, CEO, and business readiness
 

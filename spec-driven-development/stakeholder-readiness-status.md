@@ -1,5 +1,17 @@
 # Stakeholder Readiness Status
 
+## Purpose
+
+This file is the live status snapshot for the stakeholder-readiness policy.
+
+It should contain current state only: owners, blockers, dates, and waivers. The rubric, packet definitions, and launch criteria live in [stakeholder-readiness.md](stakeholder-readiness.md).
+
+## Update Rule
+
+- Update this file whenever a readiness packet gains an owner, a blocker changes, or a waiver is issued or expires.
+- Keep policy changes in [stakeholder-readiness.md](stakeholder-readiness.md), not here.
+- Use the packet templates in [../docs/readiness/README.md](../docs/readiness/README.md) to gather evidence before changing a status line.
+
 ## Status
 
 - Product / GM / Launch DRI: Drafted in docs, but no named launch DRI or waiver process is recorded yet
@@ -19,6 +31,11 @@
 ## Inputs Available
 
 - Domain research packet: `docs/domain-research-bangkok-pet-grooming-platform.md`
+- Packet templates:
+  - `docs/readiness/finance-accounting-readiness.md`
+  - `docs/readiness/operations-support-readiness.md`
+  - `docs/readiness/marketing-sales-legal-risk-readiness.md`
+  - `docs/readiness/product-ceo-tech-data-vendor-readiness.md`
 - Intended use:
   - Finance: payment-protection assumptions and PSP scoping context
   - Legal / Risk / Privacy: PDPA, e-contract, payments-scope, and consumer-protection context

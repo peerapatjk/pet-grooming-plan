@@ -71,7 +71,7 @@ This product should not be considered launch-ready unless the following groups c
 
 The detailed cross-functional gate lives in:
 
-- [stakeholder-readiness.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/stakeholder-readiness.md)
+- [stakeholder-readiness.md](stakeholder-readiness.md)
 
 ## Tech Stack
 
@@ -465,9 +465,9 @@ These questions should be resolved through the pilot decision gate before implem
 
 ## References
 
-- [requirements.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/requirements.md)
-- [pet-grooming-booking-platform.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/pet-grooming-booking-platform.md)
-- [supporting-notes.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/supporting-notes.md)
+- [requirements.md](requirements.md)
+- [pet-grooming-booking-platform.md](../idea-refine/pet-grooming-booking-platform.md)
+- [supporting-notes.md](../idea-refine/supporting-notes.md)
 - [ChopeBook user guide](https://www.scribd.com/document/884337118/chopebook-user-guide)
 - [Chope: Reducing No Show](https://restaurants.chope.co/singapore/restaurant-no-show/)
 - [Grab Help Centre: How to manage Chope bookings](https://help.grab.com/merchant/en-th/40001016)

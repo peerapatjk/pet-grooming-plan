@@ -10,7 +10,7 @@ Use these artifacts to define what the prototypes, pilot, stakeholder reviews, a
 
 - Stage: `DISCOVERY SUPPORT`
 - Primary audience: product, design, research, operations, and leadership
-- Authority boundary: these docs define what to prototype and measure, but they must stay inside [../launch-canon.md](../launch-canon.md) and the formal product contract in [../../spec-driven-development/spec.md](../../spec-driven-development/spec.md)
+- Authority boundary: these docs define what to prototype and measure, but they must stay inside [../launch-canon.md](../launch-canon.md), the formal product contract in [../../spec-driven-development/spec.md](../../spec-driven-development/spec.md), and the repo-wide boundary rules in [../governance/authority-boundaries.md](../governance/authority-boundaries.md)
 
 ## Inputs
 
@@ -63,7 +63,22 @@ Use these artifacts to define what the prototypes, pilot, stakeholder reviews, a
 
 - [../../prototype-prompts/README.md](../../prototype-prompts/README.md)
 - [../../idea-refine/pilot-decision-gate.md](../../idea-refine/pilot-decision-gate.md)
+- [../readiness/README.md](../readiness/README.md)
 - [../../spec-driven-development/stakeholder-readiness.md](../../spec-driven-development/stakeholder-readiness.md)
+
+## Promotion Criteria
+
+This folder is ready to hand work forward when:
+
+- every brief stays inside the launch canon and formal spec
+- each brief has clear critical questions, success criteria, and failure signals
+- the brief-to-prompt crosswalk is current
+- any launch-sensitive implications for stakeholder review are visible to [../readiness/README.md](../readiness/README.md)
+
+## Next Stop
+
+- [../../prototype-prompts/README.md](../../prototype-prompts/README.md) for prompt execution
+- [../../idea-refine/pilot-decision-gate.md](../../idea-refine/pilot-decision-gate.md) for evidence-backed decision lock
 
 ## Shared Launch Canon
 

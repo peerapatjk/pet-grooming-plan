@@ -10,7 +10,7 @@ Use `planning-and-task-breakdown/` when the product contract is stable enough to
 
 - Stage: `TASK BREAKDOWN`
 - Primary audience: engineering, product, and delivery planning
-- Authority boundary: this folder owns execution decomposition. It should not introduce product scope outside [../docs/launch-canon.md](../docs/launch-canon.md) or redefine policy already owned by [../spec-driven-development/README.md](../spec-driven-development/README.md)
+- Authority boundary: this folder owns execution decomposition. It should not introduce product scope outside [../docs/launch-canon.md](../docs/launch-canon.md) or redefine policy already owned by [../spec-driven-development/README.md](../spec-driven-development/README.md). For the full repo rule set, see [../docs/governance/authority-boundaries.md](../docs/governance/authority-boundaries.md).
 
 ## Inputs
 
@@ -39,7 +39,7 @@ Use `planning-and-task-breakdown/` when the product contract is stable enough to
 
 ## Files
 
-- [tasks.md](tasks.md) — Phase 3 task breakdown with launch-slice work separated from post-launch expansion and verification checkpoints
+- [tasks.md](tasks.md) — full task breakdown with launch-slice work separated from post-launch expansion and verification checkpoints
 
 ## Upstream Inputs
 
@@ -50,6 +50,20 @@ Use `planning-and-task-breakdown/` when the product contract is stable enough to
 
 - implementation tickets and workstreams
 - test planning and delivery review
+
+## Promotion Criteria
+
+This folder is ready to hand work into implementation when:
+
+- every task traces to approved upstream artifacts
+- checkpoints are explicit and reviewable
+- no fake dependencies or missing referenced docs remain
+- verification notes are concrete enough to support human review
+
+## Next Stop
+
+- implementation tickets and workstreams
+- [../docs/readiness/README.md](../docs/readiness/README.md) when launch packets need supporting execution detail
 
 ## Shared Launch Canon
 

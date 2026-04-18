@@ -133,7 +133,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Launch-slice versus post-launch scope is explicit.
 
 **Verification:**
-- [ ] Manual check: [idea-refine/pilot-decision-gate.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/pilot-decision-gate.md) is filled with evidence-backed decisions
+- [ ] Manual check: [idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md) is filled with evidence-backed decisions
 - [ ] Manual check: remaining open questions are narrow enough that implementation can proceed without hidden product guesses
 
 **Dependencies:** Task 0, Task 0A, Task 0B
@@ -155,7 +155,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Ownership is clear for each packet and approval decision.
 
 **Verification:**
-- [ ] Manual check: [spec-driven-development/stakeholder-readiness.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/stakeholder-readiness.md) is complete
+- [ ] Manual check: [spec-driven-development/stakeholder-readiness.md](../spec-driven-development/stakeholder-readiness.md) is complete
 - [ ] Manual check: stakeholder requirements match the launch-slice scope rather than a hypothetical broader product
 
 **Dependencies:** Task 0C
@@ -867,7 +867,7 @@ It assumes a separate cross-functional readiness gate for:
 
 **Files likely touched:**
 - `spec-driven-development/stakeholder-readiness.md`
-- `docs/product/finance-accounting-readiness.md`
+- `docs/readiness/finance-accounting-readiness.md`
 
 **Estimated scope:** Small
 
@@ -890,7 +890,7 @@ It assumes a separate cross-functional readiness gate for:
 
 **Files likely touched:**
 - `spec-driven-development/stakeholder-readiness.md`
-- `docs/product/operations-support-readiness.md`
+- `docs/readiness/operations-support-readiness.md`
 
 **Estimated scope:** Small
 
@@ -914,7 +914,7 @@ It assumes a separate cross-functional readiness gate for:
 
 **Files likely touched:**
 - `spec-driven-development/stakeholder-readiness.md`
-- `docs/product/marketing-sales-legal-risk-readiness.md`
+- `docs/readiness/marketing-sales-legal-risk-readiness.md`
 
 **Estimated scope:** Small
 
@@ -938,7 +938,7 @@ It assumes a separate cross-functional readiness gate for:
 
 **Files likely touched:**
 - `spec-driven-development/stakeholder-readiness.md`
-- `docs/product/product-ceo-tech-data-vendor-readiness.md`
+- `docs/readiness/product-ceo-tech-data-vendor-readiness.md`
 
 **Estimated scope:** Small
 

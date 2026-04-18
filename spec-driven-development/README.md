@@ -10,7 +10,7 @@ Use `spec-driven-development/` when discovery has converged enough to define pro
 
 - Stage: `SPECIFY` and `PLAN`
 - Primary audience: product, engineering, design, operations, and leadership
-- Authority boundary: this folder defines the formal product contract and implementation approach. When details conflict with exploratory notes or prompt packs, this folder wins unless an explicit later decision supersedes it
+- Authority boundary: this folder defines the formal product contract and implementation approach. When details conflict with exploratory notes or prompt packs, this folder wins unless an explicit later decision supersedes it. For the repo-wide authority model, see [../docs/governance/authority-boundaries.md](../docs/governance/authority-boundaries.md).
 
 ## Inputs
 
@@ -58,8 +58,23 @@ Use `spec-driven-development/` when discovery has converged enough to define pro
 ## Downstream Consumers
 
 - [../planning-and-task-breakdown/README.md](../planning-and-task-breakdown/README.md)
+- [../docs/readiness/README.md](../docs/readiness/README.md)
 - [../prototype-prompts/README.md](../prototype-prompts/README.md)
 - future implementation workstreams
+
+## Promotion Criteria
+
+This folder is ready to hand work forward when:
+
+- detailed behavior is explicit enough that downstream docs do not need to guess
+- unresolved policy areas are listed clearly
+- implementation sequencing and risks are reviewable
+- stakeholder-readiness criteria are defined and mapped to packet templates
+
+## Next Stop
+
+- [../planning-and-task-breakdown/README.md](../planning-and-task-breakdown/README.md) for executable decomposition
+- [../docs/readiness/README.md](../docs/readiness/README.md) for launch-packet assembly
 
 ## Shared Launch Canon
 

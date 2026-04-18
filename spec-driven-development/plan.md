@@ -4,7 +4,7 @@
 
 Translate the Phase 1 spec into an implementation approach that can be reviewed before task breakdown and code.
 
-This plan assumes the current spec in [spec.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/spec.md) is directionally correct and incorporates Thai and English support, a minimal onboarding stance, and a premium-leaning independent-shop wedge in central Bangkok.
+This plan assumes the current spec in [spec.md](spec.md) is directionally correct and incorporates Thai and English support, a minimal onboarding stance, and a premium-leaning independent-shop wedge in central Bangkok.
 
 ## Implementation Strategy
 
@@ -36,7 +36,7 @@ This loop exists to validate the biggest risks before building the full product 
 
 Before the plan is treated as locked, the team must also complete:
 
-- [idea-refine/pilot-decision-gate.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/pilot-decision-gate.md)
+- [../idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md)
 
 That gate must lock:
 
@@ -85,7 +85,7 @@ The plan also assumes a pre-launch stakeholder gate covering:
 
 That gate is documented in:
 
-- [stakeholder-readiness.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/stakeholder-readiness.md)
+- [stakeholder-readiness.md](stakeholder-readiness.md)
 
 ## Major Components
 

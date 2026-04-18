@@ -155,7 +155,7 @@ Before the team deepens the spec or starts implementation-heavy work, the pilot 
 
 The working artifact for that handoff lives in:
 
-- [pilot-decision-gate.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/pilot-decision-gate.md)
+- [pilot-decision-gate.md](pilot-decision-gate.md)
 
 ## Prototype Variants
 

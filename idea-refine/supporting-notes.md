@@ -395,7 +395,7 @@ A `last30days` reference run on `2026-04-18` produced sparse and noisy recent so
 
 Saved research artifact:
 
-- [/Users/peerapatjk/Documents/Last30Days/chope-app-ux-ui-raw-v3.md](/Users/peerapatjk/Documents/Last30Days/chope-app-ux-ui-raw-v3.md)
+- Local-only reference used during ideation: `/Users/peerapatjk/Documents/Last30Days/chope-app-ux-ui-raw-v3.md`
 
 ## Product Principles Emerging From This Session
 

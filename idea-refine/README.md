@@ -10,7 +10,7 @@ Use `idea-refine/` to frame the problem, test competing directions, define what 
 
 - Stage: `IDEATE`
 - Primary audience: founders, product, strategy, and early discovery collaborators
-- Authority boundary: this folder is exploratory by design. It becomes implementation-relevant only when decisions are promoted into [../docs/launch-canon.md](../docs/launch-canon.md) and [../spec-driven-development/README.md](../spec-driven-development/README.md)
+- Authority boundary: this folder is exploratory by design. It becomes implementation-relevant only when decisions are promoted into [../docs/launch-canon.md](../docs/launch-canon.md) and [../spec-driven-development/README.md](../spec-driven-development/README.md). For the full repo rule set, see [../docs/governance/authority-boundaries.md](../docs/governance/authority-boundaries.md).
 
 ## Inputs
 
@@ -58,6 +58,20 @@ Use `idea-refine/` to frame the problem, test competing directions, define what 
 - [../spec-driven-development/README.md](../spec-driven-development/README.md)
 - [../docs/product/README.md](../docs/product/README.md)
 - [../prototype-prompts/README.md](../prototype-prompts/README.md)
+
+## Promotion Criteria
+
+This folder is ready to promote forward when:
+
+- the product thesis and launch wedge are coherent
+- non-goals are explicit
+- the prototype-and-eval loop and pilot decision gate are defined
+- unresolved assumptions are named explicitly instead of buried in prose
+
+## Next Stop
+
+- [../docs/product/README.md](../docs/product/README.md) for prototype and pilot support assets
+- [../spec-driven-development/README.md](../spec-driven-development/README.md) for formal behavior and implementation planning
 
 ## Shared Launch Canon
 

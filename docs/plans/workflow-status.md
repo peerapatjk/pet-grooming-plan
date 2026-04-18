@@ -1,5 +1,11 @@
 # Workflow Status
 
+## Purpose
+
+This file is the current repo-level workflow snapshot.
+
+Use it to see where the project is blocked today, not to redefine policy. Governance and authority rules live in `docs/governance/`, and stakeholder packet structure lives in `docs/readiness/`.
+
 ## Current Phase
 
 The project already has substantial workflow artifacts, but it is not ready to enter implementation.
@@ -15,12 +21,14 @@ The project already has substantial workflow artifacts, but it is not ready to e
 - Discovery loop: `idea-refine/prototype-and-eval.md`
 - Pilot gate definition: `idea-refine/pilot-decision-gate.md`
 - Pilot status: `idea-refine/pilot-synthesis-status.md`
+- Governance spine: `docs/governance/README.md`
 - Domain research: `docs/domain-research-bangkok-pet-grooming-platform.md`
 - Spec: `spec-driven-development/spec.md`
 - Requirements: `spec-driven-development/requirements.md`
 - Plan: `spec-driven-development/plan.md`
 - Stakeholder gate definition: `spec-driven-development/stakeholder-readiness.md`
 - Stakeholder status: `spec-driven-development/stakeholder-readiness-status.md`
+- Readiness packets: `docs/readiness/README.md`
 - Task breakdown: `planning-and-task-breakdown/tasks.md`
 - Landing page prototype brief: `docs/product/landing-page-prototype.md`
 - Operations prototype brief: `docs/product/operations-control-plane-prototype.md`
@@ -43,7 +51,8 @@ The project already has substantial workflow artifacts, but it is not ready to e
 
 - The launch policy is not locked by live evidence.
 - The pilot-decision gate still has unresolved operational values.
-- Cross-functional launch packets do not exist yet.
+- Completed cross-functional launch packets do not exist yet.
+- Packet templates now exist, but no function group has populated them with owners or evidence yet.
 - There is no implementation repo or scaffolded codebase yet.
 
 ## Current Blockers
@@ -53,15 +62,15 @@ The project already has substantial workflow artifacts, but it is not ready to e
 - Verification-hold expiry is not locked.
 - Merchant response SLA is not locked.
 - Minimum onboarding field set is not locked.
-- Finance, Accounting, Ops, Support, Marketing, Legal, Risk, Tech, Data, Sales, and Vendor readiness packets are not created.
+- Finance, Accounting, Ops, Support, Marketing, Legal, Risk, Tech, Data, Sales, and Vendor readiness packets are not filled with owners, dates, or evidence.
 
 ## Next Ordered Steps
 
 1. Review and approve the new Phase 0 draft artifacts under `docs/product/`.
 2. Execute the concierge pilot and prototype sessions against those drafts.
 3. Complete `idea-refine/pilot-decision-gate.md` with evidence-backed decisions from the pilot.
-4. Use `docs/domain-research-bangkok-pet-grooming-platform.md` to draft Finance, Legal, Risk/Privacy, Marketing, Sales/BD, and Vendor launch packets.
-5. Turn `spec-driven-development/stakeholder-readiness-status.md` into owned launch packets with named people and dates.
+4. Fill the packet templates under `docs/readiness/` using `docs/domain-research-bangkok-pet-grooming-platform.md`, the current spec, and prototype findings.
+5. Turn `spec-driven-development/stakeholder-readiness-status.md` into an owned launch snapshot with named people, dates, and waivers.
 6. Re-review `spec-driven-development/spec.md`, `spec-driven-development/plan.md`, and `planning-and-task-breakdown/tasks.md` for any policy changes caused by the pilot.
 7. Only then start repo scaffolding and implementation.
 

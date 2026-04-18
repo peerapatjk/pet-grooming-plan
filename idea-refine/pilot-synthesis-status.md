@@ -1,5 +1,17 @@
 # Pilot Synthesis Status
 
+## Purpose
+
+This file is the live discovery snapshot for the pilot decision gate.
+
+It records what is currently directionally locked versus still unresolved. The gate definition and required evidence live in [pilot-decision-gate.md](pilot-decision-gate.md).
+
+## Update Rule
+
+- Update this file whenever a prototype review, pilot session, or stakeholder discussion materially changes the current lock status.
+- Keep the gate rubric in [pilot-decision-gate.md](pilot-decision-gate.md), not here.
+- If a decision becomes evidence-backed and affects launch policy, update [../docs/launch-canon.md](../docs/launch-canon.md) and downstream artifacts in the same change.
+
 ## Go / No-Go
 
 - Decision: No-Go for deep implementation lock. Go for prototype and concierge-pilot execution.
