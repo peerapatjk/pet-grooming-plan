@@ -10,6 +10,7 @@ Use this folder when you have a rough concept that still needs exploration.
 - `supporting-notes.md` — the full session notes, including user inputs, product tensions, divergent directions, and Chope reference findings.
 - `prototype-and-eval.md` — the pre-build discovery loop covering prototype variants, falsification tests, and product eval signals.
 - `pilot-decision-gate.md` — the evidence-backed checklist that must be completed before the spec and implementation plan are treated as locked.
+- `docs/domain-research-bangkok-pet-grooming-platform.md` — tracked domain research summary backing the market, workflow, regulatory, and payments assumptions.
 
 ## Session Snapshot
 
@@ -19,6 +20,8 @@ Use this folder when you have a rough concept that still needs exploration.
 - Booking model: hybrid (`instant` for standard cases, `request/accept` for exceptions)
 - Success metric: 30% repeat booking rate
 - Current competitor/workarounds: phone calls, LINE chat, Instagram DMs, Facebook inbox, walk-ins
+
+The current-source research packet above strengthens this workaround thesis with public Thailand market, merchant workflow, and payment-behavior evidence.
 
 ## Current Working Hypothesis
 

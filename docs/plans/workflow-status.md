@@ -15,6 +15,7 @@ The project already has substantial workflow artifacts, but it is not ready to e
 - Discovery loop: `idea-refine/prototype-and-eval.md`
 - Pilot gate definition: `idea-refine/pilot-decision-gate.md`
 - Pilot status: `idea-refine/pilot-synthesis-status.md`
+- Domain research: `docs/domain-research-bangkok-pet-grooming-platform.md`
 - Spec: `spec-driven-development/spec.md`
 - Requirements: `spec-driven-development/requirements.md`
 - Plan: `spec-driven-development/plan.md`
@@ -28,6 +29,7 @@ The project already has substantial workflow artifacts, but it is not ready to e
 
 - Problem framing is coherent and narrow enough for a launch slice.
 - Product scope, booking model, payment posture, and major operational rules are mostly defined.
+- A current-source domain research packet now exists for market, workflow, regulatory, and payments context.
 - The implementation sequencing and task breakdown are detailed enough to guide delivery later.
 - Draft artifacts now exist for:
   - concierge pilot planning
@@ -58,9 +60,10 @@ The project already has substantial workflow artifacts, but it is not ready to e
 1. Review and approve the new Phase 0 draft artifacts under `docs/product/`.
 2. Execute the concierge pilot and prototype sessions against those drafts.
 3. Complete `idea-refine/pilot-decision-gate.md` with evidence-backed decisions from the pilot.
-4. Turn `spec-driven-development/stakeholder-readiness-status.md` into owned launch packets with named people and dates.
-5. Re-review `spec-driven-development/spec.md`, `spec-driven-development/plan.md`, and `planning-and-task-breakdown/tasks.md` for any policy changes caused by the pilot.
-6. Only then start repo scaffolding and implementation.
+4. Use `docs/domain-research-bangkok-pet-grooming-platform.md` to draft Finance, Legal, Risk/Privacy, Marketing, Sales/BD, and Vendor launch packets.
+5. Turn `spec-driven-development/stakeholder-readiness-status.md` into owned launch packets with named people and dates.
+6. Re-review `spec-driven-development/spec.md`, `spec-driven-development/plan.md`, and `planning-and-task-breakdown/tasks.md` for any policy changes caused by the pilot.
+7. Only then start repo scaffolding and implementation.
 
 ## Exit Criteria For Implementation
 

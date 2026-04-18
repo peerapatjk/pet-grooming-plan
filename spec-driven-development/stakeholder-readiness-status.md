@@ -16,6 +16,15 @@
 - Sales / BD / Merchant Acquisition: Not started
 - External Critical Vendors: Not started
 
+## Inputs Available
+
+- Domain research packet: `docs/domain-research-bangkok-pet-grooming-platform.md`
+- Intended use:
+  - Finance: payment-protection assumptions and PSP scoping context
+  - Legal / Risk / Privacy: PDPA, e-contract, payments-scope, and consumer-protection context
+  - Marketing / Sales / BD: Bangkok wedge, channel reality, and competitive framing context
+  - External vendors: PSP, messaging, and operational-dependency framing before validation work begins
+
 ## Blockers
 
 - Stakeholder: Product / GM / Launch DRI
