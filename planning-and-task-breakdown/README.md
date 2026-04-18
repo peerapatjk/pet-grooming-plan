@@ -1,23 +1,56 @@
 # Planning and Task Breakdown
 
-This folder is for decomposing specs into small, verifiable tasks with acceptance criteria and dependency ordering.
+This folder decomposes the formal spec and implementation plan into small, verifiable work items with explicit dependencies and acceptance criteria.
 
-Use this folder when you have a spec and need implementable units.
+## Purpose
+
+Use `planning-and-task-breakdown/` when the product contract is stable enough to be turned into execution-ready tasks.
+
+## Stage
+
+- Stage: `TASK BREAKDOWN`
+- Primary audience: engineering, product, and delivery planning
+- Authority boundary: this folder owns execution decomposition. It should not introduce product scope outside [../docs/launch-canon.md](../docs/launch-canon.md) or redefine policy already owned by [../spec-driven-development/README.md](../spec-driven-development/README.md)
+
+## Inputs
+
+- [../spec-driven-development/spec.md](../spec-driven-development/spec.md)
+- [../spec-driven-development/requirements.md](../spec-driven-development/requirements.md)
+- [../spec-driven-development/plan.md](../spec-driven-development/plan.md)
+- [../spec-driven-development/stakeholder-readiness.md](../spec-driven-development/stakeholder-readiness.md)
+
+## Outputs
+
+- phased task list
+- acceptance criteria and verification notes
+- dependency ordering
+- risk and open-question tracking for execution
+
+## Status
+
+- Maturity: `reviewed`
+- Current state: structurally ready for execution planning
+- Lock status: do not treat as implementation-ready until [../idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md) closes the remaining launch-policy decisions
+- Numbering note: task numbers preserve the broader workback lineage, so deferred post-launch work may carry an earlier task number than some launch-slice work
+
+## Where To Start
+
+1. [tasks.md](tasks.md)
 
 ## Files
 
-- `tasks.md` — Phase 3 task breakdown based on the current spec and implementation plan, with launch-slice work separated from post-launch expansion.
+- [tasks.md](tasks.md) — Phase 3 task breakdown with launch-slice work separated from post-launch expansion and verification checkpoints
 
-## Relationship To Other Folders
+## Upstream Inputs
 
-- `idea-refine/` contains divergent and convergent ideation artifacts.
-- `spec-driven-development/` contains the formal spec and implementation plan.
-- `planning-and-task-breakdown/` contains the execution-ready task decomposition used before implementation starts.
+- [../spec-driven-development/README.md](../spec-driven-development/README.md)
+- [../idea-refine/pilot-decision-gate.md](../idea-refine/pilot-decision-gate.md)
 
-This folder assumes the discovery package has completed:
+## Downstream Consumers
 
-- [idea-refine/pilot-decision-gate.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/pilot-decision-gate.md)
+- implementation tickets and workstreams
+- test planning and delivery review
 
-It also assumes launch readiness will be reviewed across:
+## Shared Launch Canon
 
-- [spec-driven-development/stakeholder-readiness.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/stakeholder-readiness.md)
+- [../docs/launch-canon.md](../docs/launch-canon.md)

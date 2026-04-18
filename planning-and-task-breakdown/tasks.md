@@ -981,6 +981,8 @@ It assumes a separate cross-functional readiness gate for:
 
 ### Phase 6: Post-launch Expansion
 
+Task numbering is preserved from the broader workback plan, so a deferred post-launch task can carry an earlier task number than later launch-slice work.
+
 ## Task 18: Build bulk status update workflow
 
 **Description:** Implement merchant bulk actions for cancellation and no-show cleanup once operator volume proves that end-of-day cleanup is common enough to justify the extra complexity.

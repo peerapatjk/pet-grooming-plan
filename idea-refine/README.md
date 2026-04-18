@@ -1,47 +1,64 @@
 # Idea Refine
 
-This folder is for structured divergent and convergent thinking that turns vague ideas into concrete proposals.
+This folder contains the structured divergent and convergent work that turns a rough concept into a decision-worthy product direction.
 
-Use this folder when you have a rough concept that still needs exploration.
+## Purpose
+
+Use `idea-refine/` to frame the problem, test competing directions, define what must be validated, and decide whether the concept is strong enough to promote into the formal spec and plan.
+
+## Stage
+
+- Stage: `IDEATE`
+- Primary audience: founders, product, strategy, and early discovery collaborators
+- Authority boundary: this folder is exploratory by design. It becomes implementation-relevant only when decisions are promoted into [../docs/launch-canon.md](../docs/launch-canon.md) and [../spec-driven-development/README.md](../spec-driven-development/README.md)
+
+## Inputs
+
+- raw concept and user inputs
+- category and workflow observations
+- market, merchant-behavior, and policy research
+- early product and operating assumptions
+
+## Outputs
+
+- converged product thesis
+- supporting notes and explored alternatives
+- prototype and evaluation plan
+- pilot decision gate
+- current synthesis status for implementation lock readiness
+
+## Status
+
+- Maturity: `reviewed`
+- Current state: coherent direction, but not evidence-backed
+- Implementation lock: not ready; [pilot-synthesis-status.md](pilot-synthesis-status.md) is explicitly `No-Go` for deep implementation lock
+- Next gate: [pilot-decision-gate.md](pilot-decision-gate.md)
+
+## Where To Start
+
+1. [pet-grooming-booking-platform.md](pet-grooming-booking-platform.md)
+2. [prototype-and-eval.md](prototype-and-eval.md)
+3. [pilot-synthesis-status.md](pilot-synthesis-status.md)
 
 ## Files
 
-- `pet-grooming-booking-platform.md` — the current one-pager with the problem framing, provisional recommended direction, assumptions, MVP scope, and "not doing" list.
-- `supporting-notes.md` — the full session notes, including user inputs, product tensions, divergent directions, and Chope reference findings.
-- `prototype-and-eval.md` — the pre-build discovery loop covering prototype variants, falsification tests, and product eval signals.
-- `pilot-decision-gate.md` — the evidence-backed checklist that must be completed before the spec and implementation plan are treated as locked.
-- `docs/domain-research-bangkok-pet-grooming-platform.md` — tracked domain research summary backing the market, workflow, regulatory, and payments assumptions.
+- [pet-grooming-booking-platform.md](pet-grooming-booking-platform.md) — current one-pager with problem framing, recommended direction, assumptions, scope, and non-goals
+- [supporting-notes.md](supporting-notes.md) — full session notes, tensions, explored directions, and imported reference findings
+- [prototype-and-eval.md](prototype-and-eval.md) — pre-build discovery loop, prototype variants, falsification tests, and evaluation signals
+- [pilot-decision-gate.md](pilot-decision-gate.md) — decision gate that must be completed before the spec and plan are treated as locked
+- [pilot-synthesis-status.md](pilot-synthesis-status.md) — current synthesis snapshot showing what is directionally decided versus still unresolved
+- [../docs/domain-research-bangkok-pet-grooming-platform.md](../docs/domain-research-bangkok-pet-grooming-platform.md) — tracked domain research summary backing the market, workflow, payments, and regulatory assumptions
 
-## Session Snapshot
+## Upstream Inputs
 
-- Date: 2026-04-18
-- Market: Bangkok, Thailand
-- Primary users: busy urban pet owners and independent groomers
-- Booking model: hybrid (`instant` for standard cases, `request/accept` for exceptions)
-- Success metric: 30% repeat booking rate
-- Current competitor/workarounds: phone calls, LINE chat, Instagram DMs, Facebook inbox, walk-ins
+- [../docs/domain-research-bangkok-pet-grooming-platform.md](../docs/domain-research-bangkok-pet-grooming-platform.md)
 
-The current-source research packet above strengthens this workaround thesis with public Thailand market, merchant workflow, and payment-behavior evidence.
+## Downstream Consumers
 
-## Current Working Hypothesis
+- [../spec-driven-development/README.md](../spec-driven-development/README.md)
+- [../docs/product/README.md](../docs/product/README.md)
+- [../prototype-prompts/README.md](../prototype-prompts/README.md)
 
-The strongest starting point is not a broad "Chope for pets" clone. It is a repeat-first booking product with:
+## Shared Launch Canon
 
-- standardized instant booking for predictable services
-- exception handling for high-variance pets and services
-- card hold / deposit mechanics to reduce no-shows
-- merchant-side tools that make daily scheduling manageable
-
-The discovery package now assumes a narrower `launch slice` before a broader MVP rollout:
-
-- a dense merchant wedge in central Bangkok
-- a tightly defined list of instant-bookable services
-- explicit provisional holds for bookings awaiting verification or merchant review
-- a trust-first booking flow that explains payment protection before scale
-
-## Related Spec
-
-Formal specification artifacts now live under:
-
-- [spec-driven-development/spec.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/spec.md)
-- [spec-driven-development/requirements.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/requirements.md)
+- [../docs/launch-canon.md](../docs/launch-canon.md)
