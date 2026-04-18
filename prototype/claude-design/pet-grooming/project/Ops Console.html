@@ -108,10 +108,968 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-<script type="text/babel" src="shared/browser-window.jsx"></script>
-<script type="text/babel" src="ops/shell.jsx?v=3"></script>
-<script type="text/babel" src="ops/screens-a.jsx?v=3"></script>
-<script type="text/babel" src="ops/screens-b.jsx?v=3"></script>
+<script type="text/babel">
+
+// Chrome.jsx — Simplified Chrome browser window (dark theme, macOS)
+// No dependencies, no image assets. All inline styles + inline SVG.
+
+const CHROME_C = {
+  barBg: '#202124',
+  tabBg: '#35363a',
+  text: '#e8eaed',
+  dim: '#9aa0a6',
+  urlBg: '#282a2d',
+};
+
+function ChromeTrafficLights() {
+  return (
+    <div style={{ display: 'flex', gap: 8, padding: '0 14px' }}>
+      <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#ff5f57' }} />
+      <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#febc2e' }} />
+      <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#28c840' }} />
+    </div>
+  );
+}
+
+// Single tab (active has curved scoops)
+function ChromeTab({ title = 'New Tab', active = false }) {
+  const curve = (flip) => (
+    <svg width="8" height="10" viewBox="0 0 8 10"
+      style={{ position: 'absolute', bottom: 0, [flip ? 'right' : 'left']: -8, transform: flip ? 'scaleX(-1)' : 'none' }}>
+      <path d="M0 10C2 9 6 8 8 0V10H0Z" fill={CHROME_C.tabBg}/>
+    </svg>
+  );
+  return (
+    <div style={{
+      position: 'relative', height: 34, alignSelf: 'flex-end',
+      padding: '0 12px', display: 'flex', alignItems: 'center', gap: 8,
+      background: active ? CHROME_C.tabBg : 'transparent',
+      borderRadius: '8px 8px 0 0', minWidth: 120, maxWidth: 220,
+      fontFamily: 'system-ui, sans-serif', fontSize: 12,
+      color: active ? CHROME_C.text : CHROME_C.dim,
+    }}>
+      {active && curve(false)}
+      {active && curve(true)}
+      <div style={{ width: 14, height: 14, borderRadius: '50%', background: '#5f6368', flexShrink: 0 }} />
+      <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</span>
+    </div>
+  );
+}
+
+function ChromeTabBar({ tabs = [{ title: 'New Tab' }], activeIndex = 0 }) {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', height: 44,
+      background: CHROME_C.barBg, paddingRight: 8,
+    }}>
+      <ChromeTrafficLights />
+      <div style={{ display: 'flex', alignItems: 'flex-end', height: '100%', paddingLeft: 4, flex: 1 }}>
+        {tabs.map((t, i) => <ChromeTab key={i} title={t.title} active={i === activeIndex} />)}
+      </div>
+    </div>
+  );
+}
+
+function ChromeToolbar({ url = 'example.com' }) {
+  const iconDot = (
+    <div style={{
+      width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+      <div style={{ width: 16, height: 16, borderRadius: '50%', background: CHROME_C.dim, opacity: 0.4 }} />
+    </div>
+  );
+  return (
+    <div style={{
+      height: 40, background: CHROME_C.tabBg,
+      display: 'flex', alignItems: 'center', gap: 4, padding: '0 8px',
+    }}>
+      {iconDot}
+      {/* url bar */}
+      <div style={{
+        flex: 1, height: 30, borderRadius: 15, background: CHROME_C.urlBg,
+        display: 'flex', alignItems: 'center', gap: 8, padding: '0 14px',
+        margin: '0 6px',
+      }}>
+        <div style={{ width: 12, height: 12, borderRadius: '50%', background: CHROME_C.dim, opacity: 0.4 }} />
+        <span style={{
+          flex: 1, color: CHROME_C.text, fontSize: 13,
+          fontFamily: 'system-ui, sans-serif',
+        }}>{url}</span>
+      </div>
+      {iconDot}
+    </div>
+  );
+}
+
+function ChromeWindow({
+  tabs = [{ title: 'New Tab' }], activeIndex = 0, url = 'example.com',
+  width = 900, height = 600, children,
+}) {
+  return (
+    <div style={{
+      width, height, borderRadius: 10, overflow: 'hidden',
+      boxShadow: '0 24px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.1)',
+      display: 'flex', flexDirection: 'column', background: CHROME_C.tabBg,
+    }}>
+      <ChromeTabBar tabs={tabs} activeIndex={activeIndex} />
+      <ChromeToolbar url={url} />
+      <div style={{ flex: 1, background: '#fff', overflow: 'auto' }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, {
+  ChromeWindow, ChromeTabBar, ChromeToolbar, ChromeTab, ChromeTrafficLights,
+});
+
+</script>
+<script type="text/babel">
+// ops/shell.jsx — shared left-nav + top-bar shell for ops console
+
+const { useState } = React;
+
+// tiny icon set — inline SVG
+const OI = {
+  pulse: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 8h3l2-5 3 10 2-5h4"/></svg>,
+  inbox: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 3h12v7h-4l-1 2H7l-1-2H2z"/></svg>,
+  alert: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 2l6 11H2z M8 6v3 M8 11v.5"/></svg>,
+  shops: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 6l1-3h10l1 3v1a2 2 0 01-4 0 2 2 0 01-4 0 2 2 0 01-4 0zM3 8v5h10V8"/></svg>,
+  funnel: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 3h12l-4.5 6v5l-3-1V9z"/></svg>,
+  map: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 4v10l5-2 5 2 4-2V2l-4 2-5-2z M6 2v10 M11 4v10"/></svg>,
+  money: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="4" width="14" height="8" rx="1"/><circle cx="8" cy="8" r="2"/></svg>,
+  cog:  <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2 M8 13v2 M1 8h2 M13 8h2 M3 3l1.5 1.5 M11.5 11.5L13 13 M3 13l1.5-1.5 M11.5 4.5L13 3"/></svg>,
+  chev: <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 2l4 4-4 4"/></svg>,
+  search: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>,
+  close: <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 2l8 8 M10 2l-8 8"/></svg>,
+  phone: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 2h3l1 3-2 1a8 8 0 005 5l1-2 3 1v3a1 1 0 01-1 1A11 11 0 012 3a1 1 0 011-1z"/></svg>,
+  line: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 3h12v8H9l-3 3v-3H2z"/></svg>,
+  mail: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="3" width="14" height="10"/><path d="M1 4l7 5 7-5"/></svg>,
+};
+
+function OpsSidebar({ active }) {
+  const items = [
+    { group: 'live ops' },
+    { id: 'network',    label: 'Network',         icon: OI.pulse, count: null },
+    { id: 'requests',   label: 'Requests',        icon: OI.inbox, count: '12', hot: true },
+    { id: 'alerts',     label: 'Alerts',          icon: OI.alert, count: '3',  hot: true },
+    { group: 'supply' },
+    { id: 'shops',      label: 'Shops',           icon: OI.shops, count: '41' },
+    { id: 'pipeline',   label: 'Pipeline',        icon: OI.funnel, count: '18' },
+    { id: 'map',        label: 'Coverage',        icon: OI.map,   count: null },
+    { group: 'finance' },
+    { id: 'payouts',    label: 'Payouts',         icon: OI.money, count: null },
+    { id: 'settings',   label: 'Settings',        icon: OI.cog,   count: null },
+  ];
+  return (
+    <aside className="ops-side">
+      <div className="brand">
+        <div className="mark"/>
+        <div>
+          <b>Pawpoint <em>Ops</em></b>
+          <small>internal · v0.9.2</small>
+        </div>
+      </div>
+      <nav>
+        {items.map((it, i) => it.group
+          ? <div className="group" key={i}>{it.group}</div>
+          : <a key={it.id} className={active === it.id ? 'on' : ''}>
+              {it.icon}
+              <span>{it.label}</span>
+              {it.count && <span className={"count" + (it.hot ? ' hot' : '')}>{it.count}</span>}
+            </a>
+        )}
+      </nav>
+      <div className="foot">
+        <div className="av">PK</div>
+        <div>
+          <b>Ping K.</b>
+          <span>Ops lead</span>
+        </div>
+        <span className="env">LIVE</span>
+      </div>
+    </aside>
+  );
+}
+
+function OpsTop({ crumbs = ['Pawpoint', 'Live ops'], title, children }) {
+  return (
+    <div className="ops-top">
+      <div className="crumbs">{crumbs.slice(0, -1).map((c, i) => <span key={i}>{c}  /  </span>)}<b>{crumbs[crumbs.length - 1]}</b></div>
+      {title && <h1 style={{marginLeft:8}}>{title}</h1>}
+      <div className="spacer"/>
+      <div className="pill"><span className="dot"/>Real-time · Tue 12 Nov 13:52 ICT</div>
+      <div className="search">{OI.search}<span>⌘K — find shop, booking, owner</span></div>
+      {children}
+    </div>
+  );
+}
+
+// generic screen container that shows in a ChromeWindow
+function OpsScreen({ active, crumbs, title, children }) {
+  return (
+    <div className="ops-app">
+      <OpsSidebar active={active}/>
+      <div className="ops-main">
+        <OpsTop crumbs={crumbs} title={title}/>
+        <div className="ops-body">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+// frame — the browser window around an ops screen
+function OpsFrame({ url, children, height = 880, width = 1280 }) {
+  return (
+    <div style={{width, height, margin:'0 auto'}}>
+      <ChromeWindow
+        width={width} height={height}
+        tabs={[
+          { title: 'Pawpoint Ops' },
+          { title: 'PostgreSQL · prod-readonly' },
+          { title: 'Metabase — Shop KPIs' },
+        ]}
+        activeIndex={0}
+        url={url}
+      >
+        {children}
+      </ChromeWindow>
+    </div>
+  );
+}
+
+// Shared shop data — one consistent network
+const SHOPS = [
+  { id:'aroon',   name:'Aroon Grooming',         th:'อรุณโกรมมิ่ง',       area:'Sathorn',     since:'Mar 2025', rating:4.9, bookings30:284, accept:98, response:3,  completion:99, retention:71, status:'ok',  nps:72, payout:'฿84,210' },
+  { id:'maew',    name:'Maew & Mhaa',            th:'แมวและหมา',         area:'Thonglor',    since:'Feb 2025', rating:4.8, bookings30:312, accept:94, response:6,  completion:98, retention:68, status:'ok',  nps:68, payout:'฿92,100' },
+  { id:'panda',   name:'Panda Pet Parlour',      th:'แพนด้าเพ็ท',         area:'Ekkamai',     since:'Apr 2025', rating:4.7, bookings30:198, accept:88, response:12, completion:96, retention:55, status:'warn',nps:58, payout:'฿61,340' },
+  { id:'bingo',   name:'Bingo Groom',            th:'บิงโก',              area:'Ari',         since:'May 2025', rating:4.9, bookings30:256, accept:96, response:5,  completion:100,retention:74, status:'ok',  nps:74, payout:'฿78,900' },
+  { id:'soi11',   name:'Soi 11 Dog Club',        th:'คลับหมา ซ.11',       area:'Asoke',       since:'Jul 2025', rating:4.6, bookings30:176, accept:82, response:18, completion:93, retention:48, status:'warn',nps:51, payout:'฿54,220' },
+  { id:'pomme',   name:'Pomme & Coco',           th:'ปอมและโกโก้',        area:'Phrom Phong', since:'Jun 2025', rating:4.8, bookings30:224, accept:91, response:9,  completion:97, retention:63, status:'ok',  nps:64, payout:'฿72,450' },
+  { id:'kiki',    name:'Kiki Neko Salon',        th:'คิคิแมว',            area:'Siam',        since:'Aug 2025', rating:4.5, bookings30:112, accept:76, response:24, completion:90, retention:42, status:'hot', nps:44, payout:'฿36,800' },
+  { id:'wagwag',  name:'WagWag Bangkok',         th:'แวกแวก',             area:'Silom',       since:'Sep 2025', rating:4.7, bookings30:168, accept:85, response:14, completion:95, retention:52, status:'warn',nps:55, payout:'฿52,100' },
+  { id:'mm',      name:'M&M Mobile Groom',       th:'เอ็มแอนด์เอ็ม',      area:'Mobile',      since:'Oct 2025', rating:4.4, bookings30:68,  accept:68, response:31, completion:87, retention:38, status:'hot', nps:39, payout:'฿21,400' },
+];
+
+// export
+Object.assign(window, { OpsSidebar, OpsTop, OpsScreen, OpsFrame, OI, SHOPS });
+
+</script>
+<script type="text/babel">
+// ops/screens-a.jsx — screens 1, 2, 3
+
+// ─── Screen 1 · Network today ────────────────────────────
+function Scr_Network() {
+  // mini spark bars helper
+  const Spark = ({data, hot}) => (
+    <span className="spark" style={{height:22}}>
+      {data.map((h,i)=>(
+        <b key={i} style={{height: `${h}%`, background: hot && i===data.length-1 ? 'var(--danger)' : undefined}}/>
+      ))}
+    </span>
+  );
+
+  return (
+    <OpsScreen active="network" crumbs={['Live ops','Network today']} title={null}>
+      <div style={{display:'flex',alignItems:'baseline',gap:14,marginBottom:18}}>
+        <h1 style={{font:'500 28px/1 var(--serif)',letterSpacing:'-0.02em'}}>Tuesday, 12 November</h1>
+        <span className="eyebrow">Bangkok · 41 live shops · 9 neighbourhoods</span>
+      </div>
+
+      {/* KPI row */}
+      <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:12,marginBottom:18}}>
+        <div className="kpi dark">
+          <div className="lbl">Gmv today</div>
+          <div className="val">฿268,420</div>
+          <div className="sub"><span className="d">▲ 11.4%</span> vs. last Tue</div>
+        </div>
+        <div className="kpi">
+          <div className="lbl">Bookings confirmed</div>
+          <div className="val">312</div>
+          <div className="sub"><span className="d">▲ 8%</span> · 47 still pending</div>
+        </div>
+        <div className="kpi">
+          <div className="lbl">Accept rate</div>
+          <div className="val">89%</div>
+          <div className="sub"><span className="d down">▼ 2.1pt</span> · 3 shops dragging</div>
+        </div>
+        <div className="kpi">
+          <div className="lbl">Avg response</div>
+          <div className="val">11m</div>
+          <div className="sub">target 15m · <span className="d">on track</span></div>
+        </div>
+        <div className="kpi accent">
+          <div className="lbl">Stuck &gt; 30min</div>
+          <div className="val">3</div>
+          <div className="sub">2 on Kiki · 1 on M&amp;M · escalated</div>
+        </div>
+      </div>
+
+      {/* two-column: left = pulse, right = hotspots */}
+      <div style={{display:'grid',gridTemplateColumns:'1.5fr 1fr',gap:16}}>
+        {/* live booking feed */}
+        <div className="ops-card">
+          <div className="ch">
+            <span className="eyebrow">Booking pulse · last 2 hours</span>
+            <h3 style={{marginLeft:8}}>What's happening right now</h3>
+            <div className="spacer"/>
+            <span className="eyebrow">auto-refresh · 10s</span>
+          </div>
+
+          {/* hour chart */}
+          <div style={{padding:'18px 18px 10px'}}>
+            <div style={{display:'flex',alignItems:'flex-end',gap:3,height:90,padding:'0 2px'}}>
+              {[22,18,25,31,28,34,45,52,38,42,29,33,28,41,44,37,52,48,55,51,64,58,42,31].map((h,i)=>{
+                const isNow = i===20;
+                return <div key={i} style={{flex:1,height:`${h}%`,background:isNow?'var(--accent)':'var(--primary)',opacity:isNow?1:0.6,borderRadius:'2px 2px 0 0',position:'relative'}}>
+                  {isNow && <div style={{position:'absolute',top:-16,left:'50%',transform:'translateX(-50%)',fontFamily:'var(--mono)',fontSize:9,color:'var(--accent-ink)',whiteSpace:'nowrap'}}>NOW · 13:52</div>}
+                </div>;
+              })}
+            </div>
+            <div style={{display:'flex',justifyContent:'space-between',marginTop:8,fontFamily:'var(--mono)',fontSize:10,color:'var(--ink-3)',letterSpacing:'.08em'}}>
+              <span>11:00</span><span>12:00</span><span>13:00</span><span>14:00 →</span>
+            </div>
+          </div>
+
+          {/* live list */}
+          <div style={{borderTop:'1px solid var(--border)'}}>
+            {[
+              { t:'13:51', kind:'CONFIRMED', shop:'Maew & Mhaa',     who:'Nok S.',       price:'฿520',  pet:'Cha-Cha · Persian',     col:'ok' },
+              { t:'13:50', kind:'AUTO',      shop:'Bingo Groom',     who:'Jin W.',       price:'฿680',  pet:'Mochi · Pomeranian',    col:'info' },
+              { t:'13:49', kind:'STUCK 34m', shop:'Kiki Neko Salon', who:'Ploy K.',      price:'฿450',  pet:'Milo · Scottish fold',  col:'hot' },
+              { t:'13:48', kind:'CONFIRMED', shop:'Pomme & Coco',    who:'Apinya R.',    price:'฿720',  pet:'Toby · Yorkie',         col:'ok' },
+              { t:'13:47', kind:'DECLINED',  shop:'Soi 11 Dog Club', who:'Vasit C.',     price:'฿890',  pet:'Bear · Golden',         col:'warn' },
+              { t:'13:46', kind:'CONFIRMED', shop:'Aroon Grooming',  who:'Praew S.',     price:'฿950',  pet:'Dash · Goldie',         col:'ok' },
+            ].map((r,i)=>(
+              <div key={i} style={{display:'grid',gridTemplateColumns:'60px 110px 1fr 140px 90px',gap:14,padding:'10px 18px',borderTop:i?'1px solid var(--border)':'none',alignItems:'center',fontSize:12}}>
+                <span style={{fontFamily:'var(--mono)',color:'var(--ink-3)'}}>{r.t}</span>
+                <span className={"pill "+r.col} style={{padding:'2px 8px',borderRadius:12,fontFamily:'var(--mono)',fontSize:10,background:r.col==='ok'?'var(--ok-wash)':r.col==='hot'?'var(--danger-wash)':r.col==='info'?'var(--info-wash)':'var(--warn-wash)',color:r.col==='ok'?'var(--ok)':r.col==='hot'?'var(--danger)':r.col==='info'?'var(--info)':'oklch(0.4 0.11 75)',display:'inline-flex',alignItems:'center',gap:4,width:'fit-content'}}>{r.kind}</span>
+                <span><b style={{fontWeight:500}}>{r.shop}</b> <span style={{color:'var(--ink-3)'}}>· {r.who} · {r.pet}</span></span>
+                <span style={{fontFamily:'var(--mono)',color:'var(--ink-2)'}}>{r.price}</span>
+                <a style={{fontSize:11,color:'var(--primary)',fontFamily:'var(--mono)',letterSpacing:'.04em',justifySelf:'end'}}>OPEN →</a>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: anomalies + supply gaps */}
+        <div style={{display:'flex',flexDirection:'column',gap:16}}>
+          <div className="ops-card">
+            <div className="ch">
+              <span className="eyebrow">Wants attention</span>
+              <h3 style={{marginLeft:8}}>3 shops to call today</h3>
+            </div>
+            <div>
+              {[
+                { shop:'Kiki Neko Salon', reason:'Response time drifted to 24m (target 15m). 2 stuck requests.', cta:'Call Khun Tik', hot:true },
+                { shop:'M&M Mobile Groom', reason:'Acceptance 68%, declined 5 of 8 requests this week.', cta:'BD visit', hot:true },
+                { shop:'Soi 11 Dog Club', reason:'NPS dipped to 51. 2 one-star reviews mentioning wait time.', cta:'Review-ready script', hot:false },
+              ].map((a,i)=>(
+                <div key={i} style={{padding:'12px 18px',borderTop:i?'1px solid var(--border)':'none',display:'flex',gap:10}}>
+                  <div style={{width:6,borderRadius:3,background:a.hot?'var(--danger)':'var(--warn)',flexShrink:0}}/>
+                  <div style={{flex:1}}>
+                    <b style={{fontWeight:500,fontSize:13}}>{a.shop}</b>
+                    <div style={{fontSize:12,color:'var(--ink-2)',marginTop:3,lineHeight:1.4}}>{a.reason}</div>
+                    <a style={{fontSize:11,color:'var(--primary)',fontFamily:'var(--mono)',letterSpacing:'.04em',marginTop:6,display:'inline-block'}}>{a.cta} →</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="ops-card">
+            <div className="ch">
+              <span className="eyebrow">Supply gap</span>
+              <h3 style={{marginLeft:8}}>Where Bangkok needs a shop</h3>
+            </div>
+            <div style={{padding:'14px 18px'}}>
+              {[
+                { area:'Ladprao',     dem:'high',  sup:'none',   n:'14 searches/day, 0 live shops', col:'hot' },
+                { area:'Sukhumvit 71',dem:'med',   sup:'1 shop', n:'Wait time 2.3 days at Kiki',     col:'warn' },
+                { area:'Bang Rak',    dem:'med',   sup:'1 shop', n:'WagWag near capacity Sat',       col:'warn' },
+              ].map((g,i)=>(
+                <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'8px 0',borderTop:i?'1px dashed var(--border)':'none'}}>
+                  <span className={"sd "+g.col}/>
+                  <div style={{flex:1}}>
+                    <b style={{fontWeight:500,fontSize:13}}>{g.area}</b>
+                    <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)',marginTop:2}}>{g.n}</div>
+                  </div>
+                  <span className="eyebrow">{g.dem} demand</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </OpsScreen>
+  );
+}
+
+// ─── Screen 2 · Request monitor ────────────────────────
+function Scr_Requests() {
+  const rows = [
+    { age:42, shop:'Kiki Neko Salon', area:'Siam',       who:'Ploy K.',   pet:'Milo · Scottish fold', svc:'Cat groom', when:'Today 15:00', price:'฿450', status:'STUCK',     col:'hot' },
+    { age:34, shop:'Kiki Neko Salon', area:'Siam',       who:'Ben T.',    pet:'Suki · Persian',       svc:'Cat bath',  when:'Today 16:30', price:'฿380', status:'STUCK',     col:'hot' },
+    { age:31, shop:'M&M Mobile',      area:'Mobile',     who:'Nick S.',   pet:'Rocky · Shiba',        svc:'Mobile full', when:'Wed 10:00', price:'฿1,200',status:'STUCK',   col:'hot' },
+    { age:22, shop:'Panda Pet',       area:'Ekkamai',    who:'Ming L.',   pet:'Luna · Poodle',        svc:'Full groom',when:'Wed 14:00', price:'฿680', status:'AWAITING',  col:'warn' },
+    { age:18, shop:'Soi 11 Dog Club', area:'Asoke',      who:'Vasit C.',  pet:'Bear · Golden',        svc:'Full groom',when:'Wed 09:00', price:'฿890', status:'AWAITING',  col:'warn' },
+    { age:14, shop:'WagWag',          area:'Silom',      who:'Ana R.',    pet:'Coco · Maltipoo',      svc:'Tidy',      when:'Thu 11:00', price:'฿420', status:'AWAITING',  col:'warn' },
+    { age:9,  shop:'Pomme & Coco',    area:'Phrom Phong',who:'Benny K.',  pet:'Peach · French',       svc:'De-shed',   when:'Thu 13:00', price:'฿560', status:'AWAITING',  col:'info' },
+    { age:6,  shop:'Maew & Mhaa',     area:'Thonglor',   who:'Pim V.',    pet:'Tiger · Persian',      svc:'Cat full',  when:'Thu 15:00', price:'฿520', status:'AWAITING',  col:'info' },
+    { age:4,  shop:'Aroon Grooming',  area:'Sathorn',    who:'Khim J.',   pet:'Pepper · Shih Tzu',    svc:'Full groom',when:'Thu 10:30', price:'฿720', status:'AWAITING',  col:'info' },
+    { age:2,  shop:'Bingo Groom',     area:'Ari',        who:'Oat P.',    pet:'Hachi · Shiba',        svc:'Full groom',when:'Fri 09:00', price:'฿680', status:'AWAITING',  col:'info' },
+    { age:1,  shop:'Panda Pet',       area:'Ekkamai',    who:'June W.',   pet:'Olive · Cavapoo',      svc:'Tidy',      when:'Fri 11:00', price:'฿380', status:'AWAITING',  col:'info' },
+    { age:0,  shop:'Maew & Mhaa',     area:'Thonglor',   who:'Sky F.',    pet:'Biscuit · Ragdoll',    svc:'Cat full',  when:'Fri 14:00', price:'฿520', status:'JUST IN',   col:'info' },
+  ];
+
+  return (
+    <OpsScreen active="requests" crumbs={['Live ops','Request monitor']}>
+      <div style={{display:'flex',alignItems:'baseline',gap:14,marginBottom:14}}>
+        <h1 style={{font:'500 24px/1 var(--serif)',letterSpacing:'-0.02em'}}>Request monitor</h1>
+        <span className="eyebrow">12 pending · 3 stuck &gt; 30 min</span>
+      </div>
+
+      <div className="ops-card" style={{padding:0}}>
+        {/* filter bar */}
+        <div className="filter-bar">
+          <div className="filter-chip on">All open <span className="x">·12</span></div>
+          <div className="filter-chip"><span className="sd hot"/>Stuck &gt;30m · 3</div>
+          <div className="filter-chip"><span className="sd warn"/>Slow &gt;15m · 3</div>
+          <div className="filter-chip"><span className="sd info"/>Fresh &lt;15m · 6</div>
+          <div style={{flex:1}}/>
+          <div className="filter-chip">Area: All ▾</div>
+          <div className="filter-chip">Shop: All ▾</div>
+          <button className="btn ghost" style={{marginLeft:4}}>Export CSV</button>
+        </div>
+
+        <table className="dtable">
+          <thead>
+            <tr>
+              <th style={{width:80}}>Age</th>
+              <th>Shop · area</th>
+              <th>Customer · pet</th>
+              <th>Service</th>
+              <th>Requested for</th>
+              <th style={{textAlign:'right'}}>Value</th>
+              <th>Status</th>
+              <th style={{width:140,textAlign:'right'}}></th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r,i)=>(
+              <tr key={i} style={{background: r.col==='hot' ? 'var(--danger-wash)' : undefined}}>
+                <td className="num" style={{color: r.col==='hot'?'var(--danger)':r.col==='warn'?'oklch(0.55 0.14 70)':'var(--ink-3)',fontWeight:r.col==='hot'?600:400}}>
+                  {r.age===0 ? 'just now' : `${r.age} min`}
+                </td>
+                <td>
+                  <b style={{fontWeight:500,display:'block'}}>{r.shop}</b>
+                  <span style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>{r.area}</span>
+                </td>
+                <td>
+                  <b style={{fontWeight:500,display:'block'}}>{r.who}</b>
+                  <span style={{fontSize:11,color:'var(--ink-3)'}}>{r.pet}</span>
+                </td>
+                <td>{r.svc}</td>
+                <td style={{fontFamily:'var(--mono)'}}>{r.when}</td>
+                <td className="num">{r.price}</td>
+                <td><span className={"pill "+r.col}>{r.status}</span></td>
+                <td style={{textAlign:'right'}}>
+                  <div className="row-action">
+                    {r.col==='hot' && <button className="btn danger" style={{padding:'4px 8px',fontSize:11}}>Intervene</button>}
+                    {r.col!=='hot' && <button className="btn secondary" style={{padding:'4px 8px',fontSize:11}}>Open</button>}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div style={{padding:'10px 18px',display:'flex',alignItems:'center',gap:12,borderTop:'1px solid var(--border)',background:'var(--paper-2)'}}>
+          <span className="eyebrow">Showing 12 of 12</span>
+          <div style={{flex:1}}/>
+          <span className="eyebrow">Total value at risk · <b style={{color:'var(--ink)',fontFamily:'var(--mono)'}}>฿7,930</b></span>
+        </div>
+      </div>
+    </OpsScreen>
+  );
+}
+
+// ─── Screen 3 · Intervention detail ──────────────────────
+function Scr_Intervene() {
+  return (
+    <OpsScreen active="requests" crumbs={['Live ops','Request monitor','Ploy K. · 13:10 request']}>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 360px',gap:16,height:'100%'}}>
+
+        {/* LEFT: the intervention hero */}
+        <div className="iv-sheet">
+          <div className="iv-head">
+            <div style={{width:40,height:40,borderRadius:'50%',background:'var(--accent)',color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--mono)',fontWeight:600}}>P</div>
+            <div style={{flex:1}}>
+              <div className="eyebrow">Stuck request · booking #P28041</div>
+              <h3>Ploy K. wants Milo at Kiki Neko Salon</h3>
+              <div style={{fontSize:12,color:'rgba(255,255,255,.6)',marginTop:2}}>Requested at 13:10 · no response for 42 minutes · target is 15</div>
+            </div>
+            <button className="btn accent">Escalate</button>
+          </div>
+
+          <div className="iv-body">
+            {/* the clock */}
+            <div className="iv-section" style={{display:'grid',gridTemplateColumns:'120px 1fr',gap:20,alignItems:'center',background:'var(--danger-wash)'}}>
+              <div style={{position:'relative',width:100,height:100}}>
+                <svg viewBox="0 0 100 100" width="100" height="100" style={{transform:'rotate(-90deg)'}}>
+                  <circle cx="50" cy="50" r="42" fill="none" stroke="var(--paper)" strokeWidth="8"/>
+                  <circle cx="50" cy="50" r="42" fill="none" stroke="var(--danger)" strokeWidth="8" strokeDasharray="264" strokeDashoffset="20" strokeLinecap="round"/>
+                </svg>
+                <div style={{position:'absolute',inset:0,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+                  <div style={{font:'500 24px/1 var(--serif)',color:'var(--danger)'}}>42m</div>
+                  <div style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'.1em',color:'var(--danger)',textTransform:'uppercase'}}>Past target</div>
+                </div>
+              </div>
+              <div>
+                <div style={{font:'500 20px/1.25 var(--serif)',letterSpacing:'-0.015em',color:'oklch(0.3 0.16 30)',marginBottom:6}}>Kiki hasn't opened the request in 42 minutes.</div>
+                <div style={{fontSize:13,color:'var(--ink-2)',lineHeight:1.5}}>
+                  Two other requests at Kiki are also stuck. Owner Khun Tik normally responds in 20 min — she may be with a difficult groom. Ploy is a 2-booking repeat customer.
+                </div>
+              </div>
+            </div>
+
+            {/* context stack */}
+            <div className="iv-section">
+              <h4>Customer</h4>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:16}}>
+                <div>
+                  <b style={{fontWeight:500}}>Ploy K.</b>
+                  <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)',marginTop:2}}>+66 8x xxx 2041</div>
+                  <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>2 bookings · joined Sep</div>
+                </div>
+                <div>
+                  <b style={{fontWeight:500}}>Milo</b>
+                  <div style={{fontSize:11,color:'var(--ink-3)'}}>Scottish fold, 3y, 4.2kg</div>
+                  <div style={{fontSize:11,color:'var(--ink-3)'}}>Note · bites during nail clip</div>
+                </div>
+                <div>
+                  <b style={{fontWeight:500}}>Pawpoint Shield</b>
+                  <div style={{fontSize:11,color:'var(--ink-3)'}}>Customer has ฿450 on hold</div>
+                  <div style={{fontSize:11,color:'var(--ok)'}}>Refundable if we reroute</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="iv-section" style={{background:'var(--paper-2)'}}>
+              <h4>Suggested next moves</h4>
+              <div style={{display:'flex',flexDirection:'column',gap:10}}>
+                {[
+                  { a:'Reroute to Maew & Mhaa', sub:'Same area · 15:00 slot free · accepts cats · ฿520 (+฿70). Pawpoint covers the delta.', primary:true },
+                  { a:'Reroute to Kiki · Thursday', sub:'Same shop, pushed 2 days. Customer confirmed Thu flexibility at signup.', primary:false },
+                  { a:'Call Khun Tik now',      sub:'+66 8x xxx 9912 · Usually answers. Scripted apology + manual decline.', primary:false },
+                  { a:'Auto-decline, full refund',sub:'Customer gets ฿450 back in 2 business days, Kiki gets a response-time strike.', primary:false },
+                ].map((m,i)=>(
+                  <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'12px 14px',background:m.primary?'var(--accent-wash)':'var(--paper)',border:'1px solid '+(m.primary?'color-mix(in oklab,var(--accent) 30%,transparent)':'var(--border)'),borderRadius:8}}>
+                    <div style={{width:24,height:24,borderRadius:'50%',background:m.primary?'var(--accent)':'var(--paper-3)',color:m.primary?'#fff':'var(--ink-2)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--mono)',fontSize:11,fontWeight:600,flex:'none'}}>{i+1}</div>
+                    <div style={{flex:1}}>
+                      <b style={{fontWeight:500,fontSize:13}}>{m.a}</b>
+                      <div style={{fontSize:11,color:'var(--ink-3)',marginTop:2}}>{m.sub}</div>
+                    </div>
+                    <button className={m.primary?'btn accent':'btn secondary'}>{m.primary?'Do it':'Use this'}</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="iv-section">
+              <h4>Timeline</h4>
+              <div style={{display:'flex',flexDirection:'column',gap:6,fontSize:12,fontFamily:'var(--mono)',color:'var(--ink-2)'}}>
+                <div><span style={{color:'var(--ink-3)'}}>13:10</span> · Ploy submitted request via Customer app (iOS)</div>
+                <div><span style={{color:'var(--ink-3)'}}>13:10</span> · Shield held ฿450 from Ploy's saved card</div>
+                <div><span style={{color:'var(--ink-3)'}}>13:10</span> · Notification sent to Kiki iPad · delivered</div>
+                <div><span style={{color:'var(--ink-3)'}}>13:25</span> · Reminder 1 sent · delivered · no open</div>
+                <div><span style={{color:'var(--ink-3)'}}>13:40</span> · Reminder 2 sent · delivered · no open</div>
+                <div><span style={{color:'var(--danger)'}}>13:40</span> · Marked stuck · appears on Ops monitor</div>
+                <div><span style={{color:'var(--ink-3)'}}>13:52</span> · <b style={{color:'var(--ink)'}}>You opened this intervention</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT: alternative shops list */}
+        <div className="ops-card" style={{display:'flex',flexDirection:'column'}}>
+          <div className="ch">
+            <span className="eyebrow">Reroute candidates</span>
+            <h3>Where else Milo can go</h3>
+          </div>
+          <div style={{padding:14,display:'flex',flexDirection:'column',gap:10,overflow:'auto',flex:1}}>
+            {[
+              { shop:'Maew & Mhaa',    area:'Thonglor · 4km',  time:'Today 15:00', price:'฿520', match:96, best:true },
+              { shop:'Pomme & Coco',   area:'Phrom Phong · 5km',time:'Today 16:30',price:'฿580', match:88 },
+              { shop:'Aroon Grooming', area:'Sathorn · 8km',   time:'Wed 11:00',   price:'฿620', match:71 },
+              { shop:'Bingo Groom',    area:'Ari · 11km',      time:'Thu 14:00',   price:'฿480', match:64 },
+            ].map((c,i)=>(
+              <div key={i} style={{border:'1px solid '+(c.best?'var(--accent)':'var(--border)'),borderRadius:8,padding:12,background:c.best?'var(--accent-wash)':'var(--paper)'}}>
+                <div style={{display:'flex',alignItems:'start',gap:10}}>
+                  <div style={{width:32,height:32,borderRadius:6,background:'var(--primary-wash)',color:'var(--primary-ink)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--mono)',fontWeight:600,fontSize:12,flex:'none'}}>{c.shop[0]}</div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <b style={{fontWeight:500,fontSize:13,display:'block'}}>{c.shop}</b>
+                    <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>{c.area}</div>
+                    <div style={{fontSize:12,marginTop:6}}>
+                      <span style={{fontFamily:'var(--mono)'}}>{c.time}</span>
+                      <span style={{color:'var(--ink-3)',margin:'0 6px'}}>·</span>
+                      <span style={{fontFamily:'var(--mono)'}}>{c.price}</span>
+                    </div>
+                  </div>
+                  <div style={{textAlign:'right'}}>
+                    <div style={{font:'500 18px/1 var(--serif)',color:c.best?'var(--accent-ink)':'var(--ink)'}}>{c.match}%</div>
+                    <div className="eyebrow" style={{fontSize:9}}>match</div>
+                  </div>
+                </div>
+                {c.best && <div style={{marginTop:10,paddingTop:10,borderTop:'1px solid color-mix(in oklab,var(--accent) 20%,transparent)',fontSize:11,color:'var(--accent-ink)',display:'flex',alignItems:'center',gap:6}}>
+                  <span className="sd" style={{background:'var(--accent)'}}/>RECOMMENDED · one-tap reroute
+                </div>}
+              </div>
+            ))}
+          </div>
+          <div style={{borderTop:'1px solid var(--border)',padding:14,display:'flex',gap:8}}>
+            <button className="btn secondary" style={{flex:1,justifyContent:'center'}}>{OI.phone}<span style={{marginLeft:4}}>Call customer</span></button>
+            <button className="btn secondary" style={{flex:1,justifyContent:'center'}}>{OI.line}<span style={{marginLeft:4}}>LINE customer</span></button>
+          </div>
+        </div>
+      </div>
+    </OpsScreen>
+  );
+}
+
+Object.assign(window, { Scr_Network, Scr_Requests, Scr_Intervene });
+
+</script>
+<script type="text/babel">
+// ops/screens-b.jsx — screens 4, 5, 6
+
+// ─── Screen 4 · Shop health ──────────────────────────────
+function Scr_ShopHealth() {
+  // extended shops list for the table
+  const rows = [
+    { id:'kiki',    name:'Kiki Neko Salon',     area:'Siam',        tier:'Standard',  bookings:112, accept:76, response:24, completion:90, retention:42, nps:44, payout:'฿36,800', status:'hot',  trend:[3,4,3,2,5,6,4,3,5,2,4,3] },
+    { id:'mm',      name:'M&M Mobile Groom',    area:'Mobile',      tier:'Standard',  bookings:68,  accept:68, response:31, completion:87, retention:38, nps:39, payout:'฿21,400', status:'hot',  trend:[5,4,3,4,3,4,2,3,4,3,2,2] },
+    { id:'soi11',   name:'Soi 11 Dog Club',     area:'Asoke',       tier:'Premium',   bookings:176, accept:82, response:18, completion:93, retention:48, nps:51, payout:'฿54,220', status:'warn', trend:[5,6,5,7,6,5,6,4,5,4,5,3] },
+    { id:'wagwag',  name:'WagWag Bangkok',      area:'Silom',       tier:'Standard',  bookings:168, accept:85, response:14, completion:95, retention:52, nps:55, payout:'฿52,100', status:'warn', trend:[4,5,6,5,5,6,7,6,5,7,6,6] },
+    { id:'panda',   name:'Panda Pet Parlour',   area:'Ekkamai',     tier:'Standard',  bookings:198, accept:88, response:12, completion:96, retention:55, nps:58, payout:'฿61,340', status:'warn', trend:[6,7,6,6,7,6,8,7,6,8,7,6] },
+    { id:'aroon',   name:'Aroon Grooming',      area:'Sathorn',     tier:'Premium',   bookings:284, accept:98, response:3,  completion:99, retention:71, nps:72, payout:'฿84,210', status:'ok',   trend:[7,8,7,8,8,9,8,9,8,9,9,9] },
+    { id:'bingo',   name:'Bingo Groom',         area:'Ari',         tier:'Premium',   bookings:256, accept:96, response:5,  completion:100,retention:74, nps:74, payout:'฿78,900', status:'ok',   trend:[6,7,8,8,9,8,9,8,9,9,9,9] },
+    { id:'maew',    name:'Maew & Mhaa',         area:'Thonglor',    tier:'Premium',   bookings:312, accept:94, response:6,  completion:98, retention:68, nps:68, payout:'฿92,100', status:'ok',   trend:[7,7,8,9,8,8,9,9,8,9,9,9] },
+    { id:'pomme',   name:'Pomme & Coco',        area:'Phrom Phong', tier:'Standard',  bookings:224, accept:91, response:9,  completion:97, retention:63, nps:64, payout:'฿72,450', status:'ok',   trend:[6,7,6,7,8,7,8,7,9,8,8,9] },
+  ];
+  const barFor = (v, target) => {
+    const col = v >= target ? 'ok' : v >= target*0.85 ? 'warn' : 'hot';
+    return <><span className={"bar "+col}><i style={{width: Math.min(100, v) + '%'}}/></span><span style={{fontFamily:'var(--mono)'}}>{v}%</span></>;
+  };
+  return (
+    <OpsScreen active="shops" crumbs={['Supply','Shop health']}>
+      <div style={{display:'flex',alignItems:'baseline',gap:14,marginBottom:14}}>
+        <h1 style={{font:'500 24px/1 var(--serif)',letterSpacing:'-0.02em'}}>Shop health</h1>
+        <span className="eyebrow">41 live · 9 need attention · 32 green</span>
+        <div style={{flex:1}}/>
+        <button className="btn secondary">Compare week</button>
+        <button className="btn primary">Add shop</button>
+      </div>
+
+      {/* row of mini KPIs */}
+      <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12,marginBottom:14}}>
+        <div className="kpi"><div className="lbl">Network accept</div><div className="val">89%</div><div className="sub">target 90% · <span className="d down">▼ 1pt</span></div></div>
+        <div className="kpi"><div className="lbl">Avg response</div><div className="val">11m</div><div className="sub">target 15m · <span className="d">on track</span></div></div>
+        <div className="kpi"><div className="lbl">Retention 30d</div><div className="val">58%</div><div className="sub">target 55% · <span className="d">on track</span></div></div>
+        <div className="kpi"><div className="lbl">NPS (shop-avg)</div><div className="val">61</div><div className="sub">target 60 · <span className="d">on track</span></div></div>
+      </div>
+
+      <div className="ops-card" style={{padding:0}}>
+        <div className="filter-bar">
+          <div className="filter-chip on">All · 41</div>
+          <div className="filter-chip"><span className="sd hot"/>Red · 2</div>
+          <div className="filter-chip"><span className="sd warn"/>Amber · 7</div>
+          <div className="filter-chip"><span className="sd"/>Green · 32</div>
+          <div className="filter-chip">Tier: All ▾</div>
+          <div className="filter-chip">Area: All ▾</div>
+          <div style={{flex:1}}/>
+          <span className="eyebrow">Sort: Needs attention</span>
+        </div>
+
+        <div style={{overflow:'auto',maxHeight:500}}>
+          <table className="dtable">
+            <thead>
+              <tr>
+                <th style={{width:260}}>Shop</th>
+                <th>Area · tier</th>
+                <th style={{textAlign:'right'}}>30d bookings</th>
+                <th>Accept</th>
+                <th>Response</th>
+                <th>Completion</th>
+                <th>Retention</th>
+                <th style={{textAlign:'right'}}>NPS</th>
+                <th>12-wk trend</th>
+                <th style={{textAlign:'right'}}>Due payout</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r,i)=>(
+                <tr key={i}>
+                  <td>
+                    <div className="shop">
+                      <div className="av">{r.name[0]}</div>
+                      <div>
+                        <b>{r.name}</b>
+                        <span><span className={"sd "+(r.status==='ok'?'':r.status)}/>{r.status==='ok'?'green':r.status==='warn'?'amber':'red'}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><div>{r.area}</div><span style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>{r.tier}</span></td>
+                  <td className="num">{r.bookings}</td>
+                  <td>{barFor(r.accept, 90)}</td>
+                  <td><span style={{fontFamily:'var(--mono)',color: r.response>20?'var(--danger)':r.response>15?'oklch(0.55 0.14 70)':'var(--ink)'}}>{r.response}m</span></td>
+                  <td>{barFor(r.completion, 95)}</td>
+                  <td>{barFor(r.retention, 55)}</td>
+                  <td className="num" style={{fontWeight:500,color:r.nps<50?'var(--danger)':r.nps<60?'oklch(0.55 0.14 70)':'var(--ok)'}}>{r.nps}</td>
+                  <td>
+                    <span className="spark">
+                      {r.trend.map((h,j)=><b key={j} style={{height: (h*10)+'%', background: r.status==='hot'?'var(--danger)':r.status==='warn'?'var(--warn)':'var(--primary)'}}/>)}
+                    </span>
+                  </td>
+                  <td className="num" style={{fontWeight:500}}>{r.payout}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </OpsScreen>
+  );
+}
+
+// ─── Screen 5 · Onboarding pipeline ─────────────────────
+function Scr_Pipeline() {
+  const cols = [
+    { title:'Applied', n:8, items:[
+      { shop:'Dusit Dog Barber',     area:'Dusit',       via:'Form', age:'2d' },
+      { shop:'Catto Collective',     area:'Ratchada',    via:'Referral · Maew & Mhaa', age:'3d' },
+      { shop:'Rin Rin Grooming',     area:'Ladprao',     via:'Cold inbound · IG', age:'5d', hot:true },
+      { shop:'Poodle Palace',        area:'On Nut',      via:'Form', age:'6d' },
+      { shop:'Bkk Pet Parlour',      area:'Chinatown',   via:'Referral · Bingo',   age:'8d' },
+      { shop:'Soi Dog Groomers',     area:'Phra Khanong',via:'Form', age:'11d' },
+    ]},
+    { title:'Visited', n:4, items:[
+      { shop:'Bangna Bubbles',       area:'Bangna',      meta:'BD · Nan · Nov 10', cred:'Chain of 2', hot:false, accent:true },
+      { shop:'Grooming Bros',        area:'Nonthaburi',  meta:'BD · Nan · Nov 8',  cred:'Owner-op, 6yr' },
+      { shop:'Loog-Mha House',       area:'Saphan Kwai', meta:'BD · Ping · Nov 7', cred:'Cat specialist' },
+      { shop:'Fluffy Tuk Tuk',       area:'Phra Kanong', meta:'BD · Ping · Nov 5', cred:'Mobile, 1 van' },
+    ]},
+    { title:'Training', n:3, items:[
+      { shop:'Khaonim Kennel',       area:'Sathorn',     meta:'Day 2 of 4', cred:'iPad shipped Nov 9', progress:50 },
+      { shop:'Toto & Nana',          area:'Sukhumvit 36',meta:'Day 3 of 4', cred:'Menu locked',        progress:75 },
+      { shop:'Paws Atelier',         area:'Thonglor 13', meta:'Day 1 of 4', cred:'Onboarding call done',progress:25 },
+    ]},
+    { title:'Soft-live', n:2, items:[
+      { shop:'Meow Manor',           area:'Ari',         meta:'Week 2 of 3', cred:'First 12 bookings OK', accept:'8/8 accepted' },
+      { shop:'Glossy Tails',         area:'Asok',        meta:'Week 1 of 3', cred:'2 bookings so far',    accept:'2/2 accepted' },
+    ]},
+    { title:'Live', n:1, items:[
+      { shop:'Khunmae Grooming',     area:'Chidlom',     meta:'Graduated Nov 11', cred:'Onboarded in 11 days' },
+    ]},
+  ];
+  return (
+    <OpsScreen active="pipeline" crumbs={['Supply','Onboarding pipeline']}>
+      <div style={{display:'flex',alignItems:'baseline',gap:14,marginBottom:16}}>
+        <h1 style={{font:'500 24px/1 var(--serif)',letterSpacing:'-0.02em'}}>Onboarding pipeline</h1>
+        <span className="eyebrow">18 in flight · target 6 live by Dec 15</span>
+        <div style={{flex:1}}/>
+        <button className="btn secondary">Export board</button>
+        <button className="btn primary">+ Log new shop</button>
+      </div>
+
+      {/* Funnel summary */}
+      <div className="ops-card" style={{padding:18,marginBottom:16,display:'grid',gridTemplateColumns:'repeat(5,1fr) auto',gap:16,alignItems:'center'}}>
+        {[
+          { n:'31', l:'Applied · 30d' },
+          { n:'14', l:'Visited' },
+          { n:'8',  l:'Training' },
+          { n:'6',  l:'Soft-live' },
+          { n:'5',  l:'Live' },
+        ].map((s,i,a)=>(
+          <React.Fragment key={i}>
+            <div style={{textAlign:'center'}}>
+              <div style={{font:'500 28px/1 var(--serif)'}}>{s.n}</div>
+              <div className="eyebrow" style={{marginTop:4}}>{s.l}</div>
+            </div>
+            {i<a.length-1 && <div style={{justifySelf:'center',color:'var(--ink-3)'}}>▸</div>}
+          </React.Fragment>
+        ))}
+        <div style={{borderLeft:'1px solid var(--border)',paddingLeft:16}}>
+          <div className="eyebrow">Conversion</div>
+          <div style={{font:'500 22px/1 var(--serif)',color:'var(--accent-ink)',marginTop:4}}>16.1%</div>
+          <div style={{fontSize:11,color:'var(--ink-3)'}}>applied → live · 30d</div>
+        </div>
+      </div>
+
+      {/* Kanban */}
+      <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:12}}>
+        {cols.map((c,i)=>(
+          <div key={i} className="pipeline-col">
+            <div className="ph">
+              <b>{c.title}</b>
+              <span className="n">{c.n}</span>
+            </div>
+            <div className="pbody">
+              {c.items.map((it,j)=>(
+                <div key={j} className="pipeline-card" style={{borderLeft: it.hot?'3px solid var(--accent)':it.accent?'3px solid var(--primary)':undefined}}>
+                  <b>{it.shop}</b>
+                  <div className="sub">{it.area}{it.age && ' · '+it.age+' old'}</div>
+                  {it.via && <div style={{fontSize:11,color:'var(--ink-2)',marginTop:6}}>{it.via}</div>}
+                  {it.meta && <div style={{fontSize:11,color:'var(--ink-2)',marginTop:6}}>{it.meta}</div>}
+                  {it.cred && <div style={{fontSize:11,color:'var(--ink-3)',marginTop:2,fontStyle:'italic'}}>{it.cred}</div>}
+                  {it.progress && <div style={{marginTop:8,height:4,background:'var(--paper-3)',borderRadius:2,overflow:'hidden'}}><div style={{width:it.progress+'%',height:'100%',background:'var(--primary)'}}/></div>}
+                  {it.accept && <div style={{fontSize:11,color:'var(--ok)',marginTop:6,fontFamily:'var(--mono)'}}>{it.accept}</div>}
+                  {it.hot && <span className="tag" style={{background:'var(--accent-wash)',color:'var(--accent-ink)'}}>Priority</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </OpsScreen>
+  );
+}
+
+// ─── Screen 6 · Coverage map ─────────────────────────────
+function Scr_Map() {
+  // Bangkok-ish neighbourhoods positioned roughly
+  const shops = [
+    { x:38, y:56, name:'Aroon · Sathorn',       status:'ok' },
+    { x:52, y:46, name:'Maew & Mhaa · Thonglor',status:'ok' },
+    { x:56, y:50, name:'Pomme · Phrom Phong',   status:'ok' },
+    { x:60, y:44, name:'Panda · Ekkamai',       status:'warn' },
+    { x:44, y:40, name:'Bingo · Ari',           status:'ok' },
+    { x:48, y:48, name:'Soi 11 · Asoke',        status:'warn' },
+    { x:36, y:50, name:'Kiki · Siam',           status:'hot' },
+    { x:34, y:58, name:'WagWag · Silom',        status:'warn' },
+    // gaps (dashed)
+    { x:58, y:32, name:'Ladprao · gap',         status:'applied' },
+    { x:66, y:40, name:'Ekamai N. · gap',       status:'applied' },
+    { x:30, y:44, name:'Bang Rak · near-cap',   status:'applied' },
+  ];
+  const heats = [
+    { x:36, y:50, r:120, col:'danger' },    // Kiki hotspot
+    { x:58, y:32, r:140, col:'accent' },    // Ladprao demand
+    { x:66, y:40, r:90,  col:'accent' },
+  ];
+
+  return (
+    <OpsScreen active="map" crumbs={['Supply','Coverage map']}>
+      <div style={{display:'flex',alignItems:'baseline',gap:14,marginBottom:14}}>
+        <h1 style={{font:'500 24px/1 var(--serif)',letterSpacing:'-0.02em'}}>Coverage map</h1>
+        <span className="eyebrow">Bangkok · demand vs. supply · 30-day rolling</span>
+        <div style={{flex:1}}/>
+        <div className="filter-chip on">Grooming</div>
+        <div className="filter-chip">Cats only</div>
+        <div className="filter-chip">Mobile</div>
+      </div>
+
+      <div style={{display:'grid',gridTemplateColumns:'1fr 320px',gap:16}}>
+        {/* MAP */}
+        <div className="bkk-map">
+          <div className="bkk-grid"/>
+          {/* river abstraction */}
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:.25}}>
+            <path d="M20 10 Q 28 40 22 55 Q 18 70 28 100" stroke="#6ab6e6" strokeWidth="3" fill="none"/>
+          </svg>
+
+          {/* heat blobs */}
+          {heats.map((h,i)=>(
+            <div key={i} className="bkk-heat" style={{left:h.x+'%',top:h.y+'%',width:h.r,height:h.r,background:`radial-gradient(circle, color-mix(in oklab,var(--${h.col}) 40%,transparent) 0%, transparent 70%)`}}/>
+          ))}
+
+          {/* area labels */}
+          {[
+            {x:44,y:36,t:'ARI'},{x:34,y:46,t:'SIAM'},{x:48,y:44,t:'ASOKE'},{x:52,y:42,t:'THONGLOR'},
+            {x:58,y:48,t:'PHROM PHONG'},{x:60,y:40,t:'EKKAMAI'},{x:38,y:60,t:'SATHORN'},{x:34,y:62,t:'SILOM'},
+            {x:58,y:28,t:'LADPRAO'},{x:70,y:36,t:'BANG KAPI'},
+          ].map((l,i)=>(
+            <div key={i} style={{position:'absolute',left:l.x+'%',top:l.y+'%',transform:'translate(-50%,-28px)',fontFamily:'var(--mono)',fontSize:9,letterSpacing:'.14em',color:'rgba(255,255,255,.35)'}}>{l.t}</div>
+          ))}
+
+          {/* shop dots */}
+          {shops.map((s,i)=>(
+            <React.Fragment key={i}>
+              <div className={"bkk-dot "+(s.status==='ok'?'':s.status)} style={{left:s.x+'%',top:s.y+'%'}}/>
+              <div className="bkk-label" style={{left:s.x+'%',top:s.y+'%'}}>{s.name}</div>
+            </React.Fragment>
+          ))}
+
+          {/* legend */}
+          <div style={{position:'absolute',left:16,bottom:16,background:'rgba(0,0,0,.4)',border:'1px solid rgba(255,255,255,.1)',borderRadius:8,padding:'10px 14px',fontSize:11,color:'rgba(255,255,255,.85)',display:'flex',gap:16,fontFamily:'var(--mono)'}}>
+            <span><span className="sd"/>Healthy · 6</span>
+            <span><span className="sd warn"/>Watch · 3</span>
+            <span><span className="sd hot"/>At risk · 1</span>
+            <span><span className="sd" style={{border:'1.5px dashed rgba(255,255,255,.5)',background:'transparent'}}/>Gap</span>
+          </div>
+          <div style={{position:'absolute',right:16,top:16,background:'rgba(0,0,0,.4)',border:'1px solid rgba(255,255,255,.1)',borderRadius:6,padding:'6px 10px',fontFamily:'var(--mono)',fontSize:10,color:'rgba(255,255,255,.65)',letterSpacing:'.08em'}}>
+            Demand heat · searches/day
+          </div>
+        </div>
+
+        {/* Right rail */}
+        <div style={{display:'flex',flexDirection:'column',gap:12}}>
+          <div className="ops-card">
+            <div className="ch">
+              <span className="eyebrow">Biggest gap</span>
+              <h3>Ladprao</h3>
+            </div>
+            <div className="cb">
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,fontSize:12}}>
+                <div><div className="eyebrow">Searches/day</div><div style={{font:'500 22px/1 var(--serif)',marginTop:4,color:'var(--accent-ink)'}}>14</div></div>
+                <div><div className="eyebrow">Live shops</div><div style={{font:'500 22px/1 var(--serif)',marginTop:4,color:'var(--danger)'}}>0</div></div>
+                <div><div className="eyebrow">Nearest</div><div style={{marginTop:4}}>Bingo · Ari (5.2km)</div></div>
+                <div><div className="eyebrow">Applied</div><div style={{marginTop:4}}>Rin Rin (hot)</div></div>
+              </div>
+              <button className="btn primary" style={{width:'100%',justifyContent:'center',marginTop:12}}>Prioritise Rin Rin</button>
+            </div>
+          </div>
+
+          <div className="ops-card">
+            <div className="ch">
+              <span className="eyebrow">Near-capacity this week</span>
+              <h3>Watch list</h3>
+            </div>
+            <div>
+              {[
+                { shop:'WagWag · Silom',  load:'Sat 96%', col:'warn' },
+                { shop:'Kiki · Siam',     load:'Daily 88%',col:'hot' },
+                { shop:'Maew · Thonglor', load:'Sun 92%', col:'warn' },
+              ].map((w,i)=>(
+                <div key={i} style={{padding:'10px 18px',borderTop:i?'1px solid var(--border)':'none',display:'flex',alignItems:'center',gap:10}}>
+                  <span className={"sd "+w.col}/>
+                  <b style={{fontWeight:500,fontSize:13}}>{w.shop}</b>
+                  <span style={{flex:1}}/>
+                  <span style={{fontFamily:'var(--mono)',fontSize:11,color:'var(--ink-2)'}}>{w.load}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="ops-card">
+            <div className="ch">
+              <span className="eyebrow">Commentary</span>
+              <h3>This week's read</h3>
+            </div>
+            <div className="cb" style={{fontSize:12,lineHeight:1.55,color:'var(--ink-2)'}}>
+              Sukhumvit corridor is <b style={{color:'var(--ok)'}}>well-covered</b>. Ladprao is the clearest supply gap — high search volume, zero live shops, one hot applicant. Siam has one distressed shop (Kiki) driving a red heat blob; a second shop there would de-risk the area.
+            </div>
+          </div>
+        </div>
+      </div>
+    </OpsScreen>
+  );
+}
+
+Object.assign(window, { Scr_ShopHealth, Scr_Pipeline, Scr_Map });
+
+</script>
 
 <script type="text/babel" data-presets="react">
 const flows = [
