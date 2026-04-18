@@ -29,6 +29,7 @@ Core responsibilities:
 - booking state machine
 - service eligibility and duration logic
 - instant-book vs request-confirm routing
+- merchant-decline outcome handling
 - cancellation and no-show policy resolution
 - hold, deposit, release, capture, and refund decision rules
 - merchant correction-window rules
@@ -46,6 +47,7 @@ Why first:
 Core responsibilities:
 
 - merchant, shop, service, pet, customer, booking, payment-protection, notification, and availability entities
+- inventory-control fields for resource locking, blocking, and cutoff configuration
 - canonical schedule model for both online and offline bookings
 - audit fields for status changes and operator actions
 
@@ -64,6 +66,7 @@ Core responsibilities:
 - booking creation API
 - availability resolution
 - offline booking ingestion API
+- booking-status notification event generation
 - OTP verification
 - reminder and reconfirmation workflow
 - payment-link orchestration
@@ -95,7 +98,8 @@ Why early:
 
 Core responsibilities:
 
-- shop search
+- onboarding
+- shop search with availability discovery
 - pet profile creation and reuse
 - booking flow
 - confirmation state visibility
@@ -112,9 +116,12 @@ Dependencies:
 Core responsibilities:
 
 - availability management
+- current and upcoming booking search
 - service template management
 - booking board
 - fast status edits
+- resource lock and block controls
+- booking cutoff controls
 - offline booking capture
 - bulk status updates
 - Thai and English system UI
@@ -128,7 +135,7 @@ Dependencies:
 
 Core responsibilities:
 
-- reminders
+- booking-created, confirmed, declined, reminder, and reconfirmation notifications
 - reconfirmation prompts
 - late-arrival and no-show policy messages
 - booking and revenue summaries
@@ -149,6 +156,7 @@ Deliverables:
 - policy engine for cancellation, no-show, and payment outcomes
 - instant vs request-confirm routing rules
 - bilingual translation-key inventory for system-managed flows
+- explicit decline outcome for request-based bookings
 
 Checkpoint:
 
@@ -160,6 +168,7 @@ Deliverables:
 
 - canonical booking model
 - merchant availability model
+- inventory controls for locking, blocking, and cutoff times
 - online and offline booking ingestion
 - OTP verification hooks
 - payment-protection orchestration
@@ -172,7 +181,8 @@ Checkpoint:
 
 Deliverables:
 
-- search and pet profile
+- onboarding
+- search, availability discovery, and pet profile
 - booking flow for routine services
 - request-confirm flow for exception services
 - localized customer copy in Thai and English
@@ -180,6 +190,7 @@ Deliverables:
 Checkpoint:
 
 - A customer can complete an end-to-end booking flow in both languages.
+- A first-time customer can finish onboarding and reach booking-ready state quickly.
 
 ### Phase D: Merchant operations
 
@@ -187,7 +198,9 @@ Deliverables:
 
 - availability editor
 - booking board
+- booking search
 - fast status updates
+- resource lock and block controls
 - offline booking entry
 - bulk cleanup flows
 - localized merchant copy in Thai and English
@@ -200,7 +213,7 @@ Checkpoint:
 
 Deliverables:
 
-- reminder and reconfirmation jobs
+- booking-status notifications, reminder jobs, and reconfirmation jobs
 - no-show and grace-period handling
 - revenue summary and operational dashboard
 
@@ -233,6 +246,22 @@ Mitigation:
 - scope V1 bilingual support to system-managed text unless otherwise approved
 - keep merchant-generated content translation as a separate product decision
 - establish translation keys before UI implementation
+
+### Risk: onboarding becomes too heavy and kills first-booking conversion
+
+Mitigation:
+
+- collect only required identity, language, and booking-critical setup upfront
+- defer optional profile enrichment until it is needed
+- test onboarding against time-to-first-search and time-to-first-booking goals
+
+### Risk: waitlist or cancellation-fill scope sneaks into MVP without proper state design
+
+Mitigation:
+
+- keep waitlist and offered-slot flows explicitly out of V1 unless approved
+- avoid partial implementations that introduce hidden states without policy rules
+- document future waitlist states separately from the MVP state machine
 
 ### Risk: merchant schedule discipline breaks outside the system
 
@@ -304,8 +333,10 @@ Verify:
 
 - customer routine booking works end to end
 - customer exception booking works end to end
+- customer onboarding works end to end
 - merchant offline booking flow works end to end
 - merchant no-show and cancellation cleanup works end to end
+- merchant search and inventory controls work end to end
 
 ## Decisions Needed Before TASKS
 
@@ -314,6 +345,8 @@ Verify:
 - Choose the merchant correction window after appointment time.
 - Decide whether merchant-generated content is bilingual in V1 or only system-managed text is bilingual.
 - Choose the first merchant wedge in Bangkok.
+- Confirm whether waitlist and offered-slot flows are explicitly out of V1.
+- Decide when payment method setup happens in onboarding versus booking.
 
 ## Exit Criteria For PLAN Phase
 

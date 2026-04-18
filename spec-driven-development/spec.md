@@ -10,6 +10,8 @@
 6. V1 is for in-shop grooming and bathing only in Bangkok. Home-service logistics are explicitly out of scope.
 7. The booking model for MVP is hybrid: standard services may be instant-booked, while high-variance cases require merchant confirmation.
 8. Thai and English support in V1 applies at minimum to system-managed UI, transactional messages, and booking-state copy. Merchant-entered content is not automatically translated unless explicitly added to scope later.
+9. Waitlist, queue, and offered-slot flows are not included in V1 unless explicitly approved later.
+10. Customer onboarding in V1 should be minimal and optimized for time-to-first-booking rather than full profile completion upfront.
 
 Correct these before Phase 2 if any are wrong. The plan should not proceed on hidden assumptions.
 
@@ -125,6 +127,7 @@ Testing must prove schedule truth, payment-protection behavior, and operational 
 - Integration tests:
   - booking creation against merchant availability
   - offline booking entry followed by payment-link verification
+  - booking-status notification rendering for Thai and English
   - OTP verification and reconfirmation flows
   - webhook or callback processing from the payment provider
   - locale-sensitive notification rendering for Thai and English
@@ -166,15 +169,19 @@ Coverage expectations:
 
 ### In Scope for MVP
 
-- customer search by location and service
+- customer onboarding with language choice, phone or account verification, and first-use setup
+- customer search by location, service, and relevant near-term availability
 - customer pet profiles with booking-relevant attributes
 - merchant-defined service templates and duration rules
 - hybrid booking flow with instant and request-based paths
 - deposits and/or card holds
 - OTP or equivalent verification for risky bookings
-- reminders and reconfirmation prompts
+- booking-status notifications, reminders, and reconfirmation prompts
 - Thai and English support for system-managed UI and transactional messages
 - merchant booking board with fast status updates
+- merchant search for current and upcoming bookings
+- merchant controls to lock a booking to a groomer or station
+- merchant controls to block resources from online booking and configure booking cutoff times
 - merchant offline booking entry with payment-link follow-up
 - basic daily revenue and booking summary
 - repeat booking for the same pet and service
@@ -184,6 +191,7 @@ Coverage expectations:
 - home-service routing and dispatch
 - loyalty marketplace and deal ecosystem
 - social content and editorial discovery
+- waitlist, queue, and offered-slot cancellation-fill workflows
 - broad multi-city rollout
 - deep public-review moderation systems
 - enterprise multi-branch management beyond simple support for future expansion
@@ -192,31 +200,37 @@ Coverage expectations:
 
 ### Customer booking workflow
 
-1. Search shop by area and service
-2. Select pet profile or create one
-3. Choose service
-4. See eligible booking mode:
+1. Complete minimal onboarding if this is the first session:
+   - choose Thai or English
+   - verify phone or account identity
+   - complete essential first-use policy and permission steps
+2. Search shop by area, service, and relevant next-available time
+3. Select pet profile or create one
+4. Choose service
+5. See eligible booking mode:
    - instant confirmation for standard cases
    - pending merchant confirmation for exception cases
-5. Complete payment protection step:
+6. Complete payment protection step:
    - no payment protection
    - card hold
    - deposit
-6. Complete OTP or verification step if required
-7. Receive booking confirmation
-8. Receive reminder and reconfirmation before appointment
-9. View system-managed booking copy in Thai or English
+7. Complete OTP or verification step if required
+8. Receive booking-created, confirmed, declined, reminder, and reconfirmation messages as appropriate
+9. Receive reminder and reconfirmation before appointment
+10. View system-managed booking copy in Thai or English
 
 ### Merchant workflow
 
-1. Define services, durations, buffers, and availability
-2. Accept online bookings and manually add offline bookings
-3. Trigger payment link or verification when needed
-4. Update status quickly from desktop, tablet, or mobile
-5. Mark arrival, in-service, completion, cancellation, or no-show
-6. Perform bulk status updates if operational cleanup is needed
-7. Review daily bookings and revenue summary
-8. Use merchant workflows in Thai or English for system-managed UI
+1. Define services, durations, buffers, availability, and online booking cutoff controls
+2. Search current and upcoming bookings
+3. Accept online bookings and manually add offline bookings
+4. Trigger payment link or verification when needed
+5. Update status quickly from desktop, tablet, or mobile
+6. Mark arrival, in-service, completion, decline, cancellation, or no-show
+7. Lock bookings to a groomer or station and block resources from online booking when needed
+8. Perform bulk status updates if operational cleanup is needed
+9. Review daily bookings and revenue summary
+10. Use merchant workflows in Thai or English for system-managed UI
 
 ## Booking State Machine
 
@@ -224,6 +238,7 @@ Canonical booking states for MVP:
 
 - `pending_verification`
 - `pending_merchant_confirmation`
+- `declined_by_merchant`
 - `confirmed`
 - `reconfirmed`
 - `arrived`
@@ -237,9 +252,14 @@ State transition rules:
 
 - A booking that requires OTP or payment completion must not become `confirmed` before those steps pass.
 - A request-based booking must not become `confirmed` before merchant approval.
+- A request-based booking may become `declined_by_merchant` without being conflated with `cancelled` or `no_show`.
 - A confirmed booking may become `reconfirmed` after reminder response.
 - A confirmed or reconfirmed booking may become `late`, `arrived`, `cancelled`, or `no_show`.
 - A merchant must be able to correct booking outcome status within a defined post-appointment window.
+
+Future note:
+
+- Waitlist states such as `waitlisted`, `slot_offered`, and `removed` are intentionally excluded from V1 unless scope expands.
 
 ## Cancellation and No-Show Policy Matrix
 
@@ -247,6 +267,7 @@ This matrix is part of the product, not just operations copy.
 
 | Scenario | Slot outcome | Payment outcome | Merchant action required |
 |---|---|---|---|
+| Merchant declines request-based booking | Slot remains available | Hold released or no charge captured per policy | Mark declined_by_merchant |
 | Customer cancels within policy | Slot reopens | Hold released or deposit refunded per policy | Mark cancelled |
 | Customer cancels late | Slot may stay blocked if too late to refill | Hold captured or deposit forfeited per policy | Mark cancelled with late-cancel reason |
 | Customer does not respond to reconfirmation | Policy-driven | Hold may remain until expiry or be released | Review or auto-handle |
@@ -258,11 +279,14 @@ This matrix is part of the product, not just operations copy.
 
 The spec is successful when the MVP can satisfy all of these conditions:
 
+- A new customer can complete onboarding and reach first search or first booking without unnecessary mandatory steps.
 - A repeat customer can rebook the same pet and service in under 60 seconds.
 - Routine services can be instantly booked without causing schedule conflicts in the canonical schedule.
 - Exception cases are clearly routed into merchant confirmation without misleading the customer.
 - Both online and offline-originated bookings can trigger deposits or card holds and verification flows.
+- Booking-created, confirmed, declined, and reminder notifications render correctly in Thai and English.
 - Merchants can mark arrival, cancellation, and no-show from desktop, tablet, and mobile.
+- Merchants can search current and upcoming bookings and manage online inventory with cutoff and resource controls.
 - Merchants can correct booking outcomes inside a defined operational window after appointment time.
 - A missed offline manual update does not create a second hidden schedule; every capacity-consuming booking must exist in the same booking system.
 - The policy engine can determine release, refund, capture, or forfeiture behavior for each appointment outcome.
@@ -277,11 +301,14 @@ The spec is successful when the MVP can satisfy all of these conditions:
 - What reminder schedule should V1 use: 24 hours before, same day, or both?
 - What is the first supply wedge in Bangkok: premium salons, neighborhood independents, or a mixed cohort?
 - Does V1 bilingual support apply only to system-managed text, or must merchant-generated content also support bilingual entry?
+- Is waitlist or slot-offer behavior explicitly out of V1, or do we want a thin first version of it?
+- Should payment method collection happen during onboarding, at first booking, or only when required by policy?
 
 ## References
 
 - [requirements.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/spec-driven-development/requirements.md)
 - [pet-grooming-booking-platform.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/pet-grooming-booking-platform.md)
 - [supporting-notes.md](/Users/peerapatjk/Projects/Pet-Grooming/Plan/idea-refine/supporting-notes.md)
+- [ChopeBook user guide](https://www.scribd.com/document/884337118/chopebook-user-guide)
 - [Chope: Reducing No Show](https://restaurants.chope.co/singapore/restaurant-no-show/)
 - [Grab Help Centre: How to manage Chope bookings](https://help.grab.com/merchant/en-th/40001016)

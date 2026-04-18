@@ -85,6 +85,18 @@ Customers want speed. Merchants want confidence that:
 
 The best design should preserve both.
 
+### 5. Fast booking vs heavyweight onboarding
+
+If onboarding asks for too much too early, it will kill the "book in under 60 seconds" promise before the user even sees availability.
+
+The right onboarding should:
+
+- establish language and identity
+- collect only the minimum booking-critical profile data
+- defer optional steps until they are needed
+
+This is especially important because pet profile depth is valuable, but front-loading every field on first open creates drop-off.
+
 ## Divergent Directions Explored
 
 ### 1. Instant Book Core
@@ -341,6 +353,26 @@ Source:
 
 - https://help.grab.com/merchant/en-th/40001016
 
+7. `ChopeBook is an operations console, not just a reservation inbox`
+
+- The ChopeBook guide shows separate `Bookings` and `Waiting` tabs with operational states such as `Upcoming`, `Seated`, `Done`, `Absent`, `Waitlist`, `Queue`, `Offered`, and `Removed`.
+- The booking details panel exposes booking status, diner information, repeat-visit count, notes, reservation time, party size, and assigned table.
+- The guide documents search for current and upcoming reservations, walk-in capture, and a waitlist or queue workflow inside the same system.
+- It also includes explicit inventory controls such as locking a reservation to a table, blocking a table from online reservations, turning online booking on or off by session, and setting cutoff times for online reservations.
+- Waitlisted bookings are not auto-assigned; staff explicitly offer a table, and when deposits apply, the booking only becomes booked after deposit receipt.
+
+Product implication:
+
+- The grooming product needs to behave like an operations console, not only a consumer booking funnel.
+- We should model a merchant-decline outcome separately from `cancelled` and `no_show`, especially for request-based bookings that the shop cannot accommodate.
+- Merchant search for current and upcoming bookings should be part of the MVP, not a future admin convenience.
+- Resource controls should exist for groomers or stations in the same way Chope manages table-level online inventory.
+- Waitlist and cancellation-fill flows are clearly valuable, but they should be explicitly framed as future scope unless we are prepared to model `waitlisted`, `offered`, and `removed` states properly.
+
+Source:
+
+- https://www.scribd.com/document/884337118/chopebook-user-guide
+
 ### What should not be copied blindly
 
 - Restaurant bookings assume more standardized duration than grooming.
@@ -358,18 +390,22 @@ Saved research artifact:
 ## Product Principles Emerging From This Session
 
 - Booking speed matters, but only if the slot is truthful.
+- Onboarding should shorten time-to-first-booking, not become a second registration product.
 - The pet profile is not a side feature. It is core product infrastructure.
 - Repeat booking should be more important than discovery for the first version.
 - Card holds or deposits are a feature, not a payment detail, because they shape merchant trust.
 - Anti-no-show controls must cover both online and offline bookings.
 - Merchant operations are part of the product, not a back-office afterthought.
+- Merchant-decline should be distinct from cancel and no-show.
+- Resource controls and booking search matter because inventory integrity is operational, not just algorithmic.
 - The first version should solve one job well: book and fulfill a grooming appointment reliably.
 
 ## Recommended MVP Shape
 
 ### Customer side
 
-- search by area, shop, and service
+- onboarding with language choice, phone verification, and essential first-use setup
+- search by area, shop, service, and near-term availability
 - pet profile
 - service selection
 - date and time selection
@@ -384,11 +420,14 @@ Saved research artifact:
 
 - open and edit availability
 - define service templates and durations
+- search current and upcoming bookings
 - review exception requests
 - accept or reject edge-case bookings
 - update booking status through arrival, service, completion, cancellation, and no-show
 - create verified offline bookings from phone, LINE, or walk-in traffic
 - send payment links for offline bookings when deposit or card hold is required
+- lock bookings to a groomer or station when necessary
+- block resources from online booking and set booking cutoff times
 - see daily revenue and booking summaries
 
 ## Requirements Derived From Chope's No-Show Flow
@@ -401,7 +440,7 @@ Saved research artifact:
 - The system must support sending a secure payment link when the customer is not booking directly in the app.
 - The system must support OTP or equivalent phone verification for suspicious or high-risk bookings.
 - The system must support merchant-configurable grace periods for late arrivals.
-- The system must support explicit booking states for `pending verification`, `confirmed`, `reconfirmed`, `arrived`, `late`, `cancelled`, and `no-show`.
+- The system must support explicit booking states for `pending verification`, `pending merchant confirmation`, `declined by merchant`, `confirmed`, `reconfirmed`, `arrived`, `late`, `cancelled`, and `no-show`.
 
 ### Operational requirements
 
@@ -410,7 +449,18 @@ Saved research artifact:
 - Merchants need a simple way to mark a customer as arrived so the hold or deposit policy can transition correctly.
 - Merchants need a defined time window after the scheduled appointment to correct booking outcomes such as `cancelled`, `late`, or `no-show`.
 - Merchants should be able to update multiple bookings in bulk when operational cleanup is needed.
+- Merchants should be able to search current and upcoming bookings quickly during service operations.
+- Merchants should be able to lock a booking to a specific groomer or station and block resources from online booking when needed.
+- Merchants should be able to define booking cutoff times for online reservations.
 - The no-show policy must be visible to customers during booking and in reminders.
+
+## Additional Requirements Derived From ChopeBook Operations
+
+- The system should distinguish operational booking buckets from raw statuses, for example active bookings versus waiting or queue-like states.
+- The system should treat request declines as a distinct merchant outcome, not just a generic cancellation.
+- The system should support booking-status notifications beyond reminders, including created, confirmed, declined, and booking-change messages where relevant.
+- The system should keep future waitlist or slot-offer flows explicit as later scope rather than smuggling them into V1 without proper state design.
+- The system should support customer onboarding that gets the user to first search and first booking with minimal mandatory steps.
 
 ### Policy requirements
 
@@ -435,3 +485,5 @@ Saved research artifact:
 - Should a completed booking automatically trigger review collection, rebooking suggestion, and next-visit reminder?
 - What is the thinnest useful merchant dashboard that still replaces chat-heavy coordination?
 - What should the allowed post-appointment status-edit window be for merchants: immediate only, same day, or up to 48 hours?
+- Do we want any waitlist or slot-offer behavior in V1, or should it be explicitly deferred?
+- What is the minimum onboarding required before the user can search, book, and save a pet profile?

@@ -33,11 +33,19 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 
 ### Booking
 
-- Customers must be able to search shops by location and service.
+- Customers must be able to search shops by location, service, and relevant availability.
 - Customers must be able to create and reuse pet profiles.
 - Customers must be able to book routine services instantly where merchant rules allow.
 - The system must support request-and-confirm booking for non-standard cases.
 - The system must show a clear booking state to both customer and merchant.
+
+## Onboarding Requirements
+
+- The system must support customer onboarding for first-time users.
+- The onboarding flow must support Thai and English.
+- The onboarding flow must collect the minimum information required to reach first search and first booking.
+- The onboarding flow must support phone verification or equivalent account verification.
+- Optional setup such as deeper pet-profile completion or payment-method setup should be deferrable unless required by booking policy.
 
 ### Pet profile
 
@@ -52,6 +60,13 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 - Groomers must be able to see a summary dashboard for bookings and revenue.
 - Groomers must be able to update booking outcomes quickly on desktop, tablet, and mobile.
 - Groomers should be able to perform bulk status updates where operationally useful.
+- Groomers must be able to search current and upcoming bookings quickly.
+
+## Inventory Control Requirements
+
+- The system must support locking a booking to a specific groomer or station where needed.
+- The system must support blocking a resource from online booking.
+- The system must support configuring online booking hours and cutoff times.
 
 ## Localization Requirements
 
@@ -60,6 +75,12 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 - The system should persist a user language preference or honor device language where appropriate.
 - The product should avoid hardcoded single-language UI strings.
 - Whether merchant-generated content must be bilingual in V1 remains an explicit product decision.
+
+## Booking Lifecycle and Notification Requirements
+
+- The system must distinguish `declined_by_merchant` from customer cancellation and no-show.
+- The system must support transactional notifications for booking creation, confirmation, decline, reminder, and reconfirmation where relevant.
+- The system should support merchant-facing notification surfaces for new bookings, edits, cancellations, and deposit or verification updates.
 
 ## No-Show and Booking Integrity Requirements
 
@@ -113,6 +134,20 @@ Requirements derived from that article:
 - The product should support fast status changes from multiple merchant surfaces, not only from a desktop admin panel.
 - The product should treat no-show handling and booking edits as normal day-to-day operations, not as exception-only support tasks.
 
+## Reference Requirements From ChopeBook Guide
+
+Source:
+
+- [ChopeBook 6.19 User Guide](https://www.scribd.com/document/884337118/chopebook-user-guide)
+
+Requirements derived from that guide:
+
+- The product should provide merchant search for current and upcoming bookings.
+- The product should provide resource-level inventory controls such as lock and block behavior.
+- The product should provide session-level online booking hour and cutoff-time controls.
+- The product should treat decline, cancellation, no-show, and waiting-style states as distinct operational concepts.
+- Waitlist and offered-slot flows are useful, but should remain explicit future scope unless the MVP state model expands to support them.
+
 ## Non-Goals for V1
 
 - Home-service dispatch logistics
@@ -129,3 +164,4 @@ Requirements derived from that article:
 - What is the best reminder schedule: 24 hours, same day, or both?
 - How much merchant setup is acceptable before the product feels heavier than LINE?
 - What should the merchant status-correction window be after an appointment has passed?
+- Is waitlist or slot-offer behavior explicitly excluded from V1?

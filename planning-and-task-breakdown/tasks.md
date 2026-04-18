@@ -12,6 +12,8 @@ The goal is to leave the system in a working state after each small cluster of t
 - Treat payment-protection policy and booking state transitions as domain logic, not UI logic.
 - Build Thai and English localization into system-managed flows from the start.
 - Keep merchant-generated bilingual content out of V1 unless approved separately.
+- Treat merchant decline as distinct from cancellation and no-show.
+- Keep waitlist and offered-slot flows out of V1 unless separately approved.
 
 ## Task List
 
@@ -44,11 +46,12 @@ The goal is to leave the system in a working state after each small cluster of t
 
 ## Task 2: Implement booking state machine and transition guards
 
-**Description:** Encode the full booking lifecycle so that state transitions are explicit, validated, and testable before any UI or API begins relying on them.
+**Description:** Encode the full booking lifecycle so that state transitions are explicit, validated, and testable before any UI or API begins relying on them, including a distinct merchant-decline outcome for request-based bookings.
 
 **Acceptance criteria:**
 - [ ] Valid transitions for all canonical booking states are implemented.
 - [ ] Invalid transitions are rejected with explicit errors.
+- [ ] Request-based bookings can transition into a merchant-decline outcome that is distinct from cancellation and no-show.
 - [ ] Merchant correction-window rules are represented in the transition logic.
 
 **Verification:**
@@ -145,11 +148,12 @@ The goal is to leave the system in a working state after each small cluster of t
 
 ## Task 6: Build availability and capacity-resolution service
 
-**Description:** Implement the backend service that resolves whether a requested slot is actually bookable using merchant availability, buffers, duration rules, and existing bookings.
+**Description:** Implement the backend service that resolves whether a requested slot is actually bookable using merchant availability, buffers, duration rules, existing bookings, and online inventory controls.
 
 **Acceptance criteria:**
 - [ ] Capacity checks account for both online and offline bookings.
 - [ ] Double-booking is rejected through ordinary booking flows.
+- [ ] Online inventory controls support blocked resources and booking cutoff times.
 - [ ] Service returns a clear reason when capacity is not available.
 
 **Verification:**
@@ -161,6 +165,7 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Files likely touched:**
 - `apps/api/src/services/availability-service.ts`
+- `apps/api/src/services/inventory-controls-service.ts`
 - `apps/api/src/repositories/booking-repository.ts`
 - `tests/integration/availability-service.test.ts`
 
@@ -270,6 +275,30 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Estimated scope:** Medium
 
+## Task 10A: Build customer onboarding flow
+
+**Description:** Implement the first-time customer onboarding flow with language selection, phone or account verification, essential policy steps, and a clear path into search and booking without over-collecting data.
+
+**Acceptance criteria:**
+- [ ] First-time users can choose Thai or English during onboarding.
+- [ ] First-time users can complete phone or equivalent identity verification.
+- [ ] Onboarding gets the user to a booking-ready state without requiring optional profile depth upfront.
+
+**Verification:**
+- [ ] Tests pass: `pnpm test -- --grep "customer-onboarding"`
+- [ ] Build succeeds: `pnpm build`
+- [ ] Manual check: onboarding path is shorter than full registration-plus-profile completion
+
+**Dependencies:** Task 10
+
+**Files likely touched:**
+- `apps/app-mobile/src/screens/onboarding/LanguageSelection.tsx`
+- `apps/app-mobile/src/screens/onboarding/PhoneVerification.tsx`
+- `apps/app-mobile/src/screens/onboarding/OnboardingFlow.tsx`
+- `apps/app-mobile/tests/customer-onboarding.test.tsx`
+
+**Estimated scope:** Medium
+
 ## Task 11: Build customer pet profile flow
 
 **Description:** Implement the customer flow for creating and reusing pet profiles with booking-relevant attributes.
@@ -284,7 +313,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Build succeeds: `pnpm build`
 - [ ] Manual check: pet profile flow works in both locales
 
-**Dependencies:** Task 5, Task 10
+**Dependencies:** Task 5, Task 10, Task 10A
 
 **Files likely touched:**
 - `apps/app-mobile/src/screens/pets/PetProfileForm.tsx`
@@ -294,11 +323,12 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Estimated scope:** Medium
 
-## Task 12: Build customer routine booking flow
+## Task 12: Build customer search and routine booking flow
 
-**Description:** Implement the end-to-end customer flow for selecting a shop, choosing a service and pet, and creating a routine booking that can be instantly confirmed where eligible.
+**Description:** Implement the end-to-end customer flow for searching shops, reviewing relevant availability, choosing a service and pet, and creating a routine booking that can be instantly confirmed where eligible.
 
 **Acceptance criteria:**
+- [ ] Customer can search shops by location, service, and relevant availability through the mobile flow.
 - [ ] Customer can complete a routine booking through the mobile flow.
 - [ ] Flow shows instant confirmation when routing allows it.
 - [ ] Flow renders system-managed copy in Thai and English.
@@ -308,9 +338,11 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Build succeeds: `pnpm build`
 - [ ] Manual check: a routine booking completes end to end in both locales
 
-**Dependencies:** Task 7, Task 10, Task 11
+**Dependencies:** Task 7, Task 10, Task 10A, Task 11
 
 **Files likely touched:**
+- `apps/app-mobile/src/screens/search/ShopSearchScreen.tsx`
+- `apps/app-mobile/src/screens/search/SearchResults.tsx`
 - `apps/app-mobile/src/screens/booking/RoutineBookingFlow.tsx`
 - `apps/app-mobile/src/screens/booking/BookingConfirmation.tsx`
 - `apps/app-mobile/src/lib/api/bookings.ts`
@@ -332,7 +364,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Build succeeds: `pnpm build`
 - [ ] Manual check: pending confirmation flow is understandable in Thai and English
 
-**Dependencies:** Task 7, Task 10, Task 11, Task 12
+**Dependencies:** Task 7, Task 10, Task 10A, Task 11, Task 12
 
 **Files likely touched:**
 - `apps/app-mobile/src/screens/booking/ExceptionBookingFlow.tsx`
@@ -355,7 +387,7 @@ The goal is to leave the system in a working state after each small cluster of t
 - [ ] Build succeeds: `pnpm build`
 - [ ] Manual check: repeat booking is noticeably shorter than first-time booking
 
-**Dependencies:** Task 7, Task 11, Task 12
+**Dependencies:** Task 7, Task 10A, Task 11, Task 12
 
 **Files likely touched:**
 - `apps/app-mobile/src/screens/booking/RepeatBookingFlow.tsx`
@@ -367,6 +399,7 @@ The goal is to leave the system in a working state after each small cluster of t
 ### Checkpoint: Customer Flow
 
 - [ ] Thai and English localization foundation is in place
+- [ ] Customer onboarding works
 - [ ] Pet profile, routine booking, exception booking, and repeat booking flows work
 - [ ] Review with human before merchant operations tasks
 
@@ -396,13 +429,14 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Estimated scope:** Medium
 
-## Task 16: Build merchant booking board and single-booking status actions
+## Task 16: Build merchant booking board, booking search, and single-booking status actions
 
-**Description:** Implement the merchant booking board with quick actions for arrival, cancellation, late state, completion, and no-show on individual bookings.
+**Description:** Implement the merchant booking board with search for current and upcoming bookings and quick actions for arrival, decline, cancellation, late state, completion, and no-show on individual bookings.
 
 **Acceptance criteria:**
 - [ ] Merchant can view the booking board from desktop and tablet-friendly layouts.
-- [ ] Merchant can update one booking’s status through allowed transitions.
+- [ ] Merchant can search current and upcoming bookings quickly.
+- [ ] Merchant can update one booking’s status through allowed transitions, including merchant decline where relevant.
 - [ ] Booking board UI is localized for Thai and English system-managed copy.
 
 **Verification:**
@@ -414,18 +448,20 @@ The goal is to leave the system in a working state after each small cluster of t
 
 **Files likely touched:**
 - `apps/app-merchant/src/screens/bookings/BookingBoard.tsx`
+- `apps/app-merchant/src/components/bookings/BookingSearchBar.tsx`
 - `apps/app-merchant/src/components/bookings/BookingCellActions.tsx`
 - `apps/app-merchant/tests/booking-board.test.tsx`
 
 **Estimated scope:** Medium
 
-## Task 17: Build merchant offline booking capture UI
+## Task 17: Build merchant offline booking capture and resource-control UI
 
-**Description:** Implement the merchant-side UI for creating offline bookings and triggering payment or verification follow-up without leaving the canonical schedule.
+**Description:** Implement the merchant-side UI for creating offline bookings, triggering payment or verification follow-up, and applying resource lock or block controls without leaving the canonical schedule.
 
 **Acceptance criteria:**
 - [ ] Merchant can create offline bookings from the booking board or equivalent surface.
 - [ ] Merchant can trigger payment-link or verification follow-up for the offline booking.
+- [ ] Merchant can lock a booking to a groomer or station and block resources from online booking.
 - [ ] Offline bookings appear in the same board as online bookings.
 
 **Verification:**
@@ -438,6 +474,7 @@ The goal is to leave the system in a working state after each small cluster of t
 **Files likely touched:**
 - `apps/app-merchant/src/screens/bookings/CreateOfflineBooking.tsx`
 - `apps/app-merchant/src/components/bookings/OfflineBookingForm.tsx`
+- `apps/app-merchant/src/components/bookings/ResourceLockControls.tsx`
 - `apps/app-merchant/tests/offline-booking-ui.test.tsx`
 
 **Estimated scope:** Medium
@@ -474,11 +511,12 @@ The goal is to leave the system in a working state after each small cluster of t
 
 ### Phase 5: Notifications and Reporting
 
-## Task 19: Build reminder and reconfirmation job pipeline
+## Task 19: Build transactional notification, reminder, and reconfirmation pipeline
 
-**Description:** Implement scheduled reminder and reconfirmation delivery for upcoming bookings, with localized transactional content.
+**Description:** Implement booking-status notifications plus scheduled reminder and reconfirmation delivery for upcoming bookings, with localized transactional content.
 
 **Acceptance criteria:**
+- [ ] Booking-created, confirmed, and declined notifications are supported where relevant.
 - [ ] Reminder timing is configurable according to product decision.
 - [ ] Reconfirmation messages are localized in Thai and English.
 - [ ] Reminder jobs do not send for cancelled or completed bookings.
@@ -493,6 +531,7 @@ The goal is to leave the system in a working state after each small cluster of t
 **Files likely touched:**
 - `apps/api/src/jobs/reminder-job.ts`
 - `apps/api/src/services/notification-service.ts`
+- `tests/integration/booking-notification.test.ts`
 - `tests/integration/reminder-job.test.ts`
 
 **Estimated scope:** Medium
@@ -561,6 +600,7 @@ The goal is to leave the system in a working state after each small cluster of t
 | Merchant workflow is slower than LINE or phone coordination | High | Prioritize offline booking capture and fast status actions early |
 | Bilingual support becomes content-translation scope creep | Medium | Restrict V1 to system-managed copy unless explicitly expanded |
 | Bulk status actions create audit ambiguity | Medium | Record actor, timestamp, previous state, and new state for every bulk update |
+| Waitlist or offered-slot scope sneaks into MVP | Medium | Keep those flows explicitly out of V1 unless the state model is expanded and approved |
 
 ## Open Questions
 
@@ -569,3 +609,4 @@ The goal is to leave the system in a working state after each small cluster of t
 - What is the final merchant correction window after appointment time?
 - Is merchant-generated content bilingual in V1, or only system-managed text?
 - What is the first merchant wedge in Bangkok for rollout?
+- Is waitlist or slot-offer behavior explicitly excluded from V1?

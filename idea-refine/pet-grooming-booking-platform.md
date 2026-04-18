@@ -26,13 +26,16 @@ The MVP should focus on one job: booking and fulfilling a pet grooming appointme
 
 In scope:
 
-- customer search for shops by area and service
+- customer app onboarding with language choice, phone or account verification, and first-use setup
+- customer search for shops by area, service, and relevant next-available times
 - pet profiles with breed, size, coat type, temperament, allergies, and notes
 - groomer-defined service templates with duration and price logic
 - hybrid booking flow: instant for routine services, approval required for edge cases
 - card hold or deposit during booking
-- customer and groomer notifications for booking status
-- merchant booking board with accepted, arrived, in-service, done, cancelled, and no-show states
+- customer and groomer notifications for booking status changes
+- merchant booking board with confirmed, declined, arrived, in-service, done, cancelled, and no-show states
+- merchant search for current and upcoming bookings
+- merchant inventory controls for locking a booking to a groomer or station, blocking resources from online booking, and setting online booking hours or cutoff times
 - basic revenue and booking summary dashboard
 - post-service rating or review capture only if it is simple and tied to completed bookings
 
@@ -48,6 +51,9 @@ These requirements should be treated as part of the MVP, not as a later payments
 - A clear grace-period policy for late arrival, after which the slot can be released or marked as no-show
 - Tokenized payment handling so merchants do not handle raw card details
 - Merchant controls for marking arrival, no-show, deposit forfeiture, hold release, and exception handling
+- Merchant controls for declining a request-based booking without conflating that outcome with customer cancellation or no-show
+- Booking cutoff-time controls so online bookings cannot be made too close to service start
+- Onboarding must collect only the minimum required information needed to reach first booking quickly
 
 ## Not Doing (and Why)
 
@@ -56,6 +62,7 @@ These requirements should be treated as part of the MVP, not as a later payments
 - Broad citywide supply from day one — a dense wedge in a few Bangkok neighborhoods is more valuable than shallow coverage everywhere.
 - Rich social/discovery content — users mainly want a reliable booking action, not a lifestyle media app.
 - Complex public review mechanics before transaction volume exists — moderation and trust systems are expensive early, and completed-booking reviews are enough for v1.
+- Waitlist, queue, and cancellation-fill "offered slot" flows — these are valuable, but they should follow only after the core booking and merchant-ops workflow is stable.
 
 ## Open Questions
 
@@ -64,3 +71,5 @@ These requirements should be treated as part of the MVP, not as a later payments
 - What hold or deposit model fits Thai payment rails and user expectations best?
 - How much of the groomer workflow needs a native dashboard versus a lightweight app plus notification bridge?
 - Is the first wedge premium salons in central Bangkok, neighborhood independents, or a mix?
+- Should waitlist and slot-offer flows be explicitly deferred from V1 or partially included?
+- Should payment method be added during onboarding, during first booking, or only when required by service policy?
