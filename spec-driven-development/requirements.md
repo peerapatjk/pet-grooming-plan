@@ -41,6 +41,7 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 - The system must support request-and-confirm booking for non-standard cases.
 - The system must show a clear booking state to both customer and merchant.
 - The system must support `pending_verification` and `pending_merchant_confirmation` as distinct pre-confirmation states where appropriate.
+- If a request-confirm booking also requires payment protection or OTP, the launch policy must define one explicit sequence for review versus verification so only one live expiry path owns the slot at a time.
 
 ## Onboarding Requirements
 
@@ -97,12 +98,15 @@ Enable busy urban pet owners to book grooming in under 60 seconds for routine ca
 - The system must support transactional notifications for booking creation, confirmation, decline, reminder, and reconfirmation where relevant.
 - The system should support merchant-facing notification surfaces for new bookings, edits, cancellations, and deposit or verification updates.
 - Reconfirmation non-response must follow one explicit launch policy and must not create hidden inventory transitions.
+- Merchant decisions submitted after merchant-response timeout must be rejected or routed to auditable recovery; they must not silently confirm or decline an already expired booking.
+- Reminder scheduling must handle bookings created inside the default reminder windows without duplicate or impossible-to-send messages.
 
 ## Analytics and Feedback Requirements
 
 - The system must instrument onboarding completion, first search, booking-start, booking-success, and repeat-booking events.
 - The system must instrument merchant-facing trust signals such as offline booking usage, decline rate, and status-correction activity.
 - The system must instrument verification timeout, payment-protection drop-off, and merchant-response timing so the team can tune booking policy after launch.
+- The system must instrument reconfirmation non-response and any follow-up workload it creates.
 - The system should support a lightweight funnel view for first booking and repeat booking behavior.
 
 ## Cross-Functional Launch Requirements
@@ -208,6 +212,7 @@ Source:
   - no-show
 - The system should define a post-appointment editing window during which merchants can correct booking outcomes.
 - The default correction window is 24 hours after appointment time.
+- If the correction window closes without a final appointment outcome, the system must create an auditable operations-review item and block payout-sensitive settlement until resolved.
 
 ### Schedule integrity
 
@@ -222,6 +227,7 @@ Source:
 - The system must auto-release a provisional hold when verification, payment, or merchant review does not complete in time.
 - The system must preserve an audit trail when a provisional hold expires or is manually overridden.
 - The customer and merchant should both be able to see the next required action and expiry expectation for a provisional booking.
+- When review and verification or payment both apply, one explicit launch policy must own provisional inventory first; the booking must not run competing timeout paths against the same slot.
 - Late or duplicate OTP and payment success events must be handled idempotently and must not silently re-confirm or re-block an expired booking.
 - Recovery handling for a late success event must be explicit and auditable.
 

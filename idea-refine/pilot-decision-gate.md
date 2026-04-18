@@ -22,6 +22,7 @@ The team must leave this gate with explicit decisions on:
 - which inputs trigger request-and-confirm mode
 - how provisional inventory behaves before verification or merchant approval
 - payment-protection defaults by service class
+- whether request-confirm bookings collect payment protection or OTP before review, after approval, or only for selected service classes
 - minimum onboarding fields
 - customer-facing trust copy for holds, deposits, cancellations, and no-shows
 - merchant response SLA for request-based bookings
@@ -59,6 +60,7 @@ The pilot must lock these behaviors before implementation:
 - The merchant response window must be explicit to both customer and merchant.
 - The slot may be held provisionally during that review window, but the expiry rule must be defined.
 - If the merchant does not act within the response window, the booking auto-expires or system-cancels and the slot reopens.
+- Merchant decisions that arrive after expiry must fail safely or move into explicit manual recovery; they must not silently resurrect the expired request.
 
 ## Required Outputs
 
@@ -76,8 +78,10 @@ Before moving forward, capture:
    - verification hold duration
    - merchant response SLA
    - release behavior on timeout
+   - active expiry owner when review and verification both apply
 4. `Payment trust policy`
    - hold versus deposit defaults
+   - sequence for payment or OTP versus merchant review on request-based bookings
    - customer-facing explanation
    - failure fallback
    - support escalation path
@@ -113,6 +117,7 @@ Use this format after the pilot:
 - Verification hold duration:
 - Merchant response SLA:
 - Payment-protection defaults:
+- Request-confirm sequencing:
 - Minimum onboarding fields:
 - Booking-unit boundary:
 - Confirmed-booking disruption policy:

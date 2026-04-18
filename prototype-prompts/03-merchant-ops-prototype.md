@@ -58,6 +58,8 @@ FLOW 3: Request-confirm handling
 - decline must be distinct from customer cancellation and no-show
 - show why this booking required review
 - show expected response timing / SLA
+- show what happens if the merchant misses the response window
+- late approval or decline after expiry must not silently resurrect the request
 
 FLOW 4: Offline booking capture
 - create a booking from phone, LINE, Instagram, Facebook, or walk-in demand
@@ -82,6 +84,7 @@ FLOW 6: Merchant-cancel confirmed booking
 Must-show semantics:
 - pending verification
 - pending merchant confirmation
+- request expired / timeout by system
 - confirmed
 - declined by merchant
 - arrived
@@ -115,13 +118,14 @@ Required screens:
 4. Booking detail drawer or side panel
 5. Request-confirm approval flow
 6. Merchant decline flow with explicit reason
-7. Offline booking capture form
-8. Service template and duration configuration
-9. Availability and cutoff settings
-10. Resource lock / block controls
-11. Day-of status action flow
-12. Merchant-cancel confirmed-booking flow
-13. Lightweight booking and revenue summary snapshot
+7. Expired-request / missed-SLA state
+8. Offline booking capture form
+9. Service template and duration configuration
+10. Availability and cutoff settings
+11. Resource lock / block controls
+12. Day-of status action flow
+13. Merchant-cancel confirmed-booking flow
+14. Lightweight booking and revenue summary snapshot
 
 For the actual demo content, use realistic but sample operational data:
 - multiple pets and services across the day, but keep the launch booking unit rules intact
@@ -138,6 +142,7 @@ Design and copy notes:
 Also include:
 - one hero booking-board screen for deck use
 - one clickable approval flow
+- one clickable missed-SLA or expired-request flow
 - one clickable offline-booking flow
 - one clickable merchant-cancel flow
 - one annotation layer that explains why this board is more trustworthy than chat-based scheduling

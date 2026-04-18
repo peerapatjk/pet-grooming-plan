@@ -16,6 +16,7 @@ These are directionally decided from document synthesis, not from completed live
 - Verification hold duration: not locked
 - Merchant response SLA: not locked
 - Payment-protection defaults: card hold for routine bookings, deposit for higher-risk or higher-value services
+- Request-confirm sequencing: not locked
 - Minimum onboarding fields: minimal booking-critical onboarding only; exact field list still not locked
 - Booking-unit boundary: one pet plus one primary service template, with only fixed merchant-defined add-ons in the launch slice
 - Confirmed-booking disruption policy: merchant-initiated cancellation of a confirmed booking is allowed with an explicit operational reason; native reschedule remains out of V1
@@ -28,6 +29,7 @@ These are directionally decided from document synthesis, not from completed live
 - Exact routing inputs: service type, pet-profile conditions, and photo-review rules
 - Verification-hold expiry duration
 - Merchant response SLA for request-based bookings
+- Request-confirm sequencing when payment protection or OTP also applies
 - Exact minimum onboarding field set
 - Customer-facing trust copy for holds, deposits, cancellation, and no-show outcomes
 - Evidence-backed thresholds for merchant schedule truth and payment-protection tolerance

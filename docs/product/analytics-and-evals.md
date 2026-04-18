@@ -21,6 +21,7 @@ This schema exists to answer whether the product is improving booking speed, sch
 - verification completion rate
 - hold or deposit completion rate
 - merchant response time for request-confirm bookings
+- reconfirmation non-response follow-up rate
 - stale-availability failure rate
 - no-show rate
 - merchant schedule-trust score
@@ -59,6 +60,8 @@ This schema exists to answer whether the product is improving booking speed, sch
 | `reminder_sent` | system | reminder notification is sent | lead_time_bucket, locale |
 | `reconfirmation_sent` | system | reconfirmation prompt is sent | lead_time_bucket, locale |
 | `reconfirmation_completed` | customer | customer responds to reconfirmation | response_type, time_to_response |
+| `reconfirmation_missed` | system | reconfirmation window closes without customer response | lead_time_bucket, followup_required |
+| `booking_outcome_review_required` | system | correction window closes without final outcome | previous_status, correction_window_hours, payout_hold_applied |
 | `repeat_booking_started` | customer | repeat path begins from history or saved pet | prior_booking_id, merchant_id |
 | `repeat_booking_completed` | customer | repeat booking succeeds | prior_booking_id, time_to_complete |
 | `provider_callback_ignored` | system | stale or duplicate provider event is safely ignored | provider, callback_type, ignore_reason |
@@ -90,6 +93,7 @@ This schema exists to answer whether the product is improving booking speed, sch
 - Do merchants keep the booking board current?
 - Do they still maintain shadow scheduling outside the system?
 - Which workflows cause them to fall back to chat coordination?
+- How often does reconfirmation create manual follow-up work for merchants or ops?
 
 ## Prototype And Pilot Review Cadence
 

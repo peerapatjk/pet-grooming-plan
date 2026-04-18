@@ -60,6 +60,8 @@ FLOW 3: Exception case request-confirm flow
 - show `pending_verification` and `pending_merchant_confirmation` as different states if useful
 - make the next step obvious
 - show expected response timing and what happens if no action is completed in time
+- show what happens if the merchant declines or the request expires
+- make any slot-release or payment-protection aftermath explicit and calm
 
 FLOW 4: Repeat booking flow
 - customer can rebook the same pet and service from history or saved context
@@ -70,6 +72,8 @@ Must-show product semantics:
 - instant booking
 - pending verification
 - pending merchant confirmation
+- declined by merchant
+- request expired / timed out
 - confirmed
 - payment hold
 - deposit required
@@ -106,8 +110,9 @@ I want these screens at minimum:
 10. Instant booking confirmed screen
 11. Exception booking request-confirm screen
 12. Pending state detail view
-13. Booking history screen
-14. Repeat booking shortcut flow
+13. Declined-by-merchant or request-expired outcome screen
+14. Booking history screen
+15. Repeat booking shortcut flow
 
 For the actual demo content, use sample realistic Bangkok-flavored but polished data:
 - neighborhood references that feel plausible
@@ -129,6 +134,7 @@ At the end, give me:
 - the prototype screens
 - one clickable routine-booking path
 - one clickable request-confirm path
+- one clickable decline-or-timeout recovery path
 - one short annotation layer that points out the most important product decisions for stakeholders
 ```
 

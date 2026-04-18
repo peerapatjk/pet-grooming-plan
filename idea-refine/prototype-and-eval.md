@@ -49,6 +49,7 @@ For MVP, AI is an accelerant at most, not the product.
 - Launch booking unit: one pet plus one primary service template, with only fixed add-ons that are already encoded in merchant pricing and duration logic.
 - Confirmed-booking disruption policy: merchant-initiated cancellations are allowed with explicit operational reason codes, but native rescheduling remains out of V1.
 - Reconfirmation policy for V1: non-response should create merchant follow-up visibility, not a hidden inventory release.
+- Near-term reminder policy: bookings created inside the default reminder windows must use a compressed reminder path instead of duplicate or impossible-to-send reminders.
 - External callback policy: late or duplicate OTP or payment success events must be idempotent and must not re-confirm an expired provisional booking.
 
 ## Top Hypotheses
@@ -145,6 +146,7 @@ Before the team deepens the spec or starts implementation-heavy work, the pilot 
 - the provisional-hold behavior for pending verification
 - the merchant response SLA for pending confirmation
 - the payment-protection default by service class
+- the sequence between merchant review and payment or OTP when both apply
 - the minimum onboarding fields
 - the launch slice versus later roadmap
 - the booking-unit boundary for launch, including whether any add-on combinations remain safely instant-bookable
@@ -248,6 +250,8 @@ Do these before deep implementation:
 - decline vs cancel vs no-show becomes operationally confusing
 - merchant-initiated cancellation after confirmation is logged as a generic customer cancellation
 - a late OTP or payment success callback re-confirms an expired booking or double-applies a payment outcome
+- a near-term booking receives duplicate reminders or misses all reminder guidance because it was created inside the default reminder windows
+- the correction window closes without a final appointment outcome and nobody is forced to review it
 - support and operations still need Slack, spreadsheets, or memory to resolve incidents
 - multi-pet or bundled-service requests sneak into the launch slice and break duration truth
 

@@ -13,7 +13,7 @@ Validate that the merchant workflow is operationally faster, clearer, and safer 
 1. Define service templates and truthful availability
 2. Review current and upcoming bookings
 3. Search bookings quickly
-4. Approve or decline request-confirm bookings
+4. Approve or decline request-confirm bookings and handle SLA-expired requests safely
 5. Create offline-originated bookings in the same schedule
 6. Apply lock or block controls to inventory
 7. Update booking statuses during the day
@@ -41,6 +41,7 @@ Validate that the merchant workflow is operationally faster, clearer, and safer 
 - approve or decline action
 - reason-aware decline flow
 - customer-impact preview
+- expired-request state that blocks late approval and explains the next recovery path
 
 ### Flow D: Offline booking capture
 
@@ -63,6 +64,7 @@ Validate that the merchant workflow is operationally faster, clearer, and safer 
 - Are provisional bookings understandable and operationally safe?
 - Is offline booking capture strong enough to prevent shadow scheduling?
 - Are status edits fast enough for day-of operations?
+- Do merchants understand what happens if they miss the request-confirm response window?
 
 ## Success Criteria
 
@@ -77,6 +79,7 @@ Validate that the merchant workflow is operationally faster, clearer, and safer 
 - Merchants do not trust provisional holds or expiry behavior
 - Offline booking capture feels like separate admin instead of normal scheduling
 - Status handling is too slow or too confusing for live operations
+- Late approval or decline handling feels ambiguous enough that merchants might think expired requests can still be reopened casually
 
 ## Moderator Script
 
@@ -92,6 +95,7 @@ Validate that the merchant workflow is operationally faster, clearer, and safer 
 - missing information required to trust the booking
 - where cutoff, lock, and block controls feel necessary
 - whether merchant-cancel and decline outcomes are clear enough for support and analytics
+- whether request-expiry behavior is clear enough to prevent accidental resurrection of expired bookings
 
 ## Output
 

@@ -103,6 +103,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Event list exists for onboarding completion, first search, booking start, booking success, and repeat booking.
 - [ ] Merchant trust signals such as offline booking usage, decline rate, and status corrections are defined.
 - [ ] Verification timeout, payment-protection drop-off, and merchant-response timing are defined.
+- [ ] Reconfirmation non-response and correction-window review-required signals are defined.
 - [ ] Review cadence and success thresholds are documented.
 
 **Verification:**
@@ -126,6 +127,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] The launch service taxonomy is locked for instant booking versus request-confirm.
 - [ ] Verification-hold expiry and merchant response SLA are locked.
 - [ ] Payment-protection defaults and onboarding minimum fields are locked.
+- [ ] Request-confirm sequencing for merchant review versus payment or OTP is locked.
 - [ ] Booking-unit boundary and add-on rules are locked for the launch slice.
 - [ ] Confirmed-booking disruption policy and reconfirmation non-response policy are locked.
 - [ ] Launch-slice versus post-launch scope is explicit.
@@ -260,6 +262,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Rules reflect the pilot-locked launch service list and request-confirm triggers.
 - [ ] Routing rules accept service, pet, and merchant policy inputs.
 - [ ] Rule outputs include a machine-readable reason for request-confirm routing.
+- [ ] Rule outputs include the next required action and the ordered sequence when request-confirm also requires payment protection or OTP.
 
 **Verification:**
 - [ ] Unit tests pass: `pnpm test -- --grep "booking-routing"`
@@ -393,6 +396,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Merchants can decline request-based bookings into `declined_by_merchant`.
 - [ ] Merchants can cancel confirmed bookings with explicit structured reason codes.
 - [ ] API records actor, reason, and audit metadata for every merchant decision.
+- [ ] Merchant actions submitted after request expiry fail safely or enter explicit manual recovery instead of mutating an expired booking.
 
 **Verification:**
 - [ ] Integration tests pass: `pnpm test:integration -- --grep "merchant-decision"`
@@ -468,6 +472,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Verification failures do not incorrectly confirm a booking.
 - [ ] Verification failures or timeouts do not leave provisional holds active.
 - [ ] Reconfirmation non-response follows the locked launch policy without silently releasing confirmed inventory.
+- [ ] When request-confirm bookings also require payment protection or OTP, the backend enforces the locked sequence without running conflicting live expiry timers.
 
 **Verification:**
 - [ ] Integration tests pass: `pnpm test:integration -- --grep "otp|reconfirmation"`
@@ -799,6 +804,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Reminder timing is configurable according to product decision.
 - [ ] Reconfirmation messages are localized in Thai and English.
 - [ ] Reminder jobs do not send for cancelled or completed bookings.
+- [ ] Near-term bookings created inside the default reminder windows follow a compressed reminder path without duplicate sends.
 - [ ] Time-sensitive messages for verification expiry or merchant-response timeout are supported where relevant.
 
 **Verification:**
@@ -824,6 +830,7 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Customer events exist for onboarding completion, first search, booking start, booking success, and repeat booking.
 - [ ] Merchant events exist for offline booking creation, approval actions, decline actions, merchant-cancelled confirmed bookings, and correction-window edits.
 - [ ] Verification timeout, payment-protection drop-off, and merchant-response timing events are implemented.
+- [ ] Reconfirmation non-response follow-up events and correction-window review-required events are implemented.
 - [ ] Late-success recovery and duplicate-callback suppression events are implemented.
 - [ ] Event naming and properties match the agreed analytics schema.
 
@@ -943,11 +950,13 @@ It assumes a separate cross-functional readiness gate for:
 - [ ] Grace-period handling follows merchant policy settings.
 - [ ] No-show and late outcomes invoke correct payment-policy decisions.
 - [ ] Merchant correction-window rules are enforced and auditable.
+- [ ] If the correction window closes without a final outcome, the system creates an auditable operations-review item and blocks payout-sensitive settlement until resolved.
 
 **Verification:**
 - [ ] Integration tests pass: `pnpm test:integration -- --grep "no-show|grace-period"`
 - [ ] Typecheck passes: `pnpm typecheck`
 - [ ] Manual check: late and no-show flows resolve both booking and payment outcomes correctly
+- [ ] Manual check: unresolved bookings at correction-window expiry are surfaced for review instead of silently settling
 
 **Dependencies:** Task 3, Task 9, Task 16, Task 19
 

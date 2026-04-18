@@ -286,13 +286,14 @@ Coverage expectations:
    - instant confirmation for standard cases with no extra blocking step
    - pending verification for cases that need OTP or payment completion before confirmation
    - pending merchant confirmation for exception cases
+   - if an exception case also needs payment protection or OTP, the launch policy must define one ordered sequence for merchant review versus verification so the booking has only one active provisional-expiry owner at a time
 6. Complete payment protection step:
    - no payment protection
    - card hold
    - deposit
 7. Complete OTP or verification step if required
 8. Receive booking-created, confirmed, declined, reminder, and reconfirmation messages as appropriate
-9. Receive reminder and reconfirmation before appointment
+9. Receive reminder and reconfirmation before appointment, including a compressed path for bookings created inside the normal reminder windows
 10. View system-managed booking copy in Thai or English
 
 ### Static landing-page workflow
@@ -308,7 +309,7 @@ The landing page must not create a parallel web booking flow.
 
 1. Define services, durations, buffers, availability, and online booking cutoff controls
 2. Search current and upcoming bookings
-3. Approve or decline request-based bookings, and manually add offline bookings
+3. Approve or decline request-based bookings before the response SLA expires, and manually add offline bookings
 4. Trigger payment link or verification when needed
 5. Update status quickly from desktop, tablet, or mobile
 6. Mark arrival, in-service, completion, decline, merchant cancellation, customer cancellation, or no-show with explicit reason capture where required
@@ -334,6 +335,7 @@ Rules:
 - Customers and merchants should be able to see the next required action and time expectation for a provisional hold.
 - The system must audit auto-releases and manual overrides.
 - Only `pending_verification` and `pending_merchant_confirmation` may consume provisional inventory in V1.
+- A booking must have one explicit provisional-expiry owner at a time; if merchant review and payment or OTP both apply, the launch policy must define which step owns inventory first and what unlocks the next step.
 - Reconfirmation non-response must not silently transition confirmed inventory into released inventory.
 
 ## Booking State Machine
@@ -358,9 +360,11 @@ State transition rules:
 - A booking that requires OTP or payment completion must not become `confirmed` before those steps pass.
 - A request-based booking must not become `confirmed` before merchant approval.
 - A request-based booking may become `declined_by_merchant` without being conflated with `cancelled` or `no_show`.
+- A request-based booking that also requires payment protection or OTP must follow one explicit launch-locked sequence; it must not run competing live expiry timers for merchant review and verification at the same time.
 - `pending_verification` and `pending_merchant_confirmation` must carry expiry behavior for any provisional inventory hold.
 - When a provisional hold expires, the booking must release inventory and move to `cancelled` with an explicit system reason such as verification timeout or merchant response timeout.
 - A merchant decision on a request-based booking must be explicit: `pending_merchant_confirmation` can move to either `confirmed` or `declined_by_merchant`.
+- Merchant decisions received after a `pending_merchant_confirmation` booking has already expired must be rejected or routed to an auditable manual recovery path; they must not move the expired booking into `confirmed` or `declined_by_merchant`.
 - A confirmed booking may become `reconfirmed` after reminder response.
 - A confirmed or reconfirmed booking may become `late`, `arrived`, `cancelled`, or `no_show`.
 - `cancelled` must preserve structured actor and reason metadata so customer cancellation, merchant cancellation, and system timeout remain operationally distinct.
@@ -387,6 +391,12 @@ This matrix is part of the product, not just operations copy.
 | Customer arrives late within grace period | Slot may be preserved | Payment outcome unchanged until service decision | Mark late or arrived |
 | Customer misses grace period | Slot may be released | Hold or deposit follows no-show policy | Mark no_show |
 | OTP or payment success arrives after provisional expiry | Slot remains released | Apply deterministic recovery rule; never silently re-confirm | Record late-success event for review |
+
+## Operational Timing Guards
+
+- Merchant approval or decline submitted after a request-confirm SLA expiry must fail safely or enter an auditable manual-recovery flow; it must never silently resurrect an expired request.
+- Bookings created inside the default `24 hours before + same-day` reminder cadence must use a compressed reminder path that avoids duplicate or impossible-to-send reminders.
+- If the merchant correction window closes without a final appointment outcome, the system must create an operations-review task and block payout-sensitive settlement until the outcome is resolved.
 
 ## Customer Trust and Support
 
@@ -437,6 +447,9 @@ The spec is successful when the MVP can satisfy all of these conditions:
 - The policy engine can determine release, refund, capture, or forfeiture behavior for each appointment outcome.
 - Customers can understand the payment-protection policy before completing a booking.
 - Support and operations can trace why a hold, deposit, decline, timeout, cancellation, or no-show occurred.
+- Merchant actions submitted after request expiry cannot silently resurrect released bookings.
+- Near-term bookings created inside reminder windows follow a sane, non-duplicate reminder path.
+- Bookings missing a final outcome at correction-window expiry are surfaced for operations review before payout-sensitive settlement.
 - Product / GM, CEO, Finance, Accounting, Operations, Customer Support / Merchant Success, Marketing, Legal, Risk, Tech, Data, Sales / BD, and external vendors each have a reviewable readiness packet or explicit waiver before launch.
 - Customer and merchant system-managed journeys are usable in both Thai and English.
 - The team can observe onboarding completion, first booking conversion, merchant schedule trust, and repeat booking through instrumentation.
@@ -446,6 +459,7 @@ The spec is successful when the MVP can satisfy all of these conditions:
 - Which services are always instant-bookable in the launch slice?
 - What exact inputs should trigger request-and-confirm mode: service type, pet profile, uploaded photos, or a combination?
 - What should the verification-hold expiry and merchant response SLA be?
+- What sequence should request-confirm bookings follow when payment protection or OTP also applies?
 
 These questions should be resolved through the pilot decision gate before implementation-heavy work is treated as locked.
 

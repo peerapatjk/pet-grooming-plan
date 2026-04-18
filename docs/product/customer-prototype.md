@@ -16,7 +16,7 @@ Help target users complete a believable booking journey for a Bangkok pet-groomi
 2. Search for shops by area, service, and relevant availability
 3. Create or select a pet profile
 4. Book a routine service through an instant-like flow
-5. Book an exception case through request-confirm
+5. Book an exception case through request-confirm, including decline or timeout resolution
 6. See payment-protection explanation before committing
 7. Review booking status after creation
 8. Rebook the same pet and service from prior history
@@ -45,6 +45,8 @@ Help target users complete a believable booking journey for a Bangkok pet-groomi
 - exception-trigger explanation
 - pending merchant review state
 - next step and expected response timing
+- declined-by-merchant or request-expired outcome with clear next step
+- release or refund explanation when payment protection was already shown
 
 ### Flow D: Repeat booking
 
@@ -59,6 +61,7 @@ Help target users complete a believable booking journey for a Bangkok pet-groomi
 - Does the hold or deposit explanation feel fair and understandable?
 - Is repeat booking obviously faster than first-time booking?
 - Do users know what happens next after they create a booking?
+- Do users understand what happens if a merchant declines or does not respond in time?
 
 ## Success Criteria
 
@@ -73,12 +76,14 @@ Help target users complete a believable booking journey for a Bangkok pet-groomi
 - Users do not understand whether the slot is truly held
 - Users interpret payment protection as hidden or punitive
 - Users cannot tell what action they or the merchant must take next
+- Users cannot tell whether a declined or expired request released the slot or what happened to payment protection
 - Repeat booking feels only marginally better than messaging the shop
 
 ## Moderator Script
 
 - Ask the participant to book a routine service for a known pet
 - Ask them to book a trickier case that should route to request-confirm
+- Ask them what they think happens if the merchant declines or misses the response window
 - Ask them to explain what the booking status means in their own words
 - Ask them to rebook the same pet and service
 - Ask them where they felt uncertainty, delay, or distrust
@@ -99,5 +104,6 @@ The prototype review should produce concrete recommendations for:
 - onboarding field minimization
 - booking-state copy
 - trust-copy wording
+- decline and timeout recovery copy
 - repeat-booking shortcuts
 - request-confirm explanation and SLA messaging
