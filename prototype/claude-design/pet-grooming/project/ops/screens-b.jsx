@@ -59,7 +59,7 @@ function Scr_ShopHealth() {
                 <th>Response</th>
                 <th>Completion</th>
                 <th>Retention</th>
-                <th style={{textAlign:'right'}}>NPS</th>
+                <th style={{textAlign:'right'}}>NPS (0–100)</th>
                 <th>12-wk trend</th>
                 <th style={{textAlign:'right'}}>Due payout</th>
               </tr>
@@ -111,13 +111,13 @@ function Scr_Pipeline() {
       { shop:'Soi Dog Groomers',     area:'Phra Khanong',via:'Form', age:'11d' },
     ]},
     { title:'Visited', n:4, items:[
-      { shop:'Bangna Bubbles',       area:'Bangna',      meta:'BD · Nan · Nov 10', cred:'Chain of 2', hot:false, accent:true },
-      { shop:'Grooming Bros',        area:'Nonthaburi',  meta:'BD · Nan · Nov 8',  cred:'Owner-op, 6yr' },
-      { shop:'Loog-Mha House',       area:'Saphan Kwai', meta:'BD · Ping · Nov 7', cred:'Cat specialist' },
-      { shop:'Fluffy Tuk Tuk',       area:'Phra Kanong', meta:'BD · Ping · Nov 5', cred:'Mobile, 1 van' },
+      { shop:'Bangna Bubbles',       area:'Bangna',      meta:'BD · Nan · Apr 10', cred:'Chain of 2', hot:false, accent:true },
+      { shop:'Grooming Bros',        area:'Nonthaburi',  meta:'BD · Nan · Apr 8',  cred:'Owner-op, 6yr' },
+      { shop:'Loog-Mha House',       area:'Saphan Kwai', meta:'BD · Ping · Apr 7', cred:'Cat specialist' },
+      { shop:'Fluffy Tuk Tuk',       area:'Phra Kanong', meta:'BD · Ping · Apr 5', cred:'Mobile, 1 van' },
     ]},
     { title:'Training', n:3, items:[
-      { shop:'Khaonim Kennel',       area:'Sathorn',     meta:'Day 2 of 4', cred:'iPad shipped Nov 9', progress:50 },
+      { shop:'Khaonim Kennel',       area:'Sathorn',     meta:'Day 2 of 4', cred:'iPad shipped Apr 9', progress:50 },
       { shop:'Toto & Nana',          area:'Sukhumvit 36',meta:'Day 3 of 4', cred:'Menu locked',        progress:75 },
       { shop:'Paws Atelier',         area:'Thonglor 13', meta:'Day 1 of 4', cred:'Onboarding call done',progress:25 },
     ]},
@@ -126,7 +126,7 @@ function Scr_Pipeline() {
       { shop:'Glossy Tails',         area:'Asok',        meta:'Week 1 of 3', cred:'2 bookings so far',    accept:'2/2 accepted' },
     ]},
     { title:'Live', n:1, items:[
-      { shop:'Khunmae Grooming',     area:'Chidlom',     meta:'Graduated Nov 11', cred:'Onboarded in 11 days' },
+      { shop:'Khunmae Grooming',     area:'Chidlom',     meta:'Graduated Apr 11', cred:'Onboarded in 11 days' },
     ]},
   ];
   return (
@@ -323,4 +323,68 @@ function Scr_Map() {
   );
 }
 
-Object.assign(window, { Scr_ShopHealth, Scr_Pipeline, Scr_Map });
+// ─── Screen 7 · Alerts queue ────────────────────────────
+function Scr_Alerts() {
+  return (
+    <OpsScreen active="alerts" crumbs={['Live ops','Alerts']}>
+      <div style={{padding:32,maxWidth:700}}>
+        <div style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'.16em',textTransform:'uppercase',color:'var(--ink-3)',marginBottom:16}}>Alerts queue</div>
+        <h2 style={{fontFamily:'var(--serif)',fontSize:28,fontWeight:500,letterSpacing:'-0.02em',marginBottom:24}}>3 shops to call today.</h2>
+        <div style={{display:'flex',flexDirection:'column',gap:12}}>
+          {['Kiki Neko Salon · Ari · avg 24m response, 42m on booking BKG-28041', 'The Dog Room Thonglor · slow acceptance rate this week', 'Soi 55 Groomers · no response to 2 bookings this morning'].map((alert,i) => (
+            <div key={i} style={{padding:'14px 16px',border:'1px solid var(--border)',borderRadius:'var(--radius)',background:'var(--paper)',display:'flex',gap:14,alignItems:'flex-start'}}>
+              <div style={{width:8,height:8,borderRadius:'50%',background:'var(--danger)',marginTop:5,flex:'none'}}/>
+              <span style={{fontSize:13,color:'var(--ink-2)'}}>{alert}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </OpsScreen>
+  );
+}
+
+// ─── Screen 8 · Payouts ──────────────────────────────────
+function Scr_Payouts() {
+  return (
+    <OpsScreen active="payouts" crumbs={['Finance','Payouts']}>
+      <div style={{padding:32,maxWidth:800}}>
+        <div style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'.16em',textTransform:'uppercase',color:'var(--ink-3)',marginBottom:16}}>Payouts · Apr 2026</div>
+        <h2 style={{fontFamily:'var(--serif)',fontSize:28,fontWeight:500,letterSpacing:'-0.02em',marginBottom:24}}>฿312,480 settled this month.</h2>
+        <table style={{width:'100%',borderCollapse:'collapse',fontSize:13}}>
+          <thead><tr style={{borderBottom:'2px solid var(--ink)'}}>{['Shop','Period','GMV','Shop (85%)','Fee (2.7%)','Settled'].map(h=><th key={h} style={{padding:'8px 12px',textAlign:'left',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'.12em',textTransform:'uppercase',color:'var(--ink-3)'}}>{h}</th>)}</tr></thead>
+          <tbody>
+            {[
+              ['Aroon Grooming','1–14 Apr','฿38,400','฿32,640','฿1,037','฿31,603'],
+              ['Ari Pet Salon','1–14 Apr','฿29,760','฿25,296','฿804','฿24,492'],
+              ['The Fluff Room','1–14 Apr','฿22,080','฿18,768','฿596','฿18,172'],
+            ].map((row,i)=>(
+              <tr key={i} style={{borderBottom:'1px solid var(--border)'}}>{row.map((cell,j)=><td key={j} style={{padding:'12px',color:j===0?'var(--ink)':'var(--ink-2)',fontWeight:j===0?500:400}}>{cell}</td>)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </OpsScreen>
+  );
+}
+
+// ─── Screen 9 · Settings ─────────────────────────────────
+function Scr_Settings() {
+  return (
+    <OpsScreen active="settings" crumbs={['Finance','Settings']}>
+      <div style={{padding:32,maxWidth:560}}>
+        <div style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'.16em',textTransform:'uppercase',color:'var(--ink-3)',marginBottom:16}}>Settings</div>
+        <h2 style={{fontFamily:'var(--serif)',fontSize:28,fontWeight:500,letterSpacing:'-0.02em',marginBottom:24}}>Pawpoint Ops · <em style={{fontStyle:'italic',color:'var(--accent)'}}>Bangkok</em></h2>
+        <div style={{display:'flex',flexDirection:'column',gap:0,border:'1px solid var(--border)',borderRadius:'var(--radius)'}}>
+          {[['Organisation','Pawpoint · Bangkok · pawpoint.co'],['Ops lead','Ping K. · ping@pawpoint.co'],['BD lead','Nan P. · nan@pawpoint.co'],['Founder','Wit S. · wit@pawpoint.co'],['Version','Ops console v1 · Apr 2026']].map(([k,v],i,arr)=>(
+            <div key={k} style={{padding:'14px 16px',borderBottom:i<arr.length-1?'1px solid var(--border)':'none',display:'grid',gridTemplateColumns:'160px 1fr',gap:16}}>
+              <span style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'.1em',textTransform:'uppercase',color:'var(--ink-3)'}}>{k}</span>
+              <span style={{fontSize:13,color:'var(--ink)'}}>{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </OpsScreen>
+  );
+}
+
+Object.assign(window, { Scr_ShopHealth, Scr_Pipeline, Scr_Map, Scr_Alerts, Scr_Payouts, Scr_Settings });

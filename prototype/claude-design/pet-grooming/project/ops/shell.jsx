@@ -20,15 +20,15 @@ const OI = {
 
 function OpsSidebar({ active }) {
   const items = [
-    { group: 'live ops' },
+    { group: 'Live ops' },
     { id: 'network',    label: 'Network',         icon: OI.pulse, count: null },
     { id: 'requests',   label: 'Requests',        icon: OI.inbox, count: '12', hot: true },
     { id: 'alerts',     label: 'Alerts',          icon: OI.alert, count: '3',  hot: true },
-    { group: 'supply' },
+    { group: 'Supply' },
     { id: 'shops',      label: 'Shops',           icon: OI.shops, count: '41' },
     { id: 'pipeline',   label: 'Pipeline',        icon: OI.funnel, count: '18' },
     { id: 'map',        label: 'Coverage',        icon: OI.map,   count: null },
-    { group: 'finance' },
+    { group: 'Finance' },
     { id: 'payouts',    label: 'Payouts',         icon: OI.money, count: null },
     { id: 'settings',   label: 'Settings',        icon: OI.cog,   count: null },
   ];
@@ -69,7 +69,7 @@ function OpsTop({ crumbs = ['Pawpoint', 'Live ops'], title, children }) {
       <div className="crumbs">{crumbs.slice(0, -1).map((c, i) => <span key={i}>{c}  /  </span>)}<b>{crumbs[crumbs.length - 1]}</b></div>
       {title && <h1 style={{marginLeft:8}}>{title}</h1>}
       <div className="spacer"/>
-      <div className="pill"><span className="dot"/>Real-time · Tue 12 Nov 13:52 ICT</div>
+      <div className="pill"><span className="dot"/>Real-time · Tue 14 Apr 13:52 ICT</div>
       <div className="search">{OI.search}<span>⌘K — find shop, booking, owner</span></div>
       {children}
     </div>

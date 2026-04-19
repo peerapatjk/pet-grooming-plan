@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=1440" />
-<title>Pawpoint — Design System Seed</title>
+<title>Pawpoint Design System</title>
 <link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -596,7 +596,7 @@
         <div class="type-row"><span class="type-label">H2 / Inter Tight</span><div class="type-demo h2">This week at Soi Thonglor 13</div></div>
         <div class="type-row"><span class="type-label">H3 / Inter Tight</span><div class="type-demo h3">Confirmed, with hold released in 24h.</div></div>
         <div class="type-row"><span class="type-label">Body / Inter Tight</span><div class="type-demo body">Standard services are bookable instantly. Higher-variance cases — a first visit, a nervous dog, an unfamiliar breed — route to request-confirm so your groomer can review the pet profile first.</div></div>
-        <div class="type-row"><span class="type-label">Caption / Inter Tight</span><div class="type-demo caption">Thu 24 Oct · 10:30 · Bath &amp; Tidy · 85 min</div></div>
+        <div class="type-row"><span class="type-label">Caption / Inter Tight</span><div class="type-demo caption">Thu 23 Apr · 10:30 · Bath &amp; Tidy · 85 min</div></div>
         <div class="type-row"><span class="type-label">Data / IBM Plex Mono</span><div class="type-demo data">฿1,280.00   |   HOLD · BKG-41A7   |   +66 81 234 5678</div></div>
       </div>
       <div class="type-pairing">
@@ -713,13 +713,13 @@
         <div class="cmp-surface" style="padding:14px">
           <div class="sched">
             <div class="th hr">Time</div>
-            <div class="th">Mon 21</div><div class="th">Tue 22</div><div class="th">Wed 23</div><div class="th">Thu 24</div><div class="th">Fri 25</div><div class="th">Sat 26</div>
+            <div class="th">Mon 20</div><div class="th">Tue 21</div><div class="th">Wed 22</div><div class="th">Thu 23</div><div class="th">Fri 24</div><div class="th">Sat 25</div>
 
             <div class="td"><span class="mono" style="color:var(--ink-3)">09:00</span></div>
-            <div class="td"><div class="slot confirm"><b>Luna · Shih-tzu</b>Bath &amp; Tidy · 60m</div></div>
+            <div class="td"><div class="slot confirm"><b>Luna · Shih Tzu</b>Bath &amp; Tidy · 60m</div></div>
             <div class="td"><div class="slot pendm"><b>Mochi · Poodle</b>Full groom · review</div></div>
             <div class="td"></div>
-            <div class="td"><div class="slot confirm"><b>Dash · Corgi</b>Bath · 45m</div></div>
+            <div class="td"><div class="slot confirm"><b>Dash · Welsh Corgi</b>Bath · 45m</div></div>
             <div class="td"><div class="slot blocked">Staff off</div></div>
             <div class="td"><div class="slot hold"><b>฿400 hold</b>BKG-41A7</div></div>
 
@@ -748,10 +748,11 @@
           <span class="status s-canc-c">Cancelled · customer</span>
           <span class="status s-canc-m">Cancelled · merchant</span>
           <span class="status s-no-show">No-show</span>
-          <span class="status s-hold">Hold ฿850</span>
+          <span class="status s-hold">Shield hold · ฿200</span>
           <span class="status s-dep">Deposit required</span>
           <span class="status s-pay-iss">Payment issue</span>
         </div>
+        <p class="anno" style="font-size:12px;color:var(--ink-3);margin-top:14px">13 public states (shown above) · 3 internal-ops only: Timeout, Late, Override. Plus Stuck (ops escalation).</p>
       </div>
 
       <!-- Bottom sheet -->
@@ -759,11 +760,11 @@
         <header><h3>Bottom sheet</h3><span class="cmp-label">mobile</span></header>
         <div class="cmp-surface" style="background:var(--paper-3);padding:12px 12px 0">
           <div class="sheet">
-            <h4>Confirm your hold</h4>
-            <div class="row"><span>Bath &amp; Tidy · Luna</span><b>฿850</b></div>
-            <div class="row"><span>Hold until</span><b>Fri 10:30</b></div>
-            <div class="row"><span>Free cancel by</span><b>Thu 10:30</b></div>
-            <button class="btn primary" style="margin-top:12px;justify-content:center;width:100%">Authorise &amp; book</button>
+            <h4>Confirm your Shield hold</h4>
+            <div class="row"><span>Bath &amp; Tidy · Luna</span><b>฿650</b></div>
+            <div class="row"><span>Shield hold · ฿200</span><b>until Fri 17 Apr · 10:30</b></div>
+            <div class="row"><span>Free cancel by</span><b>Thu 16 Apr · 10:30</b></div>
+            <button class="btn primary" style="margin-top:12px;justify-content:center;width:100%">Confirm Shield hold</button>
           </div>
         </div>
       </div>
@@ -782,7 +783,7 @@
             </header>
             <div class="sp-body">
               <div style="display:flex;gap:18px">
-                <div style="flex:1"><div class="mono" style="color:var(--ink-3);font-size:11px;text-transform:uppercase">Requested</div><div>Thu 24 Oct · 10:30</div></div>
+                <div style="flex:1"><div class="mono" style="color:var(--ink-3);font-size:11px;text-transform:uppercase">Requested</div><div>Thu 23 Apr · 10:30</div></div>
                 <div style="flex:1"><div class="mono" style="color:var(--ink-3);font-size:11px;text-transform:uppercase">Service</div><div>Full groom · 120m</div></div>
                 <div style="flex:1"><div class="mono" style="color:var(--ink-3);font-size:11px;text-transform:uppercase">Hold</div><div>฿1,280 · Copper</div></div>
               </div>
@@ -824,7 +825,7 @@
       <div class="state-row"><span class="status s-canc-c">Cancelled · customer</span><span>Customer-initiated cancellation. Never conflate with no-show.</span><span class="token">color.ink-3 · strike</span><span>"You cancelled this booking."</span></div>
       <div class="state-row"><span class="status s-canc-m">Cancelled · merchant</span><span>Confirmed booking cancelled by merchant. Requires explicit reason.</span><span class="token">color.danger</span><span>"Sala Groomery cancelled: staff unavailable. Hold released."</span></div>
       <div class="state-row"><span class="status s-no-show">No-show</span><span>Customer did not arrive within grace window. May forfeit hold.</span><span class="token">color.danger.deep</span><span>"Marked no-show at 10:55. ฿850 charged."</span></div>
-      <div class="state-row"><span class="status s-hold">Hold ฿850</span><span>Authorisation active. Card not charged unless policy triggers.</span><span class="token">color.accent · wash</span><span>"Hold on your card — not a charge."</span></div>
+      <div class="state-row"><span class="status s-hold">Shield hold · ฿200</span><span>Authorisation active. Card not charged unless policy triggers. Default ฿200; shops may set higher (e.g. ฿450 for dispute cases).</span><span class="token">color.accent · wash</span><span>"Shield hold on your card — not a charge."</span></div>
       <div class="state-row"><span class="status s-dep">Deposit required</span><span>Higher-risk case. Non-refundable deposit needed to confirm.</span><span class="token">color.accent · outlined</span><span>"฿400 deposit secures this slot."</span></div>
       <div class="state-row"><span class="status s-pay-iss">Payment issue</span><span>Declined / expired / revoked. Blocks state progression.</span><span class="token">color.danger · outlined</span><span>"Your card was declined. Retry or switch cards."</span></div>
     </div>
@@ -856,7 +857,7 @@
               <div class="ring">L</div>
               <div style="flex:1">
                 <b>Luna</b>
-                <span>Shih-tzu · 5.2 kg · last groom 4 wks ago</span>
+                <span>Shih Tzu · 5.2 kg · last groom 4 wks ago</span>
               </div>
               <span class="chip" style="font-size:10px;padding:3px 8px">Switch</span>
             </div>
@@ -865,7 +866,7 @@
               <h4>Bath &amp; Tidy with Khun Ploy</h4>
               <div class="meta"><span>Sala Groomery · Thonglor 13</span><span>฿850</span></div>
               <div class="cta">
-                <span>Thu 24 Oct · 10:30</span>
+                <span>Thu 23 Apr · 10:30</span>
                 <b>Book →</b>
               </div>
             </div>
@@ -894,7 +895,7 @@
         </aside>
         <main class="desktop-main">
           <div class="desktop-top">
-            <h3>Thursday · 24 Oct</h3>
+            <h3>Thursday · 23 Apr</h3>
             <div class="g-12">
               <div class="segmented"><button class="on">Day</button><button>Week</button><button>List</button></div>
               <span class="tag">Sala Groomery · Thonglor</span>
@@ -910,7 +911,7 @@
             <div class="sched" style="--rows:6">
               <div class="th hr">Time</div><div class="th">Ploy</div><div class="th">Nuey</div><div class="th">Tar</div><div class="th">Gaem</div><div class="th">Walk-in</div><div class="th">Offline</div>
               <div class="td"><span class="mono" style="color:var(--ink-3)">10:00</span></div>
-              <div class="td"><div class="slot confirm"><b>Luna · Shih-tzu</b>Bath &amp; Tidy · 60m</div></div>
+              <div class="td"><div class="slot confirm"><b>Luna · Shih Tzu</b>Bath &amp; Tidy · 60m</div></div>
               <div class="td"><div class="slot inserv"><b>Milo</b>20m left</div></div>
               <div class="td"></div>
               <div class="td"><div class="slot pendm"><b>Mochi · Poodle</b>Full groom · review</div></div>
@@ -1028,10 +1029,51 @@
   </div>
 </section>
 
+<!-- COPY & VOICE -->
+<section class="section">
+  <div class="page">
+    <div class="section">
+      <div class="eyebrow">Copy &amp; voice</div>
+      <h2 class="sec-title">Three registers, <em>one product</em>.</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:32px">
+        <div>
+          <p style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">Customer · warm / serif</p>
+          <p style="font-family:var(--serif);font-size:17px;line-height:1.45;color:var(--ink)">"Grooming that earns the next visit."</p>
+          <p style="font-size:13px;color:var(--ink-2);margin-top:8px">Confident, lightly literary. Bilingual TH/EN. First person.</p>
+        </div>
+        <div>
+          <p style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">Merchant · operational / clipped</p>
+          <p style="font-family:var(--sans);font-size:17px;line-height:1.45;color:var(--ink)">"Deposits release on check-in."</p>
+          <p style="font-size:13px;color:var(--ink-2);margin-top:8px">Terse, actionable, pro-tool. Hotkey affordances. Helper prose only where stakes are high.</p>
+        </div>
+        <div>
+          <p style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">Ops · analyst / terse</p>
+          <p style="font-family:var(--mono);font-size:17px;line-height:1.45;color:var(--ink)">"3 shops to call today."</p>
+          <p style="font-size:13px;color:var(--ink-2);margin-top:8px">Monospace metrics, internal vocabulary (Shield hold, STUCK, reroute). No first person.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUMBERS & UNITS -->
+    <div class="section">
+      <div class="eyebrow">Numbers &amp; units</div>
+      <h2 class="sec-title">One format per <em>unit type</em>.</h2>
+      <ul style="list-style:none;padding:0;margin:32px 0 0;display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--border)">
+        <li style="padding:14px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:120px 1fr;gap:16px"><span style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Currency</span><span style="font-weight:500">฿650 · no decimal, no space after ฿</span></li>
+        <li style="padding:14px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:120px 1fr;gap:16px"><span style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Time</span><span style="font-weight:500">18m · 1h 05m · not "18 min" or "1h"</span></li>
+        <li style="padding:14px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:120px 1fr;gap:16px"><span style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Date</span><span style="font-weight:500">Tue 14 Apr · always day + date + month</span></li>
+        <li style="padding:14px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:120px 1fr;gap:16px"><span style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Percent</span><span style="font-weight:500">58% · no space before %</span></li>
+        <li style="padding:14px 0;display:grid;grid-template-columns:120px 1fr;gap:16px"><span style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Booking ID</span><span style="font-weight:500">BKG-41A7 · three-letter prefix + hyphen + 4 alphanums</span></li>
+        <li style="padding:14px 0;display:grid;grid-template-columns:120px 1fr;gap:16px"><span style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Shop count</span><span style="font-weight:500">41 live shops · 180+ groomers · Bangkok</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <div class="page">
   <footer class="footer">
-    <span>Pawpoint · design system seed v0.1</span>
+    <span>Pawpoint Design System · v1 · Apr 2026 · Bangkok</span>
     <span>Inherits launch-canon.md · spec.md</span>
     <span>Bangkok · 2026</span>
   </footer>

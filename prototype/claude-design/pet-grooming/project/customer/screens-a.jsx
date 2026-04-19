@@ -8,7 +8,7 @@ function Screen01_Welcome(){return(
       <div style={{display:'flex',flexDirection:'column',gap:22,alignItems:'center'}}>
         <div className="logo-big"/>
         <h1>Grooming that <em>earns</em><br/>the next visit.</h1>
-        <p>Real‑time slots from 180+ trusted groomers across Bangkok. Hold your spot with a small deposit, no phone calls.</p>
+        <p>Real‑time slots from 41 trusted shops · 180+ groomers across Bangkok. Hold your spot with a Shield hold, no phone calls.</p>
       </div>
       <div style={{display:'flex',flexDirection:'column',gap:10,width:'100%'}}>
         <button className="btn primary btn-lg" style={{justifyContent:'center'}}>Continue with phone</button>
@@ -141,7 +141,7 @@ function Screen05_Home(){return(
         <div className="lbl">Rebook · due in 2 weeks</div>
         <h3>Dash at Aroon,<br/>same time next month</h3>
         <div className="meta"><span>Thu 12 Dec · 10:30</span><span>฿650 · Full groom</span></div>
-        <div className="cta"><span>One‑tap rebook · ฿200 hold</span><ChevR color="#fff"/></div>
+        <div className="cta"><span>One‑tap rebook · Shield hold · ฿200</span><ChevR color="#fff"/></div>
       </div>
 
       <div className="m-sec"><h4>Today near Sathorn</h4><a>24 shops →</a></div>
@@ -151,7 +151,7 @@ function Screen05_Home(){return(
           <div className="thumb"><div className="dot"/></div>
           <div>
             <h4>Aroon Grooming <span className="th" style={{fontWeight:400,color:'var(--ink-3)',fontSize:12,fontFamily:'var(--thai)'}}>อรุณ</span></h4>
-            <div className="meta"><b>★ 4.9</b><Dot color="var(--ink-3)"/><span>0.4 km · Saladaeng</span><Dot color="var(--ink-3)"/><span className="status s-instant" style={{padding:'2px 6px',fontSize:9}}>Instant</span></div>
+            <div className="meta"><b>★ 4.9</b><Dot color="var(--ink-3)"/><span>0.4 km · Saladaeng</span><Dot color="var(--ink-3)"/><span className="status s-instant" style={{padding:'2px 6px',fontSize:9}}>Instant confirm</span></div>
             <div className="avail">
               <span className="s on">10:30</span><span className="s on">11:15</span><span className="s">13:00</span><span className="s">+6 today</span>
             </div>
@@ -161,7 +161,7 @@ function Screen05_Home(){return(
           <div className="thumb" style={{background:'linear-gradient(180deg,var(--accent-wash),var(--paper-3))'}}><div className="dot" style={{background:'var(--warn)'}}/></div>
           <div>
             <h4>The Fluff Room</h4>
-            <div className="meta"><b>★ 4.7</b><Dot color="var(--ink-3)"/><span>0.8 km</span><Dot color="var(--ink-3)"/><span className="status s-pend-m" style={{padding:'2px 6px',fontSize:9}}>Confirms ≤ 1h</span></div>
+            <div className="meta"><b>★ 4.7</b><Dot color="var(--ink-3)"/><span>0.8 km</span><Dot color="var(--ink-3)"/><span className="status s-pend-m" style={{padding:'2px 6px',fontSize:9}}>Confirms within 1h</span></div>
             <div className="avail">
               <span className="s">14:00</span><span className="s">15:30</span><span className="s">17:00</span>
             </div>
@@ -259,7 +259,7 @@ function Screen06_Shop(){return(
               <span className="chip"><span className="dot" style={{background:'var(--ok)'}}/>Sensitive‑skin shampoo</span>
             </div>
           </div>
-          <div className="price">฿650<small>includes ฿200 deposit</small></div>
+          <div className="price">฿650<small>includes ฿200 Shield hold</small></div>
         </div>
         <div className="svc-card">
           <div>
@@ -328,7 +328,7 @@ function Screen07_Time(){
 
         <div className="m-banner" style={{marginTop:4}}>
           <div className="ic">?</div>
-          <div><h5>“Confirm” slots</h5><p>Groomer reviews fit within 1 hour. You’re only charged after they accept.</p></div>
+          <div><h5>“Confirm” slots</h5><p>Shop confirms within 1 hour. You’re only charged after they accept.</p></div>
         </div>
       </div>
       <div className="action-bar">

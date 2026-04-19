@@ -56,7 +56,7 @@ const Sidebar = ({active="today"}) => {
     {k:'people', label:'Groomers',      ic:nav.people},
     {k:'svc',    label:'Services',      ic:nav.svc},
     {k:'money',  label:'Payouts',       ic:nav.money},
-    {k:'reviews',label:'Reviews',       ic:nav.star,   count:'4.9'},
+    {k:'reviews',label:'Reviews',       ic:nav.star},
     {group:'Setup'},
     {k:'gear',   label:'Shop settings', ic:nav.gear},
   ];

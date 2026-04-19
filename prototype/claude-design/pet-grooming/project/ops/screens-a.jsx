@@ -14,14 +14,14 @@ function Scr_Network() {
   return (
     <OpsScreen active="network" crumbs={['Live ops','Network today']} title={null}>
       <div style={{display:'flex',alignItems:'baseline',gap:14,marginBottom:18}}>
-        <h1 style={{font:'500 28px/1 var(--serif)',letterSpacing:'-0.02em'}}>Tuesday, 12 November</h1>
+        <h1 style={{font:'500 28px/1 var(--serif)',letterSpacing:'-0.02em'}}>Tuesday, 14 April</h1>
         <span className="eyebrow">Bangkok · 41 live shops · 9 neighbourhoods</span>
       </div>
 
       {/* KPI row */}
       <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:12,marginBottom:18}}>
         <div className="kpi dark">
-          <div className="lbl">Gmv today</div>
+          <div className="lbl">GMV today</div>
           <div className="val">฿268,420</div>
           <div className="sub"><span className="d">▲ 11.4%</span> vs. last Tue</div>
         </div>
@@ -43,7 +43,7 @@ function Scr_Network() {
         <div className="kpi accent">
           <div className="lbl">Stuck &gt; 30min</div>
           <div className="val">3</div>
-          <div className="sub">2 on Kiki · 1 on M&amp;M · escalated</div>
+          <div className="sub">2 on Kiki · 1 on M&amp;M · see Requests monitor</div>
         </div>
       </div>
 
@@ -81,7 +81,7 @@ function Scr_Network() {
               { t:'13:49', kind:'STUCK 34m', shop:'Kiki Neko Salon', who:'Ploy K.',      price:'฿450',  pet:'Milo · Scottish fold',  col:'hot' },
               { t:'13:48', kind:'CONFIRMED', shop:'Pomme & Coco',    who:'Apinya R.',    price:'฿720',  pet:'Toby · Yorkie',         col:'ok' },
               { t:'13:47', kind:'DECLINED',  shop:'Soi 11 Dog Club', who:'Vasit C.',     price:'฿890',  pet:'Bear · Golden',         col:'warn' },
-              { t:'13:46', kind:'CONFIRMED', shop:'Aroon Grooming',  who:'Praew S.',     price:'฿950',  pet:'Dash · Goldie',         col:'ok' },
+              { t:'13:46', kind:'CONFIRMED', shop:'Aroon Grooming',  who:'Praew S.',     price:'฿650',  pet:'Dash · Welsh Corgi',    col:'ok' },
             ].map((r,i)=>(
               <div key={i} style={{display:'grid',gridTemplateColumns:'60px 110px 1fr 140px 90px',gap:14,padding:'10px 18px',borderTop:i?'1px solid var(--border)':'none',alignItems:'center',fontSize:12}}>
                 <span style={{fontFamily:'var(--mono)',color:'var(--ink-3)'}}>{r.t}</span>
@@ -247,11 +247,11 @@ function Scr_Intervene() {
           <div className="iv-head">
             <div style={{width:40,height:40,borderRadius:'50%',background:'var(--accent)',color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--mono)',fontWeight:600}}>P</div>
             <div style={{flex:1}}>
-              <div className="eyebrow">Stuck request · booking #P28041</div>
+              <div className="eyebrow">Stuck request · booking BKG-28041</div>
               <h3>Ploy K. wants Milo at Kiki Neko Salon</h3>
               <div style={{fontSize:12,color:'rgba(255,255,255,.6)',marginTop:2}}>Requested at 13:10 · no response for 42 minutes · target is 15</div>
             </div>
-            <button className="btn accent">Escalate</button>
+            <button className="btn accent" title="Escalate to Wit S. (founder) · freezes booking for manual review">Escalate</button>
           </div>
 
           <div className="iv-body">
@@ -281,7 +281,7 @@ function Scr_Intervene() {
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:16}}>
                 <div>
                   <b style={{fontWeight:500}}>Ploy K.</b>
-                  <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)',marginTop:2}}>+66 8x xxx 2041</div>
+                  <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)',marginTop:2}}>+66 89 123 2041</div>
                   <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>2 bookings · joined Sep</div>
                 </div>
                 <div>
@@ -303,10 +303,10 @@ function Scr_Intervene() {
                 {[
                   { a:'Reroute to Maew & Mhaa', sub:'Same area · 15:00 slot free · accepts cats · ฿520 (+฿70). Pawpoint covers the delta.', primary:true },
                   { a:'Reroute to Kiki · Thursday', sub:'Same shop, pushed 2 days. Customer confirmed Thu flexibility at signup.', primary:false },
-                  { a:'Call Khun Tik now',      sub:'+66 8x xxx 9912 · Usually answers. Scripted apology + manual decline.', primary:false },
-                  { a:'Auto-decline, full refund',sub:'Customer gets ฿450 back in 2 business days, Kiki gets a response-time strike.', primary:false },
+                  { a:'Call Khun Tik now',      sub:'+66 89 123 9912 · Usually answers. Scripted apology + manual decline.', primary:false },
+                  { a:'Auto-decline, full refund',sub:'฿450 hold released — no funds moved. Kiki gets a response-time strike.', primary:false },
                 ].map((m,i)=>(
-                  <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'12px 14px',background:m.primary?'var(--accent-wash)':'var(--paper)',border:'1px solid '+(m.primary?'color-mix(in oklab,var(--accent) 30%,transparent)':'var(--border)'),borderRadius:8}}>
+                  <div key={i} title={m.primary?'Recommended action':undefined} style={{display:'flex',alignItems:'center',gap:12,padding:'12px 14px',background:m.primary?'var(--accent-wash)':'var(--paper)',border:'1px solid '+(m.primary?'color-mix(in oklab,var(--accent) 30%,transparent)':'var(--border)'),borderRadius:8}}>
                     <div style={{width:24,height:24,borderRadius:'50%',background:m.primary?'var(--accent)':'var(--paper-3)',color:m.primary?'#fff':'var(--ink-2)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--mono)',fontSize:11,fontWeight:600,flex:'none'}}>{i+1}</div>
                     <div style={{flex:1}}>
                       <b style={{fontWeight:500,fontSize:13}}>{m.a}</b>

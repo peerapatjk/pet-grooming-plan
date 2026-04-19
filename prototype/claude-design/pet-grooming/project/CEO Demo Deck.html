@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Pawpoint — CEO demo deck · Nov 2025</title>
+<title>Pawpoint — CEO demo deck · Apr 2026</title>
 <link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
     font-family: var(--sans);
     background: var(--paper);
     color: var(--ink);
-    padding: 96px 120px;
+    padding: 120px 120px 96px;
     display: grid;
     overflow: hidden;
     position: relative;
@@ -129,8 +129,9 @@
   .s01 .meta b { color: var(--ink); font-weight: 500;}
 
   /* ─────────────── Slide 02 — The problem ─────────────── */
-  .s02 { grid-template-rows: auto auto 1fr auto; gap: 48px;}
-  .s02 .hd { align-self: end; max-width: 30ch;}
+  .s02 { grid-template-rows: auto auto 1fr auto; gap: 32px;}
+  .s02 .hd { align-self: end; max-width: 560px;}
+  .s02 h2.mid { font-size: 72px;}
   .s02 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; align-items: start; margin-top: 24px;}
   .s02 .stat { border-top: 2px solid var(--ink); padding-top: 22px;}
   .s02 .stat .nm {
@@ -257,7 +258,7 @@
   .s05 .m-merchant .slot.now { border-left: 3px solid var(--accent); color: var(--ink); font-weight: 500;}
   .s05 .m-merchant .slot.done { color: var(--ink-3); text-decoration: line-through;}
   /* Ops mock */
-  .s05 .m-ops { background: var(--ink); color: var(--paper);}
+  .s05 .surface .mock.m-ops { background: var(--ink); color: var(--paper);}
   .s05 .m-ops h4 { font-family: var(--serif); font-weight: 500; font-size: 22px; color: var(--paper); margin: 0 0 4px;}
   .s05 .m-ops .topbar { display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,.4); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;}
   .s05 .m-ops .num { font-family: var(--serif); font-weight: 500; font-size: 56px; letter-spacing: -0.02em; line-height: 1; color: var(--paper);}
@@ -428,17 +429,17 @@
 
 "The reason the existing group-chat system persists is subtle. It's not that shops don't want software — they've tried. It's that every time someone tried to charge up-front, pet parents walked. Bangkok's middle class has been burned by deposit scams; they read 'deposit' as 'I'm about to lose my money.' So the shops gave up and trusted on a handshake — and absorbed the no-shows. The insight is: the money has to be real to the shop, but invisible to the customer. That's Shield.",
 
-"This is the mechanic, and I'd love for you to stop me if any piece is unclear, because the whole pitch hangs here. At booking, we place a 450-baht hold on the customer's card. No charge. When they walk in, they scan the shop's QR code, the hold releases in full, and the shop sees confirmation. If they don't show, we capture the 450, pay the shop their time, and the customer gets one warning before they're cut off. The money is real. The conversation about money never happens. That's the trick.",
+"This is the mechanic, and I'd love for you to stop me if any piece is unclear, because the whole pitch hangs here. At booking, we place a hold on the customer's card — 200 baht is the Aroon Grooming default, but shops set their own amount. No charge. When they walk in, they scan the shop's QR code, the hold releases in full, and the shop sees confirmation. If they don't show, we capture the hold, pay the shop their time, and the customer gets one warning before they're cut off. The money is real. The conversation about money never happens. That's the trick.",
 
 "Shield is the mechanic; this is how it ships. Three surfaces, one booking. The customer app is what pet parents see — discover nearby shops, book in three taps, one QR to scan on arrival. The merchant console runs on an iPad on the shop counter; it's glanceable from across the room. And the ops room — the control tower — is where our team rescues the handful of bookings each day that get stuck, in under a minute. A booking created on the customer app becomes a live card on the iPad and, if it stalls, a red row on the ops pulse. Same booking, three views.",
 
 "Here's where we are. Eight months in, forty-one live shops in Bangkok, 1,842 pet parents onboarded. We're running roughly 2.41 million baht GMV monthly, growing 100% quarter over quarter from a small base. But the two numbers I'd point you to are on the right. Saturday retention — the share of Saturday-booking parents who rebook within 14 days — is up 22 points since we launched Shield v1. And our no-show rate is 2.8% and falling, against an industry baseline around 19. Shield is doing what we said it would.",
 
-"Unit economics. On an average basket of 640 baht, the shop takes 85%, payment processing runs 2.7, and our attributable cost to serve — ops time, SMS, compute, fraud review — is 18 baht. That leaves 63.52 of contribution per booking. At our current 3,770 bookings a month that's about 8,200 USD contribution, which covers variable cost and half of fixed. We hit cash-flow positive in March on the current trajectory, without raising. Important: we are not fundraising on this slide. I just want you to know the math works.",
+"Unit economics. On an average basket of 640 baht, the shop takes 85%, payment processing runs 2.7, and our attributable cost to serve — ops time, SMS, compute, fraud review — is 18 baht. That leaves 63.52 of contribution per booking. At our current 3,770 bookings a month that's about 8,200 USD contribution, which covers variable cost and half of fixed. We hit cash-flow positive in Q1 2026 on the current trajectory, without raising. Important: we are not fundraising on this slide. I just want you to know the math works.",
 
 "Why Bangkok, and why now. Two and a half million urban pet households, a stable 4–5% annual growth in pet ownership, and a thicker veterinary wedge right behind grooming — about 4x the market, same Shield mechanic. We have 41 live shops but the right number for full city coverage is 60, and we have line of sight to all 60. The map on the left shows live, onboarding, and the three neighbourhood gaps we're closing this quarter — Ladprao, Bang Kapi, Nonthaburi. We don't need Thailand; we need Bangkok, and the pattern extends.",
 
-"Twelve weeks. This month — Shield v2, which moves from day-of pre-authorisation to 72-hour delayed capture; halves chargebacks and removes the confused support thread. December — we launch a separate cat-only vertical with six feline specialists already signed, because cat owners want a different flow. January — we close the three Bangkok coverage gaps and hit 60 shops. February — we pilot the veterinary wedge with three clinics. If that holds up, the market doubles, and we start the conversation about leaving Bangkok.",
+"Twelve weeks. This month — April — Shield v2, which moves from day-of pre-authorisation to 72-hour delayed capture; halves chargebacks and removes the confused support thread. May — we launch a separate cat-only vertical with six feline specialists already signed, because cat owners want a different flow. June — we close the three Bangkok coverage gaps and hit 60 shops. July — we pilot the veterinary wedge with three clinics. If that holds up, the market doubles, and we start the conversation about leaving Bangkok.",
 
 "So the ask. We are not fundraising this quarter. What I need from this room is two things: intros to two shop chains we've been chasing and a vet group — names on the next page — and anyone who knows Bangkok's pet-insurance market. Pet insurance is the only surface where the Shield mechanic breaks down, and I want to meet it with a plan, not a surprise. Series A conversations start in Q2 and I'll come back to you then with a harder number. Until then — thank you, and let's play with the live product."
 ]
@@ -450,7 +451,7 @@
 <section class="s01" data-label="Title">
   <div class="mast">
     <div class="brand"><div class="mk">p</div><div class="nm">Pawpoint</div></div>
-    <div class="r">Confidential · <b>Nov 2025</b> · Bangkok</div>
+    <div class="r">Confidential · <b>Apr 2026</b> · Bangkok</div>
   </div>
   <div class="body">
     <div>
@@ -464,7 +465,7 @@
       <div class="meta">
         <b>Pawpoint, Ltd.</b><br>
         Sathorn · Bangkok, Thailand<br>
-        wit@pawpoint.co · +66 8x xxx 9000
+        wit@pawpoint.co · +66 89 123 9000
       </div>
     </div>
   </div>
@@ -544,12 +545,12 @@
       <div class="eye" style="margin-bottom: 24px;">Shield</div>
       <h2 class="mid">A deposit that <em>evaporates</em><br>the moment the dog arrives.</h2>
     </div>
-    <div class="right">A 450-baht hold is placed on the card at booking. <b>Not a charge.</b> When the customer scans the shop's QR on arrival, the hold releases automatically — the shop sees confirmation, the customer sees nothing. No awkward conversation about money; no no-shows.</div>
+    <div class="right">A 200-baht hold is placed on the card at booking <span style="font-style:italic;color:var(--ink-3)">(shops set their own hold; ฿200 is the Aroon Grooming default)</span>. <b>Not a charge.</b> When the customer scans the shop's QR on arrival, the hold releases automatically — the shop sees confirmation, the customer sees nothing. No awkward conversation about money; no no-shows.</div>
   </div>
   <div class="steps">
     <div class="step">
       <div class="when">T – 3 days · booking</div>
-      <div class="amt">฿<span class="b">450</span></div>
+      <div class="amt">฿<span class="b">200</span></div>
       <div class="what">Refundable hold placed. Customer's card is held, not charged. A bank-level auth, not a transaction.</div>
     </div>
     <div class="arrow">→</div>
@@ -576,7 +577,7 @@
   </div>
   <div class="hd">
     <div class="eye" style="margin-bottom: 20px;">The product</div>
-    <h2 class="mid">One <em>spine</em>, three screens.</h2>
+    <h2 class="mid">One <em>spine</em>, three apps.</h2>
   </div>
   <div class="rail">
     <div class="surface">
@@ -659,7 +660,7 @@
       <div class="n">
         <div class="nm">Live shops · Bangkok</div>
         <div class="v">41</div>
-        <div class="sub">18 onboarding · 7 gaps left</div>
+        <div class="sub">18 onboarding · 3 gaps · Q1</div>
       </div>
       <div class="n">
         <div class="nm">Pet parents onboarded</div>
@@ -709,10 +710,10 @@
   </div>
   <div class="hd">
     <div>
-      <div class="eye" style="margin-bottom: 20px;">Per booking · Q4'25 actuals</div>
+      <div class="eye" style="margin-bottom: 20px;">Per booking · Q1'26 actuals</div>
       <h2 class="mid">The <em>math</em>.</h2>
     </div>
-    <div class="r">At 3,770 bookings a month we cover variable cost and half of fixed. <b>Cash-flow positive in March</b> — our published target — without raising a round.</div>
+    <div class="r">At 3,770 bookings a month we cover variable cost and half of fixed. <b>Cash-flow positive in Q1 2026</b> — our published target — without raising a round.</div>
   </div>
   <div class="body">
     <div class="receipt">
@@ -803,7 +804,7 @@
       <div class="fact">
         <div class="k">Veterinary wedge</div>
         <div class="v">≈ 4<em>×</em> grooming</div>
-        <div class="sub">same Shield mechanic · Feb pilot with 3 clinics</div>
+        <div class="sub">same Shield mechanic · Jul pilot with 3 clinics</div>
       </div>
     </div>
   </div>
@@ -822,25 +823,25 @@
   <div class="track">
     <div class="lanes">
       <div class="lane now">
-        <div class="when"><span class="dot"></span>Nov 2025 · this month</div>
+        <div class="when"><span class="dot"></span>Apr 2026 · this month</div>
         <h5>Ship <em>Shield v2</em>.</h5>
         <p>Move from day-of pre-auth to <b>72-hour delayed capture</b>. Halves chargebacks; removes the confused support thread.</p>
         <div class="metric">Target · <b>chargebacks −50%</b></div>
       </div>
       <div class="lane soon">
-        <div class="when"><span class="dot"></span>Dec · week 2</div>
+        <div class="when"><span class="dot"></span>May · week 2</div>
         <h5>Cat-only <em>vertical</em>.</h5>
         <p>Six feline-specialist shops already signed; launch a separate discovery flow and taxonomy. Cat owners book differently.</p>
         <div class="metric">Target · <b>6 shops · +400 parents</b></div>
       </div>
       <div class="lane soon">
-        <div class="when"><span class="dot"></span>Jan 2026</div>
+        <div class="when"><span class="dot"></span>Jun 2026</div>
         <h5>Bangkok <em>coverage</em>.</h5>
         <p>Close Ladprao, Bang Kapi, Nonthaburi. Hit <b>60 live shops</b> — the number for full city density.</p>
         <div class="metric">Target · <b>60 live · 0 gaps</b></div>
       </div>
       <div class="lane">
-        <div class="when"><span class="dot"></span>Feb 2026</div>
+        <div class="when"><span class="dot"></span>Jul 2026</div>
         <h5>Vet <em>wedge</em> pilot.</h5>
         <p>Same Shield mechanic, new category. Three clinics. If this holds for shots and check-ups, the <b>market doubles</b>.</p>
         <div class="metric">Target · <b>3 clinics · 1 signed</b></div>
@@ -872,8 +873,8 @@
         <p>The only adjacent surface where Shield breaks down on first principles. We want to meet it with a plan, <b>not a surprise</b>.</p>
       </div>
       <div class="contact">
-        <span class="k">Founder</span><span><b>Wit S.</b> · wit@pawpoint.co</span>
-        <span class="k">Phone</span><span>+66 8x xxx 9000</span>
+        <span class="k">Founder &amp; CEO</span><span><b>Wit S.</b> · wit@pawpoint.co</span>
+        <span class="k">Phone</span><span>+66 89 123 9000</span>
         <span class="k">Series A</span><span>Q2 2026 · conversation only · not raising this quarter</span>
       </div>
     </div>

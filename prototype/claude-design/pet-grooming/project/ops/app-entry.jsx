@@ -23,6 +23,18 @@ const opsFlows = [
       {C:Scr_Map,        label:'Coverage map'},
     ],
   },
+  {
+    num:'Flow C',
+    title:<>The <em>books</em></>,
+    lede:"Alerts surfaces shops that need a call today. Payouts gives finance a settled-vs-pending view. Settings is the source of truth for team and org config.",
+    band:'',
+    note:'These screens complete the sidebar navigation — Alerts (Live ops), Payouts (Finance), and Settings (Finance) — so every sidebar item renders a real screen.',
+    screens:[
+      {C:Scr_Alerts,   label:'Alerts'},
+      {C:Scr_Payouts,  label:'Payouts'},
+      {C:Scr_Settings, label:'Settings'},
+    ],
+  },
 ];
 
 function BrowserFrame({ idx, label, children, total }) {

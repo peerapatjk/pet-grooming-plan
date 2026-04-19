@@ -24,7 +24,7 @@ function Screen01_Today(){
         {t:'Full groom',  pet:'Luna · Shiba',       start:[9,30], dur:75,  state:'done'},
         {t:'Bath & blow', pet:'Mango · Poodle',     start:[11,15],dur:45,  state:'done'},
         {t:'Break',       pet:'',                    start:[12,30],dur:30, state:'break'},
-        {t:'Full groom',  pet:'Dash · Goldie',      start:[13,0], dur:75,  state:'in-service'},
+        {t:'Full groom',  pet:'Dash · Welsh Corgi',  start:[13,0], dur:75,  state:'in-service'},
         {t:'Full groom',  pet:'Biscuit · Cocker',   start:[14,45],dur:75,  state:'arrived'},
         {t:'De‑matting',  pet:'Coco · Poodle',      start:[16,30],dur:90,  state:'confirmed'},
     ] },
@@ -32,7 +32,7 @@ function Screen01_Today(){
         {t:'Puppy first cut', pet:'Mochi · Poodle',  start:[10,0], dur:60, state:'done'},
         {t:'Full groom',      pet:'Snow · Samoyed',  start:[11,30],dur:90, state:'done'},
         {t:'Lunch',           pet:'',                 start:[13,15],dur:30, state:'break'},
-        {t:'Full groom',      pet:'Dash · Goldie',   start:[13,52],dur:0.01, state:'hidden'}, // anchor for NOW line; not rendered
+        {t:'Full groom',      pet:'Dash · Welsh Corgi', start:[13,52],dur:0.01, state:'hidden'}, // anchor for NOW line; not rendered
         {t:'Bath & blow',     pet:'Peanut · Beagle', start:[14,0], dur:45, state:'confirmed'},
         {t:'Anxious · full',  pet:'Pepper · Frenchie',start:[15,15],dur:90, state:'confirmed'},
         {t:'New · needs slot',pet:'Maple · Pomsky',  start:[17,0], dur:75, state:'pending'},
@@ -64,7 +64,7 @@ function Screen01_Today(){
         {k:'Confirmed', v:'14'},
         {k:'Pending', v:'3'},
         {k:'PM load', v:'78%'},
-        {k:'Revenue', v:'฿7,840'},
+        {k:'Revenue', v:'฿9,760'},
       ]}
       topActions={
         <>
@@ -150,24 +150,24 @@ function Screen02_Inbox(){
     {
       id:'r1', selected:true,
       whenDay:'Today', whenTime:'14:30',
-      petAv:'D', owner:'Praew S.', phone:'+66 8x xxx 4412',
-      pet:'Dash · Goldie 3y', svc:'Full groom', svcSub:'Medium coat · 75 min',
+      petAv:'Pe', owner:'Nok C.', phone:'+66 89 xxx 4412',
+      pet:'Peanut · Beagle 2y', svc:'Full groom', svcSub:'Medium coat · 45m',
       groomer:'Nan', ok:true,
       elapsed:37, // of 60 min
     },
     {
       id:'r2',
       whenDay:'Today', whenTime:'17:15',
-      petAv:'G', owner:'Jun W.',   phone:'+66 8x xxx 7701',
-      pet:'Ginger · Beagle 5y', svc:'Full groom', svcSub:'Short coat · 60 min',
+      petAv:'G', owner:'Jun W.',   phone:'+66 89 xxx 7701',
+      pet:'Ginger · Beagle 5y', svc:'Full groom', svcSub:'Short coat · 60m',
       groomer:'Tee', ok:true,
       elapsed:12,
     },
     {
       id:'r3', urgent:true,
       whenDay:'Thu 14', whenTime:'11:00',
-      petAv:'M', owner:'Alisa P.', phone:'+66 8x xxx 9920',
-      pet:'Maple · Pomsky 2y', svc:'De‑matting + full', svcSub:'Long coat · 90 min',
+      petAv:'M', owner:'Alisa P.', phone:'+66 89 xxx 9920',
+      pet:'Maple · Pomsky 2y', svc:'De‑matting + full', svcSub:'Long coat · 90m',
       groomer:'Nan · reassign?', ok:false,
       elapsed:54,
     },
@@ -180,7 +180,7 @@ function Screen02_Inbox(){
       stats={[
         {k:'Awaiting accept', v:'3'},
         {k:'Avg response', v:'18m'},
-        {k:'Instant auto', v:'9'},
+        {k:'Auto‑accept', v:'9'},
       ]}
       topActions={<button className="btn secondary btn-sm">Auto‑accept rules →</button>}
     >
@@ -225,7 +225,10 @@ function Screen02_Inbox(){
                 <b>{r.urgent?'6m left':`${60-r.elapsed}m left`}</b>
                 <div className="bar"><i style={{width:`${100-(r.elapsed/60*100)}%`}}/></div>
               </div>
-              <div className="chev"><MChevR/></div>
+              <div style={{display:'flex',gap:6,marginLeft:'auto',alignItems:'center'}}>
+                <button style={{padding:'5px 10px',fontSize:11,fontFamily:'var(--mono)',fontWeight:500,letterSpacing:'.06em',textTransform:'uppercase',borderRadius:999,border:'1px solid var(--ok)',color:'var(--ok)',background:'var(--ok-wash)',cursor:'pointer',whiteSpace:'nowrap'}}>Accept</button>
+                <button style={{padding:'5px 10px',fontSize:11,fontFamily:'var(--mono)',fontWeight:500,letterSpacing:'.06em',textTransform:'uppercase',borderRadius:999,border:'1px solid var(--danger)',color:'var(--danger)',background:'var(--danger-wash)',cursor:'pointer',whiteSpace:'nowrap'}}>Decline</button>
+              </div>
             </div>
           ))}
         </div>
@@ -236,8 +239,8 @@ function Screen02_Inbox(){
             <div className="val">22 / 25</div>
             <div style={{fontSize:11,color:'var(--ink-3)',marginTop:4}}>88% · up from 81% last week</div>
           </div>
-          <div className="tile">
-            <div className="lbl">Instant‑confirm coverage</div>
+          <div className="tile" title="Shows as 'Instant confirm' to customers">
+            <div className="lbl">Auto‑accept coverage</div>
             <div className="val">68%</div>
             <div style={{fontSize:11,color:'var(--ink-3)',marginTop:4}}>Auto‑accept 9 of the 14 services</div>
           </div>
@@ -259,15 +262,15 @@ function Screen03_RequestDetail(){
       active="inbox"
       title="Requests"
       titleTh="คำขอจองใหม่"
-      stats={[{k:'Awaiting', v:'3'},{k:'Avg response', v:'18 min'}]}
+      stats={[{k:'Awaiting', v:'3'},{k:'Avg response', v:'18m'}]}
       topActions={<button className="btn secondary btn-sm">Auto‑accept rules →</button>}
     >
       <div style={{padding:14,height:'100%',overflow:'hidden',display:'flex',flexDirection:'column',gap:12,position:'relative',filter:'saturate(.8)'}}>
         <div className="req-list" style={{opacity:.45,pointerEvents:'none'}}>
           <div className="req-row selected">
             <div className="when">14:30<span>Today</span></div>
-            <div className="who"><div className="av">D</div><div className="meta"><b>Praew S.</b><span>Dash · Goldie 3y</span></div></div>
-            <div className="svc"><b>Full groom</b><span>75 min</span></div>
+            <div className="who"><div className="av">D</div><div className="meta"><b>Praew S.</b><span>Dash · Welsh Corgi 3y</span></div></div>
+            <div className="svc"><b>Full groom</b><span>75m</span></div>
             <div><div className="groomer-pill"><span className="d"/><span>Nan</span></div></div>
             <div className="countdown"><b>23m left</b><div className="bar"><i style={{width:'38%'}}/></div></div>
             <div className="chev"><MChevR/></div>
@@ -275,7 +278,7 @@ function Screen03_RequestDetail(){
           <div className="req-row">
             <div className="when">17:15<span>Today</span></div>
             <div className="who"><div className="av">G</div><div className="meta"><b>Jun W.</b><span>Ginger · Beagle 5y</span></div></div>
-            <div className="svc"><b>Full groom</b><span>60 min</span></div>
+            <div className="svc"><b>Full groom</b><span>60m</span></div>
             <div><div className="groomer-pill"><span className="d"/><span>Tee</span></div></div>
             <div className="countdown"><b>48m left</b><div className="bar"><i style={{width:'80%'}}/></div></div>
             <div className="chev"><MChevR/></div>
@@ -287,7 +290,7 @@ function Screen03_RequestDetail(){
           <div className="ds-head">
             <div className="ds-close"><MX/></div>
             <div style={{flex:1}}>
-              <div className="eyebrow" style={{fontSize:9}}>Request R‑4481 · Tue 12 · 14:30</div>
+              <div className="eyebrow" style={{fontSize:9}}>Booking BKG-41A7 · Tue 12 · 14:30</div>
               <h3>Dash at Aroon <span className="th" style={{fontFamily:'var(--thai)',fontStyle:'italic',color:'var(--ink-3)',fontWeight:400,fontSize:14}}>แดช</span></h3>
             </div>
             <span className="status s-pend-m">Pending</span>
@@ -325,7 +328,7 @@ function Screen03_RequestDetail(){
                 <div style={{width:40,height:40,borderRadius:'50%',background:'var(--primary-wash)',color:'var(--primary-ink)',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:600}}>D</div>
                 <div style={{flex:1}}>
                   <div style={{fontWeight:500,fontSize:14}}>Dash</div>
-                  <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>Golden Retriever · 3y · 28kg · F spayed</div>
+                  <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>Welsh Corgi · 3y · 12.4kg · F spayed</div>
                 </div>
               </div>
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,fontSize:12}}>
@@ -369,7 +372,7 @@ function Screen03_RequestDetail(){
           </div>
 
           <div className="ds-foot">
-            <button className="btn secondary btn-sm" style={{flex:1}}>Decline</button>
+            <button className="btn danger btn-sm" style={{flex:1}} title="Decline this booking — Praew will be routed to an alternative shop">Decline</button>
             <button className="btn secondary btn-sm" style={{flex:1.2}}>Suggest another time</button>
             <button className="btn primary btn-sm" style={{flex:1.4}}>Accept · 14:30</button>
           </div>

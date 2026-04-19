@@ -4,7 +4,7 @@
 // ─── 04 · Arrivals / check-in ────────────────────────────────
 function Screen04_Arrivals(){
   const due = [
-    {time:'14:30', owner:'Praew', pet:'Dash · Goldie',     groomer:'Nan',  status:'due'},
+    {time:'14:30', owner:'Praew', pet:'Dash · Welsh Corgi', groomer:'Nan',  status:'due'},
     {time:'14:45', owner:'Aom',   pet:'Biscuit · Cocker',  groomer:'Pim',  status:'arrived'},
     {time:'15:00', owner:'Boon',  pet:'Tofu · Shiba',      groomer:'Tee',  status:'due'},
     {time:'15:15', owner:'Mai',   pet:'Oreo · Boston',     groomer:'Jib',  status:'due'},
@@ -83,9 +83,9 @@ function Screen04_Arrivals(){
               <div style={{width:36,height:36,borderRadius:'50%',background:'var(--ok-wash)',color:'var(--ok)',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:600}}>B</div>
               <div style={{flex:1}}>
                 <div style={{fontWeight:500,fontSize:13}}>Aom &amp; Biscuit</div>
-                <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>14:41 · 11 min early</div>
+                <div style={{fontSize:11,color:'var(--ink-3)',fontFamily:'var(--mono)'}}>14:41 · 11m early</div>
               </div>
-              <button className="btn primary btn-sm">Start</button>
+              <span className="status s-arrived" style={{fontSize:11}}>Ready to start</span>
             </div>
           </div>
         </div>
@@ -212,7 +212,7 @@ function Screen06_Groomers(){
     <Shell
       active="people"
       title="Groomers"
-      titleTh="พนักงาน"
+      titleTh="กรูมเมอร์"
       stats={[{k:'On today',v:'4'},{k:'Utilisation',v:'77%'},{k:'Revenue',v:'฿9,760'}]}
       topActions={<><button className="btn secondary btn-sm">Set next week</button><button className="btn primary btn-sm"><MPlus/>Add groomer</button></>}
     >
@@ -372,7 +372,7 @@ function Screen08_Payouts(){
   return (
     <Shell
       active="money"
-      title="Money"
+      title="Payouts"
       titleTh="การเงิน & รีวิว"
       stats={[{k:'This month', v:'฿186,420'},{k:'Next payout', v:'Fri 15'},{k:'Rating', v:'4.9 ★'}]}
       topActions={<><button className="btn secondary btn-sm">Download statement</button><button className="btn primary btn-sm">Payout settings</button></>}
@@ -465,7 +465,7 @@ function Screen08_Payouts(){
             {stars:5, who:'Jun', when:'5d ago', svc:'Puppy first cut',
               text:'First time. Kritt let Mochi sniff everything before starting. Pictures sent over LINE after. Worth the ฿450.'},
             {stars:4, who:'Aom', when:'1w ago', svc:'Full groom',
-              text:'Good result. Had to wait 10 min past my slot — Tee explained and offered water. Would rebook.'},
+              text:'Good result. Had to wait 10m past my slot — Tee explained and offered water. Would rebook.'},
           ].map((r,i)=>(
             <div key={i} className="card" style={{padding:14}}>
               <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
