@@ -2,8 +2,8 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 
-import { Card, MobilePage, PageTitle, PawpointButton, PetBadge, SectionHeader, StatusBadge, TopIconButton, VisitRow } from '@/features/customer/ui';
-import { pawpointColors, pawpointFonts, pawpointSpacing } from '@/features/customer/design';
+import { Card, MobilePage, PageTitle, PawpointButton, PetBadge, SectionHeader, SegmentedControl, StatusBadge, TopIconButton, VisitRow } from '@/features/customer/ui';
+import { pawpointColors, pawpointFonts, pawpointSpacing, pawpointTypography } from '@/features/customer/design';
 import { useCustomerApp } from '@/features/customer/provider';
 
 export default function VisitsTabScreen() {
@@ -22,29 +22,14 @@ export default function VisitsTabScreen() {
         <TopIconButton label="⌕" />
       </View>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          alignSelf: 'flex-start',
-          padding: 4,
-          borderRadius: 999,
-          backgroundColor: pawpointColors.paperMuted,
-        }}>
-        {[
-          ['upcoming', 'Upcoming'],
-          ['past', 'Past'],
-        ].map(([value, label]) => {
-          const active = selectedTab === value;
-          return (
-            <PawpointButton
-              key={value}
-              label={label}
-              variant={active ? 'secondary' : 'ghost'}
-              onPress={() => setSelectedTab(value as 'upcoming' | 'past')}
-            />
-          );
-        })}
-      </View>
+      <SegmentedControl
+        value={selectedTab}
+        onChange={(nextValue) => setSelectedTab(nextValue as 'upcoming' | 'past')}
+        options={[
+          { value: 'upcoming', label: 'Upcoming' },
+          { value: 'past', label: 'Past' },
+        ]}
+      />
 
       {selectedTab === 'upcoming' ? (
         <>
@@ -53,10 +38,10 @@ export default function VisitsTabScreen() {
             <Card key={visit.id} tone="primary">
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: pawpointSpacing.sm }}>
                 <View style={{ flex: 1, gap: 4 }}>
-                  <Text selectable style={{ fontFamily: pawpointFonts.serif, fontSize: 22, color: pawpointColors.ink }}>
+                  <Text selectable style={{ fontFamily: pawpointFonts.serif, fontSize: 20, color: pawpointColors.ink }}>
                     {visit.title}
                   </Text>
-                  <Text selectable style={{ fontFamily: pawpointFonts.sans, fontSize: 12, color: pawpointColors.inkSoft }}>
+                  <Text selectable style={{ fontFamily: pawpointFonts.sans, fontSize: pawpointTypography.textXs, color: pawpointColors.inkSoft }}>
                     {visit.subtitle}
                   </Text>
                 </View>
@@ -113,10 +98,10 @@ export default function VisitsTabScreen() {
       )}
 
       <Card tone="soft">
-        <Text selectable style={{ fontFamily: pawpointFonts.mono, fontSize: 10, letterSpacing: 1.4, textTransform: 'uppercase', color: pawpointColors.inkSoft }}>
+        <Text selectable style={{ fontFamily: pawpointFonts.mono, fontSize: pawpointTypography.textXs, letterSpacing: 1.4, textTransform: 'uppercase', color: pawpointColors.inkSoft }}>
           Post-visit
         </Text>
-        <Text selectable style={{ fontFamily: pawpointFonts.serif, fontSize: 24, color: pawpointColors.ink }}>
+        <Text selectable style={{ fontFamily: pawpointFonts.serif, fontSize: pawpointTypography.textLg, color: pawpointColors.ink }}>
           Turn the rating moment into the next booking.
         </Text>
         <PawpointButton label="Open rating flow" onPress={() => router.push('/rate')} />

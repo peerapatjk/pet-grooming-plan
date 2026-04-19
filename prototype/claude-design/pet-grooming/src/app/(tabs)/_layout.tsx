@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { Text, View } from 'react-native';
 
-import { pawpointColors, pawpointFonts } from '@/features/customer/design';
+import { pawpointColors, pawpointFonts, pawpointShadow } from '@/features/customer/design';
 
 function TabIcon({ active }: { active: boolean }) {
   return (
@@ -9,8 +9,8 @@ function TabIcon({ active }: { active: boolean }) {
       style={{
         width: 22,
         height: 22,
-        borderRadius: 6,
-        backgroundColor: active ? pawpointColors.primary : pawpointColors.paperStrong,
+        borderRadius: 5,
+        backgroundColor: active ? pawpointColors.primary : pawpointColors.paper3,
       }}
     />
   );
@@ -25,16 +25,17 @@ export default function TabsLayout() {
         tabBarInactiveTintColor: pawpointColors.inkSoft,
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          backgroundColor: pawpointColors.paperRaised,
-          borderTopColor: pawpointColors.paperStrong,
-          height: 82,
+          backgroundColor: pawpointColors.paper,
+          borderTopColor: pawpointColors.border,
+          height: 84,
           paddingTop: 8,
-          paddingBottom: 14,
+          paddingBottom: 16,
+          boxShadow: pawpointShadow.sm,
         },
         tabBarLabelStyle: {
-          fontFamily: pawpointFonts.mono,
+          fontFamily: pawpointFonts.monoMedium,
           fontSize: 10,
-          letterSpacing: 1,
+          letterSpacing: 1.1,
           textTransform: 'uppercase',
         },
       }}>
@@ -54,9 +55,9 @@ export default function TabsLayout() {
               <Text
                 style={{
                   color,
-                  fontFamily: pawpointFonts.mono,
+                  fontFamily: pawpointFonts.monoMedium,
                   fontSize: 10,
-                  letterSpacing: 1,
+                  letterSpacing: 1.1,
                   textTransform: 'uppercase',
                 }}>
                 {title}

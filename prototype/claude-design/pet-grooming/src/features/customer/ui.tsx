@@ -2,7 +2,7 @@ import { Image } from 'expo-image';
 import { ReactNode } from 'react';
 import { Pressable, ScrollView, Text, useWindowDimensions, View } from 'react-native';
 
-import { pawpointColors, pawpointFonts, pawpointRadius, pawpointShadow, pawpointSpacing } from '@/features/customer/design';
+import { pawpointColors, pawpointFonts, pawpointRadius, pawpointShadow, pawpointSpacing, pawpointTypography } from '@/features/customer/design';
 import type { BookingSlot, Pet, Shop } from '@/features/customer/types';
 import { formatCurrency, petAccentColor } from '@/features/customer/utils';
 
@@ -16,29 +16,29 @@ export function MobilePage({
   dark?: boolean;
 }) {
   const { width } = useWindowDimensions();
-  const maxWidth = width > 720 ? 430 : undefined;
+  const maxWidth = width > 720 ? 390 : undefined;
 
   return (
-    <View style={{ flex: 1, backgroundColor: dark ? pawpointColors.ink : pawpointColors.paper }}>
+    <View style={{ flex: 1, backgroundColor: dark ? pawpointColors.paperDark : pawpointColors.paper }}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={{
-          paddingHorizontal: pawpointSpacing.lg,
-          paddingTop: pawpointSpacing.md,
-          paddingBottom: pawpointSpacing.xxl,
+          paddingHorizontal: pawpointSpacing.space5,
+          paddingTop: pawpointSpacing.space4,
+          paddingBottom: pawpointSpacing.space8,
           alignItems: 'center',
         }}>
-        <View style={{ width: '100%', maxWidth, gap: pawpointSpacing.md }}>{children}</View>
+        <View style={{ width: '100%', maxWidth, gap: pawpointSpacing.space4 }}>{children}</View>
       </ScrollView>
       {bottomBar ? (
         <View
           style={{
             borderTopWidth: 1,
-            borderTopColor: dark ? 'rgba(255,255,255,0.08)' : pawpointColors.paperStrong,
-            backgroundColor: dark ? '#14161c' : pawpointColors.paper,
-            paddingHorizontal: pawpointSpacing.lg,
-            paddingTop: pawpointSpacing.sm,
-            paddingBottom: pawpointSpacing.xl,
+            borderTopColor: dark ? 'rgba(255,255,255,0.1)' : pawpointColors.border,
+            backgroundColor: dark ? pawpointColors.paperDark : pawpointColors.paper,
+            paddingHorizontal: pawpointSpacing.space5,
+            paddingTop: pawpointSpacing.space3,
+            paddingBottom: pawpointSpacing.space6,
             alignItems: 'center',
           }}>
           <View style={{ width: '100%', maxWidth }}>{bottomBar}</View>
@@ -59,6 +59,7 @@ export function BrandMark({ size = 64 }: { size?: number }) {
         overflow: 'hidden',
         alignItems: 'center',
         justifyContent: 'center',
+        boxShadow: pawpointShadow.soft,
       }}>
       <View
         style={{
@@ -66,8 +67,7 @@ export function BrandMark({ size = 64 }: { size?: number }) {
           height: size,
           borderRadius: size,
           backgroundColor: pawpointColors.accent,
-          transform: [{ translateX: size * 0.1 }, { translateY: size * -0.08 }],
-          opacity: 0.88,
+          transform: [{ translateX: size * 0.08 }, { translateY: size * -0.1 }],
         }}
       />
       <View
@@ -79,6 +79,15 @@ export function BrandMark({ size = 64 }: { size?: number }) {
           backgroundColor: pawpointColors.paperRaised,
           right: size * 0.18,
           bottom: size * 0.18,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          inset: 0,
+          borderRadius: size,
+          borderWidth: 1,
+          borderColor: 'rgba(0,0,0,0.14)',
         }}
       />
     </View>
@@ -97,27 +106,36 @@ export function PageTitle({
   dark?: boolean;
 }) {
   return (
-    <View style={{ gap: pawpointSpacing.xs }}>
+    <View style={{ gap: pawpointSpacing.space2 }}>
       {eyebrow ? (
-        <Text
-          selectable
-          style={{
-            fontFamily: pawpointFonts.mono,
-            fontSize: 11,
-            letterSpacing: 1.6,
-            textTransform: 'uppercase',
-            color: dark ? 'rgba(255,255,255,0.72)' : pawpointColors.inkSoft,
-          }}>
-          {eyebrow}
-        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+          <View
+            style={{
+              width: 18,
+              height: 1,
+              backgroundColor: dark ? 'rgba(255,255,255,0.42)' : pawpointColors.inkSoft,
+            }}
+          />
+          <Text
+            selectable
+            style={{
+              fontFamily: pawpointFonts.mono,
+              fontSize: pawpointTypography.textXs,
+              letterSpacing: 1.6,
+              textTransform: 'uppercase',
+              color: dark ? 'rgba(255,255,255,0.72)' : pawpointColors.inkSoft,
+            }}>
+            {eyebrow}
+          </Text>
+        </View>
       ) : null}
       <Text
         selectable
         style={{
           fontFamily: pawpointFonts.serif,
-          fontSize: 30,
-          lineHeight: 32,
-          letterSpacing: -1.1,
+          fontSize: pawpointTypography.textXl,
+          lineHeight: 28,
+          letterSpacing: -0.7,
           color: dark ? pawpointColors.paperRaised : pawpointColors.ink,
         }}>
         {title}
@@ -127,8 +145,8 @@ export function PageTitle({
           selectable
           style={{
             fontFamily: pawpointFonts.sans,
-            fontSize: 14,
-            lineHeight: 22,
+            fontSize: pawpointTypography.textSm,
+            lineHeight: 20,
             color: dark ? 'rgba(255,255,255,0.76)' : pawpointColors.inkMuted,
           }}>
           {subtitle}
@@ -156,15 +174,15 @@ export function TopIconButton({
             height: 36,
             borderRadius: 999,
             borderWidth: 1,
-            borderColor: inverted ? 'rgba(255,255,255,0.18)' : pawpointColors.paperStrong,
-            backgroundColor: inverted ? 'rgba(255,255,255,0.08)' : pawpointColors.paperMuted,
+            borderColor: inverted ? 'rgba(255,255,255,0.2)' : pawpointColors.border,
+            backgroundColor: inverted ? 'rgba(255,255,255,0.08)' : pawpointColors.paper2,
             alignItems: 'center',
             justifyContent: 'center',
             opacity: pressed ? 0.75 : 1,
           }}>
           <Text
             style={{
-              fontFamily: pawpointFonts.sans,
+              fontFamily: pawpointFonts.sansMedium,
               fontSize: 15,
               color: inverted ? pawpointColors.paperRaised : pawpointColors.inkMuted,
             }}>
@@ -189,28 +207,29 @@ export function Card({
     tone === 'primary'
       ? pawpointColors.primaryWash
       : tone === 'soft'
-        ? pawpointColors.paperMuted
+        ? pawpointColors.paper2
         : tone === 'dark'
-          ? '#14161c'
+          ? pawpointColors.paperDark
           : pawpointColors.paperRaised;
 
   const borderColor =
     tone === 'primary'
-      ? pawpointColors.primary
+      ? pawpointColors.border
       : tone === 'dark'
         ? 'rgba(255,255,255,0.08)'
-        : pawpointColors.paperStrong;
+        : pawpointColors.border;
 
   return (
     <View
       style={{
-        borderRadius: pawpointRadius.md,
+        borderRadius: pawpointRadius.lg,
         borderCurve: 'continuous',
         borderWidth: 1,
         borderColor,
         backgroundColor,
-        padding: compact ? pawpointSpacing.md : pawpointSpacing.lg,
-        gap: pawpointSpacing.sm,
+        padding: compact ? pawpointSpacing.space4 : pawpointSpacing.space4,
+        gap: pawpointSpacing.space3,
+        boxShadow: tone === 'dark' ? undefined : pawpointShadow.sm,
       }}>
       {children}
     </View>
@@ -232,7 +251,7 @@ export function SectionHeader({
         selectable
         style={{
           fontFamily: pawpointFonts.mono,
-          fontSize: 11,
+          fontSize: pawpointTypography.textXs,
           letterSpacing: 1.6,
           textTransform: 'uppercase',
           color: pawpointColors.inkSoft,
@@ -246,7 +265,7 @@ export function SectionHeader({
               selectable
               style={{
                 fontFamily: pawpointFonts.sans,
-                fontSize: 12,
+                fontSize: pawpointTypography.textSm,
                 color: pawpointColors.primaryInk,
                 opacity: pressed ? 0.75 : 1,
               }}>
@@ -293,8 +312,8 @@ export function PawpointButton({
         <View
           style={{
             width: fullWidth ? '100%' : undefined,
-            paddingHorizontal: pawpointSpacing.lg,
-            paddingVertical: pawpointSpacing.md,
+            paddingHorizontal: variant === 'ghost' ? pawpointSpacing.space1 : 18,
+            paddingVertical: variant === 'ghost' ? pawpointSpacing.space1 : 10,
             borderRadius: pawpointRadius.pill,
             borderCurve: 'continuous',
             borderWidth: 1,
@@ -303,13 +322,14 @@ export function PawpointButton({
             alignItems: 'center',
             justifyContent: 'center',
             opacity: pressed ? 0.8 : 1,
+            boxShadow: variant === 'primary' || variant === 'accent' ? 'inset 0 0 0 1px rgba(0,0,0,0.16)' : undefined,
           }}>
           <Text
             selectable
             style={{
-              fontFamily: pawpointFonts.sans,
-              fontSize: 14,
-              fontWeight: 600,
+              fontFamily: pawpointFonts.sansMedium,
+              fontSize: pawpointTypography.textSm,
+              letterSpacing: -0.1,
               color,
             }}>
             {label}
@@ -348,7 +368,7 @@ export function StatusBadge({
         alignSelf: 'flex-start',
         paddingHorizontal: compact ? 8 : 10,
         paddingVertical: compact ? 4 : 6,
-        borderRadius: 10,
+        borderRadius: 8,
         backgroundColor: toneStyle.backgroundColor,
       }}>
       <View
@@ -362,7 +382,7 @@ export function StatusBadge({
       <Text
         selectable
         style={{
-          fontFamily: pawpointFonts.mono,
+          fontFamily: pawpointFonts.monoMedium,
           fontSize: compact ? 9 : 11,
           letterSpacing: 0.8,
           textTransform: 'uppercase',
@@ -386,8 +406,11 @@ export function AppChip({
   return (
     <View
       style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
         paddingHorizontal: 10,
-        paddingVertical: 6,
+        paddingVertical: 5,
         borderRadius: pawpointRadius.pill,
         backgroundColor: active
           ? tone === 'accent'
@@ -399,12 +422,24 @@ export function AppChip({
           ? tone === 'accent'
             ? pawpointColors.accent
             : pawpointColors.primary
-          : pawpointColors.paperStrong,
+          : pawpointColors.border,
       }}>
+      <View
+        style={{
+          width: 6,
+          height: 6,
+          borderRadius: 999,
+          backgroundColor: active
+            ? tone === 'accent'
+              ? pawpointColors.accent
+              : pawpointColors.primary
+            : pawpointColors.inkSoft,
+        }}
+      />
       <Text
         selectable
         style={{
-          fontFamily: pawpointFonts.sans,
+          fontFamily: pawpointFonts.sansMedium,
           fontSize: 12,
           color: active
             ? tone === 'accent'
@@ -441,8 +476,15 @@ export function InfoBanner({
         gap: pawpointSpacing.sm,
         borderRadius: pawpointRadius.md,
         borderCurve: 'continuous',
+        borderWidth: 1,
+        borderColor:
+          tone === 'info'
+            ? 'rgba(85,121,183,0.2)'
+            : tone === 'ok'
+              ? 'rgba(52,141,102,0.2)'
+              : 'rgba(191,122,60,0.2)',
         backgroundColor: styles.backgroundColor,
-        padding: pawpointSpacing.md,
+        padding: pawpointSpacing.space4,
       }}>
       <View
         style={{
@@ -459,9 +501,8 @@ export function InfoBanner({
         <Text
           selectable
           style={{
-            fontFamily: pawpointFonts.sans,
+            fontFamily: pawpointFonts.sansMedium,
             fontSize: 13,
-            fontWeight: 600,
             color: pawpointColors.ink,
           }}>
           {title}
@@ -527,12 +568,12 @@ export function ShopCard({
         <View
           style={{
             flexDirection: 'row',
-            gap: pawpointSpacing.sm,
-            padding: pawpointSpacing.sm,
-            borderRadius: pawpointRadius.md,
+            gap: pawpointSpacing.space3,
+            padding: pawpointSpacing.space3,
+            borderRadius: pawpointRadius.lg,
             borderCurve: 'continuous',
             borderWidth: 1,
-            borderColor: highlighted ? pawpointColors.primary : pawpointColors.paperStrong,
+            borderColor: highlighted ? pawpointColors.primary : pawpointColors.border,
             backgroundColor: highlighted ? pawpointColors.primaryWash : pawpointColors.paperRaised,
             opacity: pressed ? 0.9 : 1,
           }}>
@@ -542,6 +583,8 @@ export function ShopCard({
               width: 76,
               height: 76,
               borderRadius: 12,
+              borderWidth: 1,
+              borderColor: pawpointColors.border,
             }}
             contentFit="cover"
           />
@@ -551,8 +594,8 @@ export function ShopCard({
                 selectable
                 style={{
                   fontFamily: pawpointFonts.serif,
-                  fontSize: 18,
-                  lineHeight: 20,
+                  fontSize: pawpointTypography.textMd,
+                  lineHeight: 18,
                   color: pawpointColors.ink,
                 }}>
                 {shop.name}
@@ -561,7 +604,7 @@ export function ShopCard({
                 selectable
                 style={{
                   fontFamily: pawpointFonts.sans,
-                  fontSize: 11,
+                  fontSize: pawpointTypography.textXs,
                   color: pawpointColors.inkSoft,
                 }}>
                 ★ {shop.rating.toFixed(1)} · {shop.distanceKm.toFixed(1)} km · {shop.area}
@@ -624,7 +667,7 @@ export function SlotPill({ slot, selected = false }: { slot: BookingSlot; select
       <Text
         selectable
         style={{
-          fontFamily: pawpointFonts.mono,
+          fontFamily: pawpointFonts.monoMedium,
           fontSize: 12,
           color: textColor,
           fontVariant: ['tabular-nums'],
@@ -653,6 +696,7 @@ export function HeroCover({ shop }: { shop: Shop }) {
         borderRadius: pawpointRadius.lg,
         overflow: 'hidden',
         backgroundColor: pawpointColors.primary,
+        boxShadow: pawpointShadow.card,
       }}>
       <Image source={shop.heroImage} style={{ position: 'absolute', inset: 0 }} contentFit="cover" />
       <View style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(24, 21, 18, 0.34)' }} />
@@ -682,20 +726,20 @@ export function HeroCover({ shop }: { shop: Shop }) {
           <Text
             selectable
             style={{
-              fontFamily: pawpointFonts.serif,
-              fontSize: 34,
-              lineHeight: 36,
-              letterSpacing: -1.2,
-              color: pawpointColors.paperRaised,
-            }}>
+          fontFamily: pawpointFonts.serif,
+          fontSize: 44,
+          lineHeight: 42,
+          letterSpacing: -1.4,
+          color: pawpointColors.paperRaised,
+        }}>
             {shop.name}
           </Text>
           <Text
             selectable
             style={{
-              fontFamily: pawpointFonts.sans,
-              fontSize: 13,
-              lineHeight: 20,
+            fontFamily: pawpointFonts.sans,
+            fontSize: 13,
+            lineHeight: 20,
               color: 'rgba(255,255,255,0.84)',
             }}>
             ★ {shop.rating.toFixed(1)} · {shop.reviewCount} reviews · {shop.languages.join(' · ')}
@@ -716,13 +760,13 @@ export function BottomActionBar({
   button: ReactNode;
 }) {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', gap: pawpointSpacing.sm }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: pawpointSpacing.space3 }}>
       <View style={{ flex: 1, gap: 4 }}>
         <Text
           selectable
           style={{
             fontFamily: pawpointFonts.mono,
-            fontSize: 10,
+            fontSize: pawpointTypography.textXs,
             letterSpacing: 1.6,
             textTransform: 'uppercase',
             color: pawpointColors.inkSoft,
@@ -734,9 +778,9 @@ export function BottomActionBar({
             selectable
             style={{
               fontFamily: pawpointFonts.serif,
-              fontSize: 22,
-              lineHeight: 24,
-              letterSpacing: -0.8,
+              fontSize: pawpointTypography.textLg,
+              lineHeight: 22,
+              letterSpacing: -0.4,
               color: pawpointColors.ink,
             }}>
             {value}
@@ -756,16 +800,16 @@ export function KVRow({ label, value, muted = false }: { label: string; value: s
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         gap: pawpointSpacing.md,
-        paddingVertical: pawpointSpacing.sm,
+        paddingVertical: pawpointSpacing.space3,
         borderTopWidth: 1,
-        borderTopColor: pawpointColors.paperStrong,
+        borderTopColor: pawpointColors.border,
       }}>
       <Text
         selectable
         style={{
           flex: 1,
           fontFamily: pawpointFonts.sans,
-          fontSize: 13,
+          fontSize: pawpointTypography.textSm,
           color: pawpointColors.inkMuted,
         }}>
         {label}
@@ -775,8 +819,8 @@ export function KVRow({ label, value, muted = false }: { label: string; value: s
         style={{
           flex: 1,
           textAlign: 'right',
-          fontFamily: pawpointFonts.sans,
-          fontSize: 13,
+          fontFamily: muted ? pawpointFonts.sans : pawpointFonts.sansMedium,
+          fontSize: pawpointTypography.textSm,
           color: muted ? pawpointColors.inkSoft : pawpointColors.ink,
         }}>
         {value}
@@ -802,7 +846,7 @@ export function TimelineStep({
         : pawpointColors.paperStrong;
 
   return (
-    <View style={{ flexDirection: 'row', gap: pawpointSpacing.sm }}>
+    <View style={{ flexDirection: 'row', gap: pawpointSpacing.space3 }}>
       <View style={{ alignItems: 'center', width: 12 }}>
         <View
           style={{
@@ -814,13 +858,12 @@ export function TimelineStep({
           }}
         />
       </View>
-      <View style={{ flex: 1, paddingBottom: pawpointSpacing.md }}>
+      <View style={{ flex: 1, paddingBottom: pawpointSpacing.space3 }}>
         <Text
           selectable
           style={{
-            fontFamily: pawpointFonts.sans,
-            fontSize: 14,
-            fontWeight: 600,
+            fontFamily: pawpointFonts.sansMedium,
+            fontSize: pawpointTypography.textSm,
             color: pawpointColors.ink,
           }}>
           {title}
@@ -830,7 +873,7 @@ export function TimelineStep({
             selectable
             style={{
               fontFamily: pawpointFonts.mono,
-              fontSize: 11,
+              fontSize: pawpointTypography.textXs,
               letterSpacing: 0.6,
               color: pawpointColors.inkSoft,
             }}>
@@ -864,12 +907,12 @@ export function VisitRow({
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            gap: pawpointSpacing.sm,
-            padding: pawpointSpacing.md,
-            borderRadius: pawpointRadius.md,
+            gap: pawpointSpacing.space3,
+            padding: pawpointSpacing.space4,
+            borderRadius: pawpointRadius.lg,
             borderCurve: 'continuous',
             borderWidth: 1,
-            borderColor: tone === 'warn' ? pawpointColors.warn : pawpointColors.paperStrong,
+            borderColor: tone === 'warn' ? pawpointColors.warn : pawpointColors.border,
             backgroundColor: tone === 'warn' ? pawpointColors.warnWash : pawpointColors.paperRaised,
             opacity: pressed ? 0.9 : 1,
           }}>
@@ -878,9 +921,8 @@ export function VisitRow({
             <Text
               selectable
               style={{
-                fontFamily: pawpointFonts.sans,
-                fontSize: 14,
-                fontWeight: 600,
+                fontFamily: pawpointFonts.sansMedium,
+                fontSize: pawpointTypography.textSm,
                 color: pawpointColors.ink,
               }}>
               {title}
@@ -889,7 +931,7 @@ export function VisitRow({
               selectable
               style={{
                 fontFamily: pawpointFonts.sans,
-                fontSize: 11,
+                fontSize: pawpointTypography.textXs,
                 color: pawpointColors.inkSoft,
               }}>
               {subtitle}
@@ -917,7 +959,7 @@ export function PriceSummary({
         selectable
         style={{
           fontFamily: pawpointFonts.mono,
-          fontSize: 10,
+          fontSize: pawpointTypography.textXs,
           letterSpacing: 1.4,
           textTransform: 'uppercase',
           color: pawpointColors.inkSoft,
@@ -928,8 +970,8 @@ export function PriceSummary({
         selectable
         style={{
           fontFamily: pawpointFonts.serif,
-          fontSize: 24,
-          lineHeight: 26,
+          fontSize: pawpointTypography.textLg,
+          lineHeight: 22,
           color: pawpointColors.ink,
         }}>
         {formatCurrency(value)}
@@ -938,11 +980,123 @@ export function PriceSummary({
         selectable
         style={{
           fontFamily: pawpointFonts.sans,
-          fontSize: 11,
+          fontSize: pawpointTypography.textXs,
           color: pawpointColors.inkSoft,
         }}>
         {caption}
       </Text>
     </Card>
+  );
+}
+
+export function SegmentedControl({
+  options,
+  value,
+  onChange,
+}: {
+  options: Array<{ value: string; label: string }>;
+  value: string;
+  onChange: (nextValue: string) => void;
+}) {
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+        padding: 3,
+        backgroundColor: pawpointColors.paper3,
+        borderRadius: pawpointRadius.pill,
+        gap: 2,
+      }}>
+      {options.map((option) => {
+        const active = option.value === value;
+
+        return (
+          <Pressable key={option.value} onPress={() => onChange(option.value)}>
+            {({ pressed }) => (
+              <View
+                style={{
+                  paddingHorizontal: 14,
+                  paddingVertical: 7,
+                  borderRadius: pawpointRadius.pill,
+                  backgroundColor: active ? pawpointColors.paperRaised : 'transparent',
+                  boxShadow: active ? pawpointShadow.sm : undefined,
+                  opacity: pressed ? 0.82 : 1,
+                }}>
+                <Text
+                  selectable
+                  style={{
+                    fontFamily: active ? pawpointFonts.sansMedium : pawpointFonts.sans,
+                    fontSize: pawpointTypography.textSm,
+                    color: active ? pawpointColors.ink : pawpointColors.inkMuted,
+                  }}>
+                  {option.label}
+                </Text>
+              </View>
+            )}
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+}
+
+export function SearchField({
+  placeholder,
+  filterLabel,
+}: {
+  placeholder: string;
+  filterLabel?: string;
+}) {
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+        paddingHorizontal: 14,
+        paddingVertical: 10,
+        backgroundColor: pawpointColors.paperRaised,
+        borderWidth: 1,
+        borderColor: pawpointColors.borderStrong,
+        borderRadius: pawpointRadius.pill,
+        boxShadow: pawpointShadow.sm,
+      }}>
+      <Text
+        selectable
+        style={{
+          fontFamily: pawpointFonts.mono,
+          fontSize: pawpointTypography.textXs,
+          color: pawpointColors.inkSoft,
+        }}>
+        ⌕
+      </Text>
+      <Text
+        selectable
+        style={{
+          flex: 1,
+          fontFamily: pawpointFonts.sans,
+          fontSize: pawpointTypography.textSm,
+          color: pawpointColors.inkSoft,
+        }}>
+        {placeholder}
+      </Text>
+      {filterLabel ? (
+        <>
+          <View style={{ width: 1, height: 16, backgroundColor: pawpointColors.border }} />
+          <Text
+            selectable
+            style={{
+              fontFamily: pawpointFonts.mono,
+              fontSize: pawpointTypography.textXs,
+              letterSpacing: 1,
+              textTransform: 'uppercase',
+              color: pawpointColors.inkSoft,
+            }}>
+            {filterLabel}
+          </Text>
+        </>
+      ) : null}
+    </View>
   );
 }

@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { ScrollView, Text, View } from 'react-native';
 
-import { AppChip, InfoBanner, MobilePage, PageTitle, SectionHeader, ShopCard } from '@/features/customer/ui';
+import { AppChip, InfoBanner, MobilePage, PageTitle, SearchField, SectionHeader, ShopCard } from '@/features/customer/ui';
 import { pawpointColors, pawpointFonts, pawpointSpacing } from '@/features/customer/design';
 import { useCustomerApp } from '@/features/customer/provider';
 
@@ -11,25 +11,7 @@ export default function BookTabScreen() {
 
   return (
     <MobilePage>
-      <View
-        style={{
-          borderRadius: 16,
-          borderWidth: 1,
-          borderColor: pawpointColors.paperStrong,
-          backgroundColor: pawpointColors.paperRaised,
-          paddingHorizontal: pawpointSpacing.md,
-          paddingVertical: pawpointSpacing.md,
-        }}>
-        <Text
-          selectable
-          style={{
-            fontFamily: pawpointFonts.sans,
-            fontSize: 14,
-            color: pawpointColors.inkSoft,
-          }}>
-          Search area, service, or groomer
-        </Text>
-      </View>
+      <SearchField placeholder="Search area, service, or groomer" filterLabel="Bangkok" />
 
       <PageTitle title="Discovery tuned for fast booking" subtitle="Search, compare, and carry the pet context into the quote and slot picker." />
 
