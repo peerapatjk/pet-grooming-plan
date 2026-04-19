@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Pawpoint Customer",
+    "slug": "pawpoint-customer",
+    "version": "1.0.0",
+    "scheme": "pawpoint-customer",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "web": {
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
