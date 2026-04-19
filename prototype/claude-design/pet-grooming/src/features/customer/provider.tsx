@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 import { customerPets, customerShops, initialVisits, languageOptions, paymentMethods, rebookSuggestion } from '@/features/customer/data';
 import type { BookingSelection, BookingStatus, JourneyBooking, LanguageId, PaymentMethod, Visit } from '@/features/customer/types';
@@ -61,33 +61,33 @@ export function CustomerAppProvider({ children }: { children: ReactNode }) {
   const [bookingCounter, setBookingCounter] = useState(0);
   const [visits, setVisits] = useState(initialVisits);
 
-  const bookingDraft = buildDraft(bookingSelection);
+  const bookingDraft = useMemo(() => buildDraft(bookingSelection), [bookingSelection]);
 
-  function setLanguage(languageId: LanguageId) {
+  const setLanguage = useCallback((languageId: LanguageId) => {
     setSelectedLanguage(languageId);
-  }
+  }, []);
 
-  function selectPet(petId: string) {
+  const selectPet = useCallback((petId: string) => {
     setActivePetId(petId);
     setBookingSelection((current) => ({
       ...current,
       petId,
     }));
-  }
+  }, []);
 
-  function setPaymentMethod(paymentMethodId: string) {
+  const setPaymentMethod = useCallback((paymentMethodId: string) => {
     setSelectedPaymentMethodId(paymentMethodId);
-  }
+  }, []);
 
-  function skipOnboarding() {
+  const skipOnboarding = useCallback(() => {
     setOnboardingComplete(true);
-  }
+  }, []);
 
-  function completeOnboarding() {
+  const completeOnboarding = useCallback(() => {
     setOnboardingComplete(true);
-  }
+  }, []);
 
-  function startShopBooking(shopId: string) {
+  const startShopBooking = useCallback((shopId: string) => {
     const shop = customerShops.find((entry) => entry.id === shopId) ?? customerShops[0];
     const firstAvailableSlot = shop.slots.find((slot) => slot.state !== 'disabled') ?? shop.slots[0];
 
@@ -103,16 +103,16 @@ export function CustomerAppProvider({ children }: { children: ReactNode }) {
           ? 'Clippers make her nervous — intro slowly.'
           : 'Puppy appointment — allow a slower introduction to the dryer.',
     });
-  }
+  }, [activePetId]);
 
-  function updateBookingSelection(partial: Partial<BookingSelection>) {
+  const updateBookingSelection = useCallback((partial: Partial<BookingSelection>) => {
     setBookingSelection((current) => ({
       ...current,
       ...partial,
     }));
-  }
+  }, []);
 
-  function commitJourney(status: BookingStatus, selection: BookingSelection, createdLabel: string) {
+  const commitJourney = useCallback((status: BookingStatus, selection: BookingSelection, createdLabel: string) => {
     const draft = buildDraft(selection);
     const journey: JourneyBooking = {
       id: `journey-${bookingCounter + 1}`,
@@ -127,14 +127,14 @@ export function CustomerAppProvider({ children }: { children: ReactNode }) {
     setVisits((current) => [visitFromJourney(journey), ...current]);
 
     return journey;
-  }
+  }, [bookingCounter]);
 
-  function finalizeBooking() {
+  const finalizeBooking = useCallback(() => {
     const status: BookingStatus = bookingDraft.slot.state === 'pending' ? 'pending' : 'confirmed';
     return commitJourney(status, bookingSelection, status === 'pending' ? 'Started 13:52 · ends 14:40' : 'Today · 14:02');
-  }
+  }, [bookingDraft.slot.state, bookingSelection, commitJourney]);
 
-  function confirmRebook() {
+  const confirmRebook = useCallback(() => {
     const selection: BookingSelection = {
       shopId: rebookSuggestion.shopId,
       serviceId: rebookSuggestion.serviceId,
@@ -150,35 +150,58 @@ export function CustomerAppProvider({ children }: { children: ReactNode }) {
 
     setBookingSelection(selection);
     return commitJourney('confirmed', selection, 'Today · 11:47');
-  }
+  }, [commitJourney]);
+
+  const contextValue = useMemo(
+    () => ({
+      onboardingComplete,
+      selectedLanguage,
+      otpCode,
+      activePetId,
+      selectedPaymentMethodId,
+      visits,
+      bookingSelection,
+      journeyBooking,
+      languages: languageOptions,
+      pets: customerPets,
+      shops: customerShops,
+      paymentOptions: paymentMethods,
+      bookingDraft,
+      setLanguage,
+      setOtpCode,
+      selectPet,
+      setPaymentMethod,
+      skipOnboarding,
+      completeOnboarding,
+      startShopBooking,
+      updateBookingSelection,
+      finalizeBooking,
+      confirmRebook,
+    }),
+    [
+      onboardingComplete,
+      selectedLanguage,
+      otpCode,
+      activePetId,
+      selectedPaymentMethodId,
+      visits,
+      bookingSelection,
+      journeyBooking,
+      bookingDraft,
+      setLanguage,
+      selectPet,
+      setPaymentMethod,
+      skipOnboarding,
+      completeOnboarding,
+      startShopBooking,
+      updateBookingSelection,
+      finalizeBooking,
+      confirmRebook,
+    ],
+  );
 
   return (
-    <CustomerAppContext.Provider
-      value={{
-        onboardingComplete,
-        selectedLanguage,
-        otpCode,
-        activePetId,
-        selectedPaymentMethodId,
-        visits,
-        bookingSelection,
-        journeyBooking,
-        languages: languageOptions,
-        pets: customerPets,
-        shops: customerShops,
-        paymentOptions: paymentMethods,
-        bookingDraft,
-        setLanguage,
-        setOtpCode,
-        selectPet,
-        setPaymentMethod,
-        skipOnboarding,
-        completeOnboarding,
-        startShopBooking,
-        updateBookingSelection,
-        finalizeBooking,
-        confirmRebook,
-      }}>
+    <CustomerAppContext.Provider value={contextValue}>
       {children}
     </CustomerAppContext.Provider>
   );
