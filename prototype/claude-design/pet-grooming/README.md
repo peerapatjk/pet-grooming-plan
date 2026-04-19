@@ -4,6 +4,19 @@ This is a **handoff bundle** from Claude Design (claude.ai/design).
 
 A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
 
+## Current implementation
+
+The customer surface is now implemented as a real Expo Router app.
+
+- App entry: `src/app/`
+- Shared customer domain/state: `src/features/customer/`
+- Run it: `npm start`
+- Web preview: `npm run web`
+- Native preview: `npm run ios` or `npm run android`
+- Static handoff page: `project/Customer App.html`
+
+The legacy static prototype files in `project/customer/` still exist as design references, but they are no longer the runtime source of truth for the customer app.
+
 ## What you should do — IMPORTANT
 
 **Read `pet-grooming/project/Index.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.

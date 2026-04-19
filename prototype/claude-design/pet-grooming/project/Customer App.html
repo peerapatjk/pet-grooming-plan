@@ -3,82 +3,218 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Pawpoint — Customer app (mobile prototype)</title>
+<title>Pawpoint — Customer App now runs in Expo</title>
 <link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="shared/pawpoint-fonts.css"/>
 <link rel="stylesheet" href="shared/pawpoint-tokens.css"/>
-<link rel="stylesheet" href="customer/customer.css?v=2"/>
 <style>
-  body{background:#f0eee9}
-  .canvas-head{padding:48px 60px 8px;max-width:1800px;display:flex;flex-direction:column;gap:14px}
-  .canvas-head .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
-  .canvas-head h1{font-family:var(--serif);font-size:58px;letter-spacing:-0.03em;font-weight:500;line-height:1.02;max-width:22ch}
-  .canvas-head h1 em{font-style:italic;color:var(--primary);font-weight:400}
-  .canvas-head p{font-size:16px;color:var(--ink-2);max-width:70ch;line-height:1.55}
-  .canvas-head .facts{display:flex;gap:28px;flex-wrap:wrap;padding-top:8px;border-top:1px dashed var(--border);margin-top:6px;padding-top:18px}
-  .canvas-head .facts div{display:flex;flex-direction:column;gap:2px}
-  .canvas-head .facts b{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.015em}
-  .canvas-head .facts span{font-size:11px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-  .flow-band{
-    padding:36px 60px 60px;position:relative;
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 14% 12%, color-mix(in oklab, var(--accent-wash) 82%, white) 0, transparent 24%),
+      radial-gradient(circle at 84% 16%, color-mix(in oklab, var(--primary-wash) 84%, white) 0, transparent 28%),
+      var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
   }
-  .flow-band h2{font-family:var(--serif);font-weight:500;font-size:36px;letter-spacing:-0.02em;line-height:1.05}
-  .flow-band h2 em{font-style:italic;color:var(--primary);font-weight:400}
-  .flow-band .intro{display:flex;gap:56px;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap}
-  .flow-band .intro .lede{max-width:60ch;color:var(--ink-2);font-size:15px;line-height:1.6}
-  .flow-band .flow-num{font-family:var(--mono);font-size:12px;color:var(--accent-ink);letter-spacing:.16em;text-transform:uppercase}
-  .flow-band .rail{display:flex;gap:40px;align-items:flex-start;overflow-x:auto;padding:10px 4px 28px;scroll-snap-type:x mandatory}
-  .flow-band .rail::-webkit-scrollbar{height:8px}
-  .flow-band .rail::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px}
-  .flow-band .rail > *{scroll-snap-align:start}
-  .flow-band + .flow-band{border-top:1px solid var(--border)}
-  .flow-band.stripe{background:
-    linear-gradient(180deg, color-mix(in oklab, var(--primary-wash) 55%, transparent), transparent 65%),
-    var(--paper)
+  .page{
+    width:min(1120px,calc(100% - 48px));
+    margin:0 auto;
+    padding:48px 0 72px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
   }
-  .flow-band.stripe-accent{background:
-    linear-gradient(180deg, color-mix(in oklab, var(--accent-wash) 70%, transparent), transparent 65%),
-    var(--paper)
+  .hero{
+    padding:34px;
+    border-radius:28px;
+    background:color-mix(in oklab, var(--paper) 84%, white);
+    border:1px solid rgba(255,255,255,.82);
+    box-shadow:0 24px 60px rgba(18,22,30,.08);
+    overflow:hidden;
+    position:relative;
   }
-  .flow-band.dark{background:var(--ink);color:var(--paper)}
-  .flow-band.dark .intro .lede{color:rgba(255,255,255,.7)}
-  .flow-band.dark .flow-num{color:var(--accent)}
-  .anno-card{
-    max-width:none;padding:16px;border:1px dashed color-mix(in oklab, var(--accent) 55%, transparent);
-    background:color-mix(in oklab, var(--accent-wash) 55%, transparent);
-    border-radius:2px;color:var(--ink);
-    font-size:13px;line-height:1.55;
+  .hero::before{
+    content:"";
+    position:absolute;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    background:color-mix(in oklab, var(--accent) 18%, transparent);
+    top:-70px;
+    right:-70px;
   }
-  .anno-card h5{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px}
-  .anno-card b{font-family:var(--serif);font-size:16px;font-weight:500;letter-spacing:-0.01em;display:block;margin-bottom:4px;color:var(--ink)}
-  .anno-card p + p{margin-top:8px}
-  .flow-band.dark .anno-card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.8)}
-  .flow-band.dark .anno-card b{color:#fff}
-  .foot{padding:36px 60px 80px;color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
-  .foot b{color:var(--ink-2)}
+  .hero::after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:color-mix(in oklab, var(--primary) 12%, transparent);
+    left:-40px;
+    bottom:-90px;
+  }
+  .hero > *{position:relative;z-index:1}
+  .kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--accent-ink);
+    margin-bottom:18px;
+  }
+  h1{
+    margin:0;
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:56px;
+    line-height:.98;
+    letter-spacing:-.04em;
+    max-width:11ch;
+  }
+  h1 em{font-style:italic;color:var(--primary);font-weight:400}
+  .lede{
+    margin-top:18px;
+    max-width:64ch;
+    font-size:16px;
+    line-height:1.65;
+    color:var(--ink-2);
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+  }
+  .card{
+    padding:22px;
+    border-radius:20px;
+    background:var(--paper-warm);
+    border:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .card h2{
+    margin:0;
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:28px;
+    letter-spacing:-.02em;
+  }
+  .card p{
+    margin:0;
+    color:var(--ink-2);
+    font-size:14px;
+    line-height:1.6;
+  }
+  .steps{
+    margin:0;
+    padding-left:18px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    color:var(--ink-2);
+    font-size:14px;
+    line-height:1.55;
+  }
+  code{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--primary-ink);
+  }
+  .route-list{
+    display:grid;
+    gap:10px;
+  }
+  .route{
+    padding:12px 14px;
+    border-radius:14px;
+    background:var(--paper);
+    border:1px solid var(--border);
+  }
+  .route b{
+    display:block;
+    margin-bottom:4px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+  }
+  .route span{
+    display:block;
+    font-family:var(--serif);
+    font-size:18px;
+    font-weight:500;
+    letter-spacing:-.015em;
+  }
+  .foot{
+    padding-top:8px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+  }
+  @media (max-width: 820px){
+    .page{width:min(100% - 32px,680px);padding-top:32px}
+    .grid{grid-template-columns:1fr}
+    h1{font-size:42px}
+  }
 </style>
 </head>
 <body>
+  <main class="page">
+    <section class="hero">
+      <div class="kicker">Pawpoint Customer · Expo Router implementation</div>
+      <h1>The customer app now runs as a real <em>Expo</em> application.</h1>
+      <p class="lede">
+        This file is no longer the runtime surface. The static walkthrough has been retired in favor of a real Expo Router app with onboarding, discovery, booking, booking-state handling, visits, profile, and rating/rebook flows.
+      </p>
+    </section>
 
-<div id="top" class="canvas-head">
-  <div class="kicker">Pawpoint Customer · iPhone prototype · iOS</div>
-  <h1>Fifteen screens where <em>trust</em> becomes a booking — and a booking becomes a rebook.</h1>
-  <p>A walk‑through of Pawpoint’s customer app: onboarding, discovery, the deposit‑protected booking flow, the three states a request can land in (instant, pending, declined), and the account surfaces that turn one visit into a relationship. All screens use shared tokens from the design system seed so color, status, and type stay canonical.</p>
-  <div class="facts">
-    <div><span>Flows</span><b>4</b></div>
-    <div><span>Screens</span><b>15</b></div>
-    <div><span>Booking states</span><b>3 shown</b></div>
-    <div><span>Device</span><b>iPhone 15 · 390 × 812</b></div>
-    <div><span>Languages</span><b>TH · EN</b></div>
-  </div>
-</div>
+    <section class="grid">
+      <article class="card">
+        <h2>How to run it</h2>
+        <ol class="steps">
+          <li>From <code>prototype/claude-design/pet-grooming</code>, run <code>npm start</code>.</li>
+          <li>Open the app on web with <code>npm run web</code>, or launch iOS/Android with <code>npm run ios</code> / <code>npm run android</code>.</li>
+          <li>The app entry is <code>src/app/index.tsx</code>; it routes into onboarding or the tab shell based on app state.</li>
+        </ol>
+      </article>
 
-<div id="root"></div>
+      <article class="card">
+        <h2>Source of truth</h2>
+        <div class="route-list">
+          <div class="route">
+            <b>Runtime</b>
+            <span><code>src/app/</code> and <code>src/features/customer/</code></span>
+          </div>
+          <div class="route">
+            <b>Design reference</b>
+            <span><code>project/customer/</code> and the shared assets under <code>project/shared/</code></span>
+          </div>
+          <div class="route">
+            <b>State + mocks</b>
+            <span><code>src/features/customer/provider.tsx</code> and <code>data.ts</code></span>
+          </div>
+        </div>
+      </article>
+    </section>
 
-<div class="foot"><b>Pawpoint</b> · Customer prototype · made for the Grooming Booking brief · horizontal scroll within each flow · tap-through not wired in this static pass</div>
+    <section class="card">
+      <h2>Implemented flows</h2>
+      <div class="route-list">
+        <div class="route"><b>Flow A</b><span>Welcome, language, OTP, and pet setup</span></div>
+        <div class="route"><b>Flow B</b><span>Discovery, shop detail, slot selection, review, and payment</span></div>
+        <div class="route"><b>Flow C</b><span>Confirmed, pending, and declined booking outcomes</span></div>
+        <div class="route"><b>Flow D</b><span>Visits, profile, rating, and one-tap rebook</span></div>
+      </div>
+    </section>
 
-<script src="generated/vendor/react.production.min.js"></script>
-<script src="generated/vendor/react-dom.production.min.js"></script>
-<script src="generated/customer-app.js"></script>
+    <div class="foot">Static prototype retired · Expo app is the active customer surface</div>
+  </main>
 </body>
 </html>
