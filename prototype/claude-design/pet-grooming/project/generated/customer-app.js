@@ -37,11 +37,11 @@
     throw new Error("Pawpoint customer primitives must load before customer screens.");
   }
   const CUSTOMER_MEDIA = {
-    petDash: "shared/images/customer/pet-dash.png",
-    shopAroon: "shared/images/customer/shop-aroon.png",
-    shopFluffRoom: "shared/images/customer/shop-fluff-room.png",
-    shopSoiDog: "shared/images/customer/shop-soi-dog.png",
-    shopBarksBubbles: "shared/images/customer/shop-barks-bubbles.png"
+    petDash: "../shared/images/customer/pet-dash.png",
+    shopAroon: "../shared/images/customer/shop-aroon.png",
+    shopFluffRoom: "../shared/images/customer/shop-fluff-room.png",
+    shopSoiDog: "../shared/images/customer/shop-soi-dog.png",
+    shopBarksBubbles: "../shared/images/customer/shop-barks-bubbles.png"
   };
   function Screen01_Welcome() {
     return /* @__PURE__ */ React.createElement("div", { className: "screen fill" }, /* @__PURE__ */ React.createElement("div", { className: "welcome" }, /* @__PURE__ */ React.createElement("div", null), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 22, alignItems: "center" } }, /* @__PURE__ */ React.createElement("div", { className: "logo-big" }), /* @__PURE__ */ React.createElement("h1", null, "Grooming that ", /* @__PURE__ */ React.createElement("em", null, "earns"), /* @__PURE__ */ React.createElement("br", null), "the next visit."), /* @__PURE__ */ React.createElement("p", null, "Real\u2011time slots from 41 trusted shops \xB7 180+ groomers across Bangkok. Hold your spot with a Shield hold, no phone calls.")), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 10, width: "100%" } }, /* @__PURE__ */ React.createElement("button", { className: "btn primary btn-lg", style: { justifyContent: "center" } }, "Continue with phone"), /* @__PURE__ */ React.createElement("button", { className: "btn ghost", style: { justifyContent: "center", color: "var(--ink-2)" } }, "I already have an account"), /* @__PURE__ */ React.createElement("p", { style: { fontSize: 11, color: "var(--ink-3)", marginTop: 4 } }, "By continuing you accept Pawpoint\u2019s booking terms."))));

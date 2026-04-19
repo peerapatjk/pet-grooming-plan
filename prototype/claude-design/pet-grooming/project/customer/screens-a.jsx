@@ -9,11 +9,11 @@ if (!ChevL || !ChevR || !Dot || !TabBar) {
 }
 
 const CUSTOMER_MEDIA = {
-  petDash: 'shared/images/customer/pet-dash.png',
-  shopAroon: 'shared/images/customer/shop-aroon.png',
-  shopFluffRoom: 'shared/images/customer/shop-fluff-room.png',
-  shopSoiDog: 'shared/images/customer/shop-soi-dog.png',
-  shopBarksBubbles: 'shared/images/customer/shop-barks-bubbles.png',
+  petDash: '../shared/images/customer/pet-dash.png',
+  shopAroon: '../shared/images/customer/shop-aroon.png',
+  shopFluffRoom: '../shared/images/customer/shop-fluff-room.png',
+  shopSoiDog: '../shared/images/customer/shop-soi-dog.png',
+  shopBarksBubbles: '../shared/images/customer/shop-barks-bubbles.png',
 };
 
 // ─── 01 Welcome ─────────────────────────────────────────
