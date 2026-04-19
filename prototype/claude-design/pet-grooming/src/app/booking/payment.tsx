@@ -36,7 +36,6 @@ export default function PaymentScreen() {
 
       <PageTitle
         title={`Hold ${formatCurrency(bookingDraft.holdAmount)} to lock ${bookingDraft.slot.label}`}
-        subtitle="Payment method choice stays simple. Trust copy reinforces that card data never touches Pawpoint."
       />
 
       <View style={{ gap: pawpointSpacing.sm }}>

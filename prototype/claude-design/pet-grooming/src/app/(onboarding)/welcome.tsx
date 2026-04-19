@@ -23,7 +23,7 @@ export default function WelcomeScreen() {
           <BrandMark />
           <PageTitle
             title="Grooming that earns the next visit."
-            subtitle="Real-time slots from trusted Bangkok shops. Hold your spot with a Shield hold, no phone calls."
+            subtitle="Real-time slots from 41 trusted shops · 180+ groomers across Bangkok. Hold your spot with a Shield hold, no phone calls."
           />
         </View>
 

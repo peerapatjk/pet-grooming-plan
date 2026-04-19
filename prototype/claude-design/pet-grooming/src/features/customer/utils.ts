@@ -28,8 +28,8 @@ export function getSlot(shop: Shop, slotId: string) {
 export function getSlotPreviewLabels(slotState: BookingSlot['state']) {
   if (slotState === 'pending') {
     return {
-      headline: 'Confirm slots',
-      detail: 'Shop confirms within 1 hour. You are only charged after they accept.',
+      headline: '“Confirm” slots',
+      detail: 'Shop confirms within 1 hour. You’re only charged after they accept.',
     };
   }
 

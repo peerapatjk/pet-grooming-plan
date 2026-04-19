@@ -27,7 +27,7 @@ export default function ReviewScreen() {
         <TopIconButton label="?" />
       </View>
 
-      <PageTitle title="Review" subtitle="Deposit mechanics stay explicit before the customer confirms." />
+      <PageTitle title="Review" />
 
       <Card>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: pawpointSpacing.sm }}>

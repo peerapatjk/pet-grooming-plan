@@ -1,8 +1,8 @@
 import { useRouter } from 'expo-router';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
-import { AppChip, InfoBanner, MobilePage, PageTitle, SearchField, SectionHeader, ShopCard } from '@/features/customer/ui';
-import { pawpointColors, pawpointFonts, pawpointSpacing } from '@/features/customer/design';
+import { AppChip, MobilePage, SearchField, SectionHeader, ShopCard } from '@/features/customer/ui';
+import { pawpointSpacing } from '@/features/customer/design';
 import { useCustomerApp } from '@/features/customer/provider';
 
 export default function BookTabScreen() {
@@ -12,8 +12,6 @@ export default function BookTabScreen() {
   return (
     <MobilePage>
       <SearchField placeholder="Search area, service, or groomer" filterLabel="Bangkok" />
-
-      <PageTitle title="Discovery tuned for fast booking" subtitle="Search, compare, and carry the pet context into the quote and slot picker." />
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: pawpointSpacing.xs }}>
         <AppChip label="Sathorn" active />
@@ -35,11 +33,6 @@ export default function BookTabScreen() {
           />
         ))}
       </View>
-
-      <InfoBanner
-        title="Why some slots say confirm"
-        body="Some shops keep a short merchant review step for exception cases or groomer-specific requests."
-      />
     </MobilePage>
   );
 }

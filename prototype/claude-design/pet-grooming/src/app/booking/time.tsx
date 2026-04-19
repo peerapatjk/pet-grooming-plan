@@ -37,7 +37,7 @@ export default function TimePickerScreen() {
         <TopIconButton label="i" />
       </View>
 
-      <PageTitle title="Pick a time" subtitle="Choose a slot. The app distinguishes instant confirmation from staff review before you commit." />
+      <PageTitle title="Pick a time" />
 
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: pawpointSpacing.xs }}>
         {bookingDraft.shop.bookingDays.map((day) => {

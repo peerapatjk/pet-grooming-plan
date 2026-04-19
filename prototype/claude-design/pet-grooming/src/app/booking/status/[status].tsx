@@ -38,7 +38,7 @@ export default function BookingStatusScreen() {
           <StatusBadge label="Awaiting shop confirm" tone="pending" />
           <PageTitle
             title={`The ${draft.shop.name} is reviewing your ${draft.slot.label} request`}
-            subtitle="They usually respond within 25 minutes. Nothing is charged until they accept."
+            subtitle="They usually respond within 25 minutes. We'll ping you the moment they accept. Nothing is charged until they do."
           />
           <Card compact>
             <Text selectable style={{ fontFamily: pawpointFonts.mono, fontSize: 10, letterSpacing: 1.6, textTransform: 'uppercase', color: pawpointColors.inkSoft }}>
@@ -60,7 +60,7 @@ export default function BookingStatusScreen() {
           <KVRow label={`Shield hold · ${formatCurrency(draft.holdAmount)}`} value="Not yet · pending" />
         </Card>
 
-        <InfoBanner tone="info" title="Do not want to wait?" body="Three instant-confirm shops nearby can take Dash at 14:30 or 15:00." />
+        <InfoBanner tone="info" title="Don't want to wait?" body="3 instant-confirm shops nearby can take Dash at 14:30 or 15:00." />
 
         <SectionHeader title="What happens next" />
         <Card>
@@ -94,7 +94,7 @@ export default function BookingStatusScreen() {
           <StatusBadge label="Shop cannot take the request" tone="cancelled" />
           <PageTitle
             title="No charge. Here are three close fits for Dash."
-            subtitle="Your Shield hold was never placed. We carried the pet details, service, and notes forward."
+            subtitle="Your ฿150 hold was never placed. Tap a suggestion below; we’ll carry over your notes and service."
           />
           <Text selectable style={{ fontFamily: pawpointFonts.sans, fontSize: 11, color: pawpointColors.inkSoft }}>
             Shield only activates on no-show — your card is safe.

@@ -10,7 +10,7 @@ export default function YouTabScreen() {
   return (
     <MobilePage>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <PageTitle title="You" subtitle="Pets, payments, communication preferences, and the context that makes rebooking faster." />
+        <PageTitle title="You" />
         <TopIconButton label="⚙" />
       </View>
 

@@ -18,7 +18,7 @@ export default function VisitsTabScreen() {
   return (
     <MobilePage>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <PageTitle title="Visits" subtitle="Upcoming bookings, requests in flight, and the visits most likely to trigger a rebook." />
+        <PageTitle title="Visits" />
         <TopIconButton label="⌕" />
       </View>
 

@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
 
-import { InfoBanner, MobilePage, PageTitle, PawpointButton, SectionHeader, ShopCard, TopIconButton } from '@/features/customer/ui';
+import { MobilePage, PageTitle, PawpointButton, SectionHeader, ShopCard, TopIconButton } from '@/features/customer/ui';
 import { pawpointColors, pawpointFonts, pawpointSpacing } from '@/features/customer/design';
 import { useCustomerApp } from '@/features/customer/provider';
 import { formatCurrency } from '@/features/customer/utils';
@@ -25,7 +25,7 @@ export default function HomeTabScreen() {
             }}>
             Sathorn · Tue 12 Nov
           </Text>
-          <PageTitle title="Morning, Praew" subtitle="Dash is due in two weeks. Rebooking should feel almost frictionless." />
+          <PageTitle title="Morning, Praew" />
         </View>
         <TopIconButton label="🔔" />
       </View>
@@ -92,12 +92,6 @@ export default function HomeTabScreen() {
           />
         ))}
       </View>
-
-      <InfoBanner
-        tone="info"
-        title="Trust copy stays visible"
-        body="Shield holds, confirmation timing, and no-show rules are surfaced before the user commits."
-      />
     </MobilePage>
   );
 }
