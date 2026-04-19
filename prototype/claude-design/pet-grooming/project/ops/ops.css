@@ -194,8 +194,8 @@
   transform:translate(-50%,-50%);
   cursor:pointer;
 }
-.bkk-dot.cold{background:var(--danger);box-shadow:0 0 0 4px color-mix(in oklab,var(--danger) 30%,transparent)}
-.bkk-dot.warm{background:var(--warn);box-shadow:0 0 0 4px color-mix(in oklab,var(--warn) 30%,transparent)}
+.bkk-dot.hot{background:var(--danger);box-shadow:0 0 0 4px color-mix(in oklab,var(--danger) 30%,transparent)}
+.bkk-dot.warn{background:var(--warn);box-shadow:0 0 0 4px color-mix(in oklab,var(--warn) 30%,transparent)}
 .bkk-dot.applied{background:transparent;border:2px dashed rgba(255,255,255,.5);box-shadow:none}
 .bkk-label{
   position:absolute;transform:translate(-50%,14px);font-family:var(--mono);font-size:10px;

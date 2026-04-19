@@ -411,10 +411,10 @@ function Screen14_You(){return(
           ['LINE notifications','On'],
           ['Language','ไทย'],
           ['Preferred groomer','Pim K. at Aroon'],
-          ['Help &amp; support',''],
+          ['Help & support',''],
         ].map((r,i)=>(
           <div key={i} className="row between" style={{padding:'14px 16px',borderTop:i?'1px solid var(--border)':'none'}}>
-            <div style={{fontSize:14}} dangerouslySetInnerHTML={{__html:r[0]}}/>
+            <div style={{fontSize:14}}>{r[0]}</div>
             <div className="row" style={{gap:8,color:'var(--ink-3)',fontSize:13}}>{r[1]}<ChevR color="var(--ink-3)"/></div>
           </div>
         ))}

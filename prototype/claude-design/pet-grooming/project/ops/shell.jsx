@@ -1,7 +1,5 @@
 // ops/shell.jsx — shared left-nav + top-bar shell for ops console
 
-const { useState } = React;
-
 // tiny icon set — inline SVG
 const OI = {
   pulse: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 8h3l2-5 3 10 2-5h4"/></svg>,

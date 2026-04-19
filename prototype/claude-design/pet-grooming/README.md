@@ -20,3 +20,17 @@ The design medium is **HTML/CSS/JS** — these are prototypes, not production co
 
 - `pet-grooming/README.md` — this file
 - `pet-grooming/project/` — the `Pet Grooming` project files (HTML prototypes, assets, components)
+
+## Prototype authoring/runtime
+
+For the shipped static prototype pages under `pet-grooming/project/`:
+
+- The standalone JSX files in `project/customer/`, `project/merchant/`, `project/ops/`, and `project/shared/` are the source of truth.
+- The new per-surface `app-entry.jsx` files own the flow metadata, app composition, and mount logic.
+- `project/generated/` contains derived build artifacts, including vendored React runtimes and generated app bundles. Do not edit those files by hand.
+
+To regenerate the shipped runtime assets locally:
+
+1. `cd prototype/claude-design/pet-grooming`
+2. `npm install`
+3. `npm run build`

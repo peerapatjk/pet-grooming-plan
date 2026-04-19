@@ -478,6 +478,11 @@
       catch (e) { /* ignore */ }
     }
 
+    _broadcastSlideIndex(curr) {
+      if (window.parent === window) return;
+      try { window.parent.postMessage({ slideIndexChanged: curr }, '*'); } catch (e) {}
+    }
+
     _applyIndex({ showOverlay = true, broadcast = true, reason = 'init' } = {}) {
       if (!this._slides.length) return;
       const prev = this._prevIndex == null ? -1 : this._prevIndex;
@@ -490,8 +495,8 @@
       this._persistIndex();
 
       if (broadcast) {
-        // (1) Legacy: host-window postMessage for speaker-notes renderers.
-        try { window.postMessage({ slideIndexChanged: curr }, '*'); } catch (e) {}
+        // (1) Legacy: parent-window postMessage for speaker-notes renderers.
+        this._broadcastSlideIndex(curr);
 
         // (2) In-page CustomEvent on the <deck-stage> element itself.
         //     Bubbles and composes out of shadow DOM so slide code can listen:

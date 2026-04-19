@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/pawpoint-tokens.css">
 <script>
   const TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
     "primaryHue": 220,
@@ -257,22 +258,7 @@
   .shop-card .meta{display:flex;gap:12px;font-size:12px;color:var(--ink-3)}
   .shop-card .meta b{color:var(--ink-2);font-weight:500}
 
-  /* Timeline / status chips */
-  .status{display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 8px;border-radius:8px;font-size:12px;font-weight:500;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase}
-  .status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-  .status.s-instant{background: var(--ok-wash); color: var(--ok)}
-  .status.s-pend-v  {background: var(--warn-wash); color: var(--warn)}
-  .status.s-pend-m  {background: var(--info-wash); color: var(--info)}
-  .status.s-confirm {background: var(--primary-wash); color: var(--primary-ink)}
-  .status.s-arrived {background: oklch(0.96 0.02 190); color: oklch(0.42 0.08 200)}
-  .status.s-in-serv {background: oklch(0.96 0.02 260); color: oklch(0.42 0.09 260)}
-  .status.s-done    {background: var(--paper-3); color: var(--ink-2)}
-  .status.s-canc-c  {background: var(--paper-3); color: var(--ink-3); text-decoration: line-through}
-  .status.s-canc-m  {background: var(--danger-wash); color: var(--danger)}
-  .status.s-no-show {background: oklch(0.96 0.03 10); color: oklch(0.45 0.14 15)}
-  .status.s-hold    {background: var(--accent-wash); color: var(--accent-ink)}
-  .status.s-dep     {background: var(--accent-wash); color: var(--accent-ink); box-shadow:inset 0 0 0 1px var(--accent)}
-  .status.s-pay-iss {background: var(--danger-wash); color: var(--danger); box-shadow:inset 0 0 0 1px var(--danger)}
+  /* Timeline / status chips live in shared/pawpoint-tokens.css */
 
   /* Alert */
   .alert{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:var(--radius);background:var(--accent-wash);border:1px solid color-mix(in oklab, var(--accent) 20%, transparent)}
@@ -748,7 +734,7 @@
         </div>
       </div>
 
-      <!-- Timeline / status chips -->
+      <!-- Timeline / status chips are documented here, but styled by shared/pawpoint-tokens.css -->
       <div class="cmp-card full">
         <header><h3>Status tokens</h3><span class="cmp-label">booking lifecycle</span></header>
         <div class="cmp-surface" style="flex-direction:row;flex-wrap:wrap">
@@ -1069,7 +1055,29 @@
 <script>
 (function(){
   const root = document.documentElement;
+  const tweaks = document.getElementById('tweaks');
   const state = Object.assign({}, TWEAK_DEFAULS);
+  const allowedMessageTypes = new Set(['__activate_edit_mode', '__deactivate_edit_mode']);
+  const parentWindow = window.parent !== window ? window.parent : null;
+  let active = false;
+  let trustedChannel = null;
+
+  const getTargetOrigin = (origin) => origin && origin !== 'null' ? origin : '*';
+  const setEditMode = (nextActive) => {
+    active = nextActive;
+    tweaks.classList.toggle('on', active);
+  };
+  const captureTrustedChannel = (event) => {
+    if (!parentWindow || event.source !== parentWindow) return false;
+    const type = event?.data?.type;
+    if (!allowedMessageTypes.has(type)) return false;
+    const origin = event.origin || 'null';
+    if (!trustedChannel) {
+      trustedChannel = { source: event.source, origin };
+      return true;
+    }
+    return trustedChannel.source === event.source && trustedChannel.origin === origin;
+  };
   const apply = () => {
     root.style.setProperty('--primary-hue', state.primaryHue);
     root.style.setProperty('--accent-hue', state.accentHue);
@@ -1083,17 +1091,22 @@
     byId('v-paper').textContent = state.paperTint + '°';
   };
   const persist = () => {
-    window.parent.postMessage({type:'__edit_mode_set_keys', edits: state}, '*');
+    if (!trustedChannel?.source) return;
+    trustedChannel.source.postMessage(
+      {type:'__edit_mode_set_keys', edits: state},
+      getTargetOrigin(trustedChannel.origin),
+    );
   };
 
-  // Edit mode
-  let active = false;
-  window.addEventListener('message', (e) => {
-    const t = e?.data?.type;
-    if (t === '__activate_edit_mode'){ active = true; document.getElementById('tweaks').classList.add('on'); }
-    if (t === '__deactivate_edit_mode'){ active = false; document.getElementById('tweaks').classList.remove('on'); }
+  window.addEventListener('message', (event) => {
+    if (!captureTrustedChannel(event)) return;
+    const type = event.data.type;
+    if (type === '__activate_edit_mode') setEditMode(true);
+    if (type === '__deactivate_edit_mode') setEditMode(false);
   });
-  window.parent.postMessage({type:'__edit_mode_available'}, '*');
+  if (parentWindow) {
+    parentWindow.postMessage({type:'__edit_mode_available'}, '*');
+  }
 
   // Wire controls
   apply();
