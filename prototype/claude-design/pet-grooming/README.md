@@ -11,8 +11,9 @@ The customer surface is now implemented as a real Expo Router app.
 - App entry: `src/app/`
 - Shared customer domain/state: `src/features/customer/`
 - Run it: `npm start`
-- Web preview: `npm run web`
-- Native preview: `npm run ios` or `npm run android`
+- iOS preview: `npm run ios`
+- Android preview: `npm run android`
+- Web preview is optional: `npm run web`
 - Static handoff page: `project/Customer App.html`
 
 The legacy static prototype files in `project/customer/` still exist as design references, but they are no longer the runtime source of truth for the customer app.

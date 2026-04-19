@@ -6,6 +6,13 @@
     "scheme": "pawpoint-customer",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.pawpoint.customer"
+    },
+    "android": {
+      "package": "com.pawpoint.customer"
+    },
     "web": {
       "output": "static"
     },

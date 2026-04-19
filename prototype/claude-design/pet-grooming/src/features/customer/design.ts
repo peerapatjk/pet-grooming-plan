@@ -1,5 +1,3 @@
-import '@/global.css';
-
 export const pawpointColors = {
   paper: '#f4efe8',
   paperMuted: '#ece5db',
@@ -29,8 +27,8 @@ const expoOS = process.env.EXPO_OS;
 
 export const pawpointFonts = {
   sans: expoOS === 'web' ? 'var(--font-display)' : expoOS === 'ios' ? 'System' : 'sans-serif',
-  serif: expoOS === 'web' ? 'var(--font-serif)' : 'serif',
-  mono: expoOS === 'web' ? 'var(--font-mono)' : 'monospace',
+  serif: expoOS === 'web' ? 'var(--font-serif)' : expoOS === 'ios' ? 'Georgia' : 'serif',
+  mono: expoOS === 'web' ? 'var(--font-mono)' : expoOS === 'ios' ? 'Courier' : 'monospace',
   thai: expoOS === 'web' ? 'var(--font-thai)' : expoOS === 'ios' ? 'System' : 'sans-serif',
 } as const;
 
