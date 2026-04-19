@@ -52,7 +52,7 @@ function Screen02_Language(){return(
           <div className="check"/>
         </div>
         <div className="lang-card">
-          <div><h3>中文</h3><div className="sub">Simplified · Beta</div></div>
+          <div><h3>中文</h3><div className="sub">Selected screens · Beta</div></div>
           <div className="check"/>
         </div>
       </div>
@@ -147,16 +147,16 @@ function Screen05_Home(){return(
     <div className="screen-content">
       <div className="sc-head">
         <div>
-          <div className="sub" style={{fontSize:11,fontFamily:'var(--mono)',letterSpacing:'.1em',textTransform:'uppercase'}}>Sathorn · Tue 12 Nov</div>
+          <div className="sub" style={{fontSize:11,fontFamily:'var(--mono)',letterSpacing:'.1em',textTransform:'uppercase'}}>Sathorn · Tue 14 Apr</div>
           <h1 style={{fontSize:22,marginTop:4}}>Morning, <em>Praew</em></h1>
         </div>
         <div className="right"><div className="sc-ic">🔔</div></div>
       </div>
 
       <div className="rebook-hero">
-        <div className="lbl">Rebook · due in 2 weeks</div>
+        <div className="lbl">Rebook · usually every 4 weeks</div>
         <h3>Dash at Aroon,<br/>same time next month</h3>
-        <div className="meta"><span>Thu 12 Dec · 10:30</span><span>฿650 · Full groom</span></div>
+        <div className="meta"><span>Fri 15 May · 10:30</span><span>฿650 · Full groom</span></div>
         <div className="cta"><span>One‑tap rebook · Shield hold · ฿200</span><ChevR color="#fff"/></div>
       </div>
 
@@ -217,7 +217,7 @@ function Screen06_Shop(){return(
         <div className="row between" style={{alignItems:'flex-end'}}>
           <div style={{display:'flex',flexDirection:'column',gap:4}}>
             <div className="strip"><span>★ 4.9 · 312 reviews</span></div>
-            <div className="strip"><span>EN · <span className="th">ไทย</span> · 中文</span></div>
+            <div className="strip"><span>EN · <span className="th">ไทย</span> · 中文 beta</span></div>
           </div>
           <div style={{display:'flex'}}>
             {[['P','var(--accent)'],['N','var(--info)'],['T','var(--ok)'],['+2','rgba(255,255,255,.22)']].map(([n,c],i)=>(
@@ -325,7 +325,7 @@ function Screen07_Time(){
           ))}
         </div>
 
-        <div className="m-sec"><h4>Morning · Tue 12 Nov</h4><span className="sub" style={{fontSize:11}}>Confirms instantly</span></div>
+        <div className="m-sec"><h4>Morning · Tue 14 Apr</h4><span className="sub" style={{fontSize:11}}>Confirms instantly</span></div>
         <div className="slot-grid">
           <div className="slot-cell"><b>09:00</b>75 min</div>
           <div className="slot-cell on"><b>10:30</b>75 min</div>

@@ -34,7 +34,7 @@ function Screen08_Review(){return(
         <div className="kv">
           <div className="k"><span>Shop</span><b>Aroon Grooming</b></div>
           <div className="k"><span>Service</span><b>Full groom · 75 min</b></div>
-          <div className="k"><span>Time</span><b>Tue, 12 Nov · 10:30</b></div>
+          <div className="k"><span>Time</span><b>Wed, 15 Apr · 10:30</b></div>
           <div className="k"><span>Groomer</span><b>Pim K. <span className="pill">+฿50 request</span></b></div>
           <div className="k"><span>Notes for shop</span><b style={{color:'var(--ink-3)',fontWeight:400,fontSize:12}}>Clippers make her nervous — intro slowly.</b></div>
         </div>
@@ -72,7 +72,7 @@ function Screen08_Review(){return(
         <div className="ic">i</div>
         <div>
           <h5>How the deposit works</h5>
-          <p>The ฿200 hold is released the moment you check in. Free cancel until Mon 20 Apr · 10:30. No‑show forfeits the hold.</p>
+          <p>The ฿200 hold is released the moment you check in. Free cancel until Tue 14 Apr · 10:30. No‑show forfeits the hold.</p>
         </div>
       </div>
     </div>
@@ -150,7 +150,7 @@ function Screen10_Confirmed(){return(
 
       <div className="confirmed-hero">
         <span className="status status s-confirm" style={{background:'rgba(255,255,255,.18)',color:'#fff',alignSelf:'flex-start'}}>Confirmed · deposit held</span>
-        <h2>Tue 12 Nov<br/>10:30 AM</h2>
+        <h2>Wed 15 Apr<br/>10:30 AM</h2>
         <div className="sub">Aroon Grooming · Saladaeng</div>
       </div>
 
@@ -160,16 +160,16 @@ function Screen10_Confirmed(){return(
           <div className="k"><span>Groomer</span><b>Pim K.</b></div>
           <div className="k"><span>Deposit</span><b>฿200 held until arrival</b></div>
           <div className="k"><span>Due at shop</span><b>฿500</b></div>
-          <div className="k"><span>Free cancel until</span><b>Mon 20 Apr · 10:30</b></div>
+          <div className="k"><span>Free cancel until</span><b>Tue 14 Apr · 10:30</b></div>
         </div>
       </div>
 
       <div className="vtimeline">
-        <div className="step done"><b>Booked</b><span>Today · 14:02</span></div>
-        <div className="step done"><b>Deposit held (฿200)</b><span>Today · 14:02</span></div>
-        <div className="step cur"><b>Reminder 24h before</b><span>Mon 20 Apr · 10:30</span></div>
-        <div className="step"><b>Check‑in QR</b><span>Tue 10:20</span></div>
-        <div className="step"><b>Service complete · deposit refunded</b><span>Tue ~11:45</span></div>
+        <div className="step done"><b>Booked</b><span>Mon 13 Apr · 14:02</span></div>
+        <div className="step done"><b>Deposit held (฿200)</b><span>Mon 13 Apr · 14:02</span></div>
+        <div className="step done"><b>Reminder 24h before</b><span>Tue 14 Apr · 10:30</span></div>
+        <div className="step cur"><b>Check‑in QR</b><span>Wed 10:20</span></div>
+        <div className="step"><b>Service complete · deposit refunded</b><span>Wed ~11:45</span></div>
       </div>
 
       <div style={{display:'flex',gap:8}}>
@@ -219,7 +219,7 @@ function Screen11_Pending(){return(
         <div className="kv">
           <div className="k"><span>Shop</span><b>The Fluff Room · Silom</b></div>
           <div className="k"><span>Service</span><b>Bath &amp; blow · 45 min</b></div>
-          <div className="k"><span>Requested</span><b>Tue 12 Nov · 14:30</b></div>
+          <div className="k"><span>Requested</span><b>Tue 14 Apr · 14:30</b></div>
           <div className="k"><span>Shield hold · ฿150</span><b>Not yet · pending</b></div>
         </div>
       </div>
@@ -314,7 +314,7 @@ function Screen13_Visits(){return(
       <div className="card" style={{borderColor:'var(--primary)',gap:12}}>
         <div className="row between">
           <div>
-            <div className="sub" style={{fontSize:11,fontFamily:'var(--mono)',letterSpacing:'.1em',textTransform:'uppercase'}}>Tue 12 Nov · 10:30</div>
+            <div className="sub" style={{fontSize:11,fontFamily:'var(--mono)',letterSpacing:'.1em',textTransform:'uppercase'}}>Wed 15 Apr · 10:30</div>
             <div style={{fontFamily:'var(--serif)',fontSize:20,fontWeight:500,marginTop:2}}>Aroon Grooming</div>
           </div>
           <span className="status s-confirm">Confirmed</span>
@@ -389,7 +389,7 @@ function Screen14_You(){return(
           <div className="pet-ring sm">D</div>
           <div className="body">
             <h5>Dash · Welsh Corgi</h5>
-            <div className="sub">12.4 kg · Sensitive skin · Next: Tue 10:30</div>
+            <div className="sub">12.4 kg · Sensitive skin · Next: Wed 10:30</div>
           </div>
           <ChevR color="var(--ink-3)"/>
         </div>
@@ -471,7 +471,7 @@ function Screen15_Rate(){return(
 
       <div style={{padding:16,background:'var(--primary)',borderRadius:14,display:'flex',flexDirection:'column',gap:8}}>
         <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'.14em',textTransform:'uppercase',opacity:.8}}>Dash is due again</div>
-        <div style={{fontFamily:'var(--serif)',fontSize:20,fontWeight:500,letterSpacing:'-0.015em'}}>Rebook for Thu 12 Dec · 10:30?</div>
+        <div style={{fontFamily:'var(--serif)',fontSize:20,fontWeight:500,letterSpacing:'-0.015em'}}>Rebook for Fri 15 May · 10:30?</div>
         <div className="row between" style={{opacity:.85,fontSize:12}}><span>Same groomer, same price</span><span>Shield hold · ฿200</span></div>
       </div>
 

@@ -33,7 +33,7 @@ const PadFrame = ({children, label, idx, total, topRight}) => (
     <div className="pad-frame">
       <div className="pad-screen">
         <div className="pad-status">
-          <span>Tue 12 Nov · 13:52</span>
+          <span>Tue 14 Apr · 13:52</span>
           <div className="right">
             <span>Aroon · iPad counter</span>
             <span className="bars"><b/><b/><b/><b/></span>

@@ -298,7 +298,7 @@ function Screen03_RequestDetail(){
           <div className="ds-head">
             <div className="ds-close"><MX/></div>
             <div style={{flex:1}}>
-              <div className="eyebrow" style={{fontSize:9}}>Booking BKG-41A7 · Tue 12 · 14:30</div>
+              <div className="eyebrow" style={{fontSize:9}}>Booking BKG-41A7 · Tue 14 · 14:30</div>
               <h3>Dash at Aroon <span className="th" style={{fontFamily:'var(--thai)',fontStyle:'italic',color:'var(--ink-3)',fontWeight:400,fontSize:14}}>แดช</span></h3>
             </div>
             <span className="status s-pend-m">Pending</span>
