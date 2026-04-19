@@ -110,6 +110,12 @@
   border:1px solid var(--border);
   position:relative;
 }
+.shop-row .thumb.photo{
+  background:
+    linear-gradient(180deg, rgba(14,18,26,.08), rgba(14,18,26,.3)),
+    var(--media-image) center / cover no-repeat,
+    linear-gradient(180deg, var(--primary-wash), var(--paper-3));
+}
 .shop-row .thumb .dot{
   position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--ok);border-radius:50%;
   box-shadow:0 0 0 2px var(--paper);
@@ -138,10 +144,31 @@
 .pet-ring.alt{background:var(--primary-wash);border-color:var(--primary);color:var(--primary-ink)}
 .pet-ring.alt2{background:var(--info-wash);border-color:var(--info);color:var(--info)}
 
-/* Shop cover — typographic / photo-less */
+.pet-photo{
+  width:80px;height:80px;border-radius:24px;overflow:hidden;position:relative;flex:none;
+  border:1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(14,18,26,.06), rgba(14,18,26,.28)),
+    var(--media-image) center / cover no-repeat,
+    linear-gradient(135deg, var(--accent-wash), var(--paper-3));
+  box-shadow:var(--shadow-sm);
+}
+.pet-photo::after{
+  content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);
+}
+.pet-photo span{
+  position:absolute;right:8px;bottom:8px;width:22px;height:22px;border-radius:50%;
+  background:rgba(12,14,20,.72);backdrop-filter:blur(6px);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* Shop cover — photo-ready with editorial overlay */
 .cover{
   min-height:176px;border-radius:18px;position:relative;overflow:hidden;
   background:
+    linear-gradient(180deg, rgba(10,14,22,.1), rgba(10,14,22,.62)),
+    var(--cover-image) center / cover no-repeat,
     radial-gradient(ellipse at 15% 110%, color-mix(in oklab, var(--accent) 45%, transparent), transparent 55%),
     radial-gradient(ellipse at 95% -10%, color-mix(in oklab, var(--info) 30%, transparent), transparent 50%),
     linear-gradient(180deg, color-mix(in oklab, var(--primary) 88%, #000), var(--primary));

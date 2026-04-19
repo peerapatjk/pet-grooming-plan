@@ -3,374 +3,936 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pawpoint — Concept package · Index &amp; handoff</title>
+<title>Pawpoint | Prototype package and handoff</title>
 <link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared/pawpoint-tokens.css">
 <style>
-  html, body { background: var(--paper); color: var(--ink); }
-  body { font-family: var(--sans); margin: 0; }
-
-  .page {
-    max-width: 1080px; margin: 0 auto;
-    padding: 64px 48px 80px;
+  :root {
+    --page-max: 1440px;
+    --shell-gutter: clamp(24px, 4vw, 56px);
+    --surface-line: color-mix(in oklab, var(--ink) 9%, transparent);
+    --surface-strong: color-mix(in oklab, var(--ink) 18%, transparent);
+    --card-shadow: 0 22px 56px rgba(18, 22, 30, 0.08);
+    --nav-shadow: 0 28px 72px rgba(18, 22, 30, 0.08);
   }
 
-  /* Masthead */
-  .masthead {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    padding-bottom: 22px; border-bottom: 1px solid var(--ink);
-    margin-bottom: 32px;
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 14% 12%, color-mix(in oklab, var(--accent-wash) 82%, white) 0, transparent 30%),
+      radial-gradient(circle at 86% 16%, color-mix(in oklab, var(--primary-wash) 84%, white) 0, transparent 34%),
+      linear-gradient(180deg, color-mix(in oklab, var(--paper) 94%, white), color-mix(in oklab, var(--paper) 88%, var(--paper-2)));
+    color: var(--ink);
+    font-family: var(--sans);
   }
-  .masthead .brand { display: flex; align-items: center; }
-  .masthead .brand .mark { font-size: 22px; }
-  .masthead .brand .mark-dot { width: 28px; height: 28px; }
-  .masthead .meta {
-    font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--ink-3); text-align: right;
-  }
-  .masthead .meta b { color: var(--ink); font-weight: 500;}
 
-  /* Hero */
-  .hero { padding: 18px 0 48px; border-bottom: 1px solid var(--border); margin-bottom: 48px;}
-  .hero .eye {
-    font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--accent-ink); margin-bottom: 22px;
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.08) 1px, transparent 0);
+    background-size: 20px 20px;
+    opacity: 0.08;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6), transparent 86%);
   }
-  .hero h1 {
-    font-family: var(--serif); font-weight: 500; letter-spacing: -0.03em;
-    font-size: clamp(44px, 5.2vw, 72px); line-height: 1.02; margin: 0 0 28px; max-width: 20ch;
-  }
-  .hero h1 em { font-style: italic; color: var(--accent); font-weight: 400;}
-  .hero .lede {
-    font-size: 16px; line-height: 1.6; color: var(--ink-2); max-width: 64ch;
-  }
-  .hero .lede b { color: var(--ink); font-weight: 500;}
 
-  /* Six artifacts grid */
-  .contents {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
-    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+  a {
+    color: inherit;
+    text-decoration: none;
   }
-  .item {
-    padding: 28px 28px 32px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 14px;
-    text-decoration: none; color: inherit;
-    transition: background .2s ease;
+
+  .wrap {
+    width: min(var(--page-max), calc(100% - (var(--shell-gutter) * 2)));
+    margin: 0 auto;
+  }
+
+  .floating-nav {
+    position: sticky;
+    top: 20px;
+    z-index: 50;
+    padding-top: 20px;
+  }
+
+  .nav-pill {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 16px 18px 16px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: color-mix(in oklab, var(--paper) 82%, white);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--nav-shadow);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    font-size: 18px;
+  }
+
+  .mark-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--accent) 0 35%, var(--primary) 36% 100%);
     position: relative;
-  }
-  .item:hover { background: var(--paper-2); }
-  .item:nth-child(2n) { border-right: none; }
-  .item:nth-last-child(-n+2) { border-bottom: none; }
-
-  .item .num {
-    font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em;
-    text-transform: uppercase; color: var(--ink-3);
-    display: flex; align-items: center; gap: 12px;
-  }
-  .item .num .dash { flex: 1; height: 1px; background: var(--border);}
-  .item h2 {
-    font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em;
-    font-size: 30px; line-height: 1.1; margin: 0;
-  }
-  .item h2 em { font-style: italic; color: var(--accent); font-weight: 400;}
-  .item .format {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--ink-3);
-  }
-  .item .format b { color: var(--ink); font-weight: 500;}
-  .item p {
-    font-size: 13.5px; line-height: 1.55; color: var(--ink-2); margin: 0;
-    max-width: 46ch;
-  }
-  .item .look {
-    margin-top: auto; padding-top: 10px;
-    border-top: 1px dashed var(--border);
-    font-size: 12px; line-height: 1.5; color: var(--ink-2);
-  }
-  .item .look b {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--ink); font-weight: 500;
-    display: block; margin-bottom: 6px;
-  }
-  .item .arrow {
-    position: absolute; top: 28px; right: 28px;
-    font-family: var(--mono); font-size: 18px; color: var(--ink-3);
-    transition: transform .2s ease, color .2s ease;
-  }
-  .item:hover .arrow { transform: translate(4px, -4px); color: var(--accent); }
-
-  /* Section */
-  .section { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--ink);}
-  .section .eye {
-    font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--ink-3); margin-bottom: 14px;
-  }
-  .section h3 {
-    font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em;
-    font-size: 32px; line-height: 1.1; margin: 0 0 28px; max-width: 28ch;
-  }
-  .section h3 em { font-style: italic; color: var(--accent); font-weight: 400;}
-
-  .two-col {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-  }
-  .two-col p {
-    font-size: 14px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px;
-  }
-  .two-col p + p { margin-top: 0;}
-  .two-col > div > p:last-child { margin-bottom: 0;}
-  .two-col p b { color: var(--ink); font-weight: 500;}
-  .two-col ul {
-    font-size: 14px; line-height: 1.65; color: var(--ink-2);
-    padding-left: 0; list-style: none; margin: 0;
-  }
-  .two-col ul li {
-    padding: 8px 0; border-bottom: 1px solid var(--border);
-    display: grid; grid-template-columns: auto 1fr; gap: 14px;
-  }
-  .two-col ul li:first-child { padding-top: 0;}
-  .two-col ul li .k {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--ink-3); white-space: nowrap;
-    padding-top: 3px;
-  }
-  .two-col ul li .v { color: var(--ink); font-weight: 500; }
-  .two-col ul li .v em { font-style: normal; color: var(--ink-2); font-weight: 400;}
-
-  /* Stack list */
-  .stack {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-    margin-top: 24px;
-  }
-  .stack .card {
-    padding: 20px; border: 1px solid var(--border);
-    background: var(--paper-2);
-  }
-  .stack .card .k {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px;
-  }
-  .stack .card .v {
-    font-family: var(--serif); font-size: 20px; letter-spacing: -0.015em;
-    line-height: 1.25; color: var(--ink); font-weight: 500;
-  }
-  .stack .card .v em { font-style: italic; color: var(--accent); font-weight: 400;}
-  .stack .card p {
-    font-size: 12.5px; line-height: 1.55; color: var(--ink-2); margin: 10px 0 0;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14);
   }
 
-  /* Footer strip */
-  .sig {
-    margin-top: 72px; padding-top: 24px;
-    border-top: 1px solid var(--ink);
-    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  .mark-dot::after {
+    content: "";
+    position: absolute;
+    inset: auto 4px 4px auto;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--paper);
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: clamp(14px, 2vw, 26px);
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .nav-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .nav-meta strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .hero {
+    padding: clamp(72px, 10vw, 118px) 0 clamp(56px, 8vw, 84px);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+    gap: clamp(34px, 5vw, 70px);
+    align-items: end;
+  }
+
+  .hero-kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    width: min(100%, 10.4ch);
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+    font-size: clamp(3.8rem, 7vw, 7rem);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .hero p {
+    max-width: 47ch;
+    margin: 26px 0 0;
+    color: var(--ink-2);
+    font-size: clamp(1rem, 1.3vw, 1.08rem);
+    line-height: 1.72;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    box-shadow: 0 18px 40px rgba(14, 18, 26, 0.12);
+  }
+
+  .hero-board {
+    position: relative;
+    min-height: 520px;
+  }
+
+  .hero-panel {
+    position: absolute;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 28px 90px rgba(16, 20, 29, 0.12);
+  }
+
+  .hero-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(13, 18, 28, 0.08), rgba(13, 18, 28, 0.68));
+    z-index: 1;
+  }
+
+  .hero-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.18) contrast(1.12) saturate(0.88);
+    transition: transform 700ms ease, filter 700ms ease;
+  }
+
+  .hero-panel:hover img {
+    transform: scale(1.06);
+    filter: grayscale(0.04) contrast(1.06) saturate(0.96);
+  }
+
+  .hero-panel .panel-copy {
+    position: absolute;
+    inset: auto 22px 22px 22px;
+    z-index: 2;
+    color: var(--paper);
+  }
+
+  .hero-panel strong {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .hero-panel span {
+    display: block;
+    margin-top: 10px;
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.96;
+  }
+
+  .panel-one {
+    inset: 24px 46px auto auto;
+    width: min(70%, 340px);
+    height: 300px;
+    transform: rotate(-6deg);
+  }
+
+  .panel-two {
+    inset: 140px auto auto 0;
+    width: min(58%, 270px);
+    height: 236px;
+    transform: rotate(4deg);
+  }
+
+  .panel-three {
+    inset: auto 10px 24px auto;
+    width: min(74%, 360px);
+    height: 260px;
+  }
+
+  .signal-bar {
+    display: flex;
     flex-wrap: wrap;
+    gap: 12px 22px;
+    padding: 18px 0 0;
+    border-top: 1px solid var(--surface-line);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
   }
-  .sig .left {
-    font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1.3;
-    color: var(--ink); max-width: 40ch;
-  }
-  .sig .right {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--ink-3); text-align: right;
-  }
-  .sig .right b { color: var(--ink); font-weight: 500;}
 
-  @media (max-width: 780px) {
-    .contents { grid-template-columns: 1fr; }
-    .item { border-right: none; }
-    .two-col, .stack { grid-template-columns: 1fr; }
+  .signal-bar span {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .signal-bar span::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: var(--surface-strong);
+  }
+
+  .section {
+    padding: clamp(64px, 9vw, 104px) 0;
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 340px);
+    gap: 42px;
+    align-items: end;
+    margin-bottom: 34px;
+  }
+
+  .section-kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(2.9rem, 5vw, 5.2rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+    max-width: 10ch;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 400;
+  }
+
+  .section-copy {
+    color: var(--ink-2);
+    font-size: 1rem;
+    line-height: 1.72;
+    max-width: 33ch;
+  }
+
+  .artifact-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: 18px;
+  }
+
+  .artifact-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 280px;
+    padding: 22px;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.54)),
+      color-mix(in oklab, var(--paper) 84%, white);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: transform 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+  }
+
+  .artifact-card:hover,
+  .artifact-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 72px rgba(18, 22, 30, 0.12);
+    border-color: rgba(255, 255, 255, 0.94);
+  }
+
+  .artifact-card::before {
+    content: "";
+    position: absolute;
+    inset: auto -18% -38% auto;
+    width: 220px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, color-mix(in oklab, var(--accent) 12%, transparent), transparent 68%);
+  }
+
+  .artifact-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0 45%, rgba(255, 255, 255, 0.1) 100%);
+    pointer-events: none;
+  }
+
+  .artifact-span-2 { grid-column: span 2; }
+  .artifact-span-3 { grid-column: span 3; }
+  .artifact-span-6 { grid-column: span 6; }
+
+  .artifact-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: start;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .artifact-meta strong {
+    color: var(--accent-ink);
+    font-weight: 500;
+  }
+
+  .artifact-arrow {
+    color: var(--ink-3);
+    font-size: 16px;
+    transition: transform 320ms ease, color 320ms ease;
+  }
+
+  .artifact-card:hover .artifact-arrow {
+    transform: translate(4px, -4px);
+    color: var(--ink);
+  }
+
+  .artifact-card h3 {
+    position: relative;
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 2.4vw, 2.8rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.94;
+    max-width: 12ch;
+  }
+
+  .artifact-card h3 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .artifact-card p {
+    position: relative;
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.68;
+    max-width: 36ch;
+  }
+
+  .artifact-card .look {
+    position: relative;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px dashed var(--surface-strong);
+    color: var(--ink-2);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .artifact-card .look strong {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .artifact-card.dark {
+    background:
+      radial-gradient(circle at 100% 0, rgba(255, 255, 255, 0.08), transparent 40%),
+      linear-gradient(145deg, color-mix(in oklab, var(--ink) 96%, #08101a), color-mix(in oklab, var(--primary) 44%, var(--ink)));
+    border-color: rgba(255, 255, 255, 0.12);
+    color: var(--paper);
+  }
+
+  .artifact-card.dark .artifact-meta,
+  .artifact-card.dark p,
+  .artifact-card.dark .look,
+  .artifact-card.dark .look strong {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .artifact-card.dark .artifact-meta strong,
+  .artifact-card.dark h3 {
+    color: var(--paper);
+  }
+
+  .artifact-card.dark .artifact-arrow {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .system-map {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .map-card,
+  .next-card {
+    padding: 24px;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.64);
+    box-shadow: var(--card-shadow);
+  }
+
+  .map-card strong,
+  .next-card strong {
+    display: block;
+    margin-bottom: 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+
+  .map-card h3,
+  .next-card h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+
+  .map-card p,
+  .next-card p {
+    margin: 14px 0 0;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 42ch;
+  }
+
+  .stack-list {
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .stack-item {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--surface-strong);
+  }
+
+  .stack-item:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .stack-item strong {
+    margin: 0;
+    color: var(--ink-3);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .stack-item span {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.96;
+  }
+
+  .stack-item p {
+    margin: 8px 0 0;
+    color: var(--ink-2);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  footer {
+    padding: 30px 0 56px;
+  }
+
+  .footer-shell {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px 24px;
+    padding-top: 22px;
+    border-top: 1px solid var(--surface-line);
+  }
+
+  .footer-quote {
+    max-width: 28ch;
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-style: italic;
+    line-height: 1.38;
+  }
+
+  .footer-meta {
+    color: var(--ink-3);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  .footer-meta strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  @media (max-width: 1120px) {
+    .hero-grid,
+    .section-head,
+    .system-map {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-board {
+      min-height: 460px;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .nav-pill {
+      grid-template-columns: auto auto;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .nav-meta {
+      grid-column: 1 / -1;
+      justify-content: space-between;
+    }
+
+    .artifact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .artifact-span-2,
+    .artifact-span-3,
+    .artifact-span-6 {
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .floating-nav {
+      top: 12px;
+      padding-top: 12px;
+    }
+
+    .nav-pill {
+      gap: 14px;
+      padding: 14px 16px;
+    }
+
+    .hero h1,
+    .section-title {
+      width: auto;
+      max-width: none;
+      font-size: clamp(3rem, 16vw, 5rem);
+    }
+
+    .hero-board {
+      min-height: 400px;
+    }
+
+    .panel-one,
+    .panel-two,
+    .panel-three {
+      width: 72%;
+    }
+
+    .panel-two {
+      inset: 110px auto auto 0;
+    }
+
+    .stack-item {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-shell {
+      flex-direction: column;
+    }
+
+    .footer-meta {
+      text-align: left;
+    }
   }
 </style>
 </head>
 <body>
 
-<div class="page">
-
-  <!-- MASTHEAD -->
-  <header class="masthead">
-    <div class="brand">
-      <div class="mark"><span class="mark-dot" aria-hidden="true"></span>Pawpoint</div>
+<div class="wrap floating-nav">
+  <nav class="nav-pill" aria-label="Package navigation">
+    <a class="brand" href="#top">
+      <span class="mark-dot" aria-hidden="true"></span>
+      <span>Pawpoint</span>
+    </a>
+    <div class="nav-links">
+      <a href="#surfaces">Surfaces</a>
+      <a href="Landing Page.html">Landing</a>
+      <a href="Customer App.html">Customer</a>
+      <a href="Ops Console.html">Ops</a>
     </div>
-    <div class="meta">
-      Concept package · v1<br>
-      <b>Apr 2026</b> · Bangkok
+    <div class="nav-meta">
+      <span><strong>Concept package</strong></span>
+      <span>Apr 2026 / Bangkok</span>
     </div>
-  </header>
+  </nav>
+</div>
 
-  <!-- HERO -->
+<main id="top">
   <section class="hero">
-    <div class="eye">Index &amp; handoff note</div>
-    <h1>Seven artifacts, one <em>receipt</em>.</h1>
-    <p class="lede">
-      Pawpoint is a booking spine for Bangkok's pet-care market — built around <b>Shield</b>, a refundable deposit that makes every confirmation real. This package is the whole argument: one customer app, one merchant console, one ops room, a brand layer, a stakeholder one-pager, and a public landing page. Everything here is a working prototype package — open the surfaces, inspect the tweaks, and look at the numbers. Start wherever is useful; the pages cross-reference each other where the details rhyme.
-    </p>
-  </section>
-
-  <!-- SIX ARTIFACTS -->
-  <div class="contents">
-
-    <a class="item" href="Pawpoint Design System.html">
-      <div class="num">01 <span class="dash"></span> Foundations</div>
-      <div class="arrow">↗</div>
-      <h2>The <em>design system</em>.</h2>
-      <div class="format">Format · <b>Browser page</b> · reference</div>
-      <p>Tokens, type, color, components, motion, the brand story, and the four mini-posters. The vocabulary every other artifact speaks.</p>
-      <div class="look">
-        <b>What to look at</b>
-        Shield badge states, the copper accent treatment, the Thai/English type pairing, and the &ldquo;receipts, not promises&rdquo; brand posters at the bottom.
-      </div>
-    </a>
-
-    <a class="item" href="Customer App.html">
-      <div class="num">02 <span class="dash"></span> Customer</div>
-      <div class="arrow">↗</div>
-      <h2>The pet-parent <em>app</em>.</h2>
-      <div class="format">Format · <b>iPhone prototype</b> · 15 screens · guided walkthrough</div>
-      <p>Discover shops, book in three taps, scan-to-arrive QR, pet profile with groomer memory, bilingual TH/EN. Scroll through the four flows to see every booking outcome — instant confirm, pending, and declined.</p>
-      <div class="look">
-        <b>What to look at</b>
-        The booking flow (Home → Shop → Book → Confirm), the Shield receipt, and the arrival QR screen — that's the whole Pawpoint loop in 90 seconds.
-      </div>
-    </a>
-
-    <a class="item" href="Merchant App.html">
-      <div class="num">03 <span class="dash"></span> Merchant</div>
-      <div class="arrow">↗</div>
-      <h2>The shop <em>console</em>.</h2>
-      <div class="format">Format · <b>iPad prototype</b> · 8 screens · guided walkthrough</div>
-      <p>Today's timeline, a kanban board for groomers in motion, pending-requests triage, scan-to-arrive handoff, payouts. Designed to live on a counter and be glanceable from across the room.</p>
-      <div class="look">
-        <b>What to look at</b>
-        The Today view (left rail + timeline), the scan modal, and the payout reconciliation — where the &ldquo;my money isn't sitting in a tab&rdquo; feeling lives.
-      </div>
-    </a>
-
-    <a class="item" href="Ops Console.html">
-      <div class="num">04 <span class="dash"></span> Ops</div>
-      <div class="arrow">↗</div>
-      <h2>The <em>control room</em>.</h2>
-      <div class="format">Format · <b>Desktop prototype</b> · 6 screens · guided walkthrough</div>
-      <p>Network pulse, stuck-booking triage, neighbourhood coverage map, Shield disputes, onboarding pipeline. Used daily by three roles — Ops, BD, and the founder's morning glance.</p>
-      <div class="look">
-        <b>What to look at</b>
-        The pulse dashboard (top-left is always &ldquo;is the network healthy&rdquo;) and the disputes queue, where Shield edge-cases get resolved in under a minute.
-      </div>
-    </a>
-
-    <a class="item" href="Stakeholder One Pager.html">
-      <div class="num">05 <span class="dash"></span> Narrative</div>
-      <div class="arrow">↗</div>
-      <h2>The stakeholder <em>one-pager</em>.</h2>
-      <div class="format">Format · <b>A3 landscape</b> · printable</div>
-      <p>The whole argument on a single sheet: problem, mechanism (Shield), product surfaces, 90-day numbers, interview quotes, per-booking economics, 12-week timeline, and the ask.</p>
-      <div class="look">
-        <b>What to look at</b>
-        Read the lede, then jump to the per-booking math (column three, bottom) and the timeline (column four). Everything else is supporting evidence.
-      </div>
-    </a>
-
-    <a class="item" href="Landing Page.html">
-      <div class="num">06 <span class="dash"></span> Public</div>
-      <div class="arrow">↗</div>
-      <h2>The <em>landing page</em>.</h2>
-      <div class="format">Format · <b>Browser page</b> · marketing</div>
-      <p>The public surface — the &ldquo;pet parents arrive here&rdquo; page. Hero, Shield explainer, shop directory preview, FAQ, store links. Same vocabulary as the rest, calibrated for first-time visitors.</p>
-      <div class="look">
-        <b>What to look at</b>
-        The hero treatment, the Shield section halfway down (same three-state explainer as the one-pager), and how the page handles Thai/English without feeling translated.
-      </div>
-    </a>
-
-    <a class="item" href="CEO Demo Deck.html" style="grid-column:span 2">
-      <div class="num">07 <span class="dash"></span> Pitch</div>
-      <div class="arrow">↗</div>
-      <h2>The <em>CEO demo deck</em>.</h2>
-      <div class="format">Format · <b>Browser slides</b> · 10 slides · investor / partner pitch</div>
-      <p>The full Pawpoint argument in ten slides: problem, mechanism (Shield), three surfaces, 90-day metrics, per-booking economics, and the ask. Same language as the one-pager, built for a room rather than a desk.</p>
-      <div class="look">
-        <b>What to look at</b>
-        Slide 4 (the Shield mechanic) and slide 7 (per-booking math). The two slides that answer every VC&rsquo;s first two questions in under two minutes.
-      </div>
-    </a>
-
-  </div>
-
-  <!-- HOW IT FITS TOGETHER -->
-  <section class="section">
-    <div class="eye">How it fits together</div>
-    <h3>One <em>spine</em>, seven surfaces.</h3>
-    <div class="two-col">
+    <div class="wrap hero-grid">
       <div>
-        <p>Every artifact shares the same tokens, the same Shield mechanic, the same Bangkok-specific copy. The <b>design system</b> is the source of truth: the other six consume it. When you see copper, it's the same copper. When you see a Shield badge, it behaves the same way.</p>
-        <p>The three product surfaces (<b>Customer</b>, <b>Merchant</b>, <b>Ops</b>) are three views of one booking. A booking created on the customer app lights up as a pending request on the merchant iPad, and shows up on the ops pulse if something goes wrong.</p>
-        <p>The <b>one-pager</b> is the pitch and the <b>landing page</b> is the public face — both tell the same story at different altitudes.</p>
+        <div class="hero-kicker">Prototype handoff and artifact map</div>
+        <h1>Seven <em>surfaces</em>, one operating story.</h1>
+        <p>Pawpoint is a booking spine for Bangkok pet grooming, built around a trust model that turns soft confirmations into explicit states. This package is the full argument: design system, customer flow, merchant board, ops control room, stakeholder narrative, public landing page, and deck. Use it as a guided product proof, not a loose pile of mocks.</p>
+        <a class="hero-cta" href="#surfaces">Open the surfaces</a>
       </div>
-      <div>
-        <ul>
-          <li>
-            <div class="k">Shared</div>
-            <div class="v">Tokens, type, Shield mechanic, copy style <em>— all five product artifacts link to <code>shared/pawpoint-tokens.css</code></em></div>
-          </li>
-          <li>
-            <div class="k">Cross-ref</div>
-            <div class="v">Each surface calls out the others by name <em>— booking IDs, shop names, and pet names repeat across the three product artifacts</em></div>
-          </li>
-          <li>
-            <div class="k">Localisation</div>
-            <div class="v">Bilingual Thai/English throughout <em>— toggle via Tweaks on the customer app; Thai is primary in shop-facing surfaces</em></div>
-          </li>
-          <li>
-            <div class="k">Fidelity</div>
-            <div class="v">Hi-fi guided walkthroughs for the three product surfaces <em>— one-pager and landing page are pixel-final print/web</em></div>
-          </li>
-        </ul>
+
+      <div class="hero-board" aria-hidden="true">
+        <figure class="hero-panel panel-one">
+          <img src="shared/images/index/panel-landing.png" alt="">
+          <figcaption class="panel-copy">
+            <strong>Public surface</strong>
+            <span>Landing page</span>
+          </figcaption>
+        </figure>
+        <figure class="hero-panel panel-two">
+          <img src="shared/images/index/panel-customer.png" alt="">
+          <figcaption class="panel-copy">
+            <strong>Customer flow</strong>
+            <span>Booking, hold, repeat</span>
+          </figcaption>
+        </figure>
+        <figure class="hero-panel panel-three">
+          <img src="shared/images/index/panel-ops.png" alt="">
+          <figcaption class="panel-copy">
+            <strong>Internal control</strong>
+            <span>Ops and merchant trust</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="wrap signal-bar">
+      <span>Shared tokens</span>
+      <span>Named booking states</span>
+      <span>Bangkok launch slice</span>
+      <span>Customer, merchant, ops coherence</span>
+    </div>
+  </section>
+
+  <section class="section" id="surfaces">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Artifact directory</div>
+          <h2 class="section-title">Open what matters, in the order the argument needs it.</h2>
+        </div>
+        <div class="section-copy">The package is designed to read from vocabulary to workflow to proof. Start with the design system if you want the visual language, with the landing page if you want the public story, or with the product surfaces if you want to inspect the booking mechanics directly.</div>
+      </div>
+
+      <div class="artifact-grid">
+        <a class="artifact-card artifact-span-2" href="Pawpoint Design System.html">
+          <div class="artifact-meta">
+            <span><strong>Foundations</strong> / browser page</span>
+            <span class="artifact-arrow" aria-hidden="true">&nearr;</span>
+          </div>
+          <h3>The <em>design system</em>.</h3>
+          <p>Tokens, typography, motion, brand rules, and the shared product grammar every other artifact speaks.</p>
+          <div class="look">
+            <strong>What to inspect</strong>
+            Shield badge behavior, the copper trust accent, and the typography pair that keeps the system editorial without slowing the interfaces down.
+          </div>
+        </a>
+
+        <a class="artifact-card artifact-span-2" href="Customer App.html">
+          <div class="artifact-meta">
+            <span><strong>Customer</strong> / 15-screen prototype</span>
+            <span class="artifact-arrow" aria-hidden="true">&nearr;</span>
+          </div>
+          <h3>The pet-parent <em>app</em>.</h3>
+          <p>First-run clarity, routine speed, request-confirm honesty, and one-tap repeat booking for Bangkok pet owners.</p>
+          <div class="look">
+            <strong>What to inspect</strong>
+            The booking loop from discovery to confirmation, then the repeat flow that makes the second appointment feel materially faster than chat.
+          </div>
+        </a>
+
+        <a class="artifact-card artifact-span-2" href="Merchant App.html">
+          <div class="artifact-meta">
+            <span><strong>Merchant</strong> / iPad workflow</span>
+            <span class="artifact-arrow" aria-hidden="true">&nearr;</span>
+          </div>
+          <h3>The shop <em>console</em>.</h3>
+          <p>Truthful availability, request review, offline booking capture, and the board a merchant could plausibly treat as the real schedule.</p>
+          <div class="look">
+            <strong>What to inspect</strong>
+            Today view, pending review handling, and payout or trust-sensitive moments that must feel operationally safe.
+          </div>
+        </a>
+
+        <a class="artifact-card artifact-span-2 dark" href="Ops Console.html">
+          <div class="artifact-meta">
+            <span><strong>Ops</strong> / desktop prototype</span>
+            <span class="artifact-arrow" aria-hidden="true">&nearr;</span>
+          </div>
+          <h3>The internal <em>control room</em>.</h3>
+          <p>Launch health, incident triage, override safety, merchant recovery, and the operational surface that keeps trust-sensitive edge cases inside one workspace.</p>
+          <div class="look">
+            <strong>What to inspect</strong>
+            Pulse dashboard hierarchy, booking investigation flow, and how manual intervention stays permissioned and auditable.
+          </div>
+        </a>
+
+        <a class="artifact-card artifact-span-3" href="Stakeholder One Pager.html">
+          <div class="artifact-meta">
+            <span><strong>Narrative</strong> / printable brief</span>
+            <span class="artifact-arrow" aria-hidden="true">&nearr;</span>
+          </div>
+          <h3>The stakeholder <em>one-pager</em>.</h3>
+          <p>The problem, the shield mechanic, the product surfaces, early proof points, and the near-term ask compressed into one high-density document for review rooms and offline circulation.</p>
+          <div class="look">
+            <strong>What to inspect</strong>
+            Lead story, booking economics, and the way the argument compresses without losing the operational truth.
+          </div>
+        </a>
+
+        <a class="artifact-card artifact-span-3" href="Landing Page.html">
+          <div class="artifact-meta">
+            <span><strong>Public</strong> / marketing site</span>
+            <span class="artifact-arrow" aria-hidden="true">&nearr;</span>
+          </div>
+          <h3>The <em>landing page</em>.</h3>
+          <p>The public explanation layer. Premium, static, trust-first, and explicit that booking happens in the app rather than on the website.</p>
+          <div class="look">
+            <strong>What to inspect</strong>
+            Hero clarity, trust framing, merchant proof, and how the launch wedge reads as deliberate rather than constrained.
+          </div>
+        </a>
+
+        <a class="artifact-card artifact-span-6" href="CEO Demo Deck.html">
+          <div class="artifact-meta">
+            <span><strong>Pitch</strong> / browser deck</span>
+            <span class="artifact-arrow" aria-hidden="true">&nearr;</span>
+          </div>
+          <h3>The CEO <em>demo deck</em>.</h3>
+          <p>A room-ready version of the same story: why Bangkok grooming booking is still broken, how the shield mechanic changes the economics, what the three surfaces prove, and what the business gets if the trust model holds.</p>
+          <div class="look">
+            <strong>What to inspect</strong>
+            The shield slide, product surface framing, and the economic slide that answers the first investor questions without drifting away from the launch slice.
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- WHAT'S NEXT -->
   <section class="section">
-    <div class="eye">Where it goes next</div>
-    <h3>Three things to <em>sharpen</em> before the Feb ship.</h3>
+    <div class="wrap system-map">
+      <article class="map-card">
+        <strong>How it fits together</strong>
+        <h3>One spine, seven surfaces.</h3>
+        <p>The design system sets the language. Customer, merchant, and ops express one booking from three roles. The one-pager and deck compress the same argument for review. The landing page explains the wedge publicly without creating a fake web product.</p>
+        <div class="stack-list">
+          <div class="stack-item">
+            <strong>Shared</strong>
+            <div>
+              <span>Tokens, typography, and state language</span>
+              <p>When shield, hold, review, and repeat appear in one surface, they mean the same thing everywhere else.</p>
+            </div>
+          </div>
+          <div class="stack-item">
+            <strong>Cross-ref</strong>
+            <div>
+              <span>Pet names, merchants, and edge cases recur on purpose</span>
+              <p>The package is stitched so stakeholders can trace one story across public, customer, merchant, and ops views.</p>
+            </div>
+          </div>
+          <div class="stack-item">
+            <strong>Boundary</strong>
+            <div>
+              <span>The website sells the app. It does not replace it.</span>
+              <p>That constraint is enforced across the package so the launch slice stays coherent.</p>
+            </div>
+          </div>
+        </div>
+      </article>
 
-    <div class="stack">
-      <div class="card">
-        <div class="k">01 · Shield v2</div>
-        <div class="v">Delayed <em>capture</em>, not pre-auth.</div>
-        <p>Move from day-of pre-authorisation to 72-hour delayed capture. Halves chargebacks; removes the &ldquo;why is there a charge on my card&rdquo; support thread.</p>
-      </div>
-      <div class="card">
-        <div class="k">02 · Cat vertical</div>
-        <div class="v">Separate <em>discovery</em> flow.</div>
-        <p>Six feline-specialist shops are already onboard. They need their own filter, their own landing surface, and cat-specific service taxonomies. Separate the flow before it contaminates the default.</p>
-      </div>
-      <div class="card">
-        <div class="k">03 · Vet wedge</div>
-        <div class="v">Same Shield, <em>new</em> category.</div>
-        <p>Bangkok's veterinary bookings look exactly like grooming with one extra field. Pilot in Feb with three clinics. If Shield holds up for shots and check-ups, the market doubles overnight.</p>
-      </div>
+      <article class="next-card">
+        <strong>Next sharpeners</strong>
+        <h3>Three things that matter before a tighter ship decision.</h3>
+        <div class="stack-list">
+          <div class="stack-item">
+            <strong>Shield v2</strong>
+            <div>
+              <span>Refine the payment protection mechanics.</span>
+              <p>Push harder on the exact balance between authorisation, deposit, and the support cost of customer confusion.</p>
+            </div>
+          </div>
+          <div class="stack-item">
+            <strong>Cat slice</strong>
+            <div>
+              <span>Separate feline discovery before it muddies the default path.</span>
+              <p>Specialist shops need their own rules, language, and confidence model rather than a buried filter.</p>
+            </div>
+          </div>
+          <div class="stack-item">
+            <strong>Ops proof</strong>
+            <div>
+              <span>Pressure-test overrides and timeout recovery.</span>
+              <p>The launch only works if support and operations can explain every trust-sensitive state without Slack archaeology.</p>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
+</main>
 
-  <!-- SIGNOFF -->
-  <footer class="sig">
-    <div class="left">
-      &ldquo;Receipts, not promises. That's the whole business.&rdquo;
-    </div>
-    <div class="right">
-      <b>Wit S.</b> · Founder &amp; CEO<br>
-      wit@pawpoint.co · +66 89 123 9000<br>
+<footer>
+  <div class="wrap footer-shell">
+    <div class="footer-quote">"Receipts, not promises. That is still the whole business."</div>
+    <div class="footer-meta">
+      <strong>Wit S.</strong><br>
+      Founder / CEO<br>
       Sathorn, Bangkok
     </div>
-  </footer>
-
-</div>
+  </div>
+</footer>
 
 </body>
 </html>

@@ -45,7 +45,7 @@
   --info-wash:    oklch(0.965 0.02 230);
 
   /* Type */
-  --sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
   --serif: "Fraunces", "Noto Serif", ui-serif, Georgia, serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   --thai: "Noto Sans Thai", var(--sans);

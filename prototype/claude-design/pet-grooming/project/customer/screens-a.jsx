@@ -1,5 +1,13 @@
 // customer/screens-a.jsx — Flow A (Welcome) + Flow B (Discover/Book)
 
+const CUSTOMER_MEDIA = {
+  petDash: '../shared/images/customer/pet-dash.png',
+  shopAroon: '../shared/images/customer/shop-aroon.png',
+  shopFluffRoom: '../shared/images/customer/shop-fluff-room.png',
+  shopSoiDog: '../shared/images/customer/shop-soi-dog.png',
+  shopBarksBubbles: '../shared/images/customer/shop-barks-bubbles.png',
+};
+
 // ─── 01 Welcome ─────────────────────────────────────────
 function Screen01_Welcome(){return(
   <div className="screen fill">
@@ -86,7 +94,7 @@ function Screen04_Pet(){return(
       <p className="sc-sub">Shops use this to quote accurate time and price.</p>
 
       <div style={{display:'flex',alignItems:'center',gap:14,marginTop:6}}>
-        <div className="pet-ring lg">D</div>
+        <div className="pet-photo" style={{'--media-image':`url('${CUSTOMER_MEDIA.petDash}')`}}><span>D</span></div>
         <div style={{flex:1}}>
           <div style={{fontFamily:'var(--serif)',fontSize:22,fontWeight:500}}>Dash</div>
           <div className="sub" style={{fontSize:12}}>Tap to add a photo</div>
@@ -148,7 +156,7 @@ function Screen05_Home(){return(
 
       <div style={{display:'flex',flexDirection:'column',gap:10}}>
         <div className="shop-row">
-          <div className="thumb"><div className="dot"/></div>
+          <div className="thumb photo" style={{'--media-image':`url('${CUSTOMER_MEDIA.shopAroon}')`}}><div className="dot"/></div>
           <div>
             <h4>Aroon Grooming <span className="th" style={{fontWeight:400,color:'var(--ink-3)',fontSize:12,fontFamily:'var(--thai)'}}>อรุณ</span></h4>
             <div className="meta"><b>★ 4.9</b><Dot color="var(--ink-3)"/><span>0.4 km · Saladaeng</span><Dot color="var(--ink-3)"/><span className="status s-instant" style={{padding:'2px 6px',fontSize:9}}>Instant confirm</span></div>
@@ -158,7 +166,7 @@ function Screen05_Home(){return(
           </div>
         </div>
         <div className="shop-row">
-          <div className="thumb" style={{background:'linear-gradient(180deg,var(--accent-wash),var(--paper-3))'}}><div className="dot" style={{background:'var(--warn)'}}/></div>
+          <div className="thumb photo" style={{'--media-image':`url('${CUSTOMER_MEDIA.shopFluffRoom}')`}}><div className="dot" style={{background:'var(--warn)'}}/></div>
           <div>
             <h4>The Fluff Room</h4>
             <div className="meta"><b>★ 4.7</b><Dot color="var(--ink-3)"/><span>0.8 km</span><Dot color="var(--ink-3)"/><span className="status s-pend-m" style={{padding:'2px 6px',fontSize:9}}>Confirms within 1h</span></div>
@@ -168,7 +176,7 @@ function Screen05_Home(){return(
           </div>
         </div>
         <div className="shop-row">
-          <div className="thumb" style={{background:'linear-gradient(180deg,var(--primary-wash),var(--paper-3))'}}/>
+          <div className="thumb photo" style={{'--media-image':`url('${CUSTOMER_MEDIA.shopSoiDog}')`}}/>
           <div>
             <h4>Soi Dog Studio <span className="th" style={{fontWeight:400,color:'var(--ink-3)',fontSize:12,fontFamily:'var(--thai)'}}>ซอยหมา</span></h4>
             <div className="meta"><b>★ 4.8</b><Dot color="var(--ink-3)"/><span>1.2 km · Silom</span></div>
@@ -192,7 +200,7 @@ function Screen06_Shop(){return(
         <div className="right"><div className="sc-ic">♡</div><div className="sc-ic">↗</div></div>
       </div>
 
-      <div className="cover">
+      <div className="cover" style={{'--cover-image':`url('${CUSTOMER_MEDIA.shopAroon}')`}}>
         <div className="row between" style={{alignItems:'flex-start'}}>
           <div className="mono">Saladaeng · est. 2019</div>
           <span className="status s-instant" style={{background:'rgba(255,255,255,.14)',color:'#fff',backdropFilter:'blur(6px)'}}>Instant confirm</span>

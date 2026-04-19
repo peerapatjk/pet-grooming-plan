@@ -3,698 +3,2118 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pawpoint — Bangkok pet grooming, booked right</title>
-<meta name="description" content="Pawpoint is a Bangkok-first pet grooming booking app built around truthful availability, fast repeat booking, and clear payment protection." />
+<title>Pawpoint | Bangkok pet grooming, booked before the chat spiral starts</title>
+<meta name="description" content="Pawpoint is a Bangkok-first grooming booking app for routine speed, truthful review flows, and plain-language payment protection." />
 <link rel="icon" href="shared/pawpoint-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared/pawpoint-tokens.css">
 <style>
-  body{background:var(--paper)}
-  .wrap{max-width:1280px;margin:0 auto;padding:0 40px}
-
-  /* Top nav */
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;position:sticky;top:0;background:color-mix(in oklab, var(--paper) 92%, transparent);backdrop-filter: blur(12px);z-index:50;border-bottom:1px solid transparent}
-  .nav.scrolled{border-bottom-color:var(--border)}
-  .nav-links{display:flex;gap:28px;color:var(--ink-2);font-size:13px}
-  .nav-links a{text-decoration:none}
-  .nav-links a:hover{color:var(--ink)}
-  .nav-cta{display:flex;gap:10px;align-items:center}
-  .lang-toggle{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase;display:flex;gap:6px;align-items:center}
-  .lang-toggle b{color:var(--ink)}
-
-  /* Hero */
-  .hero{padding:60px 0 96px;position:relative;overflow:hidden}
-  .hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:32px}
-  .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:var(--paper-2);border:1px solid var(--border);border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
-  .hero-badge .tiny-dot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
-  .hero-grid{display:grid;grid-template-columns: 1.2fr 1fr;gap:64px;align-items:end}
-  .hero h1{
-    font-family:var(--serif);font-weight:500;
-    font-size: clamp(52px, 6.2vw, 108px);
-    line-height: 1.0;letter-spacing:-0.035em;color:var(--ink)
+  :root {
+    --page-max: 1440px;
+    --shell-gutter: clamp(24px, 4vw, 56px);
+    --chapter-space: clamp(7rem, 12vw, 12rem);
+    --surface-line: color-mix(in oklab, var(--ink) 10%, transparent);
+    --surface-strong: color-mix(in oklab, var(--ink) 18%, transparent);
+    --ink-soft: color-mix(in oklab, var(--ink) 82%, white);
+    --nav-shadow: 0 30px 80px rgba(18, 20, 27, 0.08);
+    --card-shadow: 0 24px 60px rgba(19, 23, 31, 0.1);
+    --hero-shadow: 0 40px 120px rgba(17, 20, 28, 0.22);
   }
-  .hero h1 em{font-style:italic;color:var(--primary);font-weight:400}
-  .hero-sub{margin-top:32px;font-size:19px;line-height:1.55;color:var(--ink-2);max-width:54ch}
-  .hero-ctas{margin-top:36px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-  .store{display:inline-flex;align-items:center;gap:12px;padding:10px 18px 10px 14px;border-radius:14px;background:var(--ink);color:var(--paper);text-decoration:none;min-height:56px}
-  .store .store-ic{width:28px;height:28px;flex:none;display:flex;align-items:center;justify-content:center}
-  .store .store-text{line-height:1.1}
-  .store .store-text small{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;display:block}
-  .store .store-text b{font-size:17px;font-weight:500;font-family:var(--serif);letter-spacing:-0.01em}
-  .hero-ctas .ghost-link{color:var(--ink-2);font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:8px 10px}
-  .hero-ctas .ghost-link::after{content:"→"}
 
-  /* Hero phones */
-  .hero-phones{position:relative;height:640px;display:flex;align-items:flex-end;justify-content:center}
-  .p-shell{width:280px;height:580px;border-radius:40px;background:#0c0e14;padding:10px;box-shadow: var(--shadow-lg);position:absolute}
-  .p-shell.back{transform:rotate(-6deg) translate(-80px, 30px);width:252px;height:530px;opacity:.92}
-  .p-shell.front{transform:rotate(4deg) translate(70px, 0)}
-  .p-screen{width:100%;height:100%;border-radius:32px;background:var(--paper);overflow:hidden;position:relative;display:flex;flex-direction:column}
-  .p-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:90px;height:24px;background:#0c0e14;border-radius:999px;z-index:3}
-  .p-status{padding:10px 22px 0;font-size:11px;font-weight:600;display:flex;justify-content:space-between;color:var(--ink)}
-  .phone-hero{padding:44px 16px 16px;display:flex;flex-direction:column;gap:12px;height:100%;overflow:hidden}
-  .phone-hero h5{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.02em;line-height:1.15}
-  .phone-hero .searchbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--border-strong);border-radius:999px;background:var(--paper);font-size:12px;color:var(--ink-3)}
-  .pill-bar{display:flex;gap:6px;overflow:hidden}
-  .pill{padding:6px 10px;background:var(--paper-3);border-radius:999px;font-size:11px;color:var(--ink-2)}
-  .pill.on{background:var(--primary);color:var(--paper)}
-  .pet-card-mini{padding:12px;border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg,var(--paper-2),var(--paper));display:flex;gap:10px;align-items:center}
-  .pet-card-mini .ring{width:38px;height:38px;border-radius:50%;background:var(--accent-wash);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);color:var(--accent-ink);font-size:15px;font-weight:500}
-  .pet-card-mini b{font-size:13px;font-weight:600;display:block}
-  .pet-card-mini span{font-size:11px;color:var(--ink-3)}
-  .repeat-card{background:var(--primary);color:var(--paper);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
-  .repeat-card .lbl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
-  .repeat-card .card-title{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:-0.01em;line-height:1.1}
-  .repeat-card .meta{display:flex;justify-content:space-between;font-size:11px;opacity:.9}
-  .repeat-card .cta{display:flex;justify-content:space-between;align-items:center;margin-top:2px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 18% 12%, color-mix(in oklab, var(--accent-wash) 90%, white) 0, transparent 32%),
+      radial-gradient(circle at 84% 14%, color-mix(in oklab, var(--primary-wash) 88%, white) 0, transparent 38%),
+      linear-gradient(180deg, color-mix(in oklab, var(--paper) 94%, white) 0%, var(--paper) 48%, color-mix(in oklab, var(--paper) 90%, var(--paper-2)) 100%);
+    color: var(--ink);
+    font-family: var(--sans);
+  }
 
-  /* Back phone content = confirmation */
-  .confirm-card{padding:44px 16px 16px;display:flex;flex-direction:column;gap:14px;height:100%}
-  .confirm-card .muted,
-  .detail-row .muted{color:var(--ink-2)}
-  .confirm-big{padding:22px 16px;border:1px solid var(--border);border-radius:14px;background:var(--primary-wash);display:flex;flex-direction:column;gap:10px;align-items:flex-start}
-  .confirm-big .status{background:var(--primary);color:var(--paper)}
-  .confirm-big .card-title{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.02em;line-height:1.1}
-  .confirm-big .muted{color:color-mix(in oklab, var(--primary-ink) 72%, white);font-weight:500}
-  .detail-row{display:flex;justify-content:space-between;padding:9px 0;border-top:1px dashed var(--border);font-size:12px}
-  .detail-row:first-of-type{border-top:0;padding-top:4px}
-  .detail-row b{font-weight:500}
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.08) 1px, transparent 0);
+    background-size: 18px 18px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 85%);
+  }
 
-  /* Proof strip */
-  .proof{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:40px;color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;flex-wrap:wrap}
-  .proof .item{display:flex;align-items:center;gap:10px}
-  .proof .item::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  img {
+    display: block;
+    width: 100%;
+  }
 
-  /* Section */
-  section{padding:120px 0;border-bottom:1px solid var(--border)}
-  .sec-top{display:grid;grid-template-columns: 180px 1fr 360px;gap:40px;align-items:baseline;margin-bottom:56px}
-  .sec-num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-3)}
-  .sec-title{font-family:var(--serif);font-size:52px;letter-spacing:-0.025em;line-height:1.05;font-weight:500;max-width:22ch}
-  .sec-kicker{color:var(--ink-2);font-size:15px;line-height:1.55}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-  /* Problem framing */
-  .problem-grid{display:grid;grid-template-columns: repeat(3,1fr);gap:24px}
-  .prob-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:var(--paper-2);min-height:260px;display:flex;flex-direction:column;gap:14px}
-  .prob-card .chat{display:flex;flex-direction:column;gap:6px;padding:10px 0}
-  .prob-card .mono{color:var(--ink-2)}
-  .msg{padding:7px 10px;border-radius:12px;font-size:12px;max-width:80%;line-height:1.35;color:var(--ink-2)}
-  .msg.them{background:var(--paper-3);align-self:flex-start;border-bottom-left-radius:4px}
-  .msg.me{background:var(--primary-wash);color:var(--primary-ink);align-self:flex-end;border-bottom-right-radius:4px}
-  .prob-card h3{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.02em}
-  .prob-card p{font-size:13px;color:var(--ink-2)}
+  .overflow-x-hidden { overflow-x: hidden; }
+  .w-full { width: 100%; }
+  .max-w-full { max-width: 100%; }
 
-  /* Difference — feature rows */
-  .diff-row{display:grid;grid-template-columns: 1fr 1.3fr;gap:64px;align-items:center;padding:72px 0;border-top:1px dashed var(--border)}
-  .diff-row:first-child{border-top:0;padding-top:0}
-  .diff-row.flip{grid-template-columns: 1.3fr 1fr}
-  .diff-row.flip .diff-visual{order:2}
-  .diff-row .num{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.14em;margin-bottom:16px}
-  .diff-row h3{font-family:var(--serif);font-weight:500;font-size:40px;letter-spacing:-0.025em;line-height:1.08;margin-bottom:16px}
-  .diff-row h3 em{font-style:italic;color:var(--primary)}
-  .diff-row p{color:var(--ink-2);font-size:15px;line-height:1.6;max-width:44ch}
-  .diff-row .bullets{margin-top:20px;display:flex;flex-direction:column;gap:10px}
-  .diff-row .bullets div{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2)}
-  .diff-row .bullets div::before{content:"";width:14px;height:14px;margin-top:3px;flex:none;background:var(--accent);mask: radial-gradient(circle at center, transparent 40%, black 41%);-webkit-mask: radial-gradient(circle at center, transparent 40%, black 41%)}
+  .wrap {
+    width: min(var(--page-max), calc(100% - (var(--shell-gutter) * 2)));
+    margin: 0 auto;
+  }
 
-  .diff-visual{border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;background:var(--paper-2);min-height:420px;display:flex;flex-direction:column;gap:16px;justify-content:center}
+  .floating-nav {
+    position: sticky;
+    top: 20px;
+    z-index: 60;
+    padding-top: 20px;
+  }
 
-  /* Visual 1 — timeline compare */
-  .timeline-compare{display:grid;gap:20px}
-  .tl{display:grid;grid-template-columns: 80px 1fr;gap:16px;align-items:center}
-  .tl .who{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
-  .tl .bar{display:flex;gap:3px;align-items:center}
-  .tl .seg{height:22px;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-size:10px;font-family:var(--mono);letter-spacing:.06em;color:var(--paper);white-space:nowrap}
-  .tl .seg.chat{background:var(--ink-3)}
-  .tl .seg.wait{background:var(--warn);color:var(--ink)}
-  .tl .seg.confirmed{background:var(--primary)}
-  .tl .seg.instant{background:color-mix(in oklab, var(--ok) 86%, black);color:var(--paper)}
-  .tl .mins{font-size:11px;color:var(--ink-2);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .nav-pill {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 16px 18px 16px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--paper) 82%, white);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--nav-shadow);
+    transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+  }
 
-  /* Visual 2 — instant vs pending */
-  .rail{display:grid;grid-template-columns: 1fr 1fr;gap:14px}
-  .rail-card{padding:20px;border-radius:14px;display:flex;flex-direction:column;gap:10px}
-  .rail-card.instant{background:var(--ok-wash);border:1px solid color-mix(in oklab, var(--ok) 30%, transparent)}
-  .rail-card.pending{background:var(--warn-wash);border:1px solid color-mix(in oklab, var(--warn) 30%, transparent)}
-  .rail-card .card-title{font-family:var(--serif);font-weight:500;font-size:18px;letter-spacing:-0.015em}
-  .rail-card p{font-size:12px;color:var(--ink-2);line-height:1.45}
-  .rail-card .status{align-self:flex-start}
-  .rail-card.instant .status{color:color-mix(in oklab, var(--ok) 84%, black);background:color-mix(in oklab, var(--ok-wash) 72%, white)}
-  .rail-card.pending .status{color:color-mix(in oklab, var(--info) 78%, black);background:color-mix(in oklab, var(--info-wash) 82%, white)}
+  .floating-nav.is-scrolled .nav-pill {
+    transform: translateY(-2px);
+    box-shadow: 0 36px 86px rgba(18, 20, 27, 0.11);
+    border-color: rgba(255, 255, 255, 0.94);
+  }
 
-  /* Visual 3 — repeat booking */
-  .repeat-vis{display:flex;flex-direction:column;gap:12px}
-  .repeat-vis .row2{display:flex;gap:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--paper);align-items:center;justify-content:space-between}
-  .repeat-vis .row2 .left{display:flex;gap:10px;align-items:center}
-  .repeat-vis .row2 .ring{width:36px;height:36px;border-radius:50%;background:var(--accent-wash);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);color:var(--accent-ink);font-weight:500;font-size:14px}
-  .repeat-vis .row2 b{font-size:13px;font-weight:500;display:block}
-  .repeat-vis .row2 span{font-size:11px;color:var(--ink-3)}
-  .repeat-vis .btn{padding:8px 14px;font-size:12px}
-  .repeat-vis .hint{font-size:11px;font-family:var(--mono);letter-spacing:.1em;color:var(--ink-2);text-align:center;padding-top:4px}
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    font-size: 18px;
+  }
 
-  /* Trust */
-  .trust-grid{display:grid;grid-template-columns: repeat(4,1fr);gap:20px}
-  .trust-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:var(--paper-2);display:flex;flex-direction:column;gap:14px;min-height:260px}
-  .trust-card .ic{width:32px;height:32px;border-radius:8px;background:var(--primary-wash);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:500}
-  .trust-card .card-title{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:-0.02em}
-  .trust-card p{font-size:13px;color:var(--ink-2);line-height:1.55}
-  .trust-card .meta{margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--ink-2);letter-spacing:.14em;text-transform:uppercase;padding-top:12px;border-top:1px dashed var(--border)}
+  .brand .mark-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--accent) 0 35%, var(--primary) 36% 100%);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14);
+    position: relative;
+  }
 
-  /* Merchant section */
-  .merchant{background:var(--ink);color:var(--paper)}
-  .merchant .sec-title{color:var(--paper)}
-  .merchant .sec-kicker{color:rgba(255,255,255,.7)}
-  .merchant .sec-num{color:rgba(255,255,255,.5)}
-  .merchant-grid{display:grid;grid-template-columns: 1fr 1.1fr;gap:56px;align-items:start}
-  .merchant-bullets{display:flex;flex-direction:column;gap:18px}
-  .m-bul{display:grid;grid-template-columns: 44px 1fr;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.08)}
-  .m-bul:first-child{border-top:0}
-  .m-bul .n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.52);padding-top:4px}
-  .m-bul .card-title{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:-0.015em;margin-bottom:4px;color:var(--paper)}
-  .m-bul p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.55}
-  .merchant-visual{border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);padding:20px;background:rgba(255,255,255,.03);display:flex;flex-direction:column;gap:14px}
-  .m-board-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
-  .m-board-head h5{font-family:var(--serif);font-weight:500;font-size:18px;color:var(--paper)}
-  .m-board-head span{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.14em;text-transform:uppercase}
-  .m-board{display:grid;grid-template-columns: 60px repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:8px;overflow:hidden}
-  .m-board .cell{background:var(--ink);padding:8px 10px;font-size:10px;color:rgba(255,255,255,.55);font-family:var(--mono);letter-spacing:.08em;min-height:48px}
-  .m-board .cell.h{background:#191b25;color:rgba(255,255,255,.35);text-transform:uppercase;font-size:9px}
-  .m-board .slot-m{background:var(--primary);color:var(--paper);padding:6px 8px;border-radius:4px;margin:3px;font-family:var(--sans);font-size:11px;line-height:1.2;font-weight:500}
-  .m-board .slot-m.pend{background:transparent;border:1px dashed rgba(255,255,255,.35);color:rgba(255,255,255,.7)}
-  .m-board .slot-m.hold{background:var(--accent);color:var(--ink)}
+  .brand .mark-dot::after {
+    content: "";
+    position: absolute;
+    inset: auto 4px 4px auto;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--paper);
+  }
 
-  /* Launch wedge */
-  .wedge-grid{display:grid;grid-template-columns: repeat(3,1fr);gap:24px}
-  .wedge-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;min-height:300px;display:flex;flex-direction:column;gap:18px;background:var(--paper-2)}
-  .wedge-card .num{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--accent-ink)}
-  .wedge-card h3{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-0.025em;line-height:1.1}
-  .wedge-card p{font-size:13px;color:var(--ink-2);line-height:1.6}
-  .wedge-card .not{margin-top:auto;padding-top:14px;border-top:1px dashed var(--border);font-size:11px;color:var(--ink-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em}
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: clamp(16px, 2vw, 28px);
+    font-size: 13px;
+    color: var(--ink-2);
+  }
 
-  /* Download CTA */
-  .cta-block{padding:140px 0;background:radial-gradient(ellipse at 80% 20%,var(--accent-wash) 0,transparent 50%),radial-gradient(ellipse at 0% 90%,var(--primary-wash) 0,transparent 55%),var(--paper);text-align:center}
-  .cta-block h2{font-family:var(--serif);font-weight:500;font-size: clamp(48px, 6vw, 92px);letter-spacing:-0.035em;line-height:1.0;max-width:18ch;margin:0 auto}
-  .cta-block h2 em{font-style:italic;color:var(--primary)}
-  .cta-block p{margin-top:24px;color:var(--ink-2);font-size:17px;max-width:48ch;margin-left:auto;margin-right:auto;line-height:1.55}
-  .cta-stores{margin-top:40px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .cta-fine{margin-top:24px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .nav-links a {
+    position: relative;
+    padding-bottom: 2px;
+  }
 
-  /* Footer */
-  footer{padding:64px 0 48px;background:var(--paper-2);border-top:1px solid var(--border)}
-  .foot-grid{display:grid;grid-template-columns: 1.5fr 1fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
-  .foot-grid .section-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px}
-  .foot-grid ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--ink-2)}
-  .foot-grid .lead{font-family:var(--serif);font-size:20px;line-height:1.35;color:var(--ink);letter-spacing:-0.015em;max-width:30ch;margin-top:14px}
-  .foot-bot{padding-top:32px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: var(--ink);
+    transition: transform 320ms ease;
+  }
 
-  @media (max-width: 900px){
-    .hero-grid,.merchant-grid,.trust-grid,.wedge-grid,.problem-grid,.diff-row,.diff-row.flip{grid-template-columns:1fr !important}
-    .hero-phones{height:auto;min-height:400px}
-    .sec-top{grid-template-columns:1fr}
-    .foot-grid{grid-template-columns:1fr 1fr}
-    .nav-links{display:none}
+  .nav-links a:hover::after,
+  .nav-links a:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lang-toggle {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .lang-toggle strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .nav-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  .chapter {
+    padding: var(--chapter-space) 0;
+    position: relative;
+  }
+
+  .chapter-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: end;
+    margin-bottom: clamp(36px, 6vw, 56px);
+  }
+
+  .chapter-kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 16px;
+  }
+
+  .chapter-title {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.96;
+    font-size: clamp(3rem, 5vw, 5.6rem);
+    max-width: 10.8ch;
+  }
+
+  .chapter-title em {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 400;
+  }
+
+  .chapter-text {
+    color: var(--ink-2);
+    font-size: clamp(1rem, 1.2vw, 1.05rem);
+    line-height: 1.7;
+    max-width: 34ch;
+  }
+
+  .hero {
+    padding-top: clamp(68px, 11vw, 112px);
+    padding-bottom: calc(var(--chapter-space) - 16px);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.28fr) minmax(300px, 0.72fr);
+    gap: clamp(40px, 5vw, 72px);
+    align-items: end;
+  }
+
+  .hero-intro {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 22px;
+  }
+
+  .hero-title {
+    width: min(100%, 14.8ch);
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(3.45rem, 6.5vw, 6.35rem);
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    text-wrap: balance;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 400;
+  }
+
+  .hero-inline {
+    display: inline-block;
+    width: clamp(5.8rem, 8.8vw, 7.4rem);
+    height: clamp(2.7rem, 4vw, 3.6rem);
+    margin: 0 0.12em;
+    vertical-align: 0.08em;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background:
+      linear-gradient(135deg, rgba(18, 22, 30, 0.08), rgba(18, 22, 30, 0.35)),
+      url("shared/images/landing/hero-photo.png") center / cover no-repeat;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+    filter: grayscale(0.18) contrast(1.12) saturate(0.88);
+  }
+
+  .hero-copy p {
+    max-width: 48ch;
+    margin: 28px 0 0;
+    color: var(--ink-soft);
+    font-size: clamp(1rem, 1.35vw, 1.18rem);
+    line-height: 1.72;
+  }
+
+  .hero-copy strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 32px;
+  }
+
+  .store-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 62px;
+    padding: 10px 18px 10px 16px;
+    border-radius: 18px;
+    border: 1px solid transparent;
+    transition: transform 280ms ease, box-shadow 280ms ease, background 280ms ease;
+  }
+
+  .store-btn:hover,
+  .store-btn:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(16, 19, 28, 0.12);
+  }
+
+  .store-btn.dark {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .store-btn.light {
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--ink);
+    border-color: rgba(16, 22, 30, 0.08);
+  }
+
+  .store-ic {
+    width: 28px;
+    height: 28px;
+    flex: none;
+    display: grid;
+    place-items: center;
+  }
+
+  .store-copy {
+    line-height: 1.02;
+  }
+
+  .store-copy small {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.72;
+  }
+
+  .store-copy strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-note {
+    margin-top: 18px;
+    color: var(--ink-3);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .hero-art {
+    min-height: 720px;
+    position: relative;
+  }
+
+  .hero-glow {
+    position: absolute;
+    inset: 10% 4% auto auto;
+    width: 72%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.62), transparent 38%),
+      radial-gradient(circle at 60% 60%, color-mix(in oklab, var(--accent) 24%, transparent), transparent 54%),
+      radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 78%);
+    filter: blur(28px);
+    opacity: 0.8;
+  }
+
+  .hero-photo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(100%, 470px);
+    aspect-ratio: 0.84 / 1;
+    padding: 18px;
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(18px);
+    box-shadow: var(--hero-shadow);
+    overflow: hidden;
+  }
+
+  .hero-photo img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 26px;
+    filter: grayscale(0.22) contrast(1.12) saturate(0.85);
+    transition: transform 700ms ease, filter 700ms ease;
+  }
+
+  .hero-photo:hover img,
+  .hero-photo:focus-within img {
+    transform: scale(1.05);
+    filter: grayscale(0.08) contrast(1.08) saturate(0.95);
+  }
+
+  .hero-floating-card,
+  .hero-state-card,
+  .hero-mini-rail {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 16px 40px rgba(19, 23, 31, 0.12);
+  }
+
+  .hero-floating-card {
+    top: 44px;
+    left: 12px;
+    width: min(68%, 310px);
+    padding: 18px 18px 16px;
+    border-radius: 22px;
+  }
+
+  .hero-card-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .hero-floating-card h2 {
+    margin: 16px 0 8px;
+    font-family: var(--serif);
+    font-size: 1.95rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+  }
+
+  .hero-floating-card p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .hero-state-card {
+    left: 0;
+    bottom: 112px;
+    width: min(62%, 280px);
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .hero-state-card .status {
+    margin-bottom: 12px;
+  }
+
+  .hero-state-card strong {
+    display: block;
+    font-size: 1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-state-card span {
+    display: block;
+    margin-top: 6px;
+    color: var(--ink-2);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .hero-mini-rail {
+    right: 24px;
+    top: 96px;
+    width: 150px;
+    padding: 16px 14px;
+    border-radius: 18px;
+  }
+
+  .mini-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--paper) 72%, white);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+
+  .mini-pill + .mini-pill {
+    margin-top: 8px;
+  }
+
+  .signal-strip {
+    padding-top: 16px;
+    border-top: 1px solid var(--surface-line);
+  }
+
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    border-top: 1px solid var(--surface-line);
+    border-bottom: 1px solid var(--surface-line);
+    background: rgba(255, 255, 255, 0.36);
+  }
+
+  .marquee-track {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 100%;
+    padding: 18px 0;
+    animation: marquee 26s linear infinite;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+
+  .marquee-item::after {
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: color-mix(in oklab, var(--ink) 18%, transparent);
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+
+  .interest {
+    border-top: 1px solid var(--surface-line);
+  }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: minmax(132px, auto);
+    grid-auto-flow: dense;
+    gap: 18px;
+  }
+
+  .bento-card {
+    position: relative;
+    padding: 26px;
+    border-radius: 28px;
+    border: 1px solid color-mix(in oklab, var(--ink) 8%, transparent);
+    background: rgba(255, 255, 255, 0.68);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+
+  .bento-card h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 2.1vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+  }
+
+  .bento-card p {
+    color: var(--ink-2);
+    font-size: 0.97rem;
+    line-height: 1.65;
+  }
+
+  .bento-card .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 14px;
+  }
+
+  .bento-card .eyebrow::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: color-mix(in oklab, var(--accent) 48%, transparent);
+  }
+
+  .span-3x2 {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+
+  .span-2x2 {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .bento-dark {
+    background:
+      radial-gradient(circle at 100% 0, rgba(255, 255, 255, 0.08), transparent 38%),
+      linear-gradient(145deg, color-mix(in oklab, var(--ink) 96%, #061018), color-mix(in oklab, var(--primary) 48%, var(--ink)));
+    border-color: rgba(255, 255, 255, 0.12);
+    color: var(--paper);
+  }
+
+  .bento-dark p,
+  .bento-dark .eyebrow,
+  .bento-dark .mini-meta,
+  .bento-dark .time-step span {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .bento-dark .eyebrow::before {
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .time-rail {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .time-step {
+    padding: 18px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .time-step strong {
+    display: block;
+    margin-bottom: 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .time-step span {
+    display: block;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .routine-board {
+    display: grid;
+    grid-template-columns: 86px 1fr;
+    gap: 16px;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .routine-board strong {
+    font-size: 2.2rem;
+    font-family: var(--serif);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+  }
+
+  .mini-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .accordion-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: 100%;
+  }
+
+  .accordion-rail {
+    display: flex;
+    gap: 10px;
+    min-height: 100%;
+    flex: 1;
+  }
+
+  .accordion-panel {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    transition: flex 700ms cubic-bezier(0.2, 0.7, 0.2, 1), transform 700ms ease;
+    isolation: isolate;
+  }
+
+  .accordion-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10, 14, 22, 0.18), rgba(10, 14, 22, 0.74)),
+      var(--panel-image) center / cover no-repeat;
+    transition: transform 700ms ease, filter 700ms ease;
+    filter: grayscale(0.32) contrast(1.08) saturate(0.9);
+  }
+
+  .accordion-panel:hover,
+  .accordion-panel:focus-within {
+    flex: 2.4 1 0;
+    transform: translateY(-2px);
+  }
+
+  .accordion-panel:hover::before,
+  .accordion-panel:focus-within::before {
+    transform: scale(1.05);
+    filter: grayscale(0.05) contrast(1.03) saturate(0.95);
+  }
+
+  .accordion-copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+    height: 100%;
+    padding: 22px 18px;
+    color: var(--paper);
+  }
+
+  .accordion-copy strong {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.94;
+  }
+
+  .accordion-copy span {
+    display: block;
+    max-width: 18ch;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .shield-flow {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .shield-step {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-top: 1px dashed var(--surface-strong);
+  }
+
+  .shield-step:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .shield-step strong {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+
+  .shield-step span {
+    display: block;
+    color: var(--ink-2);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .pending-stack {
+    display: grid;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .pending-card {
+    padding: 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--surface-line);
+  }
+
+  .pending-card strong {
+    display: block;
+    font-size: 1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .pending-card span {
+    display: block;
+    margin-top: 8px;
+    color: var(--ink-2);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .memory-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .memory-item {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 15px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--surface-line);
+  }
+
+  .memory-mark {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 24%, white), color-mix(in oklab, var(--primary) 20%, white));
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .memory-item strong {
+    display: block;
+    font-size: 0.98rem;
+    letter-spacing: -0.03em;
+  }
+
+  .memory-item span {
+    display: block;
+    margin-top: 6px;
+    color: var(--ink-2);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .desire {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08)),
+      radial-gradient(circle at 80% 20%, color-mix(in oklab, var(--accent-wash) 74%, transparent), transparent 38%);
+    border-top: 1px solid var(--surface-line);
+    border-bottom: 1px solid var(--surface-line);
+  }
+
+  .desire-shell {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 84px);
+    align-items: start;
+  }
+
+  .desire-copy {
+    position: sticky;
+    top: 132px;
+  }
+
+  .desire-copy .chapter-title {
+    max-width: 9.6ch;
+  }
+
+  .scrub-copy {
+    margin: 32px 0 18px;
+    max-width: 16ch;
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+
+  .scrub-word {
+    opacity: 0.12;
+  }
+
+  .desire-foot {
+    max-width: 30ch;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .story-gallery {
+    display: grid;
+    gap: 28px;
+  }
+
+  .story-card {
+    border-radius: 30px;
+    overflow: hidden;
+    background: color-mix(in oklab, var(--paper) 76%, white);
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    box-shadow: 0 26px 60px rgba(19, 23, 31, 0.09);
+  }
+
+  .story-image {
+    aspect-ratio: 1.4 / 1;
+    overflow: hidden;
+  }
+
+  .story-image img {
+    height: 100%;
+    object-fit: cover;
+    transform: scale(0.84);
+    opacity: 0.28;
+    filter: grayscale(1) contrast(1.12) brightness(0.92);
+    transition: transform 700ms ease;
+  }
+
+  .story-card:hover .story-image img,
+  .story-card:focus-within .story-image img {
+    transform: scale(1.05);
+  }
+
+  .story-body {
+    padding: 24px 24px 26px;
+  }
+
+  .story-body strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.95rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+  }
+
+  .story-body p {
+    margin: 12px 0 0;
+    color: var(--ink-2);
+    font-size: 0.98rem;
+    line-height: 1.68;
+    max-width: 40ch;
+  }
+
+  .merchant-band {
+    position: relative;
+    background:
+      radial-gradient(circle at 8% 10%, rgba(255, 255, 255, 0.07), transparent 30%),
+      linear-gradient(135deg, color-mix(in oklab, var(--ink) 96%, #061018), color-mix(in oklab, var(--primary) 40%, var(--ink)));
+    color: var(--paper);
+  }
+
+  .merchant-band::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%, transparent 78%, rgba(255, 255, 255, 0.03));
+  }
+
+  .merchant-shell {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(30px, 5vw, 70px);
+    align-items: start;
+  }
+
+  .merchant-copy .chapter-kicker,
+  .merchant-copy .chapter-text,
+  .merchant-copy .merchant-list p,
+  .merchant-copy .merchant-list span {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .merchant-copy .chapter-title {
+    max-width: 9.8ch;
+    color: var(--paper);
+  }
+
+  .merchant-list {
+    display: grid;
+    gap: 16px;
+    margin-top: 26px;
+  }
+
+  .merchant-point {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .merchant-point:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .merchant-point strong {
+    color: rgba(255, 255, 255, 0.45);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .merchant-point span {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+    color: var(--paper);
+  }
+
+  .merchant-point p {
+    margin: 8px 0 0;
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+
+  .merchant-board {
+    padding: 24px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 26px 80px rgba(8, 12, 18, 0.22);
+  }
+
+  .board-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .board-head strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.85rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+  }
+
+  .board-head span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.48);
+  }
+
+  .board-grid {
+    display: grid;
+    grid-template-columns: 72px repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 18px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .board-cell {
+    min-height: 84px;
+    padding: 12px;
+    background: rgba(7, 10, 15, 0.94);
+  }
+
+  .board-cell.head {
+    min-height: auto;
+    padding: 14px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+  }
+
+  .board-cell.time {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+  }
+
+  .slot-pill {
+    display: block;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    line-height: 1.38;
+    color: var(--paper);
+    background: color-mix(in oklab, var(--primary) 76%, black);
+    transition: transform 280ms ease;
+  }
+
+  .slot-pill:hover {
+    transform: translateY(-1px);
+  }
+
+  .slot-pill strong {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-family: var(--mono);
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .slot-pill.pending {
+    background: transparent;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .slot-pill.offline {
+    background: var(--accent);
+    color: var(--ink);
+  }
+
+  .launch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .launch-card {
+    position: relative;
+    padding: 28px;
+    border-radius: 26px;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1)),
+      linear-gradient(135deg, color-mix(in oklab, var(--paper) 82%, white), color-mix(in oklab, var(--paper-2) 88%, var(--paper)));
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    box-shadow: 0 24px 60px rgba(19, 23, 31, 0.08);
+  }
+
+  .launch-card::before {
+    content: "";
+    position: absolute;
+    inset: auto -20% -42% auto;
+    width: 220px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, color-mix(in oklab, var(--accent) 16%, transparent), transparent 70%);
+    opacity: 0.9;
+  }
+
+  .launch-card strong {
+    display: block;
+    position: relative;
+    margin-bottom: 18px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+
+  .launch-card h3 {
+    position: relative;
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+
+  .launch-card p {
+    position: relative;
+    margin: 14px 0 0;
+    color: var(--ink-2);
+    font-size: 0.96rem;
+    line-height: 1.65;
+    max-width: 28ch;
+  }
+
+  .launch-card span {
+    position: relative;
+    display: block;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--surface-strong);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .cta-band {
+    padding-top: calc(var(--chapter-space) + 12px);
+    padding-bottom: calc(var(--chapter-space) + 28px);
+  }
+
+  .cta-panel {
+    position: relative;
+    padding: clamp(34px, 5vw, 56px);
+    border-radius: 38px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 82% 18%, color-mix(in oklab, var(--accent) 24%, transparent), transparent 28%),
+      radial-gradient(circle at 14% 80%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 38%),
+      linear-gradient(135deg, color-mix(in oklab, var(--ink) 96%, #05080f), color-mix(in oklab, var(--primary) 34%, var(--ink)));
+    box-shadow: 0 36px 100px rgba(10, 14, 22, 0.22);
+  }
+
+  .cta-shell {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: end;
+  }
+
+  .cta-copy strong {
+    display: block;
+    margin-bottom: 18px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .cta-copy h2 {
+    margin: 0;
+    max-width: 10ch;
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 6vw, 6.8rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    color: var(--paper);
+  }
+
+  .cta-copy h2 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .cta-copy p {
+    max-width: 39ch;
+    margin: 22px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: grid;
+    gap: 12px;
+  }
+
+  .cta-actions .store-btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .cta-fine {
+    margin-top: 18px;
+    color: rgba(255, 255, 255, 0.48);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  footer {
+    padding: 36px 0 60px;
+  }
+
+  .footer-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr));
+    gap: clamp(22px, 4vw, 44px);
+    padding-top: 22px;
+    border-top: 1px solid var(--surface-line);
+  }
+
+  .footer-lede {
+    max-width: 28ch;
+    color: var(--ink-2);
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .footer-column strong {
+    display: block;
+    margin-bottom: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .footer-column a,
+  .footer-column span {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--ink-2);
+    font-size: 0.92rem;
+  }
+
+  .footer-column a:hover {
+    color: var(--ink);
+  }
+
+  .footer-bottom {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 1120px) {
+    .desire-shell,
+    .merchant-shell,
+    .cta-shell,
+    .chapter-head {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-art {
+      min-height: 620px;
+    }
+
+    .hero-copy p,
+    .chapter-text,
+    .desire-foot {
+      max-width: 44ch;
+    }
+
+    .desire-copy {
+      position: static;
+    }
+
+    .launch-grid,
+    .footer-shell {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .nav-pill {
+      grid-template-columns: auto auto;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .bento-grid,
+    .launch-grid,
+    .footer-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .span-3x2,
+    .span-2x2 {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    .accordion-rail {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .accordion-panel,
+    .accordion-panel:hover,
+    .accordion-panel:focus-within {
+      flex: 1 1 auto;
+      min-height: 200px;
+    }
+
+    .board-grid {
+      grid-template-columns: 56px repeat(3, minmax(0, 1fr));
+    }
+
+    .hero-title,
+    .chapter-title,
+    .cta-copy h2 {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .floating-nav {
+      top: 12px;
+      padding-top: 12px;
+    }
+
+    .nav-pill {
+      gap: 14px;
+      padding: 14px 16px;
+    }
+
+    .nav-actions {
+      width: 100%;
+      justify-content: space-between;
+      grid-column: 1 / -1;
+    }
+
+    .hero {
+      padding-top: 48px;
+    }
+
+    .hero-title {
+      width: min(100%, 10.5ch);
+      font-size: clamp(3.25rem, 16vw, 5.25rem);
+      line-height: 0.94;
+    }
+
+    .hero-art {
+      min-height: 540px;
+    }
+
+    .hero-photo {
+      width: 100%;
+      max-width: 360px;
+      right: 0;
+      left: auto;
+    }
+
+    .hero-floating-card {
+      left: 0;
+      width: min(84%, 280px);
+    }
+
+    .hero-mini-rail {
+      right: 0;
+      width: 130px;
+    }
+
+    .hero-state-card {
+      width: min(74%, 250px);
+    }
+
+    .time-rail {
+      grid-template-columns: 1fr;
+    }
+
+    .shield-step,
+    .memory-item,
+    .merchant-point {
+      grid-template-columns: 1fr;
+    }
+
+    .board-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .board-cell.head,
+    .board-cell.time {
+      min-height: auto;
+    }
+
+    .cta-actions {
+      margin-top: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<div class="wrap">
-  <nav class="nav">
-    <a class="mark" href="#" style="text-decoration:none">
-      <span class="mark-dot"></span> Pawpoint
+<div class="wrap floating-nav" id="top">
+  <nav class="nav-pill" aria-label="Primary">
+    <a class="brand" href="#top">
+      <span class="mark-dot" aria-hidden="true"></span>
+      <span>Pawpoint</span>
     </a>
     <div class="nav-links">
       <a href="#how">How it works</a>
       <a href="#trust">Trust</a>
       <a href="#merchants">For groomers</a>
-      <a href="#launch">Launching in</a>
+      <a href="#launch">Launch slice</a>
     </div>
-    <div class="nav-cta">
-      <span class="lang-toggle"><b>EN</b> · TH</span>
-      <a class="btn primary btn-sm" href="#download">Download app</a>
+    <div class="nav-actions">
+      <span class="lang-toggle"><strong>EN</strong> / TH</span>
+      <a class="nav-download" href="#download">Download app</a>
     </div>
   </nav>
 </div>
 
-<main id="main-content">
-<!-- HERO -->
-<div class="wrap">
-  <section class="hero" id="top">
-    <div class="hero-grid">
-      <div>
-        <div class="hero-eyebrow">
-          <span class="hero-badge"><span class="tiny-dot"></span>Now booking · Sathorn · Thonglor · Ari</span>
-        </div>
-        <h1>A grooming appointment<br/>that <em>holds its word.</em></h1>
-        <p class="hero-sub">Book routine grooming for your dog or cat in about a minute. Real availability from trusted Bangkok shops. No chasing LINE replies, no ghosted slots, no guessing whether you're actually booked.</p>
+<main class="overflow-x-hidden w-full max-w-full">
+  <section class="chapter hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="hero-intro">Bangkok first. In-shop only. Booking stays in the app.</div>
+        <h1 class="hero-title">Book the <span class="hero-inline" aria-hidden="true"></span> groom before chat starts.</h1>
+        <p>Pawpoint is a Bangkok-first mobile app for pet grooming. <strong>Routine services confirm fast.</strong> Higher-variance cases route into a short review flow. Holds and deposits are explained before you tap, so trust comes from clarity, not guesswork.</p>
         <div class="hero-ctas">
-          <a class="store" href="#download">
+          <a class="store-btn dark" href="#download">
             <span class="store-ic" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.54c-.02-2.31 1.88-3.42 1.96-3.47-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.15-2.77.84-3.49.84-.72 0-1.83-.82-3.01-.8-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.69 2.36 2.9 2.32 1.16-.05 1.6-.75 3-.75 1.4 0 1.8.75 3.03.72 1.25-.02 2.04-1.13 2.81-2.24.89-1.29 1.25-2.54 1.27-2.6-.03-.01-2.43-.94-2.46-3.72zM14.72 5.59c.63-.78 1.06-1.85.94-2.92-.91.04-2.03.62-2.69 1.39-.59.68-1.11 1.78-.97 2.82 1.03.08 2.08-.52 2.72-1.29z"/></svg>
             </span>
-            <div class="store-text"><small>Download on the</small><b>App Store</b></div>
+            <span class="store-copy"><small>Download on the</small><strong>App Store</strong></span>
           </a>
-          <a class="store" href="#download">
+          <a class="store-btn light" href="#how">
             <span class="store-ic" aria-hidden="true">
               <svg width="22" height="24" viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C33 7.3 23.7 20.7 23.7 38.1v435.7c0 17.4 9.3 30.8 23.3 38.1l256.4-256L47 0zm425.6 225.2l-58.9-34-65.7 64.5 65.7 64.5 60.1-34c18-14.3 18-46.6-1.2-60.9zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
             </span>
-            <div class="store-text"><small>Get it on</small><b>Google Play</b></div>
+            <span class="store-copy"><small>See the booking loop</small><strong>How it works</strong></span>
           </a>
-          <a class="ghost-link" href="#how">See how it works</a>
         </div>
+        <div class="hero-note">No web booking flow here by design. The app is the product.</div>
       </div>
-      <div class="hero-phones" aria-hidden="true">
-        <!-- Back phone: booking confirmation -->
-        <div class="p-shell back">
-          <div class="p-screen">
-            <div class="p-notch"></div>
-            <div class="p-status"><span>9:41</span><span>●●●</span></div>
-            <div class="confirm-card">
-            <div class="mono muted">Booking · #BK-21408</div>
-            <div class="confirm-big">
-              <span class="status s-confirm">Confirmed</span>
-                <div class="card-title">Luna · Bath &amp; Tidy</div>
-                <div class="muted" style="font-size:11px">Fri 18 Apr 2026 · 10:30 AM</div>
-              </div>
-              <div class="detail-row"><span class="muted">Groomer</span><b>Khun Ploy</b></div>
-              <div class="detail-row"><span class="muted">Shop</span><b>Ari Pet Salon</b></div>
-              <div class="detail-row"><span class="muted">Card hold</span><b>฿200 · until Fri 17 Apr · 10:30</b></div>
-              <div class="detail-row"><span class="muted">Free cancel</span><b>Thu 17 Apr · 10:30</b></div>
-            </div>
-          </div>
-        </div>
-        <!-- Front phone: home -->
-        <div class="p-shell front">
-          <div class="p-screen">
-            <div class="p-notch"></div>
-            <div class="p-status"><span>9:41</span><span>●●●</span></div>
-            <div class="phone-hero">
-              <div class="row between">
-                <h5>Good morning,<br/>Praew</h5>
-                <div style="width:32px;height:32px;border-radius:50%;background:var(--primary);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">P</div>
-              </div>
-              <div class="searchbar">🔍 Search shop or service</div>
-              <div class="pill-bar">
-                <div class="pill on">Near me</div>
-                <div class="pill">This week</div>
-                <div class="pill">Dog · bath</div>
-              </div>
-              <div class="repeat-card">
-                <span class="lbl">Rebook in one tap</span>
-                <div class="card-title">Bath &amp; Tidy · Luna</div>
-                <div class="meta"><span>Ari Pet Salon</span><span>฿200</span></div>
-                <div class="cta"><b>Fri 18 Apr avail</b><span>→</span></div>
-              </div>
-              <div class="pet-card-mini">
-                <div class="ring">L</div>
-                <div><b>Luna</b><span>Shih Tzu · 4kg · sensitive coat</span></div>
-              </div>
-              <div style="margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase;text-align:center">Home · Browse · Bookings · Pets</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="proof">
-      <span class="item">Instant routine bookings</span>
-      <span class="item">Card hold, not charge</span>
-      <span class="item">Pawpoint Shield: refundable deposit</span>
-      <span class="item">Thai + English</span>
-      <span class="item">Free cancel window</span>
-      <span class="item">One-tap rebook</span>
-    </div>
-  </section>
-</div>
-
-<!-- PROBLEM -->
-<div class="wrap">
-  <section id="problem">
-    <div class="sec-top">
-      <div class="sec-num">01 · The problem</div>
-      <h2 class="sec-title">Booking a groomer in Bangkok shouldn't be a group chat.</h2>
-      <p class="sec-kicker">Today, scheduling a bath or full groom means ping-ponging across LINE, Instagram, Facebook, and the shop's phone. Nobody can tell if a slot is actually yours until someone replies. Pawpoint fixes the coordination, not the craft.</p>
-    </div>
-    <div class="problem-grid">
-      <div class="prob-card">
-        <div class="mono muted">Tuesday, 8:42 PM</div>
-        <div class="chat">
-          <div class="msg me">สวัสดีค่ะ ว่างวันเสาร์เช้ามั้ยคะ</div>
-          <div class="msg them">รอสอบถามก่อนนะคะ 🙏</div>
-          <div class="msg them">(อ่านแล้ว 9:17)</div>
-          <div class="msg me">📱 …?</div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-glow"></div>
+        <div class="hero-floating-card">
+          <div class="hero-card-label">Routine, review, repeat</div>
+          <h2>Truthful slots. Named states. One tap back in.</h2>
+          <p>Routine services move fast. Complex grooms stay honest. Repeat visits remember the pet, the stylist, and the shape of the last cut.</p>
         </div>
-        <h3>Chat is slow and unclear</h3>
-        <p>Availability lives in a groomer's head. "Let me check" is often as far as it gets.</p>
-      </div>
-      <div class="prob-card">
-        <div class="row gap-8" style="justify-content:flex-start">
-          <span class="status s-confirm">Confirmed?</span>
-          <span class="status s-no-show">No-show?</span>
+        <div class="hero-mini-rail">
+          <span class="mini-pill">Sathorn</span>
+          <span class="mini-pill">Thonglor</span>
+          <span class="mini-pill">Ari</span>
         </div>
-        <div style="height:120px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border);border-radius:var(--radius);background:var(--paper);font-family:var(--serif);font-size:22px;color:var(--ink-3);letter-spacing:-0.015em">"I think you're booked?"</div>
-        <h3>No-shows &amp; ghost slots</h3>
-        <p>Without a commitment step, both sides lose time. Shops overbook defensively; owners drop off their pet to closed shutters.</p>
-      </div>
-      <div class="prob-card">
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:90px">
-          <div style="background:var(--paper-3);border-radius:4px"></div>
-          <div style="background:var(--paper-3);border-radius:4px"></div>
-          <div style="background:var(--accent-wash);border:1px solid var(--accent);border-radius:4px"></div>
-          <div style="background:var(--paper-3);border-radius:4px"></div>
-          <div style="background:var(--paper-3);border-radius:4px"></div>
-          <div style="background:var(--accent-wash);border:1px solid var(--accent);border-radius:4px"></div>
-          <div style="background:var(--paper-3);border-radius:4px"></div>
-          <div style="background:var(--paper-3);border-radius:4px"></div>
+        <div class="hero-state-card">
+          <span class="status s-pend-m">Pending review</span>
+          <strong>Full groom, first visit, matted coat.</strong>
+          <span>The app shows a response window up front, and releases the hold cleanly if the shop passes or times out.</span>
         </div>
-        <h3>Rebooking starts from zero</h3>
-        <p>Every repeat visit restarts the same negotiation — breed, coat, temperament, cut length. Nothing carries over.</p>
+        <figure class="hero-photo">
+          <img src="shared/images/landing/hero-photo.png" alt="Premium Bangkok pet grooming studio moment.">
+        </figure>
       </div>
     </div>
   </section>
-</div>
 
-<!-- HOW / DIFFERENCE -->
-<div class="wrap">
-  <section id="how">
-    <div class="sec-top">
-      <div class="sec-num">02 · How Pawpoint works</div>
-      <h2 class="sec-title">Fast for routine. Honest about the rest.</h2>
-      <p class="sec-kicker">Not every groom fits a neat 45-minute box — that's the truth most apps quietly break. Pawpoint separates services that can be instant-booked from cases that genuinely need the shop to review, and treats both with the same care.</p>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Routine speed</span>
+      <span class="marquee-item">Truthful exceptions</span>
+      <span class="marquee-item">Card hold, not a surprise charge</span>
+      <span class="marquee-item">One-tap rebook</span>
+      <span class="marquee-item">Thai and English</span>
+      <span class="marquee-item">Independent Bangkok shops first</span>
     </div>
-
-    <div class="diff-row">
-      <div class="diff-visual">
-        <div class="timeline-compare">
-          <div class="tl">
-            <div class="who">Before</div>
-            <div class="bar">
-              <div class="seg chat" style="width:60px">DM</div>
-              <div class="seg wait" style="width:90px">Wait 3h</div>
-              <div class="seg chat" style="width:50px">Reply</div>
-              <div class="seg wait" style="width:70px">Wait 6h</div>
-              <div class="seg confirmed" style="width:80px">Maybe?</div>
-            </div>
-          </div>
-          <div class="tl"><div></div><div class="mins">~ 1 day elapsed · 6 messages</div></div>
-          <div class="tl">
-            <div class="who">Pawpoint</div>
-            <div class="bar">
-              <div class="seg instant" style="width:110px">Pick slot</div>
-              <div class="seg confirmed" style="width:120px">Confirmed instantly</div>
-            </div>
-          </div>
-          <div class="tl"><div></div><div class="mins">~ 45 seconds · 0 messages</div></div>
-        </div>
-      </div>
-      <div>
-        <div class="num">01 · ROUTINE SPEED</div>
-        <h3>Routine bookings<br/><em>in under a minute.</em></h3>
-        <p>Bath, tidy, nail trim, ear cleaning — a defined set of routine services are instantly bookable at participating Bangkok shops, with real slot availability published by the groomer themselves.</p>
-        <div class="bullets">
-          <div>Real next-available times — not "please enquire"</div>
-          <div>Clear routine pricing before you commit</div>
-          <div>Card hold, not a charge, to reduce no-shows</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="diff-row flip">
-      <div>
-        <div class="num">02 · TRUTHFUL EXCEPTIONS</div>
-        <h3>When a groom is tricky,<br/>the app <em>says so.</em></h3>
-        <p>Matted coats, anxious dogs, first-time large breeds, unfamiliar cats — these cases route into a short request-confirm flow. The shop reviews, you get a clear response window, and you always know what happens next.</p>
-        <div class="bullets">
-          <div>Instant vs pending is unmistakable in the UI</div>
-          <div>Every pending booking shows an expected response time</div>
-          <div>If the shop declines or time runs out, the hold releases cleanly</div>
-        </div>
-      </div>
-      <div class="diff-visual">
-        <div class="rail">
-          <div class="rail-card instant">
-            <span class="status s-instant">Instant</span>
-            <div class="card-title">Bath &amp; Tidy · Luna</div>
-            <p>Routine service. Duration is predictable, the slot is held the moment you confirm.</p>
-          </div>
-          <div class="rail-card pending">
-            <span class="status s-pend-m">Pending review</span>
-            <div class="card-title">Full Groom · Mochi</div>
-            <p>Poodle, first visit, matted coat. The shop will respond within 2 hours or the hold releases.</p>
-          </div>
-        </div>
-        <div class="anno" style="margin-top:6px"><b>Design decision</b>Routine vs. review is a product contract, not a styling choice. Both states share the same shape so customers learn them fast.</div>
-      </div>
-    </div>
-
-    <div class="diff-row">
-      <div class="diff-visual">
-        <div class="repeat-vis">
-          <div class="row2">
-            <div class="left"><div class="ring">L</div><div><b>Luna · Bath &amp; Tidy</b><span>Ari Pet Salon · Khun Ploy</span></div></div>
-            <a class="btn primary btn-sm" href="#download">Rebook Fri</a>
-          </div>
-          <div class="row2">
-            <div class="left"><div class="ring" style="background:var(--primary-wash);border-color:var(--primary);color:var(--primary-ink)">M</div><div><b>Mochi · Full Groom</b><span>Soi 55 Groomers · Khun Nat</span></div></div>
-            <a class="btn secondary btn-sm" href="#download">Rebook Sat</a>
-          </div>
-          <div class="row2">
-            <div class="left"><div class="ring" style="background:var(--info-wash);border-color:var(--info);color:var(--info)">K</div><div><b>Kobe · Nails</b><span>Thonglor Paws</span></div></div>
-            <a class="btn secondary btn-sm" href="#download">Rebook next</a>
-          </div>
-          <div class="hint">One tap · same shop · same stylist · same notes</div>
-        </div>
-      </div>
-      <div>
-        <div class="num">03 · REPEAT-FIRST</div>
-        <h3>The second booking<br/>is where it <em>clicks.</em></h3>
-        <p>Your pet, your shop, your stylist, your preferred cut — remembered. Rebooking takes one tap and picks up exactly where last time left off, because that's where most grooming actually lives.</p>
-        <div class="bullets">
-          <div>Pet profile: breed, size, coat, temperament, allergies</div>
-          <div>Stylist notes carry forward across visits</div>
-          <div>Same card, same hold rules, no forms to refill</div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- TRUST -->
-<div class="wrap">
-  <section id="trust">
-    <div class="sec-top">
-      <div class="sec-num">03 · Trust, explained</div>
-      <h2 class="sec-title">Payment protection in plain language.</h2>
-      <p class="sec-kicker">We use card holds and — for higher-risk cases — Pawpoint Shield holds (small refundable deposits) to cut no-shows. These are protections, not penalties. Pawpoint is up-front about every rule, every timer, and every way to get your hold released.</p>
-    </div>
-    <div class="trust-grid">
-      <div class="trust-card">
-        <div class="ic">¶</div>
-        <div class="card-title">Card hold, not a charge</div>
-        <p>Routine bookings place a temporary card authorisation. Nothing is captured until the appointment completes — and the hold lifts automatically if you cancel in the free window.</p>
-        <div class="meta">Authorisation · no capture</div>
-      </div>
-      <div class="trust-card">
-        <div class="ic">§</div>
-        <div class="card-title">Deposits, only when they fit</div>
-        <p>Full grooms or higher-value services may ask for a Pawpoint Shield hold — a small refundable deposit. The amount, the refund window, and what happens on a no-show are stated before you commit.</p>
-        <div class="meta">Explicit policy · per service</div>
-      </div>
-      <div class="trust-card">
-        <div class="ic">✦</div>
-        <div class="card-title">Reminders &amp; reconfirm</div>
-        <p>You get a friendly reminder the day before and the morning of. A single tap reconfirms. If you can't make it, cancelling is the same one tap — no phone call required.</p>
-        <div class="meta">24h before · day-of</div>
-      </div>
-      <div class="trust-card">
-        <div class="ic">◎</div>
-        <div class="card-title">Every state is named</div>
-        <p>Instant, pending, confirmed, declined, arrived, completed, cancelled — you always see the current state of your booking, and what needs to happen next.</p>
-        <div class="meta">13 named states</div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- MERCHANT -->
-<section class="merchant" id="merchants">
-  <div class="wrap">
-    <div class="sec-top">
-      <div class="sec-num">04 · For grooming shops</div>
-      <h2 class="sec-title">One canonical schedule. Not six chat windows.</h2>
-      <p class="sec-kicker">Pawpoint's merchant app replaces the mental tracking and LINE archaeology with a single board that every booking — online, phone, walk-in — lives inside.</p>
-    </div>
-    <div class="merchant-grid">
-      <div class="merchant-bullets">
-        <div class="m-bul">
-          <div class="n">01</div>
-          <div>
-            <div class="card-title">Truthful availability</div>
-            <p>You set routine services, durations, online-booking hours, and cut-offs. The slots customers see are the slots you actually have.</p>
-          </div>
-        </div>
-        <div class="m-bul">
-          <div class="n">02</div>
-          <div>
-            <div class="card-title">Offline bookings live in the same board</div>
-            <p>Phone call, LINE message, walk-in — capture the booking inside Pawpoint and it shares the same slot logic and payment protection.</p>
-          </div>
-        </div>
-        <div class="m-bul">
-          <div class="n">03</div>
-          <div>
-            <div class="card-title">Request-confirm, not first-come-first-hope</div>
-            <p>High-variance jobs route for your review. Approve, decline with an explicit reason, or let the timeout expire cleanly — the outcome is always auditable.</p>
-          </div>
-        </div>
-        <div class="m-bul">
-          <div class="n">04</div>
-          <div>
-            <div class="card-title">No-shows get quieter</div>
-            <p>Card holds and deposits do the work reminders can't. You get paid for the slot even when the customer doesn't show — and the policy is never a surprise.</p>
-          </div>
-        </div>
-      </div>
-      <div class="merchant-visual" aria-hidden="true">
-        <div class="m-board-head"><h5>Friday · 18 Apr 2026</h5><span>Ari Pet Salon · Khun Ploy</span></div>
-        <div class="m-board">
-          <div class="cell h">Time</div>
-          <div class="cell h">Bath</div>
-          <div class="cell h">Full Groom</div>
-          <div class="cell h">Nails</div>
-
-          <div class="cell">09:00</div>
-          <div class="cell"><div class="slot-m">Luna · Shih Tzu<br/><small style="opacity:.75">Bath &amp; Tidy · 45m</small></div></div>
-          <div class="cell"></div>
-          <div class="cell"><div class="slot-m hold">Kobe · Labrador<br/><small style="opacity:.85">Nails · 15m · ฿120 hold</small></div></div>
-
-          <div class="cell">10:00</div>
-          <div class="cell"></div>
-          <div class="cell"><div class="slot-m pend">Mochi · Poodle<br/><small style="opacity:.75">Pending review · 2h SLA</small></div></div>
-          <div class="cell"></div>
-
-          <div class="cell">11:00</div>
-          <div class="cell"><div class="slot-m">Coco · Bichon<br/><small style="opacity:.75">Bath · 30m</small></div></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-
-          <div class="cell">12:00</div>
-          <div class="cell" style="background:#191b25;font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.12em">Lunch</div>
-          <div class="cell" style="background:#191b25"></div>
-          <div class="cell" style="background:#191b25"></div>
-        </div>
-        <div class="row between" style="color:rgba(255,255,255,.55);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding-top:6px">
-          <span>Confirmed · Pending · Hold</span>
-          <span>Live merchant board</span>
-        </div>
-      </div>
+    <div class="marquee-track">
+      <span class="marquee-item">Routine speed</span>
+      <span class="marquee-item">Truthful exceptions</span>
+      <span class="marquee-item">Card hold, not a surprise charge</span>
+      <span class="marquee-item">One-tap rebook</span>
+      <span class="marquee-item">Thai and English</span>
+      <span class="marquee-item">Independent Bangkok shops first</span>
     </div>
   </div>
-</section>
 
-<!-- LAUNCH WEDGE -->
-<div class="wrap">
-  <section id="launch">
-    <div class="sec-top">
-      <div class="sec-num">05 · What's launching</div>
-      <h2 class="sec-title">A deliberately narrow start.</h2>
-      <p class="sec-kicker">We're launching a tight slice on purpose. Pawpoint is Bangkok-first, in-shop only, and focused on a small set of premium-leaning independent shops in dense neighborhoods. Breadth can wait until the core booking is actually trusted.</p>
-    </div>
-    <div class="wedge-grid">
-      <div class="wedge-card">
-        <div class="num">WHERE · AREA</div>
-        <h3>Central Bangkok,<br/>dense neighborhoods.</h3>
-        <p>Sathorn, Thonglor, Ari, Phrom Phong, and Sukhumvit sois — clusters where a great shop is minutes away, not an expedition.</p>
-        <div class="not">Not yet: suburbs, other cities</div>
+  <section class="chapter interest" id="how">
+    <div class="wrap">
+      <div class="chapter-head">
+        <div>
+          <div class="chapter-kicker">Fast where it can be. Clear where it cannot.</div>
+          <h2 class="chapter-title">A booking system shaped around real grooming work.</h2>
+        </div>
+        <div class="chapter-text">The site has one job: explain why the product feels materially better than chat-based coordination, without pretending the website itself is the booking flow. The app handles the action. This page handles the argument.</div>
       </div>
-      <div class="wedge-card">
-        <div class="num">WHO · SHOPS</div>
-        <h3>Independent shops,<br/>premium-leaning.</h3>
-        <p>Owner-operated grooming studios who care about craft, already have repeat clientele, and are tired of running a schedule out of LINE.</p>
-        <div class="not">Not yet: chain salons, franchise PET+</div>
-      </div>
-      <div class="wedge-card">
-        <div class="num">WHAT · SERVICES</div>
-        <h3>In-shop grooming,<br/>one pet at a time.</h3>
-        <p>Bath, tidy, full grooms, nails, ear care — for one pet with an optional set of fixed add-ons. Predictable enough to actually be truthful about slots.</p>
-        <div class="not">Not yet: home service, multi-pet, bundles</div>
+
+      <div class="bento-grid">
+        <article class="bento-card bento-dark span-3x2">
+          <div class="eyebrow">Routine speed</div>
+          <h3>A routine slot can become real in under a minute.</h3>
+          <p>Bath, tidy, nails, ear care. Defined services, groomer-owned availability, and a short hold flow that keeps the slot honest without forcing the customer into another chat thread.</p>
+          <div class="time-rail">
+            <div class="time-step">
+              <strong>Pick</strong>
+              <span>Choose the pet, the service, and a slot the merchant actually opened.</span>
+            </div>
+            <div class="time-step">
+              <strong>Protect</strong>
+              <span>See the hold or deposit rule before commit, in plain language.</span>
+            </div>
+            <div class="time-step">
+              <strong>Confirm</strong>
+              <span>Land in a named state immediately, with next steps already visible.</span>
+            </div>
+          </div>
+          <div class="routine-board">
+            <strong>45s</strong>
+            <div>
+              <div class="mini-meta">From opening the app to seeing a confirmed booking</div>
+              <p style="margin: 8px 0 0; color: rgba(255, 255, 255, 0.78);">No ghosted DMs, no hidden queue, no soft promise that still needs a reply later.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="bento-card span-3x2">
+          <div class="accordion-shell">
+            <div>
+              <div class="eyebrow">Horizontal accordions</div>
+              <h3>Services stay truthful by expanding only where the schedule can hold them.</h3>
+              <p>Hover through the launch wedge. Routine services stay crisp. Higher-variance work earns a review step instead of pretending every groom is the same.</p>
+            </div>
+            <div class="accordion-rail">
+              <article class="accordion-panel" style="--panel-image: url('shared/images/landing/accordion-bath.png');">
+                <div class="accordion-copy">
+                  <strong>Bath &amp; tidy</strong>
+                  <span>Predictable length, same-day availability, instant confirm.</span>
+                </div>
+              </article>
+              <article class="accordion-panel" style="--panel-image: url('shared/images/landing/accordion-full-groom.png');">
+                <div class="accordion-copy">
+                  <strong>Full groom</strong>
+                  <span>Longer blocks, more price sensitivity, deposit rules when needed.</span>
+                </div>
+              </article>
+              <article class="accordion-panel" style="--panel-image: url('shared/images/landing/accordion-cat-care.png');">
+                <div class="accordion-copy">
+                  <strong>Cat care</strong>
+                  <span>More careful routing, fewer merchants, calmer expectations.</span>
+                </div>
+              </article>
+              <article class="accordion-panel" style="--panel-image: url('shared/images/landing/accordion-nails.png');">
+                <div class="accordion-copy">
+                  <strong>Nails &amp; quick care</strong>
+                  <span>Short visits, sharp handoff, rebook friendly by default.</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </article>
+
+        <article class="bento-card span-2x2">
+          <div class="eyebrow">Shield logic</div>
+          <h3>Protection is explained as a flow, not hidden in policy text.</h3>
+          <p>Card holds reduce no-shows. Deposits appear only when the service economics justify them. Every branch is named before the customer commits.</p>
+          <div class="shield-flow">
+            <div class="shield-step">
+              <strong>Reserve</strong>
+              <span>The slot holds while the booking is active, and the customer sees the free-cancel window immediately.</span>
+            </div>
+            <div class="shield-step">
+              <strong>Show up</strong>
+              <span>Completion captures the payment path already explained on the review screen.</span>
+            </div>
+            <div class="shield-step">
+              <strong>Release</strong>
+              <span>Declined requests, timeouts, and qualifying cancellations unwind the protection cleanly.</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="bento-card span-2x2">
+          <div class="eyebrow">Truthful exceptions</div>
+          <h3>Complex grooms get a short review lane, not fake instant UX.</h3>
+          <p>The product earns trust by naming uncertainty. First visits, nervous pets, matted coats, and unusual service requests surface a pending state on purpose.</p>
+          <div class="pending-stack">
+            <div class="pending-card">
+              <span class="status s-instant">Instant</span>
+              <strong>Bath &amp; tidy for Luna</strong>
+              <span>Predictable service, known pet, merchant-owned slot.</span>
+            </div>
+            <div class="pending-card">
+              <span class="status s-pend-m">Pending review</span>
+              <strong>Full groom for Mochi</strong>
+              <span>The merchant sees the case, the response window, and the operational reason before deciding.</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="bento-card span-2x2">
+          <div class="eyebrow">Repeat first</div>
+          <h3>The second booking should feel like recognition, not data entry.</h3>
+          <p>Pets, service notes, stylist memory, and payment protection rules carry forward so a repeat visit feels materially faster than messaging the shop again.</p>
+          <div class="memory-list">
+            <div class="memory-item">
+              <div class="memory-mark">Pet</div>
+              <div>
+                <strong>Breed, coat, temperament, allergies</strong>
+                <span>Only the details that keep the next appointment safe and fast.</span>
+              </div>
+            </div>
+            <div class="memory-item">
+              <div class="memory-mark">Cut</div>
+              <div>
+                <strong>Stylist notes carry forward</strong>
+                <span>Preferred length, known sensitivities, and the shape of the last successful groom.</span>
+              </div>
+            </div>
+            <div class="memory-item">
+              <div class="memory-mark">Tap</div>
+              <div>
+                <strong>Same merchant, same guardrails</strong>
+                <span>Rebook in one motion without re-learning how the service behaves.</span>
+              </div>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
-</div>
 
-<!-- DOWNLOAD CTA -->
-<section class="cta-block" id="download">
-  <div class="wrap">
-    <h2>Book the groom.<br/><em>Get on with the day.</em></h2>
-    <p>Pawpoint is a mobile app. Download it, add your pet once, and rebook in a tap. Booking lives in the app, not on this page — that's on purpose.</p>
-    <div class="cta-stores">
-      <a class="store" href="#">
-        <span class="store-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.54c-.02-2.31 1.88-3.42 1.96-3.47-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.15-2.77.84-3.49.84-.72 0-1.83-.82-3.01-.8-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.69 2.36 2.9 2.32 1.16-.05 1.6-.75 3-.75 1.4 0 1.8.75 3.03.72 1.25-.02 2.04-1.13 2.81-2.24.89-1.29 1.25-2.54 1.27-2.6-.03-.01-2.43-.94-2.46-3.72zM14.72 5.59c.63-.78 1.06-1.85.94-2.92-.91.04-2.03.62-2.69 1.39-.59.68-1.11 1.78-.97 2.82 1.03.08 2.08-.52 2.72-1.29z"/></svg></span>
-        <div class="store-text"><small>Download on the</small><b>App Store</b></div>
-      </a>
-      <a class="store" href="#">
-        <span class="store-ic"><svg width="22" height="24" viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C33 7.3 23.7 20.7 23.7 38.1v435.7c0 17.4 9.3 30.8 23.3 38.1l256.4-256L47 0zm425.6 225.2l-58.9-34-65.7 64.5 65.7 64.5 60.1-34c18-14.3 18-46.6-1.2-60.9zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg></span>
-        <div class="store-text"><small>Get it on</small><b>Google Play</b></div>
-      </a>
+  <section class="chapter desire" id="trust">
+    <div class="wrap desire-shell">
+      <div class="desire-copy">
+        <div class="chapter-kicker">Desire, built from calm clarity</div>
+        <h2 class="chapter-title">Trust is a feeling until the flow makes it visible.</h2>
+        <p class="scrub-copy">
+          <span class="scrub-word">Pawpoint</span>
+          <span class="scrub-word">makes</span>
+          <span class="scrub-word">routine</span>
+          <span class="scrub-word">grooming</span>
+          <span class="scrub-word">feel</span>
+          <span class="scrub-word">booked,</span>
+          <span class="scrub-word">not</span>
+          <span class="scrub-word">promised;</span>
+          <span class="scrub-word">reviewed,</span>
+          <span class="scrub-word">not</span>
+          <span class="scrub-word">mysterious;</span>
+          <span class="scrub-word">and</span>
+          <span class="scrub-word">repeatable,</span>
+          <span class="scrub-word">not</span>
+          <span class="scrub-word">re-entered.</span>
+        </p>
+        <div class="desire-foot">The emotional job of the product is simple: remove the soft uncertainty that makes grooming appointments feel provisional. Each scroll card below maps to a specific trust surface in the app.</div>
+      </div>
+
+      <div class="story-gallery">
+        <article class="story-card js-scale-card">
+          <div class="story-image">
+            <img src="shared/images/landing/trust-card.png" alt="Customer check-in and trust moment at a premium Bangkok grooming studio.">
+          </div>
+          <div class="story-body">
+            <strong>Card hold, not hidden charge.</strong>
+            <p>The moment that usually creates friction becomes legible. Customers see whether the app is reserving a slot with a hold, asking for a small deposit, or doing nothing at all. The point is not stricter policy. The point is cleaner expectation.</p>
+          </div>
+        </article>
+
+        <article class="story-card js-scale-card">
+          <div class="story-image">
+            <img src="shared/images/landing/response-window.png" alt="Groomer reviewing a booking request in a premium Bangkok grooming studio.">
+          </div>
+          <div class="story-body">
+            <strong>Every pending state comes with a clock and a branch.</strong>
+            <p>When a merchant needs to review a case, the app names the expected response time and what happens if that time runs out. Pending becomes a managed state instead of a blank wait.</p>
+          </div>
+        </article>
+
+        <article class="story-card js-scale-card">
+          <div class="story-image">
+            <img src="shared/images/landing/repeat-card.png" alt="Returning customer and stylist relationship at a boutique Bangkok grooming studio.">
+          </div>
+          <div class="story-body">
+            <strong>Repeat booking becomes the quiet payoff.</strong>
+            <p>Once a pet, merchant, and stylist relationship exists, the app should feel almost invisible. That is the real moat against messaging workflows: not novelty, but the way the next appointment starts halfway done.</p>
+          </div>
+        </article>
+      </div>
     </div>
-    <div class="cta-fine">Free to download · Bangkok launch · Thai + English</div>
-  </div>
-</section>
+  </section>
+
+  <section class="chapter merchant-band" id="merchants">
+    <div class="wrap merchant-shell">
+      <div class="merchant-copy">
+        <div class="chapter-kicker">For grooming shops</div>
+        <h2 class="chapter-title">One canonical schedule, not six soft promises.</h2>
+        <div class="chapter-text">The merchant side matters because public trust only holds when the schedule is operationally credible. Pawpoint is designed to be the board the shop actually uses, not a second inbox beside LINE.</div>
+        <div class="merchant-list">
+          <div class="merchant-point">
+            <strong>Truthful</strong>
+            <div>
+              <span>Availability comes from the merchant.</span>
+              <p>Routine services, durations, cutoffs, and online hours stay in one place so the slot logic never drifts into a shadow schedule.</p>
+            </div>
+          </div>
+          <div class="merchant-point">
+            <strong>Offline</strong>
+            <div>
+              <span>Phone, walk-in, and chat bookings land on the same board.</span>
+              <p>Offline capture is part of the product, not an afterthought. That keeps the merchant from maintaining a parallel reality outside the app.</p>
+            </div>
+          </div>
+          <div class="merchant-point">
+            <strong>Safe</strong>
+            <div>
+              <span>Review flows expire cleanly and stay auditable.</span>
+              <p>Approve, decline, or let the timer close. Nobody should be wondering whether an expired request can quietly come back from the dead.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="merchant-board">
+        <div class="board-head">
+          <div>
+            <span>Merchant board preview</span>
+            <strong>Friday, Ari Pet Salon</strong>
+          </div>
+          <span>One source of truth</span>
+        </div>
+        <div class="board-grid">
+          <div class="board-cell head"></div>
+          <div class="board-cell head">Khun Ploy</div>
+          <div class="board-cell head">Khun Nat</div>
+          <div class="board-cell head">Float</div>
+
+          <div class="board-cell time">10:00</div>
+          <div class="board-cell">
+            <span class="slot-pill">
+              <strong>Confirmed</strong>
+              Luna, bath &amp; tidy
+            </span>
+          </div>
+          <div class="board-cell">
+            <span class="slot-pill pending">
+              <strong>Pending review</strong>
+              Mochi, full groom
+            </span>
+          </div>
+          <div class="board-cell"></div>
+
+          <div class="board-cell time">11:30</div>
+          <div class="board-cell"></div>
+          <div class="board-cell">
+            <span class="slot-pill">
+              <strong>Confirmed</strong>
+              Kobe, nails
+            </span>
+          </div>
+          <div class="board-cell"></div>
+
+          <div class="board-cell time">13:00</div>
+          <div class="board-cell">
+            <span class="slot-pill offline">
+              <strong>Offline capture</strong>
+              Walk-in, wash + dry
+            </span>
+          </div>
+          <div class="board-cell"></div>
+          <div class="board-cell">
+            <span class="slot-pill pending">
+              <strong>Hold window</strong>
+              Awaiting payment step
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="launch">
+    <div class="wrap">
+      <div class="chapter-head">
+        <div>
+          <div class="chapter-kicker">Launch wedge</div>
+          <h2 class="chapter-title">A tight start, so the trust model can hold.</h2>
+        </div>
+        <div class="chapter-text">The landing page should make the slice feel intentional, not small. Narrow scope is the point: it is how Pawpoint avoids becoming another generic pet marketplace with weak booking semantics.</div>
+      </div>
+
+      <div class="launch-grid">
+        <article class="launch-card">
+          <strong>Where</strong>
+          <h3>Central Bangkok, dense neighborhoods first.</h3>
+          <p>Sathorn, Ari, Thonglor, Phrom Phong, and nearby sois where premium independent grooming already lives close to home.</p>
+          <span>Not yet: suburbs, other cities, broad marketplace sprawl</span>
+        </article>
+        <article class="launch-card">
+          <strong>Who</strong>
+          <h3>Independent shops with repeat clientele.</h3>
+          <p>Owner-operated grooming studios that already care about craft and service quality, but still run too much of the schedule through chat memory.</p>
+          <span>Not yet: chains, franchises, low-trust coverage promises</span>
+        </article>
+        <article class="launch-card">
+          <strong>What</strong>
+          <h3>In-shop grooming, one pet, one truthful slot.</h3>
+          <p>Baths, tidy work, full grooms, nails, ear care, and a controlled set of fixed add-ons. Simple enough to schedule honestly. Valuable enough to earn repeat.</p>
+          <span>Not yet: home service, multi-pet bundles, broad concierge detours</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="download">
+    <div class="wrap">
+      <div class="cta-panel">
+        <div class="cta-shell">
+          <div class="cta-copy">
+            <strong>Booking lives in the app</strong>
+            <h2>Book the groom, then get <em>on with the day.</em></h2>
+            <p>Pawpoint is the mobile surface for Bangkok pet owners who want a routine appointment to feel actually booked, and a complex one to feel clearly reviewed. Download the app, add the pet once, and let the next visit start from memory instead of messaging history.</p>
+          </div>
+
+          <div class="cta-actions">
+            <a class="store-btn dark" href="#">
+              <span class="store-ic" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.54c-.02-2.31 1.88-3.42 1.96-3.47-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.15-2.77.84-3.49.84-.72 0-1.83-.82-3.01-.8-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.69 2.36 2.9 2.32 1.16-.05 1.6-.75 3-.75 1.4 0 1.8.75 3.03.72 1.25-.02 2.04-1.13 2.81-2.24.89-1.29 1.25-2.54 1.27-2.6-.03-.01-2.43-.94-2.46-3.72zM14.72 5.59c.63-.78 1.06-1.85.94-2.92-.91.04-2.03.62-2.69 1.39-.59.68-1.11 1.78-.97 2.82 1.03.08 2.08-.52 2.72-1.29z"/></svg>
+              </span>
+              <span class="store-copy"><small>Download on the</small><strong>App Store</strong></span>
+            </a>
+            <a class="store-btn light" href="#">
+              <span class="store-ic" aria-hidden="true">
+                <svg width="22" height="24" viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C33 7.3 23.7 20.7 23.7 38.1v435.7c0 17.4 9.3 30.8 23.3 38.1l256.4-256L47 0zm425.6 225.2l-58.9-34-65.7 64.5 65.7 64.5 60.1-34c18-14.3 18-46.6-1.2-60.9zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+              </span>
+              <span class="store-copy"><small>Get it on</small><strong>Google Play</strong></span>
+            </a>
+            <div class="cta-fine">Free to download. Bangkok launch. Thai and English.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
-<!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="foot-grid">
+    <div class="footer-shell">
       <div>
-        <a class="mark" href="#top" style="text-decoration:none"><span class="mark-dot"></span> Pawpoint</a>
-        <p class="lead">A booking that earns the next appointment. Bangkok-first, in-shop grooming, built for repeat.</p>
+        <a class="brand" href="#top">
+          <span class="mark-dot" aria-hidden="true"></span>
+          <span>Pawpoint</span>
+        </a>
+        <p class="footer-lede">A booking system for Bangkok pet grooming that makes the operational truth visible to both sides before the appointment is ever claimed.</p>
       </div>
-      <div>
-        <div class="section-label">Product</div>
-        <ul>
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#trust">Payment protection</a></li>
-          <li><a href="#download">Download</a></li>
-          <li><a href="#">Pet profiles</a></li>
-        </ul>
+
+      <div class="footer-column">
+        <strong>Product</strong>
+        <a href="#how">How it works</a>
+        <a href="#trust">Payment protection</a>
+        <a href="#download">Download app</a>
       </div>
-      <div>
-        <div class="section-label">Shops</div>
-        <ul>
-          <li><a href="#merchants">For groomers</a></li>
-          <li><a href="#">Merchant app</a></li>
-          <li><a href="#">Apply to join</a></li>
-          <li><a href="#">Pricing</a></li>
-        </ul>
+
+      <div class="footer-column">
+        <strong>Shops</strong>
+        <a href="#merchants">For groomers</a>
+        <span>Merchant app</span>
+        <span>Apply to join</span>
       </div>
-      <div>
-        <div class="section-label">Company</div>
-        <ul>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Terms &amp; policies</a></li>
-        </ul>
+
+      <div class="footer-column">
+        <strong>Company</strong>
+        <span>Bangkok launch slice</span>
+        <span>Terms &amp; privacy</span>
+        <span>EN / TH</span>
       </div>
     </div>
-    <div class="foot-bot">
-      <span>© 2026 Pawpoint · Bangkok</span>
-      <span>EN · TH</span>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 Pawpoint</span>
+      <span>Bangkok, Thailand</span>
     </div>
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
-  // Nav border on scroll
-  const nav = document.querySelector('.nav');
-  addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', scrollY > 8);
+  window.addEventListener("load", () => {
+    const nav = document.querySelector(".floating-nav");
+    const onScroll = () => {
+      if (!nav) return;
+      nav.classList.toggle("is-scrolled", window.scrollY > 24);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion || !window.gsap || !window.ScrollTrigger) return;
+
+    const { gsap, ScrollTrigger } = window;
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from(".hero-copy > *", {
+      y: 26,
+      opacity: 0,
+      duration: 0.9,
+      stagger: 0.08,
+      ease: "power3.out"
+    });
+
+    gsap.from(".hero-art > *", {
+      y: 38,
+      opacity: 0,
+      duration: 1.05,
+      stagger: 0.12,
+      ease: "power3.out",
+      delay: 0.12
+    });
+
+    const words = gsap.utils.toArray(".scrub-word");
+    gsap.set(words, { opacity: 0.12 });
+    gsap.to(words, {
+      opacity: 1,
+      stagger: 0.24,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".scrub-copy",
+        start: "top 74%",
+        end: "bottom 28%",
+        scrub: true
+      }
+    });
+
+    gsap.utils.toArray(".js-scale-card").forEach((card) => {
+      const image = card.querySelector(".story-image img");
+
+      gsap.fromTo(card, {
+        y: 56
+      }, {
+        y: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 92%",
+          end: "top 36%",
+          scrub: true
+        }
+      });
+
+      if (!image) return;
+
+      gsap.fromTo(image, {
+        scale: 0.84,
+        opacity: 0.28,
+        filter: "grayscale(1) contrast(1.12) brightness(0.92)"
+      }, {
+        scale: 1,
+        opacity: 1,
+        filter: "grayscale(0.08) contrast(1.04) brightness(1)",
+        ease: "none",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 90%",
+          end: "center 42%",
+          scrub: true
+        }
+      });
+
+      gsap.to(image, {
+        opacity: 0.22,
+        filter: "grayscale(0.55) contrast(1.08) brightness(0.62)",
+        ease: "none",
+        scrollTrigger: {
+          trigger: card,
+          start: "bottom 46%",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+    });
   });
 </script>
-
 </body>
 </html>

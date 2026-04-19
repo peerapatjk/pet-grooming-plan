@@ -254,7 +254,7 @@ function Screen12_Declined(){return(
 
       <div style={{display:'flex',flexDirection:'column',gap:10}}>
         <div className="shop-row" style={{borderColor:'var(--primary)',background:'var(--primary-wash)'}}>
-          <div className="thumb"><div className="dot"/></div>
+          <div className="thumb photo" style={{'--media-image':`url('${CUSTOMER_MEDIA.shopAroon}')`}}><div className="dot"/></div>
           <div>
             <h4>Aroon Grooming</h4>
             <div className="meta"><span className="status s-instant" style={{padding:'2px 6px',fontSize:9}}>Instant confirm</span><span>0.4 km · ★4.9</span></div>
@@ -262,7 +262,7 @@ function Screen12_Declined(){return(
           </div>
         </div>
         <div className="shop-row">
-          <div className="thumb"/>
+          <div className="thumb photo" style={{'--media-image':`url('${CUSTOMER_MEDIA.shopSoiDog}')`}}/>
           <div>
             <h4>Soi Dog Studio</h4>
             <div className="meta"><span className="status s-instant" style={{padding:'2px 6px',fontSize:9}}>Instant confirm</span><span>1.2 km · ★4.8</span></div>
@@ -270,7 +270,7 @@ function Screen12_Declined(){return(
           </div>
         </div>
         <div className="shop-row">
-          <div className="thumb"/>
+          <div className="thumb photo" style={{'--media-image':`url('${CUSTOMER_MEDIA.shopBarksBubbles}')`}}/>
           <div>
             <h4>Barks &amp; Bubbles</h4>
             <div className="meta"><span>1.7 km · ★4.6</span></div>
