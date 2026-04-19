@@ -296,11 +296,16 @@
     font-weight: 700;
   }
 
+  .hero-copy {
+    padding-bottom: 16px;
+  }
+
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
-    margin-top: 32px;
+    margin-top: 26px;
+    align-items: center;
   }
 
   .store-btn {
@@ -312,6 +317,7 @@
     border-radius: 18px;
     border: 1px solid transparent;
     transition: transform 280ms ease, box-shadow 280ms ease, background 280ms ease;
+    box-shadow: 0 10px 24px rgba(18, 20, 27, 0.08);
   }
 
   .store-btn:hover,
@@ -323,12 +329,14 @@
   .store-btn.dark {
     background: var(--ink);
     color: var(--paper);
+    min-width: 168px;
   }
 
   .store-btn.light {
     background: rgba(255, 255, 255, 0.72);
     color: var(--ink);
     border-color: rgba(16, 22, 30, 0.08);
+    min-width: 204px;
   }
 
   .store-ic {
@@ -361,7 +369,7 @@
   }
 
   .hero-note {
-    margin-top: 18px;
+    margin-top: 14px;
     color: var(--ink-3);
     font-family: var(--mono);
     font-size: 11px;
@@ -393,7 +401,7 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    width: min(100%, 470px);
+    width: min(100%, 500px);
     aspect-ratio: 0.84 / 1;
     padding: 18px;
     border-radius: 34px;
@@ -429,9 +437,9 @@
   }
 
   .hero-floating-card {
-    top: 24px;
-    left: 34px;
-    width: min(58%, 278px);
+    top: 18px;
+    left: 22px;
+    width: min(50%, 246px);
     padding: 18px 18px 16px;
     border-radius: 22px;
     z-index: 3;
@@ -462,9 +470,9 @@
   }
 
   .hero-state-card {
-    left: 26px;
-    bottom: 56px;
-    width: min(52%, 244px);
+    left: 18px;
+    bottom: 32px;
+    width: min(46%, 214px);
     padding: 16px;
     border-radius: 18px;
     z-index: 3;
@@ -491,7 +499,7 @@
   .hero-mini-rail {
     right: -6px;
     top: 74px;
-    width: 120px;
+    width: 104px;
     padding: 16px 14px;
     border-radius: 18px;
     z-index: 1;
@@ -1386,12 +1394,14 @@
     }
 
     .hero-floating-card {
-      left: 18px;
+      left: 14px;
+      width: min(48%, 232px);
     }
 
     .hero-state-card {
-      left: 12px;
-      bottom: 38px;
+      left: 10px;
+      bottom: 18px;
+      width: min(44%, 208px);
     }
 
     .hero-copy p,
@@ -1487,27 +1497,27 @@
 
     .hero-photo {
       width: 100%;
-      max-width: 360px;
+      max-width: 374px;
       right: 0;
       left: auto;
     }
 
     .hero-floating-card {
-      left: 10px;
+      left: 8px;
       top: 18px;
-      width: min(68%, 232px);
+      width: min(64%, 214px);
     }
 
     .hero-mini-rail {
       right: -2px;
       top: 56px;
-      width: 110px;
+      width: 96px;
     }
 
     .hero-state-card {
-      left: 10px;
-      bottom: 24px;
-      width: min(62%, 214px);
+      left: 8px;
+      bottom: 14px;
+      width: min(54%, 194px);
     }
 
     .time-rail {
