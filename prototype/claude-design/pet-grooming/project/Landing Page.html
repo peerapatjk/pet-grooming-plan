@@ -2032,21 +2032,25 @@
     const { gsap, ScrollTrigger } = window;
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from(".hero-copy > *", {
-      y: 26,
-      opacity: 0,
-      duration: 0.9,
-      stagger: 0.08,
+    // Keep the hero visible even if JS or asset timing is uneven on file:// loads.
+    // The intro still gets motion, but it no longer depends on opacity 0 as a start state.
+    gsap.fromTo(".hero-copy > *", {
+      y: 18
+    }, {
+      y: 0,
+      duration: 0.75,
+      stagger: 0.06,
       ease: "power3.out"
     });
 
-    gsap.from(".hero-art > *", {
-      y: 38,
-      opacity: 0,
-      duration: 1.05,
-      stagger: 0.12,
+    gsap.fromTo(".hero-art > *", {
+      y: 24
+    }, {
+      y: 0,
+      duration: 0.9,
+      stagger: 0.1,
       ease: "power3.out",
-      delay: 0.12
+      delay: 0.08
     });
 
     const words = gsap.utils.toArray(".scrub-word");
