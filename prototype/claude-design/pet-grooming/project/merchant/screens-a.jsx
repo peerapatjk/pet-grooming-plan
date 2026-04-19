@@ -1,6 +1,14 @@
 // merchant/screens-a.jsx — Flow A: Running today
 // Screens: 01 Today (timeline)  ·  02 Requests inbox  ·  03 Request detail (drawer)
 
+(() => {
+const PawpointMerchant = window.PawpointMerchant || {};
+const { Shell, MChevR, MSearch, MX, MPlus } = PawpointMerchant;
+
+if (!Shell || !MChevR || !MSearch || !MX || !MPlus) {
+  throw new Error('Pawpoint merchant primitives must load before merchant screens.');
+}
+
 // Shared data — so our demo feels like one shop, one day
 const GROOMERS = [
   {id:'P', name:'Pim',   role:'Owner',  color:'accent'},
@@ -382,6 +390,7 @@ function Screen03_RequestDetail(){
   );
 }
 
-Object.assign(window, {
+Object.assign(PawpointMerchant, {
   GROOMERS, Screen01_Today, Screen02_Inbox, Screen03_RequestDetail
 });
+})();

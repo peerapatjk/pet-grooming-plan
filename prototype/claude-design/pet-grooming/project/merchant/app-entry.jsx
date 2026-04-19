@@ -1,3 +1,31 @@
+(() => {
+const PawpointMerchant = window.PawpointMerchant || {};
+const {
+  PadFrame,
+  Screen01_Today,
+  Screen02_Inbox,
+  Screen03_RequestDetail,
+  Screen04_Arrivals,
+  Screen05_Board,
+  Screen06_Groomers,
+  Screen07_Services,
+  Screen08_Payouts,
+} = PawpointMerchant;
+
+if (
+  !PadFrame ||
+  !Screen01_Today ||
+  !Screen02_Inbox ||
+  !Screen03_RequestDetail ||
+  !Screen04_Arrivals ||
+  !Screen05_Board ||
+  !Screen06_Groomers ||
+  !Screen07_Services ||
+  !Screen08_Payouts
+) {
+  throw new Error('Pawpoint merchant app-entry loaded before its runtime dependencies.');
+}
+
 const merchantFlows = [
   {
     num:'Flow A',
@@ -75,3 +103,4 @@ const merchantRoot = document.getElementById('root');
 if (merchantRoot) {
   ReactDOM.createRoot(merchantRoot).render(<MerchantApp />);
 }
+})();

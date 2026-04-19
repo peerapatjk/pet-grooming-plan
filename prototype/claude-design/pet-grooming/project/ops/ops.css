@@ -24,17 +24,20 @@
   padding:14px 16px 6px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
   color:rgba(255,255,255,.4)
 }
-.ops-side nav a{
+.ops-side nav .nav-btn{
   display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;
   font-size:13px;color:rgba(255,255,255,.75);text-decoration:none;border-left:2px solid transparent;
   white-space:nowrap;
 }
-.ops-side nav a:hover{background:rgba(255,255,255,.04);color:#fff}
-.ops-side nav a.on{background:rgba(255,255,255,.06);color:#fff;border-left-color:var(--accent)}
-.ops-side nav a .ic{width:16px;height:16px;flex:none;opacity:.8}
-.ops-side nav a.on .ic{opacity:1}
-.ops-side nav a .count{margin-left:auto;font-family:var(--mono);font-size:10px;padding:1px 7px;border-radius:8px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
-.ops-side nav a .count.hot{background:var(--accent);color:#fff}
+.ops-side nav .nav-btn{
+  appearance:none;-webkit-appearance:none;background:none;border-top:0;border-right:0;border-bottom:0;margin:0;text-align:left;font:inherit
+}
+.ops-side nav .nav-btn:hover{background:rgba(255,255,255,.04);color:#fff}
+.ops-side nav .nav-btn.on{background:rgba(255,255,255,.06);color:#fff;border-left-color:var(--accent)}
+.ops-side nav .nav-btn .ic{width:16px;height:16px;flex:none;opacity:.8}
+.ops-side nav .nav-btn.on .ic{opacity:1}
+.ops-side nav .nav-btn .count{margin-left:auto;font-family:var(--mono);font-size:10px;padding:1px 7px;border-radius:8px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+.ops-side nav .nav-btn .count.hot{background:var(--accent);color:#fff}
 
 .ops-side .foot{
   padding:10px 14px;border-top:1px solid rgba(255,255,255,.08);

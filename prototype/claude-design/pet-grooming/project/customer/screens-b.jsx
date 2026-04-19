@@ -1,5 +1,13 @@
 // customer/screens-b.jsx — Flow B cont. (Review/Pay) + Flow C (States) + Flow D (Account)
 
+(() => {
+const PawpointCustomer = window.PawpointCustomer || (window.PawpointCustomer = {});
+const { CUSTOMER_MEDIA, ChevL, ChevR, Dot, TabBar } = PawpointCustomer;
+
+if (!CUSTOMER_MEDIA || !ChevL || !ChevR || !Dot || !TabBar) {
+  throw new Error('Pawpoint customer runtime must load before customer follow-on screens.');
+}
+
 // ─── 08 Review & Deposit ───────────────────────────────────
 function Screen08_Review(){return(
   <div className="screen">
@@ -328,7 +336,7 @@ function Screen13_Visits(){return(
         <span className="status s-pend-m">Pending</span>
       </div>
 
-      <div className="m-sec"><h4>Recent</h4><a>All visits</a></div>
+      <div className="m-sec"><h4>Recent</h4><button type="button" className="link-btn">All visits</button></div>
       <div style={{display:'flex',flexDirection:'column',gap:8}}>
         <div className="hist-row">
           <div className="pet-ring sm">D</div>
@@ -375,7 +383,7 @@ function Screen14_You(){return(
         <span className="chip accent"><span className="dot"/>12 visits</span>
       </div>
 
-      <div className="m-sec"><h4>Pets</h4><a>+ Add pet</a></div>
+      <div className="m-sec"><h4>Pets</h4><button type="button" className="link-btn">+ Add pet</button></div>
       <div style={{display:'flex',flexDirection:'column',gap:8}}>
         <div className="hist-row">
           <div className="pet-ring sm">D</div>
@@ -480,4 +488,14 @@ function Screen15_Rate(){return(
   </div>
 );}
 
-Object.assign(window,{Screen08_Review,Screen09_Pay,Screen10_Confirmed,Screen11_Pending,Screen12_Declined,Screen13_Visits,Screen14_You,Screen15_Rate});
+Object.assign(PawpointCustomer,{
+  Screen08_Review,
+  Screen09_Pay,
+  Screen10_Confirmed,
+  Screen11_Pending,
+  Screen12_Declined,
+  Screen13_Visits,
+  Screen14_You,
+  Screen15_Rate,
+});
+})();

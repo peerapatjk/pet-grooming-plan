@@ -2,6 +2,9 @@
 // Chrome.jsx — Simplified Chrome browser window (dark theme, macOS)
 // No dependencies, no image assets. All inline styles + inline SVG.
 
+(() => {
+const PawpointShared = window.PawpointShared || (window.PawpointShared = {});
+
 const CHROME_C = {
   barBg: '#202124',
   tabBg: '#35363a',
@@ -109,6 +112,7 @@ function ChromeWindow({
   );
 }
 
-Object.assign(window, {
+Object.assign(PawpointShared, {
   ChromeWindow, ChromeTabBar, ChromeToolbar, ChromeTab, ChromeTrafficLights,
 });
+})();

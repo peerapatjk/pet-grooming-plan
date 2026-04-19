@@ -1,3 +1,33 @@
+(() => {
+const PawpointOps = window.PawpointOps || {};
+const {
+  OpsFrame,
+  Scr_Network,
+  Scr_Requests,
+  Scr_Intervene,
+  Scr_ShopHealth,
+  Scr_Pipeline,
+  Scr_Map,
+  Scr_Alerts,
+  Scr_Payouts,
+  Scr_Settings,
+} = PawpointOps;
+
+if (
+  !OpsFrame ||
+  !Scr_Network ||
+  !Scr_Requests ||
+  !Scr_Intervene ||
+  !Scr_ShopHealth ||
+  !Scr_Pipeline ||
+  !Scr_Map ||
+  !Scr_Alerts ||
+  !Scr_Payouts ||
+  !Scr_Settings
+) {
+  throw new Error('Pawpoint ops app-entry loaded before its runtime dependencies.');
+}
+
 const opsFlows = [
   {
     num:'Flow A',
@@ -93,3 +123,4 @@ const opsRoot = document.getElementById('root');
 if (opsRoot) {
   ReactDOM.createRoot(opsRoot).render(<OpsApp />);
 }
+})();

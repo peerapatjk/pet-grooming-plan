@@ -1,6 +1,14 @@
 // merchant/screens-b.jsx — Flows B + C
 // 04 Arrivals · 05 Service board (kanban) · 06 Groomers & shifts · 07 Services + auto‑accept · 08 Payouts & reviews
 
+(() => {
+const PawpointMerchant = window.PawpointMerchant || {};
+const { Shell, MPlus, MSearch } = PawpointMerchant;
+
+if (!Shell || !MPlus || !MSearch) {
+  throw new Error('Pawpoint merchant primitives must load before merchant follow-on screens.');
+}
+
 // ─── 04 · Arrivals / check-in ────────────────────────────────
 function Screen04_Arrivals(){
   const due = [
@@ -413,7 +421,7 @@ function Screen08_Payouts(){
             <div style={{padding:'12px 18px',borderBottom:'1px solid var(--border)',display:'flex',alignItems:'center'}}>
               <div className="eyebrow">Recent bookings · auto‑reconciled</div>
               <div style={{flex:1}}/>
-              <a style={{fontSize:11,color:'var(--primary-ink)'}}>See all →</a>
+              <button type="button" className="link-btn" style={{fontSize:11,color:'var(--primary-ink)'}}>See all →</button>
             </div>
             {[
               {t:'14:48',who:'Praew · Dash',svc:'Full groom',gross:650,fee:19,net:631,deposit:true},
@@ -485,6 +493,7 @@ function Screen08_Payouts(){
   );
 }
 
-Object.assign(window, {
+Object.assign(PawpointMerchant, {
   Screen04_Arrivals, Screen05_Board, Screen06_Groomers, Screen07_Services, Screen08_Payouts
 });
+})();

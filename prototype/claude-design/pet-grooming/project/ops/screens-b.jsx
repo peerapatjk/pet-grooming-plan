@@ -1,5 +1,13 @@
 // ops/screens-b.jsx — screens 4, 5, 6
 
+(() => {
+const PawpointOps = window.PawpointOps || {};
+const { OpsScreen } = PawpointOps;
+
+if (!OpsScreen) {
+  throw new Error('Pawpoint ops shell must load before ops follow-on screens.');
+}
+
 // ─── Screen 4 · Shop health ──────────────────────────────
 function Scr_ShopHealth() {
   // extended shops list for the table
@@ -387,4 +395,5 @@ function Scr_Settings() {
   );
 }
 
-Object.assign(window, { Scr_ShopHealth, Scr_Pipeline, Scr_Map, Scr_Alerts, Scr_Payouts, Scr_Settings });
+Object.assign(PawpointOps, { Scr_ShopHealth, Scr_Pipeline, Scr_Map, Scr_Alerts, Scr_Payouts, Scr_Settings });
+})();

@@ -1,5 +1,13 @@
 // ops/screens-a.jsx — screens 1, 2, 3
 
+(() => {
+const PawpointOps = window.PawpointOps || {};
+const { OpsScreen, OI, SHOPS } = PawpointOps;
+
+if (!OpsScreen || !OI || !SHOPS) {
+  throw new Error('Pawpoint ops shell must load before ops screens.');
+}
+
 // ─── Screen 1 · Network today ────────────────────────────
 function Scr_Network() {
   // mini spark bars helper
@@ -88,7 +96,7 @@ function Scr_Network() {
                 <span className={"pill "+r.col} style={{padding:'2px 8px',borderRadius:12,fontFamily:'var(--mono)',fontSize:10,background:r.col==='ok'?'var(--ok-wash)':r.col==='hot'?'var(--danger-wash)':r.col==='info'?'var(--info-wash)':'var(--warn-wash)',color:r.col==='ok'?'var(--ok)':r.col==='hot'?'var(--danger)':r.col==='info'?'var(--info)':'oklch(0.4 0.11 75)',display:'inline-flex',alignItems:'center',gap:4,width:'fit-content'}}>{r.kind}</span>
                 <span><b style={{fontWeight:500}}>{r.shop}</b> <span style={{color:'var(--ink-3)'}}>· {r.who} · {r.pet}</span></span>
                 <span style={{fontFamily:'var(--mono)',color:'var(--ink-2)'}}>{r.price}</span>
-                <a style={{fontSize:11,color:'var(--primary)',fontFamily:'var(--mono)',letterSpacing:'.04em',justifySelf:'end'}}>OPEN →</a>
+                <button type="button" className="link-btn" style={{fontSize:11,color:'var(--primary)',fontFamily:'var(--mono)',letterSpacing:'.04em',justifySelf:'end'}}>OPEN →</button>
               </div>
             ))}
           </div>
@@ -112,7 +120,7 @@ function Scr_Network() {
                   <div style={{flex:1}}>
                     <b style={{fontWeight:500,fontSize:13}}>{a.shop}</b>
                     <div style={{fontSize:12,color:'var(--ink-2)',marginTop:3,lineHeight:1.4}}>{a.reason}</div>
-                    <a style={{fontSize:11,color:'var(--primary)',fontFamily:'var(--mono)',letterSpacing:'.04em',marginTop:6,display:'inline-block'}}>{a.cta} →</a>
+                    <button type="button" className="link-btn" style={{fontSize:11,color:'var(--primary)',fontFamily:'var(--mono)',letterSpacing:'.04em',marginTop:6,display:'inline-block'}}>{a.cta} →</button>
                   </div>
                 </div>
               ))}
@@ -379,4 +387,5 @@ function Scr_Intervene() {
   );
 }
 
-Object.assign(window, { Scr_Network, Scr_Requests, Scr_Intervene });
+Object.assign(PawpointOps, { Scr_Network, Scr_Requests, Scr_Intervene });
+})();

@@ -1,3 +1,45 @@
+(() => {
+const PawpointCustomer = window.PawpointCustomer || {};
+const {
+  PhoneShell,
+  Screen01_Welcome,
+  Screen02_Language,
+  Screen03_OTP,
+  Screen04_Pet,
+  Screen05_Home,
+  Screen06_Shop,
+  Screen07_Time,
+  Screen08_Review,
+  Screen09_Pay,
+  Screen10_Confirmed,
+  Screen11_Pending,
+  Screen12_Declined,
+  Screen13_Visits,
+  Screen14_You,
+  Screen15_Rate,
+} = PawpointCustomer;
+
+if (
+  !PhoneShell ||
+  !Screen01_Welcome ||
+  !Screen02_Language ||
+  !Screen03_OTP ||
+  !Screen04_Pet ||
+  !Screen05_Home ||
+  !Screen06_Shop ||
+  !Screen07_Time ||
+  !Screen08_Review ||
+  !Screen09_Pay ||
+  !Screen10_Confirmed ||
+  !Screen11_Pending ||
+  !Screen12_Declined ||
+  !Screen13_Visits ||
+  !Screen14_You ||
+  !Screen15_Rate
+) {
+  throw new Error('Pawpoint customer app-entry loaded before its runtime dependencies.');
+}
+
 const customerFlows = [
   {
     num:'Flow A',
@@ -91,3 +133,4 @@ const customerRoot = document.getElementById('root');
 if (customerRoot) {
   ReactDOM.createRoot(customerRoot).render(<CustomerApp />);
 }
+})();

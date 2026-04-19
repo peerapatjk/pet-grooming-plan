@@ -1,5 +1,8 @@
 // merchant/primitives.jsx — iPad device shell + tiny UI primitives
 
+(() => {
+const PawpointMerchant = window.PawpointMerchant || (window.PawpointMerchant = {});
+
 const MChevL = ({size=16})=>(<svg width={size} height={size} viewBox="0 0 16 16"><path d="M10 2L4 8l6 6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>);
 const MChevR = ({size=14})=>(<svg width={size} height={size} viewBox="0 0 14 14"><path d="M5 2l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>);
 const MChevD = ({size=12})=>(<svg width={size} height={size} viewBox="0 0 14 14"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>);
@@ -72,11 +75,16 @@ const Sidebar = ({active="today"}) => {
       <nav>
         {items.map((it,i)=>it.group
           ? <div key={i} className="group">{it.group}</div>
-          : <a key={it.k} className={active===it.k?'on':''}>
+          : <button
+              key={it.k}
+              type="button"
+              className={"nav-btn"+(active===it.k?' on':'')}
+              aria-current={active===it.k ? 'page' : undefined}
+            >
               <span className="nav-ic">{it.ic}</span>
               <span>{it.label}</span>
               {it.count && <span className={"count "+(it.countClass||'')}>{it.count}</span>}
-            </a>
+            </button>
         )}
       </nav>
       <div className="side-foot">
@@ -113,7 +121,8 @@ const Shell = ({active, title, titleTh, stats, topActions, children, search=true
   </div>
 );
 
-Object.assign(window, {
+Object.assign(PawpointMerchant, {
   MChevL, MChevR, MChevD, MSearch, MX, MPlus, nav,
   PadFrame, Sidebar, TopBar, Shell,
 });
+})();

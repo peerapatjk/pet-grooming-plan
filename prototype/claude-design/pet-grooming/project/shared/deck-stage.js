@@ -312,6 +312,7 @@
     }
 
     attributeChangedCallback() {
+      this._syncDesignSizeVariables();
       if (this._canvas) {
         this._canvas.style.width = this.designWidth + 'px';
         this._canvas.style.height = this.designHeight + 'px';
@@ -323,6 +324,7 @@
     }
 
     _render() {
+      this._syncDesignSizeVariables();
       const style = document.createElement('style');
       style.textContent = stylesheet;
 
@@ -383,6 +385,11 @@
       this._overlay = overlay;
       this._countEl = overlay.querySelector('.current');
       this._totalEl = overlay.querySelector('.total');
+    }
+
+    _syncDesignSizeVariables() {
+      this.style.setProperty('--deck-design-w', this.designWidth + 'px');
+      this.style.setProperty('--deck-design-h', this.designHeight + 'px');
     }
 
     /** @page must live in the document stylesheet — it's a no-op inside

@@ -1,5 +1,13 @@
 // ops/shell.jsx — shared left-nav + top-bar shell for ops console
 
+(() => {
+const PawpointShared = window.PawpointShared || {};
+const { ChromeWindow } = PawpointShared;
+
+if (!ChromeWindow) {
+  throw new Error('Pawpoint shared browser window runtime must load before ops shell.');
+}
+
 // tiny icon set — inline SVG
 const OI = {
   pulse: <svg className="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 8h3l2-5 3 10 2-5h4"/></svg>,
@@ -44,11 +52,16 @@ function OpsSidebar({ active }) {
       <nav>
         {items.map((it, i) => it.group
           ? <div className="group" key={i}>{it.group}</div>
-          : <a key={it.id} className={active === it.id ? 'on' : ''}>
+          : <button
+              key={it.id}
+              type="button"
+              className={"nav-btn"+(active === it.id ? ' on' : '')}
+              aria-current={active === it.id ? 'page' : undefined}
+            >
               {it.icon}
               <span>{it.label}</span>
               {it.count && <span className={"count" + (it.hot ? ' hot' : '')}>{it.count}</span>}
-            </a>
+            </button>
         )}
       </nav>
       <div className="foot">
@@ -123,4 +136,6 @@ const SHOPS = [
 ];
 
 // export
-Object.assign(window, { OpsSidebar, OpsTop, OpsScreen, OpsFrame, OI, SHOPS });
+const PawpointOps = window.PawpointOps || (window.PawpointOps = {});
+Object.assign(PawpointOps, { OpsSidebar, OpsTop, OpsScreen, OpsFrame, OI, SHOPS });
+})();

@@ -1,11 +1,19 @@
 // customer/screens-a.jsx — Flow A (Welcome) + Flow B (Discover/Book)
 
+(() => {
+const PawpointCustomer = window.PawpointCustomer || (window.PawpointCustomer = {});
+const { ChevL, ChevR, Dot, TabBar } = PawpointCustomer;
+
+if (!ChevL || !ChevR || !Dot || !TabBar) {
+  throw new Error('Pawpoint customer primitives must load before customer screens.');
+}
+
 const CUSTOMER_MEDIA = {
-  petDash: '../shared/images/customer/pet-dash.png',
-  shopAroon: '../shared/images/customer/shop-aroon.png',
-  shopFluffRoom: '../shared/images/customer/shop-fluff-room.png',
-  shopSoiDog: '../shared/images/customer/shop-soi-dog.png',
-  shopBarksBubbles: '../shared/images/customer/shop-barks-bubbles.png',
+  petDash: 'shared/images/customer/pet-dash.png',
+  shopAroon: 'shared/images/customer/shop-aroon.png',
+  shopFluffRoom: 'shared/images/customer/shop-fluff-room.png',
+  shopSoiDog: 'shared/images/customer/shop-soi-dog.png',
+  shopBarksBubbles: 'shared/images/customer/shop-barks-bubbles.png',
 };
 
 // ─── 01 Welcome ─────────────────────────────────────────
@@ -152,7 +160,7 @@ function Screen05_Home(){return(
         <div className="cta"><span>One‑tap rebook · Shield hold · ฿200</span><ChevR color="#fff"/></div>
       </div>
 
-      <div className="m-sec"><h4>Today near Sathorn</h4><a>24 shops →</a></div>
+      <div className="m-sec"><h4>Today near Sathorn</h4><button type="button" className="link-btn">24 shops →</button></div>
 
       <div style={{display:'flex',flexDirection:'column',gap:10}}>
         <div className="shop-row">
@@ -252,7 +260,7 @@ function Screen06_Shop(){return(
         </div>
       </div>
 
-      <div className="m-sec"><h4>Services for Dash · medium coat</h4><a>All 9 →</a></div>
+      <div className="m-sec"><h4>Services for Dash · medium coat</h4><button type="button" className="link-btn">All 9 →</button></div>
 
       <div style={{display:'flex',flexDirection:'column',gap:8}}>
         <div className="svc-card on" style={{padding:16}}>
@@ -346,4 +354,14 @@ function Screen07_Time(){
     </div>
   );
 }
-Object.assign(window,{Screen01_Welcome,Screen02_Language,Screen03_OTP,Screen04_Pet,Screen05_Home,Screen06_Shop,Screen07_Time});
+Object.assign(PawpointCustomer,{
+  CUSTOMER_MEDIA,
+  Screen01_Welcome,
+  Screen02_Language,
+  Screen03_OTP,
+  Screen04_Pet,
+  Screen05_Home,
+  Screen06_Shop,
+  Screen07_Time,
+});
+})();

@@ -133,6 +133,23 @@ p{margin:0}
 .btn.dark{background:var(--ink);color:var(--paper)}
 .btn-sm{padding:7px 12px;font-size:12px}
 .btn-lg{padding:14px 22px;font-size:14px}
+.link-btn{
+  appearance:none;
+  -webkit-appearance:none;
+  background:none;
+  border:0;
+  padding:0;
+  margin:0;
+  font:inherit;
+  color:inherit;
+  cursor:pointer;
+  text-align:left;
+  text-decoration:none;
+}
+.link-btn:focus-visible{
+  outline:2px solid color-mix(in oklab, var(--primary) 48%, transparent);
+  outline-offset:3px;
+}
 
 /* Chips */
 .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 8px;border-radius:999px;background:var(--paper);border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--ink-2)}

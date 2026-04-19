@@ -1,4 +1,6 @@
 // customer/primitives.jsx — shared tiny UI primitives
+(() => {
+const PawpointCustomer = window.PawpointCustomer || (window.PawpointCustomer = {});
 const ChevL = ({size=16, color="currentColor"})=>(
   <svg width={size} height={size} viewBox="0 0 16 16"><path d="M10 2L4 8l6 6" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
 );
@@ -40,8 +42,17 @@ const TabBar = ({on="home"})=>(
       {k:'visits',label:'Visits'},
       {k:'you',label:'You'},
     ].map(t=>(
-      <div key={t.k} className={"tab"+(on===t.k?' on':'')}><div className="ic"/>{t.label}</div>
+      <button
+        key={t.k}
+        type="button"
+        className={"tab link-btn"+(on===t.k?' on':'')}
+        aria-current={on===t.k ? 'page' : undefined}
+      >
+        <div className="ic" aria-hidden="true"/>
+        {t.label}
+      </button>
     ))}
   </div>
 );
-Object.assign(window,{ChevL,ChevR,Dot,PhoneShell,TabBar});
+Object.assign(PawpointCustomer,{ChevL,ChevR,Dot,PhoneShell,TabBar});
+})();
